@@ -1,0 +1,49 @@
+// Database schemas
+
+// Customers table Schema
+
+            $table->increments('cust_id')->unsighed();
+            $table->string('cust_name', 255)->unique();
+            $table->string('cust_shipto', 500);
+            $table->string('cust_billto', 500);
+            $table->string('cust_buyer', 50);
+            $table->string('cust_email');
+            $table->string('cust_phone');
+            $table->string('cust_country');
+            $table->timestamps();
+
+// Part Numbers table Schema
+
+            $table->increments('pn_id')->unsigned();
+            $table->string('pn_num', 20);
+            $table->char('pn_rev', 1);
+            $table->date('pn_rev_date');
+            $table->timestamps();
+
+// Purchase Orders table Schema
+
+            $table->increments('po_id')->unsigned();
+            $table->integer('po_num');
+            $table->date('po_date');
+            $table->string('po_com', 500);
+            $table->string('po_instr', 500);
+            $table->enum('po_status', ['Open', 'Closed'])->default('Open');
+            $table->integer('cust_id')->unsigned();
+            $table->foreign('cust_id')->references('cust_id')->on('customers');
+            $table->timestamps();
+
+// Routers table Schema
+
+            $table->increments('id')->unsigned();
+            $table->integer('router_num');
+            $table->string('router_pn', 15);
+            $table->date('router_date');
+            $table->integer('router_qty');
+            $table->enum('router_status', ['Open', 'Closed'])->default('Open');
+            $table->integer('pic_id')->unsigned();
+            $table->foreign('pic_id')->references('pic_id')->on('pictickets');
+            $table->timestamps();
+
+// Invoices table Schema
+
+To be written

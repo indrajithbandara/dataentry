@@ -22,6 +22,12 @@ Route::get('/users', 'PagesController@vuePage');
 Route::get('/customers', 'PagesController@vuePage');
 Route::get('/products', 'PagesController@vuePage');
 Route::get('/purchaseorders', 'PagesController@vuePage');
-Route::get('/invoices', 'PagesController@vuePage');
+Route::get('/invoices', function(){
+    if(Gate::allows('admin-only', Auth::user())){
+        return view('page');
+    }else{
+        return 'You are not authorized to view this page.';
+    }
+});
 Route::get('/routers', 'PagesController@vuePage');
 Route::get('/inventory', 'PagesController@vuePage');

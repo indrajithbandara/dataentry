@@ -40,27 +40,27 @@
                     <li>
                         <a href="{{ url('home') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    @if(Auth::user()->permission === 1)
-                    <li>
-                        <a href="{{ url('invoices') }} "><i class="fa fa-fw fa-money"></i> Invoices</a>
-                    </li>
-                    @endif
+                    @can('admin-only', Auth::user())
+                        <li>
+                            <a href="{{ url('invoices') }} "><i class="fa fa-fw fa-money"></i> Invoices</a>
+                        </li>
+                    @endcan
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#assets"><i class="fa fa-fw fa-database"></i> Assets <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="assets" class="collapse">
-                            @if(Auth::user()->permission === 1)
-                            <li>
-                                <a href="{{ url('users') }}"><i class="fa fa-fw fa-user"></i> Users</a>
-                            </li>
-                            @endif
+                            @can('admin-only', Auth::user())
+                                <li>
+                                    <a href="{{ url('users') }}"><i class="fa fa-fw fa-user"></i> Users</a>
+                                </li>
+                            @endcan
                             <li>
                                 <a href="{{ url('products') }}"><i class="fa fa-fw fa-plane"></i> Products</a>
                             </li>
-                            @if(Auth::user()->permission === 1)
-                            <li>
-                                <a href="{{ url('customers') }}"><i class="fa fa-fw fa-users"></i> Customers</a>
-                            </li>
-                            @endif
+                            @can('admin-only', Auth::user())
+                                <li>
+                                    <a href="{{ url('customers') }}"><i class="fa fa-fw fa-users"></i> Customers</a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
 {{--                     <li>

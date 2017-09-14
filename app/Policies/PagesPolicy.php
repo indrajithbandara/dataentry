@@ -78,7 +78,7 @@ class PagesPolicy
     *                   Products [view, add, edit, delete]
     *                   Inventory [view, add, edit, delete, print]
     *
-    *   Permissions:    Routers [view, add, edit, delete, print]
+    *   Permissions:    Routers [view, add, edit]
 
     */
     public function empl_four($user)

@@ -40,7 +40,7 @@
                     <li>
                         <a href="{{ url('home') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    @if(Auth::user()->can('admin') || Auth::user()->can('admin-two'))
+                    @if( Auth::user()->can('admin') || Auth::user()->can('admin-two') )
                         <li><a href="{{ url('invoices') }} "><i class="fa fa-fw fa-money"></i> Invoices</a></li>
                     @endif
                     <li>
@@ -51,11 +51,11 @@
                                 <li><a href="{{ url('users') }}"><i class="fa fa-fw fa-user"></i> Users</a></li>
                             @endcan
 
-                            @if( Auth::user()->can('admin') || Auth::user()->can('admin-two') || Auth::user()->can('manage-three') )
+                            @if( Auth::user()->can('admin') || Auth::user()->can('admin-two') || Auth::user()->can('manage_three') )
                                 <li><a href="{{ url('products') }}"><i class="fa fa-fw fa-plane"></i> Products</a></li>
                             @endif
 
-                            @if(Auth::user()->can('admin') || Auth::user()->can('admin-two'))
+                            @if( Auth::user()->can('admin') || Auth::user()->can('admin-two') )
                                 <li><a href="{{ url('customers') }}"><i class="fa fa-fw fa-users"></i> Customers</a></li>
                             @endif
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PagesController extends Controller
 {
@@ -16,8 +17,13 @@ class PagesController extends Controller
         $this->middleware('auth');
     }
 
-    public function vuePage() 
+    public function users() 
     {
-        return view('page');
+        if( $this->authorize('admin') ){
+            return view('page');
+        }
     }
 }
+/*
+As of right now, I'm trying to get the application to off load the gate logic to the 
+*/

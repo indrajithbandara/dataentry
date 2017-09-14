@@ -38,10 +38,13 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::routes(); // Added for passport api support
 
-        // Defined Gates For Page and section viewing content
+        // Web Gates
         Gate::define('admin', 'App\Policies\PagesPolicy@admin');
         Gate::define('admin-two', 'App\Policies\PagesPolicy@admin_two');
         Gate::define('manage-three', 'App\Policies\PagesPolicy@manage_three');
         Gate::define('empl-four', 'App\Policies\PagesPolicy@empl_four');
+
+        // Api Gates
+        Gate::define('delete', 'App\Policies\ProductPolicy@delete');
     }
 }

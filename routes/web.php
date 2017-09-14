@@ -23,7 +23,7 @@ Auth::routes();
 Route::group(['middleware' => ['web', 'auth']], function(){
 
     // Users web route
-    Route::get('/users', function(){ return Gate::allows('admin', Auth::user()) ? view('page') : abort(401); });
+    Route::get('/users', 'PagesController@users');
     // End Users Web route
 
     // Customers Web Route

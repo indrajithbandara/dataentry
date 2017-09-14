@@ -40,27 +40,25 @@
                     <li>
                         <a href="{{ url('home') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    @can('admin-only', Auth::user())
-                        <li>
-                            <a href="{{ url('invoices') }} "><i class="fa fa-fw fa-money"></i> Invoices</a>
-                        </li>
-                    @endcan
+                    @if(Auth::user()->can('admin') || Auth::user()->can('admin-two'))
+                        <li><a href="{{ url('invoices') }} "><i class="fa fa-fw fa-money"></i> Invoices</a></li>
+                    @endif
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#assets"><i class="fa fa-fw fa-database"></i> Assets <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="assets" class="collapse">
-                            @can('admin-only', Auth::user())
-                                <li>
-                                    <a href="{{ url('users') }}"><i class="fa fa-fw fa-user"></i> Users</a>
-                                </li>
+
+                            @can('admin', Auth::user())
+                                <li><a href="{{ url('users') }}"><i class="fa fa-fw fa-user"></i> Users</a></li>
                             @endcan
-                            <li>
-                                <a href="{{ url('products') }}"><i class="fa fa-fw fa-plane"></i> Products</a>
-                            </li>
-                            @can('admin-only', Auth::user())
-                                <li>
-                                    <a href="{{ url('customers') }}"><i class="fa fa-fw fa-users"></i> Customers</a>
-                                </li>
-                            @endcan
+
+                            @if( Auth::user()->can('admin') || Auth::user()->can('admin-two') || Auth::user()->can('manage-three') )
+                                <li><a href="{{ url('products') }}"><i class="fa fa-fw fa-plane"></i> Products</a></li>
+                            @endif
+
+                            @if(Auth::user()->can('admin') || Auth::user()->can('admin-two'))
+                                <li><a href="{{ url('customers') }}"><i class="fa fa-fw fa-users"></i> Customers</a></li>
+                            @endif
+
                         </ul>
                     </li>
 {{--                     <li>

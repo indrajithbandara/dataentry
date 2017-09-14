@@ -1,7 +1,7 @@
 <?php
 
 // Route for loading the front guest page
-Route::get('/', function () {return view('welcome');});
+Route::get('/', function () { return view('welcome'); });
 
 // Route for loading the dashboard page
 Route::get('/home', 'HomeController@index')->name('home');
@@ -18,16 +18,48 @@ Auth::routes();
 *   'Auth' Middleware has been added on the PagesController.php
 *   page via the controller constructor.
 */
-Route::get('/users', 'PagesController@vuePage');
-Route::get('/customers', 'PagesController@vuePage');
-Route::get('/products', 'PagesController@vuePage');
-Route::get('/purchaseorders', 'PagesController@vuePage');
-Route::get('/invoices', function(){
-    if(Gate::allows('admin-only', Auth::user())){
-        return view('page');
-    }else{
-        return 'You are not authorized to view this page.';
-    }
+
+// Route Group passed through web and auth middleware for the main page. 
+Route::group(['middleware' => ['web', 'auth']], function(){
+
+    // Users web route
+    Route::get('/users', function(){ return Gate::allows('admin', Auth::user()) ? view('page') : abort(401); });
+    // End Users Web route
+
+    // Customers Web Route
+    Route::get('/customers', function(){
+        if ( Gate::allows('admin', Auth::user()) || Gate::allows('admin_two', Auth::user())){
+            return view('page');
+        } else {  
+            return abort(401); 
+        }
+    });
+    // End Customers Route
+
+    // Products Web Route
+    Route::get('/products', function(){
+        if ( Gate::allows('admin', Auth::user()) || Gate::allows('admin_two', Auth::user()) || Gate::allows('manage_three', Auth::user()) ){
+            return view('page');
+        } else {  
+            return abort(401); 
+        }
+    });
+    // End Products Route
+
+    // Invoices Web Route
+    Route::get('/invoices', function(){ 
+        if ( Gate::allows('admin', Auth::user()) || Gate::allows('admin_two', Auth::user())){
+            return view('page');
+        } else {  
+            return abort(401); 
+        }
+    });
+    // End Invoices Route
+    
+
+    // Routes to be determined
+    // Route::get('/purchaseorders', function(){ return Gate::allows('admin', Auth::user()) ? view('page') : abort(401); });
+    // Route::get('/routers', function(){ return Gate::allows('admin', Auth::user()) ? view('page') : abort(401); });
+    // Route::get('/inventory', function(){ return Gate::allows('admin', Auth::user()) ? view('page') : abort(401); });
+
 });
-Route::get('/routers', 'PagesController@vuePage');
-Route::get('/inventory', 'PagesController@vuePage');

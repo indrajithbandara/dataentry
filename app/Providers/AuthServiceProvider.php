@@ -1,9 +1,16 @@
 <?php
 
 namespace App\Providers;
+//======= Models =======
+use App\Invoice;
+//======= end of models =======
 
-use Laravel\Passport\Passport; // Add this line to use for service provider.
-use App\Policies\ProductPolicy;
+//========= Policies =========
+use App\Policies\InvoicePolicy;
+use App\Policies\PagesPolicy;
+//===== end of policies ======
+
+use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -16,6 +23,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        // Invoice::class => InvoicePolicy::class,
+        'App\User' => PagesPolicy::class,
     ];
 
     /**
@@ -26,13 +35,13 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        Passport::routes();
-        Gate::define('admin-only', function($user){
-            if ($user->permission == 1){
-                return true;
-            }else{
-                return false;
-            }
-        });
+
+        Passport::routes(); // Added for passport api support
+
+        // Defined Gates For Page and section viewing content
+        Gate::define('admin', 'App\Policies\PagesPolicy@admin');
+        Gate::define('admin-two', 'App\Policies\PagesPolicy@admin_two');
+        Gate::define('manage-three', 'App\Policies\PagesPolicy@manage_three');
+        Gate::define('empl-four', 'App\Policies\PagesPolicy@empl_four');
     }
 }

@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProductsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     // Get all products
     public function getProducts() 
@@ -62,6 +73,7 @@ class ProductsController extends Controller
     // Delete Product
     public function deleteProduct($id)
     {
+        $this->authorize('delete', $id);
         return Product::destroy($id);
     }
 }

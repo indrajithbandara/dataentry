@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PagesController extends Controller
 {
@@ -16,8 +18,39 @@ class PagesController extends Controller
         $this->middleware('auth');
     }
 
-    public function vuePage() 
+    public function invoices()
     {
-        return view('page');
+        if( User::isSuperAdmin() || User::isAdmin() ) {
+            return view('page');
+        }else{
+            return abort('401');
+        }
+    }
+
+    public function users()
+    {
+        if( User::isSuperAdmin() ) { 
+            return view('page'); 
+        }else{
+            return abort('401');
+        }
+    }
+
+    public function customers() 
+    {
+        if( User::isSuperAdmin() || User::isAdmin() ) {
+            return view('page');
+        }else{
+            return abort('401');
+        }
+    }
+
+    public function products()
+    {
+        if( User::isSuperAdmin() || User::isAdmin() || User::isManager() ) {
+            return view('page');
+        }else{
+            return abort('401');
+        }
     }
 }

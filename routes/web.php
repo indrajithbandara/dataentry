@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+
 // Route for loading the front guest page
 Route::get('/', function () { return view('welcome'); });
 
@@ -22,44 +24,14 @@ Auth::routes();
 // Route Group passed through web and auth middleware for the main page. 
 Route::group(['middleware' => ['web', 'auth']], function(){
 
-    // Users web route
+    Route::get('/invoices', 'PagesController@invoices');
     Route::get('/users', 'PagesController@users');
-    // End Users Web route
-
-    // Customers Web Route
-    Route::get('/customers', function(){
-        if ( Gate::allows('admin', Auth::user()) || Gate::allows('admin_two', Auth::user())){
-            return view('page');
-        } else {  
-            return abort(401); 
-        }
-    });
-    // End Customers Route
-
-    // Products Web Route
-    Route::get('/products', function(){
-        if ( Gate::allows('admin', Auth::user()) || Gate::allows('admin_two', Auth::user()) || Gate::allows('manage_three', Auth::user()) ){
-            return view('page');
-        } else {  
-            return abort(401); 
-        }
-    });
-    // End Products Route
-
-    // Invoices Web Route
-    Route::get('/invoices', function(){ 
-        if ( Gate::allows('admin', Auth::user()) || Gate::allows('admin_two', Auth::user())){
-            return view('page');
-        } else {  
-            return abort(401); 
-        }
-    });
-    // End Invoices Route
+    Route::get('/customers', 'PagesController@customers');
+    Route::get('/products', 'PagesController@products');
     
-
     // Routes to be determined
-    // Route::get('/purchaseorders', function(){ return Gate::allows('admin', Auth::user()) ? view('page') : abort(401); });
-    // Route::get('/routers', function(){ return Gate::allows('admin', Auth::user()) ? view('page') : abort(401); });
-    // Route::get('/inventory', function(){ return Gate::allows('admin', Auth::user()) ? view('page') : abort(401); });
+    // Route::get('/purchaseorders', 'PagesController@vuePage');
+    // Route::get('/routers', 'PagesController@vuePage');
+    // Route::get('/inventory', 'PagesController@vuePage');
 
 });

@@ -4,6 +4,7 @@ namespace App;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -27,4 +28,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function isSuperAdmin() 
+    {
+        return Auth::user()->permission == 1;
+    }
+
+    public static function isAdmin()
+    {
+        return Auth::user()->permission == 2;
+    }
+
+    public static function isManager()
+    {
+        return Auth::user()->permission == 3;
+    }
+
+    public static function isEmployee()
+    {
+        return Auth::user()->permission == 4;
+    }
 }

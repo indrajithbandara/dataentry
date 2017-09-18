@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,13 +18,39 @@ class PagesController extends Controller
         $this->middleware('auth');
     }
 
-    public function users() 
+    public function invoices()
     {
-        if( $this->authorize('admin') ){
+        if( User::isSuperAdmin() || User::isAdmin() ) {
             return view('page');
+        }else{
+            return abort('401');
+        }
+    }
+
+    public function users()
+    {
+        if( User::isSuperAdmin() ) { 
+            return view('page'); 
+        }else{
+            return abort('401');
+        }
+    }
+
+    public function customers() 
+    {
+        if( User::isSuperAdmin() || User::isAdmin() ) {
+            return view('page');
+        }else{
+            return abort('401');
+        }
+    }
+
+    public function products()
+    {
+        if( User::isSuperAdmin() || User::isAdmin() || User::isManager() ) {
+            return view('page');
+        }else{
+            return abort('401');
         }
     }
 }
-/*
-As of right now, I'm trying to get the application to off load the gate logic to the 
-*/

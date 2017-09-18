@@ -11,7 +11,7 @@
                         <th>Revision</th>
                         <th>Rev Date</th>
                         <th>Edit</th>
-                        <th>Delete</th>
+                        <th v-if="user == 1">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,7 +23,7 @@
                         <td>{{ product.rev }}</td>
                         <td>{{ product.rev_date }}</td>
                         <td><button @click="showProduct(product.id)" class="btn btn-warning">Edit</button></td>
-                        <td><button @click="deleteProduct(product.id)" class="btn btn-danger">Delete</button></td>
+                        <td v-if="user == 1"><button @click="deleteProduct(product.id)" class="btn btn-danger">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -88,13 +88,23 @@
                     rev_date: ''
                 },
                 regWarning: '',
-                nameAlert: ''
+                nameAlert: '',
+                user: ''
             }
         },
         mounted() {
             this.getProducts();
+            this.getUser();
         },
         methods: {
+            getUser(){
+                axios.get('api/user')
+                .then((response) => {
+                    this.user = response.data.permission;
+                }).catch((error) => {
+                    console.log(error);
+                });
+            },
             getProducts(){
                 axios.get('api/products')
                 .then((response) => {
@@ -136,7 +146,6 @@
             },
             updateProduct(id){
                 let self = this;
-                self.nameDatabase();
                 if(!self.product.description){self.product.description = 'NA';}
                 if(!self.product.material){self.product.material = 'NA';}
                 if(!self.product.rev){self.product.rev = 'NA';}
@@ -161,7 +170,7 @@
                     self.nameAlert = '';
                     self.edit = false;
                     self.getProducts();
-                }).catch(function(error){
+                }).catch((error) => {
                     console.log(error.message);
                 });
             },

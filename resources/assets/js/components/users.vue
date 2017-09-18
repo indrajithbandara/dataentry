@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- User Table -->
-        <div class="table-responsive">
+        <div id="product-table" v-if="list.length > 0" class="table-responsive">
             <table class="table table-condensed">
                 <thead>
                     <tr>
@@ -9,77 +9,53 @@
                         <th>Email</th>
                         <th>Permissions</th>
                         <th>Edit</th>
-                        <th>Delete</th>
+                        <th v-if="user == 1">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Raquel Gonzales</td>
-                        <td>rgonzales@ksentusa.com</td>
-                        <td>1</td>
-                        <td><button class="btn btn-warning">Edit</button></td>
-                        <td><button class="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <tr>
-                        <td>Helen Vargus</td>
-                        <td>admin@ksentusa.com</td>
-                        <td>2</td>
-                        <td><button class="btn btn-warning">Edit</button></td>
-                        <td><button class="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <tr>
-                        <td>Simon Gonzales</td>
-                        <td>sgonzales@ksentusa.com</td>
-                        <td>3</td>
-                        <td><button class="btn btn-warning">Edit</button></td>
-                        <td><button class="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <tr>
-                        <td>Carl Kessler</td>
-                        <td>ckessler@ksentusa.com</td>
-                        <td>4</td>
-                        <td><button class="btn btn-warning">Edit</button></td>
-                        <td><button class="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <tr>
-                        <td>General Employee</td>
-                        <td>admin@ksentusa.com</td>
-                        <td>5</td>
-                        <td><button class="btn btn-warning">Edit</button></td>
-                        <td><button class="btn btn-danger">Delete</button></td>
+                    <tr v-for="users in list">
+                        <td>{{ users.name }}</td>
+                        <td>{{ users.email }}</td>
+                        <td>{{ users.permission }}</td>
+                        <td><button @click="showUser(users.id)" class="btn btn-warning">Edit</button></td>
+                        <td v-if="user == 1"><button @click="deleteUser(users.id)" class="btn btn-danger">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div v-else>
+            <p class="alert alert-info text-center">You currently have no users to show.</p>
         </div>
         <!-- end of users table -->
         <hr>
         <!-- Add User Form -->
         <div>
-            <form>
+            <h2 class="text-center">Add User</h2>
+            <form action="#" @submit.prevent="edit ? updateUser(users.id) : createUser()">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" name="name" class="form-control" required>
+                    <input v-model="users.name" type="text" name="name" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" class="form-control">
+                    <input v-model="users.email" type="email" name="email" class="form-control" required>
                 </div>
-                <div class="form-group">
+                <div v-show="!edit" class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" class="form-control">
+                    <input v-model="users.password" type="password" name="password" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Permissions</label>
-                    <select class="form-control">
+                    <select v-model="users.permission" class="form-control" required>
                         <option>Choose an option</option>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
                         <option>4</option>
-                        <option>5</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                <button v-show="!edit" type="submit" class="btn btn-primary pull-right" name="button">Add User</button>
+                <button v-show="edit" type="submit" class="btn btn-primary pull-right" name="button">Update User</button>
             </form>
         </div>
         <!-- End of add user form -->
@@ -90,11 +66,110 @@
     export default {
         data() {
             return {
-                // key: value pairs
+                edit: false,
+                list: [],
+                users: {
+                    id: '',
+                    name: '',
+                    email: '',
+                    permission: ''
+                },
+                user: ''
             }
         },
+        mounted() {
+            this.getUsers();
+            this.getUser();
+        },
         methods: {
-
+            getUser(){
+                axios.get('api/user')
+                .then((response) => {
+                    this.user = response.data.permission;
+                }).catch((error) => {
+                    console.log(error);
+                });
+            },
+            getUsers(){
+                axios.get('api/users')
+                .then((response) => {
+                    this.list = response.data;
+                }).catch((error) => {
+                    console.log(error);
+                });
+            },
+            createUser(){
+                let self = this;
+                let params = Object.assign({}, self.users);
+                axios({
+                    method: 'post',
+                    url: 'api/users/store',
+                    data: params,
+                    validateStatus(status){
+                        return status >= 200 && status < 300;
+                    }
+                }).then(() => {
+                    self.users.name = '';
+                    self.users.email = '';
+                    self.users.password = '';
+                    self.users.permission = '';
+                    self.edit = false;
+                    self.getUsers();
+                }).catch((error) => {
+                    console.log(error.message);
+                });
+            },
+            updateUser(id){
+                let self = this;
+                let params = Object.assign({}, self.users);
+                axios({
+                    method: 'patch',
+                    url: 'api/users/' + id,
+                    data: params,
+                    validateStatus(status) {
+                        return status >= 200 && status < 300;
+                    }
+                }).then(() => {
+                    self.users.name = '',
+                    self.users.email = '',
+                    self.users.permission = '',
+                    self.edit = false;
+                    self.getUsers();
+                }).catch((error) => {
+                    console.log(error.message);
+                });
+            },
+            showUser(id){
+                let self = this;
+                axios({
+                    method: 'get',
+                    url: 'api/users/' + id,
+                    validateStatus(status) {
+                        return status >= 200 && status < 300;
+                    }
+                }).then((response) => {
+                    self.users.id = response.data.id;
+                    self.users.name = response.data.name;
+                    self.users.email = response.data.email;
+                    self.users.permission = response.data.permission;
+                }).catch((error) => {
+                    console.log(error.message);
+                });
+                self.edit = true;
+            },
+            deleteUser(id){
+                if(confirm('Are you sure you want to delete this user?')){
+                    let self = this;
+                    axios.delete('api/users/' + id)
+                    .then((response) => {
+                        self.getUsers();
+                    }).catch((error) => {
+                        console.log(error.message);
+                    });
+                }else{
+                    return;
+                }
+            }
         }
     }
 </script>

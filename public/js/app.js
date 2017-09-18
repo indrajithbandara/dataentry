@@ -42004,39 +42004,114 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            // key: value pairs
+            edit: false,
+            list: [],
+            users: {
+                id: '',
+                name: '',
+                email: '',
+                permission: ''
+            },
+            user: ''
         };
     },
+    mounted: function mounted() {
+        this.getUsers();
+        this.getUser();
+    },
 
-    methods: {}
+    methods: {
+        getUser: function getUser() {
+            var _this = this;
+
+            axios.get('api/user').then(function (response) {
+                _this.user = response.data.permission;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getUsers: function getUsers() {
+            var _this2 = this;
+
+            axios.get('api/users').then(function (response) {
+                _this2.list = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        createUser: function createUser() {
+            var self = this;
+            var params = Object.assign({}, self.users);
+            axios({
+                method: 'post',
+                url: 'api/users/store',
+                data: params,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function () {
+                self.users.name = '';
+                self.users.email = '';
+                self.users.password = '';
+                self.users.permission = '';
+                self.edit = false;
+                self.getUsers();
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+        },
+        updateUser: function updateUser(id) {
+            var self = this;
+            var params = Object.assign({}, self.users);
+            axios({
+                method: 'patch',
+                url: 'api/users/' + id,
+                data: params,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function () {
+                self.users.name = '', self.users.email = '', self.users.permission = '', self.edit = false;
+                self.getUsers();
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+        },
+        showUser: function showUser(id) {
+            var self = this;
+            axios({
+                method: 'get',
+                url: 'api/users/' + id,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function (response) {
+                self.users.id = response.data.id;
+                self.users.name = response.data.name;
+                self.users.email = response.data.email;
+                self.users.permission = response.data.permission;
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+            self.edit = true;
+        },
+        deleteUser: function deleteUser(id) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                var self = this;
+                axios.delete('api/users/' + id).then(function (response) {
+                    self.getUsers();
+                }).catch(function (error) {
+                    console.log(error.message);
+                });
+            } else {
+                return;
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -42044,44 +42119,70 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
-    staticClass: "table-responsive"
+  return _c('div', [(_vm.list.length > 0) ? _c('div', {
+    staticClass: "table-responsive",
+    attrs: {
+      "id": "product-table"
+    }
   }, [_c('table', {
     staticClass: "table table-condensed"
-  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Permissions")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), _c('th', [_vm._v("Delete")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Raquel Gonzales")]), _vm._v(" "), _c('td', [_vm._v("rgonzales@ksentusa.com")]), _vm._v(" "), _c('td', [_vm._v("1")]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "btn btn-warning"
-  }, [_vm._v("Edit")])]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "btn btn-danger"
-  }, [_vm._v("Delete")])])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Helen Vargus")]), _vm._v(" "), _c('td', [_vm._v("admin@ksentusa.com")]), _vm._v(" "), _c('td', [_vm._v("2")]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "btn btn-warning"
-  }, [_vm._v("Edit")])]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "btn btn-danger"
-  }, [_vm._v("Delete")])])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Simon Gonzales")]), _vm._v(" "), _c('td', [_vm._v("sgonzales@ksentusa.com")]), _vm._v(" "), _c('td', [_vm._v("3")]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "btn btn-warning"
-  }, [_vm._v("Edit")])]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "btn btn-danger"
-  }, [_vm._v("Delete")])])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Carl Kessler")]), _vm._v(" "), _c('td', [_vm._v("ckessler@ksentusa.com")]), _vm._v(" "), _c('td', [_vm._v("4")]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "btn btn-warning"
-  }, [_vm._v("Edit")])]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "btn btn-danger"
-  }, [_vm._v("Delete")])])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("General Employee")]), _vm._v(" "), _c('td', [_vm._v("admin@ksentusa.com")]), _vm._v(" "), _c('td', [_vm._v("5")]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "btn btn-warning"
-  }, [_vm._v("Edit")])]), _vm._v(" "), _c('td', [_c('button', {
-    staticClass: "btn btn-danger"
-  }, [_vm._v("Delete")])])])])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', [_c('form', [_c('div', {
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Permissions")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(users) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(users.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(users.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(users.permission))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-warning",
+      on: {
+        "click": function($event) {
+          _vm.showUser(users.id)
+        }
+      }
+    }, [_vm._v("Edit")])]), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          _vm.deleteUser(users.id)
+        }
+      }
+    }, [_vm._v("Delete")])]) : _vm._e()])
+  }))])]) : _c('div', [_c('p', {
+    staticClass: "alert alert-info text-center"
+  }, [_vm._v("You currently have no users to show.")])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', [_c('h2', {
+    staticClass: "text-center"
+  }, [_vm._v("Add User")]), _vm._v(" "), _c('form', {
+    attrs: {
+      "action": "#"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.edit ? _vm.updateUser(_vm.users.id) : _vm.createUser()
+      }
+    }
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
       "for": "name"
     }
   }, [_vm._v("Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.users.name),
+      expression: "users.name"
+    }],
     staticClass: "form-control",
     attrs: {
       "type": "text",
       "name": "name",
       "required": ""
+    },
+    domProps: {
+      "value": (_vm.users.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.users.name = $event.target.value
+      }
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
@@ -42090,34 +42191,110 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": "email"
     }
   }, [_vm._v("Email")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.users.email),
+      expression: "users.email"
+    }],
     staticClass: "form-control",
     attrs: {
       "type": "email",
-      "name": "email"
+      "name": "email",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.users.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.users.email = $event.target.value
+      }
     }
   })]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.edit),
+      expression: "!edit"
+    }],
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
       "for": "password"
     }
   }, [_vm._v("Password")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.users.password),
+      expression: "users.password"
+    }],
     staticClass: "form-control",
     attrs: {
       "type": "password",
       "name": "password"
+    },
+    domProps: {
+      "value": (_vm.users.password)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.users.password = $event.target.value
+      }
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', [_vm._v("Permissions")]), _vm._v(" "), _c('select', {
-    staticClass: "form-control"
-  }, [_c('option', [_vm._v("Choose an option")]), _vm._v(" "), _c('option', [_vm._v("1")]), _vm._v(" "), _c('option', [_vm._v("2")]), _vm._v(" "), _c('option', [_vm._v("3")]), _vm._v(" "), _c('option', [_vm._v("4")]), _vm._v(" "), _c('option', [_vm._v("5")])])]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.users.permission),
+      expression: "users.permission"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.users.permission = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose an option")]), _vm._v(" "), _c('option', [_vm._v("1")]), _vm._v(" "), _c('option', [_vm._v("2")]), _vm._v(" "), _c('option', [_vm._v("3")]), _vm._v(" "), _c('option', [_vm._v("4")])])]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.edit),
+      expression: "!edit"
+    }],
     staticClass: "btn btn-primary pull-right",
     attrs: {
-      "type": "submit"
+      "type": "submit",
+      "name": "button"
     }
-  }, [_vm._v("Submit")])])])])
-}]}
+  }, [_vm._v("Add User")]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.edit),
+      expression: "edit"
+    }],
+    staticClass: "btn btn-primary pull-right",
+    attrs: {
+      "type": "submit",
+      "name": "button"
+    }
+  }, [_vm._v("Update User")])])])])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -42338,19 +42515,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 rev_date: ''
             },
             regWarning: '',
-            nameAlert: ''
+            nameAlert: '',
+            user: ''
         };
     },
     mounted: function mounted() {
         this.getProducts();
+        this.getUser();
     },
 
     methods: {
-        getProducts: function getProducts() {
+        getUser: function getUser() {
             var _this = this;
 
+            axios.get('api/user').then(function (response) {
+                _this.user = response.data.permission;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getProducts: function getProducts() {
+            var _this2 = this;
+
             axios.get('api/products').then(function (response) {
-                _this.list = response.data;
+                _this2.list = response.data;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -42394,7 +42582,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         updateProduct: function updateProduct(id) {
             var self = this;
-            self.nameDatabase();
             if (!self.product.description) {
                 self.product.description = 'NA';
             }
@@ -42506,7 +42693,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('table', {
     staticClass: "table table-condensed"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(product) {
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Description")]), _vm._v(" "), _c('th', [_vm._v("Material")]), _vm._v(" "), _c('th', [_vm._v("Revision")]), _vm._v(" "), _c('th', [_vm._v("Rev Date")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(product) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(product.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(product.description))]), _vm._v(" "), (product.material.length > 10) ? _c('td', {
       attrs: {
         "title": product.material
@@ -42518,14 +42705,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.showProduct(product.id)
         }
       }
-    }, [_vm._v("Edit")])]), _vm._v(" "), _c('td', [_c('button', {
+    }, [_vm._v("Edit")])]), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
       staticClass: "btn btn-danger",
       on: {
         "click": function($event) {
           _vm.deleteProduct(product.id)
         }
       }
-    }, [_vm._v("Delete")])])])
+    }, [_vm._v("Delete")])]) : _vm._e()])
   }))])]) : _c('div', [_c('p', {
     staticClass: "alert alert-info text-center"
   }, [_vm._v("You currently have no products to show.")])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', [_c('h2', {
@@ -42722,9 +42909,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "button"
     }
   }, [_vm._v("Update Product")])])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Description")]), _vm._v(" "), _c('th', [_vm._v("Material")]), _vm._v(" "), _c('th', [_vm._v("Revision")]), _vm._v(" "), _c('th', [_vm._v("Rev Date")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), _c('th', [_vm._v("Delete")])])])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

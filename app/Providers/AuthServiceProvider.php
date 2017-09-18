@@ -3,10 +3,14 @@
 namespace App\Providers;
 //======= Models =======
 use App\Invoice;
+use App\User;
+use App\Product;
 //======= end of models =======
 
 //========= Policies =========
 use App\Policies\InvoicePolicy;
+use App\Policies\UserPolicy;
+use App\Policies\ProductPolicy;
 //===== end of policies ======
 
 use Laravel\Passport\Passport;
@@ -22,8 +26,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
-        // Invoice::class => InvoicePolicy::class,
-        'App\User' => PagesPolicy::class,
+        Product::class => ProductPolicy::class,
+        User::class => UserPolicy::class
     ];
 
     /**
@@ -39,5 +43,6 @@ class AuthServiceProvider extends ServiceProvider
 
         // Api Gates
         Gate::define('delete', 'App\Policies\ProductPolicy@delete');
+        Gate::define('deleteUser', 'UserPolicy@deleteUser');
     }
 }

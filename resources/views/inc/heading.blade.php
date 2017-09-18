@@ -14,8 +14,10 @@
                                 Routers
                             @elseif(Request::is('customers'))
                                 Customers
+                            @elseif(Request::is('settings'))
+                                Settings
                             @else
-                                Dashboard <small>Overview</small>
+                                Dashboard
                             @endif
                             <small>
                             @if(Request::is('/add'))

@@ -7,6 +7,7 @@ Route::get('/', function () { return view('welcome'); });
 
 // Route for loading the dashboard page
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/settings', 'HomeController@index');
 
 // Default auth routes added when php artisan make:auth was ran. 
 Auth::routes();

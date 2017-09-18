@@ -11,7 +11,7 @@ use App\User;
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/home') }}">Order Entry</a>
+                <a class="navbar-brand" href="{{ url('/home') }}">Data Entry</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">

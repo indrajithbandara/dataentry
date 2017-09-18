@@ -14,11 +14,11 @@
                 </thead>
                 <tbody>
                     <tr v-for="users in list">
-                        <td>{{ users.name }}</td>
-                        <td>{{ users.email }}</td>
-                        <td>{{ users.permission }}</td>
-                        <td><button @click="showUser(users.id)" class="btn btn-warning">Edit</button></td>
-                        <td v-if="user == 1"><button @click="deleteUser(users.id)" class="btn btn-danger">Delete</button></td>
+                        <td v-if="users.id != 1">{{ users.name }}</td>
+                        <td v-if="users.id != 1">{{ users.email }}</td>
+                        <td v-if="users.id != 1">{{ users.permission }}</td>
+                        <td v-if="users.id != 1"><button @click="showUser(users.id)" class="btn btn-warning">Edit</button></td>
+                        <td v-if="users.id != 1"><button @click="deleteUser(users.id)" class="btn btn-danger">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -158,16 +158,20 @@
                 self.edit = true;
             },
             deleteUser(id){
-                if(confirm('Are you sure you want to delete this user?')){
-                    let self = this;
-                    axios.delete('api/users/' + id)
-                    .then((response) => {
-                        self.getUsers();
-                    }).catch((error) => {
-                        console.log(error.message);
-                    });
+                if(id == 1){
+                    alert('Sorry!! You are not allowed to delete the admin user.');
                 }else{
-                    return;
+                    if(confirm('Are you sure you want to delete this user?')){
+                        let self = this;
+                        axios.delete('api/users/' + id)
+                        .then((response) => {
+                            self.getUsers();
+                        }).catch((error) => {
+                            console.log(error.message);
+                        });
+                    }else{
+                        return;
+                    }
                 }
             }
         }

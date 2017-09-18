@@ -3,6 +3,8 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 // Vue Components
+Vue.component('dashboard', require('./components/dashboard.vue'));
+Vue.component('settings', require('./components/settings.vue'));
 Vue.component('users', require('./components/users.vue'));
 Vue.component('customers', require('./components/customers.vue'));
 Vue.component('products', require('./components/products.vue'));
@@ -13,6 +15,12 @@ Vue.component('invoices', require('./components/invoices.vue'));
 
 
 // Vue Instances
+if (document.getElementById('dashboard-app')) {
+    const dashboardApp = new Vue({ el: '#dashboard-app' });
+}
+if (document.getElementById('settings-app')) {
+    const settingsApp = new Vue({ el: '#settings-app' });
+}
 if (document.getElementById('users-app')) {
     const usersApp = new Vue({ el: '#users-app' });
 }

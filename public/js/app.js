@@ -42738,15 +42738,363 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            // key: value pairs
+            edit: false,
+            table: true,
+            list: [],
+            customer: {
+                name: '',
+                email: '',
+                phone: '',
+                buyer: '',
+                shipto: '',
+                billto: '',
+                country: '',
+                disclaimer: '',
+                comments: ''
+            },
+            regexAlphaWarning: '',
+            regexAddressWarning: '',
+            regexBlobWarning: '',
+            regexPhoneWarning: '',
+            user: ''
         };
     },
+    mounted: function mounted() {
+        this.getCustomers();
+        this.getUser();
+    },
 
-    methods: {}
+    methods: {
+        getUser: function getUser() {
+            var _this = this;
+
+            axios.get('api/user').then(function (response) {
+                _this.user = response.data.permission;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getCustomers: function getCustomers() {
+            var _this2 = this;
+
+            axios.get('api/customers').then(function (response) {
+                _this2.list = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        createCustomer: function createCustomer() {
+            var self = this;
+            self.regexAlpha(self.customer.name);
+            self.regexAddress(self.customer.shipto);
+            self.regexAddress(self.customer.billto);
+            self.regexAlpha(self.customer.buyer);
+            self.regexPhone(self.customer.phone);
+            self.regexBlob(self.customer.country);
+            self.regexBlob(self.customer.disclaimer);
+            self.regexBlob(self.customer.comments);
+            if (!self.customer.country) {
+                self.customer.country = 'NA';
+            }
+            if (!self.customer.disclaimer) {
+                self.customer.disclaimer = 'NA';
+            }
+            if (!self.customer.comments) {
+                self.customer.comments = 'NA';
+            }
+            var params = Object.assign({}, self.customer);
+            axios({
+                method: 'post',
+                url: 'api/customers/store',
+                data: params,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function () {
+                self.customer.name = '';
+                self.customer.email = '';
+                self.customer.phone = '';
+                self.customer.buyer = '';
+                self.customer.shipto = '';
+                self.customer.billto = '';
+                self.customer.country = '';
+                self.customer.disclaimer = '';
+                self.customer.comments = '';
+                self.edit = false;
+                self.getCustomers();
+                self.table = true;
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+        },
+        updateCustomer: function updateCustomer(id) {
+            var self = this;
+            self.regexAlpha(self.customer.name);
+            self.regexAddress(self.customer.shipto);
+            self.regexAddress(self.customer.billto);
+            self.regexAlpha(self.customer.buyer);
+            self.regexPhone(self.customer.phone);
+            self.regexBlob(self.customer.country);
+            self.regexBlob(self.customer.disclaimer);
+            self.regexBlob(self.customer.comments);
+            if (!self.customer.country) {
+                self.customer.country = 'NA';
+            }
+            if (!self.customer.disclaimer) {
+                self.customer.disclaimer = 'NA';
+            }
+            if (!self.customer.comments) {
+                self.customer.comments = 'NA';
+            }
+            var params = Object.assign({}, self.customer);
+            axios({
+                method: 'patch',
+                url: 'api/customers/' + id,
+                data: params,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function () {
+                self.customer.name = '';
+                self.customer.email = '';
+                self.customer.phone = '';
+                self.customer.buyer = '';
+                self.customer.shipto = '';
+                self.customer.billto = '';
+                self.customer.country = '';
+                self.customer.disclaimer = '';
+                self.customer.comments = '';
+                self.edit = false;
+                self.getCustomers();
+                self.table = true;
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+        },
+        showCustomer: function showCustomer(id) {
+            var self = this;
+            axios({
+                method: 'get',
+                url: 'api/customers/' + id,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function (response) {
+                self.table = false;
+                self.customer.id = response.data.id;
+                self.customer.name = response.data.name;
+                self.customer.email = response.data.email;
+                self.customer.phone = response.data.phone;
+                self.customer.buyer = response.data.buyer;
+                self.customer.shipto = response.data.shipto;
+                self.customer.billto = response.data.billto;
+                self.customer.country = response.data.country;
+                self.customer.disclaimer = response.data.disclaimer;
+                self.customer.comments = response.data.comments;
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+            self.edit = true;
+        },
+        deleteCustomer: function deleteCustomer(id) {
+            if (confirm('Are you sure you want to delete this customer?')) {
+                var self = this;
+                axios.delete('api/customers/' + id).then(function (response) {
+                    self.getCustomers();
+                }).catch(function (error) {
+                    console.log(error.message);
+                });
+            } else {
+                return;
+            }
+        },
+        regexAlpha: function regexAlpha(string) {
+            if (string) {
+                var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+                if (pattern.test(string) != true) {
+                    this.regexAlphaWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                    return;
+                } else {
+                    this.regexAlphaWarning = '';
+                }
+            }
+        },
+        regexAddress: function regexAddress(string) {
+            if (string) {
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+                if (pattern.test(string) != true) {
+                    this.regexAddressWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
+                    return;
+                } else {
+                    this.regexAddressWarning = '';
+                }
+            }
+        },
+        regexBlob: function regexBlob(string) {
+            if (string) {
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
+                if (pattern.test(string) != true) {
+                    this.regexBlobWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
+                    return;
+                } else {
+                    this.regexBlobWarning = '';
+                }
+            }
+        },
+        regexPhone: function regexPhone(string) {
+            if (string) {
+                var pattern = /^(?!-)(?!.*--)[0-9\(\)\-\s]+$/;
+                if (pattern.test(string) != true) {
+                    this.regexPhoneWarning = "Unapproved characters detected! Only numerica characters, parenthesis and dashes. However, '--' is not allowed.";
+                    return;
+                } else {
+                    this.regexPhoneWarning = '';
+                }
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -42754,7 +43102,428 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h1', [_vm._v("Customers")])
+  return _c('div', [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('button', {
+    staticClass: "btn btn-primary btn-lg full-width",
+    on: {
+      "click": function($event) {
+        _vm.table = true
+      }
+    }
+  }, [_vm._v("View Customers")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('button', {
+    staticClass: "btn btn-success btn-lg full-width",
+    on: {
+      "click": function($event) {
+        _vm.table = false
+      }
+    }
+  }, [_vm._v("Add A Customer")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.table),
+      expression: "table"
+    }]
+  }, [(_vm.list.length > 0) ? _c('div', {
+    staticClass: "table-responsive",
+    attrs: {
+      "id": "product-table"
+    }
+  }, [_c('table', {
+    staticClass: "table table-condensed"
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Phone")]), _vm._v(" "), _c('th', [_vm._v("Buyer")]), _vm._v(" "), _c('th', [_vm._v("ShipTo")]), _vm._v(" "), _c('th', [_vm._v("BillTo")]), _vm._v(" "), _c('th', [_vm._v("Country")]), _vm._v(" "), _c('th', [_vm._v("Disclaimer")]), _vm._v(" "), _c('th', [_vm._v("Comments")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(customer) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(customer.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.phone))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.buyer))]), _vm._v(" "), (customer.shipto.length > 10) ? _c('td', {
+      attrs: {
+        "title": customer.shipto
+      }
+    }, [_vm._v(_vm._s(customer.shipto.substring(0, 10) + '...'))]) : _c('td', [_vm._v(_vm._s(customer.shipto))]), _vm._v(" "), (customer.billto.length > 10) ? _c('td', {
+      attrs: {
+        "title": customer.billto
+      }
+    }, [_vm._v(_vm._s(customer.billto.substring(0, 10) + '...'))]) : _c('td', [_vm._v(_vm._s(customer.billto))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.country))]), _vm._v(" "), (customer.disclaimer.length > 10) ? _c('td', {
+      attrs: {
+        "title": customer.disclaimer
+      }
+    }, [_vm._v(_vm._s(customer.disclaimer.substring(0, 10) + '...'))]) : _c('td', [_vm._v(_vm._s(customer.disclaimer))]), _vm._v(" "), (customer.comments.length > 10) ? _c('td', {
+      attrs: {
+        "title": customer.comments
+      }
+    }, [_vm._v(_vm._s(customer.comments.substring(0, 10) + '...'))]) : _c('td', [_vm._v(_vm._s(customer.comments))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-warning",
+      on: {
+        "click": function($event) {
+          _vm.showCustomer(customer.id)
+        }
+      }
+    }, [_vm._v("Edit")])]), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          _vm.deleteCustomer(customer.id)
+        }
+      }
+    }, [_vm._v("Delete")])]) : _vm._e()])
+  }))])]) : _c('div', [_c('p', {
+    staticClass: "alert alert-info text-center"
+  }, [_vm._v("You currently have no customers to show.")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.table),
+      expression: "!table"
+    }]
+  }, [_c('h2', {
+    staticClass: "text-center"
+  }, [_vm._v("Add Customer")]), _vm._v(" "), _c('form', {
+    attrs: {
+      "action": "#"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.edit ? _vm.updateCustomer(_vm.customer.id) : _vm.createCustomer()
+      }
+    }
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.customer.name),
+      expression: "customer.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "name",
+      "required": "",
+      "maxlength": "50"
+    },
+    domProps: {
+      "value": (_vm.customer.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.customer.name = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.customer.name.length == 50) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("50 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexAlphaWarning) ? _c('p', {
+    staticClass: "alert alert-danger"
+  }, [_vm._v(_vm._s(_vm.regexAlphaWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("Email")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.customer.email),
+      expression: "customer.email"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "email",
+      "name": "email",
+      "required": "",
+      "maxlength": "50"
+    },
+    domProps: {
+      "value": (_vm.customer.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.customer.email = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.customer.email.length == 50) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("50 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "phone"
+    }
+  }, [_vm._v("Phone")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.customer.phone),
+      expression: "customer.phone"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "phone",
+      "required": "",
+      "maxlength": "25"
+    },
+    domProps: {
+      "value": (_vm.customer.phone)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.customer.phone = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.customer.phone.length == 25) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("25 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexPhoneWarning) ? _c('p', {
+    staticClass: "alert alert-danger"
+  }, [_vm._v(_vm._s(_vm.regexPhoneWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "buyer"
+    }
+  }, [_vm._v("Buyer")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.customer.buyer),
+      expression: "customer.buyer"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "buyer",
+      "required": "",
+      "maxlength": "50"
+    },
+    domProps: {
+      "value": (_vm.customer.buyer)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.customer.buyer = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.customer.buyer.length == 50) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("50 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexAlphaWarning) ? _c('p', {
+    staticClass: "alert alert-danger"
+  }, [_vm._v(_vm._s(_vm.regexAlphaWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "country"
+    }
+  }, [_vm._v("Country")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.customer.country),
+      expression: "customer.country"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "country",
+      "maxlength": "15"
+    },
+    domProps: {
+      "value": (_vm.customer.country)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.customer.country = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.customer.country.length == 15) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("15 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBlobWarning) ? _c('p', {
+    staticClass: "alert alert-danger"
+  }, [_vm._v(_vm._s(_vm.regexBlobWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "shipto"
+    }
+  }, [_vm._v("Ship To Address")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.customer.shipto),
+      expression: "customer.shipto"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "shipto",
+      "rows": "3",
+      "required": "",
+      "maxlength": "255"
+    },
+    domProps: {
+      "value": (_vm.customer.shipto)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.customer.shipto = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.customer.shipto.length == 255) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexAddressWarning) ? _c('p', {
+    staticClass: "alert alert-danger"
+  }, [_vm._v(_vm._s(_vm.regexAddressWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "billto"
+    }
+  }, [_vm._v("Bill To Address")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.customer.billto),
+      expression: "customer.billto"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "billto",
+      "rows": "3",
+      "required": "",
+      "maxlength": "255"
+    },
+    domProps: {
+      "value": (_vm.customer.billto)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.customer.billto = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.customer.billto.length == 255) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexAddressWarning) ? _c('p', {
+    staticClass: "alert alert-danger"
+  }, [_vm._v(_vm._s(_vm.regexAddressWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "disclaimer"
+    }
+  }, [_vm._v("Disclaimer")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.customer.disclaimer),
+      expression: "customer.disclaimer"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "disclaimer",
+      "rows": "3",
+      "maxlength": "255"
+    },
+    domProps: {
+      "value": (_vm.customer.disclaimer)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.customer.disclaimer = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.customer.disclaimer.length == 255) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBlobWarning) ? _c('p', {
+    staticClass: "alert alert-danger"
+  }, [_vm._v(_vm._s(_vm.regexBlobWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "comments"
+    }
+  }, [_vm._v("Comments")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.customer.comments),
+      expression: "customer.comments"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "comments",
+      "rows": "3",
+      "maxlength": "255"
+    },
+    domProps: {
+      "value": (_vm.customer.comments)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.customer.comments = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.customer.comments.length == 255) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBlobWarning) ? _c('p', {
+    staticClass: "alert alert-danger"
+  }, [_vm._v(_vm._s(_vm.regexBlobWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.edit),
+      expression: "!edit"
+    }],
+    staticClass: "btn btn-primary full-width",
+    attrs: {
+      "type": "submit",
+      "name": "button"
+    }
+  }, [_vm._v("Add Customer")]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.edit),
+      expression: "edit"
+    }],
+    staticClass: "btn btn-primary full-width",
+    attrs: {
+      "type": "submit",
+      "name": "button"
+    }
+  }, [_vm._v("Update Customer")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br')])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

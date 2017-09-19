@@ -66,3 +66,4 @@ input[type='submit'] {margin-top: 20px;margin-bottom: 20px;}
 th {background: #ccc;}
 div.table-checkbox-align {margin-top: 0px;margin-bottom: 0px;margin-left: 13px;}
 .dropdown-menu>li>a {padding: 3px 10px;}
+button.full-width { width: 100%; }

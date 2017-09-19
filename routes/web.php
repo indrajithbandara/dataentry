@@ -10,12 +10,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route for loading the settings page
 Route::get('/settings', 'HomeController@index')->name('settings');
 
-
-
 // Authentications shortcut for default routes.
 Auth::routes();
-
-
 
 /** 
 *   Single Page App Routes

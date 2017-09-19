@@ -21,6 +21,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::patch('users/{id}', 'UsersController@updateUser'); // Update A Single User
     Route::delete('users/{id}', 'UsersController@deleteUser'); // Delete A Single User
     // ==================== End of Users Api ======================== //    
+
+    //====================== Customers Api ====================== //
+    Route::get('customers', 'CustomersController@getCustomers'); // Get all Customers
+    Route::get('customers/{id}', 'CustomersController@getCustomer'); // Get One Customer for Editing
+    Route::post('customers/store', 'CustomersController@addCustomer'); // Add A Single Custer
+    Route::patch('customers/{id}', 'CustomersController@updateCustomer'); // Update a Single Customer
+    Route::delete('customers/{id}', 'CustomersController@deleteCustomer'); // Delete a Single Customer
+    //====================== End of Customers Api ================ //
 });
 
 

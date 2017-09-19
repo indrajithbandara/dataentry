@@ -11,8 +11,6 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/sb-admin.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/queries.css') }}">
     
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

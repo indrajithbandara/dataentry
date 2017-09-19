@@ -2,6 +2,7 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
@@ -14,10 +15,16 @@ trait RegistersUsers
      * Show the application registration form.
      *
      * @return \Illuminate\Http\Response
+     *
+     * SuperAdminExists() method is present on the App\User model
      */
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        if(User::SuperAdminExists() > 0){
+            return redirect('login');
+        }else{
+            return view('auth.register');
+        }
     }
 
     /**

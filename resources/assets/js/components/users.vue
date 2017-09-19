@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- User Table -->
-        <div id="product-table" v-if="list.length > 0" class="table-responsive">
+        <div id="product-table" v-if="list.length > 1" class="table-responsive">
             <table class="table table-condensed">
                 <thead>
                     <tr>
@@ -80,6 +80,7 @@
         mounted() {
             this.getUsers();
             this.getUser();
+            console.log(this.list);
         },
         methods: {
             getUser(){

@@ -53,4 +53,6 @@ class PagesController extends Controller
             return abort('401');
         }
     }
+
+
 }

@@ -187,18 +187,8 @@
                 });
             },
             createCustomer(){
+                this.valueCheck();
                 let self = this;
-                self.regexAlpha(self.customer.name);
-                self.regexAddress(self.customer.shipto);
-                self.regexAddress(self.customer.billto);
-                self.regexAlpha(self.customer.buyer);
-                self.regexPhone(self.customer.phone);
-                self.regexBlob(self.customer.country);
-                self.regexBlob(self.customer.disclaimer);
-                self.regexBlob(self.customer.comments);
-                if(!self.customer.country){self.customer.country = 'NA';}
-                if(!self.customer.disclaimer){self.customer.disclaimer = 'NA';}
-                if(!self.customer.comments){self.customer.comments = 'NA';}
                 let params = Object.assign({}, self.customer);
                 axios({
                     method: 'post',
@@ -208,35 +198,14 @@
                         return status >= 200 && status < 300;
                     }
                 }).then(() => {
-                    self.customer.name = '';
-                    self.customer.email = '';
-                    self.customer.phone = '';
-                    self.customer.buyer = '';
-                    self.customer.shipto = '';
-                    self.customer.billto = '';
-                    self.customer.country = '';
-                    self.customer.disclaimer = '';
-                    self.customer.comments = '';
-                    self.edit = false;
-                    self.getCustomers();
-                    self.table = true;
+                    this.resetValues();
                 }).catch((error) => {
                     console.log(error.message);
                 });
             },
             updateCustomer(id){
+                this.valueCheck();
                 let self = this;
-                self.regexAlpha(self.customer.name);
-                self.regexAddress(self.customer.shipto);
-                self.regexAddress(self.customer.billto);
-                self.regexAlpha(self.customer.buyer);
-                self.regexPhone(self.customer.phone);
-                self.regexBlob(self.customer.country);
-                self.regexBlob(self.customer.disclaimer);
-                self.regexBlob(self.customer.comments);
-                if(!self.customer.country){self.customer.country = 'NA';}
-                if(!self.customer.disclaimer){self.customer.disclaimer = 'NA';}
-                if(!self.customer.comments){self.customer.comments = 'NA';}
                 let params = Object.assign({}, self.customer);
                 axios({
                     method: 'patch',
@@ -246,18 +215,7 @@
                         return status >= 200 && status < 300;
                     }
                 }).then(() => {
-                    self.customer.name = '';
-                    self.customer.email = '';
-                    self.customer.phone = '';
-                    self.customer.buyer = '';
-                    self.customer.shipto = '';
-                    self.customer.billto = '';
-                    self.customer.country = '';
-                    self.customer.disclaimer = '';
-                    self.customer.comments = '';
-                    self.edit = false;
-                    self.getCustomers();
-                    self.table = true;
+                    this.resetValues();
                 }).catch((error) => {
                     console.log(error.message);
                 });
@@ -343,6 +301,33 @@
                         this.regexPhoneWarning = '';
                     } 
                 }
+            },
+            valueCheck(){
+                this.regexAlpha(this.customer.name);
+                this.regexAddress(this.customer.shipto);
+                this.regexAddress(this.customer.billto);
+                this.regexAlpha(this.customer.buyer);
+                this.regexPhone(this.customer.phone);
+                this.regexBlob(this.customer.country);
+                this.regexBlob(this.customer.disclaimer);
+                this.regexBlob(this.customer.comments);
+                if(!this.customer.country){this.customer.country = 'NA';}
+                if(!this.customer.disclaimer){this.customer.disclaimer = 'NA';}
+                if(!this.customer.comments){this.customer.comments = 'NA';}
+            },
+            resetValues(){
+                self.customer.name = '';
+                self.customer.email = '';
+                self.customer.phone = '';
+                self.customer.buyer = '';
+                self.customer.shipto = '';
+                self.customer.billto = '';
+                self.customer.country = '';
+                self.customer.disclaimer = '';
+                self.customer.comments = '';
+                self.edit = false;
+                self.getCustomers();
+                self.table = true;
             }
         }
     }

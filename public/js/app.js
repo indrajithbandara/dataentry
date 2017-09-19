@@ -42926,24 +42926,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         createCustomer: function createCustomer() {
+            var _this3 = this;
+
+            this.valueCheck();
             var self = this;
-            self.regexAlpha(self.customer.name);
-            self.regexAddress(self.customer.shipto);
-            self.regexAddress(self.customer.billto);
-            self.regexAlpha(self.customer.buyer);
-            self.regexPhone(self.customer.phone);
-            self.regexBlob(self.customer.country);
-            self.regexBlob(self.customer.disclaimer);
-            self.regexBlob(self.customer.comments);
-            if (!self.customer.country) {
-                self.customer.country = 'NA';
-            }
-            if (!self.customer.disclaimer) {
-                self.customer.disclaimer = 'NA';
-            }
-            if (!self.customer.comments) {
-                self.customer.comments = 'NA';
-            }
             var params = Object.assign({}, self.customer);
             axios({
                 method: 'post',
@@ -42953,41 +42939,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return status >= 200 && status < 300;
                 }
             }).then(function () {
-                self.customer.name = '';
-                self.customer.email = '';
-                self.customer.phone = '';
-                self.customer.buyer = '';
-                self.customer.shipto = '';
-                self.customer.billto = '';
-                self.customer.country = '';
-                self.customer.disclaimer = '';
-                self.customer.comments = '';
-                self.edit = false;
-                self.getCustomers();
-                self.table = true;
+                _this3.resetValues();
             }).catch(function (error) {
                 console.log(error.message);
             });
         },
         updateCustomer: function updateCustomer(id) {
+            var _this4 = this;
+
+            this.valueCheck();
             var self = this;
-            self.regexAlpha(self.customer.name);
-            self.regexAddress(self.customer.shipto);
-            self.regexAddress(self.customer.billto);
-            self.regexAlpha(self.customer.buyer);
-            self.regexPhone(self.customer.phone);
-            self.regexBlob(self.customer.country);
-            self.regexBlob(self.customer.disclaimer);
-            self.regexBlob(self.customer.comments);
-            if (!self.customer.country) {
-                self.customer.country = 'NA';
-            }
-            if (!self.customer.disclaimer) {
-                self.customer.disclaimer = 'NA';
-            }
-            if (!self.customer.comments) {
-                self.customer.comments = 'NA';
-            }
             var params = Object.assign({}, self.customer);
             axios({
                 method: 'patch',
@@ -42997,18 +42958,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return status >= 200 && status < 300;
                 }
             }).then(function () {
-                self.customer.name = '';
-                self.customer.email = '';
-                self.customer.phone = '';
-                self.customer.buyer = '';
-                self.customer.shipto = '';
-                self.customer.billto = '';
-                self.customer.country = '';
-                self.customer.disclaimer = '';
-                self.customer.comments = '';
-                self.edit = false;
-                self.getCustomers();
-                self.table = true;
+                _this4.resetValues();
             }).catch(function (error) {
                 console.log(error.message);
             });
@@ -43040,9 +42990,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         deleteCustomer: function deleteCustomer(id) {
             if (confirm('Are you sure you want to delete this customer?')) {
-                var self = this;
+                var _self = this;
                 axios.delete('api/customers/' + id).then(function (response) {
-                    self.getCustomers();
+                    _self.getCustomers();
                 }).catch(function (error) {
                     console.log(error.message);
                 });
@@ -43093,6 +43043,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.regexPhoneWarning = '';
                 }
             }
+        },
+        valueCheck: function valueCheck() {
+            this.regexAlpha(this.customer.name);
+            this.regexAddress(this.customer.shipto);
+            this.regexAddress(this.customer.billto);
+            this.regexAlpha(this.customer.buyer);
+            this.regexPhone(this.customer.phone);
+            this.regexBlob(this.customer.country);
+            this.regexBlob(this.customer.disclaimer);
+            this.regexBlob(this.customer.comments);
+            if (!this.customer.country) {
+                this.customer.country = 'NA';
+            }
+            if (!this.customer.disclaimer) {
+                this.customer.disclaimer = 'NA';
+            }
+            if (!this.customer.comments) {
+                this.customer.comments = 'NA';
+            }
+        },
+        resetValues: function resetValues() {
+            self.customer.name = '';
+            self.customer.email = '';
+            self.customer.phone = '';
+            self.customer.buyer = '';
+            self.customer.shipto = '';
+            self.customer.billto = '';
+            self.customer.country = '';
+            self.customer.disclaimer = '';
+            self.customer.comments = '';
+            self.edit = false;
+            self.getCustomers();
+            self.table = true;
         }
     }
 });

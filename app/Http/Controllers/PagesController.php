@@ -18,6 +18,11 @@ class PagesController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Load the invoices page for Super Admin and Regular Admin
+     *
+     * @return view
+     */
     public function invoices()
     {
         if( User::isSuperAdmin() || User::isAdmin() ) {
@@ -27,6 +32,11 @@ class PagesController extends Controller
         }
     }
 
+    /**
+     * Load the users page only for the Super Admin
+     *
+     * @return view
+     */
     public function users()
     {
         if( User::isSuperAdmin() ) { 
@@ -36,6 +46,11 @@ class PagesController extends Controller
         }
     }
 
+    /**
+     * Load the customers page only for the Super admin and the regular admin. 
+     *
+     * @return view
+     */
     public function customers() 
     {
         if( User::isSuperAdmin() || User::isAdmin() ) {

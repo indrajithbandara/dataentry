@@ -42880,10 +42880,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            edit: false,
-            table: true,
-            list: [],
-            customer: {
+            edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
+            table: true, // If true, the customers table is showing. If false, the customers form is showing.
+            list: [], // Array for listting out the results of the ajax calls
+            customer: { // Customer model and it's values
                 name: '',
                 email: '',
                 phone: '',
@@ -42894,14 +42894,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 disclaimer: '',
                 comments: ''
             },
-            regexAlphaWarning: '',
-            regexAddressWarning: '',
-            regexBlobWarning: '',
+            // List of warning properties that have value added by there corrisponding regex[name]Check methods below.
+            regexNameWarning: '',
+            regexBuyerWarning: '',
             regexPhoneWarning: '',
+            regexCountryWarning: '',
+            regexShiptoWarning: '',
+            regexBilltoWarning: '',
+            regexDiscWarning: '',
+            regexComWarning: '',
+            // Property for know who the user is and knowing what to hide form other users. 
             user: ''
         };
     },
     mounted: function mounted() {
+        // when vue instance is mounted, get the customers and the authenticated user.
         this.getCustomers();
         this.getUser();
     },
@@ -42910,6 +42917,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getUser: function getUser() {
             var _this = this;
 
+            // ajax call to get the authenticated user
             axios.get('api/user').then(function (response) {
                 _this.user = response.data.permission;
             }).catch(function (error) {
@@ -42919,6 +42927,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getCustomers: function getCustomers() {
             var _this2 = this;
 
+            // ajax call to get all the customers
             axios.get('api/customers').then(function (response) {
                 _this2.list = response.data;
             }).catch(function (error) {
@@ -42926,8 +42935,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         createCustomer: function createCustomer() {
-            var _this3 = this;
-
+            // post request to add a customer
             this.valueCheck();
             var self = this;
             var params = Object.assign({}, self.customer);
@@ -42939,14 +42947,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return status >= 200 && status < 300;
                 }
             }).then(function () {
-                _this3.resetValues();
+                self.resetValues();
             }).catch(function (error) {
                 console.log(error.message);
             });
         },
         updateCustomer: function updateCustomer(id) {
-            var _this4 = this;
-
+            // patch request to update a customer
             this.valueCheck();
             var self = this;
             var params = Object.assign({}, self.customer);
@@ -42958,12 +42965,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return status >= 200 && status < 300;
                 }
             }).then(function () {
-                _this4.resetValues();
+                self.resetValues();
             }).catch(function (error) {
                 console.log(error.message);
             });
         },
         showCustomer: function showCustomer(id) {
+            // grad a specific customer to be edited.
             var self = this;
             axios({
                 method: 'get',
@@ -42989,10 +42997,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.edit = true;
         },
         deleteCustomer: function deleteCustomer(id) {
+            // deletes a specific customer, only the Super Admin can make this request as the button is only visable for that user.
             if (confirm('Are you sure you want to delete this customer?')) {
-                var _self = this;
+                var self = this;
                 axios.delete('api/customers/' + id).then(function (response) {
-                    _self.getCustomers();
+                    self.getCustomers();
                 }).catch(function (error) {
                     console.log(error.message);
                 });
@@ -43000,59 +43009,124 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return;
             }
         },
-        regexAlpha: function regexAlpha(string) {
-            if (string) {
-                var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
-                if (pattern.test(string) != true) {
-                    this.regexAlphaWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
-                    return;
-                } else {
-                    this.regexAlphaWarning = '';
-                }
+
+        /*
+        * Regex methods for each of the feilds. Tried to tie all of this up into one function but
+        * it was buggy and didn't work everytime. It worked a lot better when each field had
+        * it's own regex check. 
+        *
+        * Each regex method has a empty string check because it would throw the error even if the
+        * field was empty, so I added a check for emptiness and it would set the waring to an empty
+        * string as well. 
+        *
+        * In the conditional statment for the pattern test as well, it needed an else statment to get ride
+        * of the error for when the user got ride of the unapproved character but the field wasn't empty. 
+        */
+        regexNameCheck: function regexNameCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+            if (string == '') {
+                this.regexNameWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexNameWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                return;
+            } else {
+                this.regexNameWarning = '';
             }
         },
-        regexAddress: function regexAddress(string) {
-            if (string) {
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
-                if (pattern.test(string) != true) {
-                    this.regexAddressWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
-                    return;
-                } else {
-                    this.regexAddressWarning = '';
-                }
+        regexBuyerCheck: function regexBuyerCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+            if (string == '') {
+                this.regexBuyerWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexBuyerWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                return;
+            } else {
+                this.regexBuyerWarning = '';
             }
         },
-        regexBlob: function regexBlob(string) {
-            if (string) {
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
-                if (pattern.test(string) != true) {
-                    this.regexBlobWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
-                    return;
-                } else {
-                    this.regexBlobWarning = '';
-                }
+        regexCountryCheck: function regexCountryCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+            if (string == '') {
+                this.regexCountryWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexCountryWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                return;
+            } else {
+                this.regexCountryWarning = '';
             }
         },
-        regexPhone: function regexPhone(string) {
-            if (string) {
-                var pattern = /^(?!-)(?!.*--)[0-9\(\)\-\s]+$/;
-                if (pattern.test(string) != true) {
-                    this.regexPhoneWarning = "Unapproved characters detected! Only numerica characters, parenthesis and dashes. However, '--' is not allowed.";
-                    return;
-                } else {
-                    this.regexPhoneWarning = '';
-                }
+        regexShiptoCheck: function regexShiptoCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+            if (string == '') {
+                this.regexShiptoWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexShiptoWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
+                return;
+            } else {
+                this.regexShiptoWarning = '';
+            }
+        },
+        regexBilltoCheck: function regexBilltoCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+            if (string == '') {
+                this.regexBilltoWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexBilltoWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
+                return;
+            } else {
+                this.regexBilltoWarning = '';
+            }
+        },
+        regexDiscCheck: function regexDiscCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
+            if (string == '') {
+                this.regexDiscWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexDiscWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
+                return;
+            } else {
+                this.regexDiscWarning = '';
+            }
+        },
+        regexComCheck: function regexComCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
+            if (string == '') {
+                this.regexComWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexComWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
+                return;
+            } else {
+                this.regexComWarning = '';
+            }
+        },
+        regexPhoneCheck: function regexPhoneCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[0-9\(\)\-\s]+$/;
+            if (string == '') {
+                this.regexPhoneWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexPhoneWarning = "Unapproved characters detected! Only numerica characters, parenthesis and dashes. However, '--' is not allowed.";
+                return;
+            } else {
+                this.regexPhoneWarning = '';
             }
         },
         valueCheck: function valueCheck() {
-            this.regexAlpha(this.customer.name);
-            this.regexAddress(this.customer.shipto);
-            this.regexAddress(this.customer.billto);
-            this.regexAlpha(this.customer.buyer);
-            this.regexPhone(this.customer.phone);
-            this.regexBlob(this.customer.country);
-            this.regexBlob(this.customer.disclaimer);
-            this.regexBlob(this.customer.comments);
             if (!this.customer.country) {
                 this.customer.country = 'NA';
             }
@@ -43064,18 +43138,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         resetValues: function resetValues() {
-            self.customer.name = '';
-            self.customer.email = '';
-            self.customer.phone = '';
-            self.customer.buyer = '';
-            self.customer.shipto = '';
-            self.customer.billto = '';
-            self.customer.country = '';
-            self.customer.disclaimer = '';
-            self.customer.comments = '';
-            self.edit = false;
-            self.getCustomers();
-            self.table = true;
+            this.customer.name = '';
+            this.customer.email = '';
+            this.customer.phone = '';
+            this.customer.buyer = '';
+            this.customer.shipto = '';
+            this.customer.billto = '';
+            this.customer.country = '';
+            this.customer.disclaimer = '';
+            this.customer.comments = '';
+            this.edit = false;
+            this.getCustomers();
+            this.table = true;
         }
     }
 });
@@ -43200,6 +43274,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.customer.name)
     },
     on: {
+      "keyup": function($event) {
+        _vm.regexNameCheck(_vm.customer.name)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.customer.name = $event.target.value
@@ -43207,9 +43284,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.customer.name.length == 50) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("50 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexAlphaWarning) ? _c('p', {
+  }, [_vm._v("50 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexNameWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexAlphaWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexNameWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-12 col-md-6"
   }, [_c('div', {
     staticClass: "form-group"
@@ -43270,6 +43347,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.customer.phone)
     },
     on: {
+      "keyup": function($event) {
+        _vm.regexPhoneCheck(_vm.customer.phone)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.customer.phone = $event.target.value
@@ -43305,6 +43385,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.customer.buyer)
     },
     on: {
+      "keyup": function($event) {
+        _vm.regexBuyerCheck(_vm.customer.buyer)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.customer.buyer = $event.target.value
@@ -43312,9 +43395,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.customer.buyer.length == 50) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("50 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexAlphaWarning) ? _c('p', {
+  }, [_vm._v("50 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBuyerWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexAlphaWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexBuyerWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43337,6 +43420,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.customer.country)
     },
     on: {
+      "keyup": function($event) {
+        _vm.regexCountryCheck(_vm.customer.country)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.customer.country = $event.target.value
@@ -43344,9 +43430,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.customer.country.length == 15) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("15 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBlobWarning) ? _c('p', {
+  }, [_vm._v("15 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexCountryWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexBlobWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexCountryWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43371,6 +43457,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.customer.shipto)
     },
     on: {
+      "keyup": function($event) {
+        _vm.regexShiptoCheck(_vm.customer.shipto)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.customer.shipto = $event.target.value
@@ -43378,9 +43467,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.customer.shipto.length == 255) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexAddressWarning) ? _c('p', {
+  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexShiptoWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexAddressWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexShiptoWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43405,6 +43494,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.customer.billto)
     },
     on: {
+      "keyup": function($event) {
+        _vm.regexBilltoCheck(_vm.customer.billto)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.customer.billto = $event.target.value
@@ -43412,9 +43504,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.customer.billto.length == 255) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexAddressWarning) ? _c('p', {
+  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBilltoWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexAddressWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexBilltoWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43438,6 +43530,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.customer.disclaimer)
     },
     on: {
+      "keyup": function($event) {
+        _vm.regexDiscCheck(_vm.customer.disclaimer)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.customer.disclaimer = $event.target.value
@@ -43445,9 +43540,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.customer.disclaimer.length == 255) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBlobWarning) ? _c('p', {
+  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexDiscWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexBlobWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexDiscWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43471,6 +43566,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.customer.comments)
     },
     on: {
+      "keyup": function($event) {
+        _vm.regexComCheck(_vm.customer.comments)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.customer.comments = $event.target.value
@@ -43478,9 +43576,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.customer.comments.length == 255) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBlobWarning) ? _c('p', {
+  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexComWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexBlobWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexComWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     directives: [{

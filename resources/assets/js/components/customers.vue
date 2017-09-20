@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="row">
+        <div class="row"> 
             <div class="col-sm-12 col-md-6"><button @click="table = true" class="btn btn-primary btn-lg full-width">View Customers</button></div>
             <div class="col-sm-12 col-md-6"><button @click="table = false" class="btn btn-success btn-lg full-width">Add A Customer</button></div>
         </div>
@@ -60,9 +60,9 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input v-model="customer.name" type="text" name="name" class="form-control" required maxlength="50">
+                            <input v-model="customer.name" @keyup="regexNameCheck(customer.name)" type="text" name="name" class="form-control" required maxlength="50">
                             <p class="alert alert-warning" v-if="customer.name.length == 50">50 character limit reached!</p>
-                            <p class="alert alert-danger" v-if="regexAlphaWarning">{{ regexAlphaWarning }}</p>
+                            <p class="alert alert-danger" v-if="regexNameWarning">{{ regexNameWarning }}</p>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
@@ -78,7 +78,7 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input v-model="customer.phone" type="text" name="phone" class="form-control" required maxlength="25">
+                            <input v-model="customer.phone" @keyup="regexPhoneCheck(customer.phone)" type="text" name="phone" class="form-control" required maxlength="25">
                             <p class="alert alert-warning" v-if="customer.phone.length == 25">25 character limit reached!</p>
                             <p class="alert alert-danger" v-if="regexPhoneWarning">{{ regexPhoneWarning }}</p>
                         </div>
@@ -86,46 +86,46 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="buyer">Buyer</label>
-                            <input v-model="customer.buyer" type="text" name="buyer" class="form-control" required maxlength="50">
+                            <input v-model="customer.buyer" @keyup="regexBuyerCheck(customer.buyer)" type="text" name="buyer" class="form-control" required maxlength="50">
                             <p class="alert alert-warning" v-if="customer.buyer.length == 50">50 character limit reached!</p>
-                            <p class="alert alert-danger" v-if="regexAlphaWarning">{{ regexAlphaWarning }}</p>
+                            <p class="alert alert-danger" v-if="regexBuyerWarning">{{ regexBuyerWarning }}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="country">Country</label>
-                    <input v-model="customer.country" type="text" name="country" class="form-control" maxlength="15">
+                    <input v-model="customer.country" @keyup="regexCountryCheck(customer.country)" type="text" name="country" class="form-control" maxlength="15">
                     <p class="alert alert-warning" v-if="customer.country.length == 15">15 character limit reached!</p>
-                    <p class="alert alert-danger" v-if="regexBlobWarning">{{ regexBlobWarning }}</p>
+                    <p class="alert alert-danger" v-if="regexCountryWarning">{{ regexCountryWarning }}</p>
                 </div>
 
                 <div class="form-group">
                     <label for="shipto">Ship To Address</label>
-                    <textarea v-model="customer.shipto" type="text" name="shipto" class="form-control" rows="3" required maxlength="255"></textarea>
+                    <textarea v-model="customer.shipto" @keyup="regexShiptoCheck(customer.shipto)" type="text" name="shipto" class="form-control" rows="3" required maxlength="255"></textarea>
                     <p class="alert alert-warning" v-if="customer.shipto.length == 255">255 character limit reached!</p>
-                    <p class="alert alert-danger" v-if="regexAddressWarning">{{ regexAddressWarning }}</p>
+                    <p class="alert alert-danger" v-if="regexShiptoWarning">{{ regexShiptoWarning }}</p>
                 </div>
 
                 <div class="form-group">
                     <label for="billto">Bill To Address</label>
-                    <textarea v-model="customer.billto" type="text" name="billto" class="form-control" rows="3" required maxlength="255"></textarea>
+                    <textarea v-model="customer.billto" @keyup="regexBilltoCheck(customer.billto)" type="text" name="billto" class="form-control" rows="3" required maxlength="255"></textarea>
                     <p class="alert alert-warning" v-if="customer.billto.length == 255">255 character limit reached!</p>
-                    <p class="alert alert-danger" v-if="regexAddressWarning">{{ regexAddressWarning }}</p>
+                    <p class="alert alert-danger" v-if="regexBilltoWarning">{{ regexBilltoWarning }}</p>
                 </div>
 
                 <div class="form-group">
                     <label for="disclaimer">Disclaimer</label>
-                    <textarea v-model="customer.disclaimer" type="text" name="disclaimer" class="form-control" rows="3" maxlength="255"></textarea>
+                    <textarea v-model="customer.disclaimer" @keyup="regexDiscCheck(customer.disclaimer)" type="text" name="disclaimer" class="form-control" rows="3" maxlength="255"></textarea>
                     <p class="alert alert-warning" v-if="customer.disclaimer.length == 255">255 character limit reached!</p>
-                    <p class="alert alert-danger" v-if="regexBlobWarning">{{ regexBlobWarning }}</p>
+                    <p class="alert alert-danger" v-if="regexDiscWarning">{{ regexDiscWarning }}</p>
                 </div>
 
                 <div class="form-group">
                     <label for="comments">Comments</label>
-                    <textarea v-model="customer.comments" type="text" name="comments" class="form-control" rows="3" maxlength="255"></textarea>
+                    <textarea v-model="customer.comments" @keyup="regexComCheck(customer.comments)" type="text" name="comments" class="form-control" rows="3" maxlength="255"></textarea>
                     <p class="alert alert-warning" v-if="customer.comments.length == 255">255 character limit reached!</p>
-                    <p class="alert alert-danger" v-if="regexBlobWarning">{{ regexBlobWarning }}</p>
+                    <p class="alert alert-danger" v-if="regexComWarning">{{ regexComWarning }}</p>
                 </div>
 
                 <div class="form-group">
@@ -144,10 +144,10 @@
     export default {
         data() {
             return {
-                edit: false,
-                table: true,
-                list: [],
-                customer: {
+                edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
+                table: true, // If true, the customers table is showing. If false, the customers form is showing.
+                list: [], // Array for listting out the results of the ajax calls
+                customer: { // Customer model and it's values
                     name: '',
                     email: '',
                     phone: '',
@@ -158,19 +158,26 @@
                     disclaimer: '',
                     comments: ''
                 },
-                regexAlphaWarning: '',
-                regexAddressWarning: '',
-                regexBlobWarning: '',
+                // List of warning properties that have value added by there corrisponding regex[name]Check methods below.
+                regexNameWarning: '', 
+                regexBuyerWarning: '',
                 regexPhoneWarning: '',
+                regexCountryWarning: '',
+                regexShiptoWarning: '',
+                regexBilltoWarning: '',
+                regexDiscWarning: '',
+                regexComWarning: '',
+                // Property for know who the user is and knowing what to hide form other users. 
                 user: ''
             }
         },
-        mounted() {
+        mounted() { 
+            // when vue instance is mounted, get the customers and the authenticated user.
             this.getCustomers();
             this.getUser();
         },
         methods: {
-            getUser(){
+            getUser(){ // ajax call to get the authenticated user
                 axios.get('api/user')
                 .then((response) => {
                     this.user = response.data.permission;
@@ -178,7 +185,7 @@
                     console.log(error);
                 });
             },
-            getCustomers(){
+            getCustomers(){ // ajax call to get all the customers
                 axios.get('api/customers')
                 .then((response) => {
                     this.list = response.data;
@@ -186,7 +193,7 @@
                     console.log(error);
                 });
             },
-            createCustomer(){
+            createCustomer(){ // post request to add a customer
                 this.valueCheck();
                 let self = this;
                 let params = Object.assign({}, self.customer);
@@ -198,12 +205,12 @@
                         return status >= 200 && status < 300;
                     }
                 }).then(() => {
-                    this.resetValues();
+                    self.resetValues();
                 }).catch((error) => {
                     console.log(error.message);
                 });
             },
-            updateCustomer(id){
+            updateCustomer(id){ // patch request to update a customer
                 this.valueCheck();
                 let self = this;
                 let params = Object.assign({}, self.customer);
@@ -215,12 +222,12 @@
                         return status >= 200 && status < 300;
                     }
                 }).then(() => {
-                    this.resetValues();
+                    self.resetValues();
                 }).catch((error) => {
                     console.log(error.message);
                 });
             },
-            showCustomer(id){
+            showCustomer(id){ // grad a specific customer to be edited.
                 let self = this;
                 axios({
                     method: 'get',
@@ -245,7 +252,7 @@
                 });
                 self.edit = true;
             },
-            deleteCustomer(id){
+            deleteCustomer(id){ // deletes a specific customer, only the Super Admin can make this request as the button is only visable for that user.
                 if(confirm('Are you sure you want to delete this customer?')){
                     let self = this;
                     axios.delete('api/customers/' + id)
@@ -258,76 +265,140 @@
                     return;
                 }
             },
-            regexAlpha(string){
-                if(string){
-                    var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
-                    if(pattern.test(string) != true){
-                        this.regexAlphaWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
-                        return;
-                    } else {
-                        this.regexAlphaWarning = '';
-                    }
+            /*
+            * Regex methods for each of the feilds. Tried to tie all of this up into one function but
+            * it was buggy and didn't work everytime. It worked a lot better when each field had
+            * it's own regex check. 
+            *
+            * Each regex method has a empty string check because it would throw the error even if the
+            * field was empty, so I added a check for emptiness and it would set the waring to an empty
+            * string as well. 
+            *
+            * In the conditional statment for the pattern test as well, it needed an else statment to get ride
+            * of the error for when the user got ride of the unapproved character but the field wasn't empty. 
+            */
+            regexNameCheck(string){
+                var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+                if(string == ''){
+                    this.regexNameWarning = '';
+                    return;
+                }
+                if(pattern.test(string) != true){
+                    this.regexNameWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                    return;
+                } else {
+                    this.regexNameWarning = '';
                 }
             },
-            regexAddress(string){
-                if(string){
-                    var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
-                    if(pattern.test(string) != true){
-                        this.regexAddressWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
-                        return;
-                    } else {
-                        this.regexAddressWarning = '';
-                    } 
+            regexBuyerCheck(string){
+                var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+                if(string == ''){
+                    this.regexBuyerWarning = '';
+                    return;
+                }
+                if(pattern.test(string) != true){
+                    this.regexBuyerWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                    return;
+                } else {
+                    this.regexBuyerWarning = '';
                 }
             },
-            regexBlob(string){
-                if(string){
-                    var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
-                    if(pattern.test(string) != true){
-                        this.regexBlobWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
-                        return;
-                    } else {
-                        this.regexBlobWarning = '';
-                    } 
+            regexCountryCheck(string){
+                var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+                if(string == ''){
+                    this.regexCountryWarning = '';
+                    return;
+                }
+                if(pattern.test(string) != true){
+                    this.regexCountryWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                    return;
+                } else {
+                    this.regexCountryWarning = '';
                 }
             },
-            regexPhone(string){
-                if(string){
-                    var pattern = /^(?!-)(?!.*--)[0-9\(\)\-\s]+$/;
-                    if(pattern.test(string) != true){
-                        this.regexPhoneWarning = "Unapproved characters detected! Only numerica characters, parenthesis and dashes. However, '--' is not allowed.";
-                        return;
-                    } else {
-                        this.regexPhoneWarning = '';
-                    } 
+            regexShiptoCheck(string){
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+                if(string == ''){
+                    this.regexShiptoWarning = '';
+                    return;
+                }
+                if(pattern.test(string) != true){
+                    this.regexShiptoWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
+                    return;
+                } else {
+                    this.regexShiptoWarning = '';
+                } 
+            },
+            regexBilltoCheck(string){
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+                if(string == ''){
+                    this.regexBilltoWarning = '';
+                    return;
+                }
+                if(pattern.test(string) != true){
+                    this.regexBilltoWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
+                    return;
+                } else {
+                    this.regexBilltoWarning = '';
+                } 
+            },
+            regexDiscCheck(string){
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
+                if(string == ''){
+                    this.regexDiscWarning = '';
+                    return;
+                }
+                if(pattern.test(string) != true){
+                    this.regexDiscWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
+                    return;
+                } else {
+                    this.regexDiscWarning = '';
+                }
+            },
+            regexComCheck(string){
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
+                if(string == ''){
+                    this.regexComWarning = '';
+                    return;
+                }
+                if(pattern.test(string) != true){
+                    this.regexComWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
+                    return;
+                } else {
+                    this.regexComWarning = '';
+                } 
+            },
+            regexPhoneCheck(string){
+                var pattern = /^(?!-)(?!.*--)[0-9\(\)\-\s]+$/;
+                if(string == ''){
+                    this.regexPhoneWarning = '';
+                    return;
+                }
+                if(pattern.test(string) != true){
+                    this.regexPhoneWarning = "Unapproved characters detected! Only numerica characters, parenthesis and dashes. However, '--' is not allowed.";
+                    return;
+                } else {
+                    this.regexPhoneWarning = '';
                 }
             },
             valueCheck(){
-                this.regexAlpha(this.customer.name);
-                this.regexAddress(this.customer.shipto);
-                this.regexAddress(this.customer.billto);
-                this.regexAlpha(this.customer.buyer);
-                this.regexPhone(this.customer.phone);
-                this.regexBlob(this.customer.country);
-                this.regexBlob(this.customer.disclaimer);
-                this.regexBlob(this.customer.comments);
                 if(!this.customer.country){this.customer.country = 'NA';}
                 if(!this.customer.disclaimer){this.customer.disclaimer = 'NA';}
                 if(!this.customer.comments){this.customer.comments = 'NA';}
             },
             resetValues(){
-                self.customer.name = '';
-                self.customer.email = '';
-                self.customer.phone = '';
-                self.customer.buyer = '';
-                self.customer.shipto = '';
-                self.customer.billto = '';
-                self.customer.country = '';
-                self.customer.disclaimer = '';
-                self.customer.comments = '';
-                self.edit = false;
-                self.getCustomers();
-                self.table = true;
+                this.customer.name = '';
+                this.customer.email = '';
+                this.customer.phone = '';
+                this.customer.buyer = '';
+                this.customer.shipto = '';
+                this.customer.billto = '';
+                this.customer.country = '';
+                this.customer.disclaimer = '';
+                this.customer.comments = '';
+                this.edit = false;
+                this.getCustomers();
+                this.table = true;
             }
         }
     }

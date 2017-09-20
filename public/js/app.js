@@ -42661,7 +42661,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (!_vm.edit),
       expression: "!edit"
     }],
-    staticClass: "btn btn-primary pull-right",
+    staticClass: "btn btn-primary full-width",
     attrs: {
       "type": "submit",
       "name": "button"
@@ -42673,7 +42673,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.edit),
       expression: "edit"
     }],
-    staticClass: "btn btn-primary pull-right",
+    staticClass: "btn btn-primary full-width",
     attrs: {
       "type": "submit",
       "name": "button"
@@ -42734,6 +42734,16 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -43162,7 +43172,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [_c('div', {
     staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-sm-12 col-md-6"
+    staticClass: "col-xs-6 col-sm-6 col-md-6"
   }, [_c('button', {
     staticClass: "btn btn-primary btn-lg full-width",
     on: {
@@ -43171,7 +43181,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v("View Customers")])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-12 col-md-6"
+    staticClass: "col-xs-6 col-sm-6 col-md-6"
   }, [_c('button', {
     staticClass: "btn btn-success btn-lg full-width",
     on: {
@@ -43247,10 +43257,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-sm-12 col-md-6"
-  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43286,7 +43292,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("50 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexNameWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexNameWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexNameWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
     staticClass: "col-sm-12 col-md-6"
   }, [_c('div', {
     staticClass: "form-group"
@@ -43319,9 +43327,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.customer.email.length == 50) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("50 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
+  }, [_vm._v("50 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-12 col-md-6"
   }, [_c('div', {
     staticClass: "form-group"
@@ -43359,7 +43365,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("25 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexPhoneWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexPhoneWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexPhoneWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
     staticClass: "col-sm-12 col-md-6"
   }, [_c('div', {
     staticClass: "form-group"
@@ -43397,7 +43405,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("50 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBuyerWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexBuyerWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexBuyerWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43432,7 +43442,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("15 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexCountryWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexCountryWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexCountryWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43469,7 +43483,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexShiptoWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexShiptoWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexShiptoWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43506,7 +43522,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBilltoWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexBilltoWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexBilltoWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43542,7 +43562,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexDiscWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexDiscWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexDiscWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -43578,7 +43600,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexComWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexComWarning))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexComWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     directives: [{
@@ -43660,6 +43682,18 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -43965,6 +43999,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [(_vm.regWarning) ? _c('p', {
     staticClass: "alert alert-danger"
   }, [_vm._v(_vm._s(_vm.regWarning))]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -44000,7 +44038,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("25 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.nameAlert) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v(_vm._s(_vm.nameAlert))]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.nameAlert))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -44030,7 +44070,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.product.description.length == 25) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("25 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v("25 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -44061,6 +44101,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), (_vm.product.material.length == 70) ? _c('p', {
     staticClass: "alert alert-warning"
   }, [_vm._v("70 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -44090,7 +44134,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.product.rev.length == 3) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("3 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v("3 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -44117,7 +44163,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.product.rev_date = $event.target.value
       }
     }
-  })]), _vm._v(" "), _c('div', {
+  })])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     directives: [{
@@ -44126,7 +44172,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (!_vm.edit),
       expression: "!edit"
     }],
-    staticClass: "btn btn-primary pull-right",
+    staticClass: "btn btn-primary full-width",
     attrs: {
       "type": "submit",
       "name": "button"
@@ -44138,7 +44184,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.edit),
       expression: "edit"
     }],
-    staticClass: "btn btn-primary pull-right",
+    staticClass: "btn btn-primary full-width",
     attrs: {
       "type": "submit",
       "name": "button"

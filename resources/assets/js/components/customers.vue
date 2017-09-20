@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="row"> 
-            <div class="col-sm-12 col-md-6"><button @click="table = true" class="btn btn-primary btn-lg full-width">View Customers</button></div>
-            <div class="col-sm-12 col-md-6"><button @click="table = false" class="btn btn-success btn-lg full-width">Add A Customer</button></div>
+            <div class="col-xs-6 col-sm-6 col-md-6"><button @click="table = true" class="btn btn-primary btn-lg full-width">View Customers</button></div>
+            <div class="col-xs-6 col-sm-6 col-md-6"><button @click="table = false" class="btn btn-success btn-lg full-width">Add A Customer</button></div>
         </div>
         <hr>
         <div v-show="table">
@@ -56,15 +56,14 @@
             <h2 class="text-center">Add Customer</h2>
             <form action="#" @submit.prevent="edit ? updateCustomer(customer.id) : createCustomer()">
 
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input v-model="customer.name" @keyup="regexNameCheck(customer.name)" type="text" name="name" class="form-control" required maxlength="50">
+                    <p class="alert alert-warning" v-if="customer.name.length == 50">50 character limit reached!</p>
+                    <p class="alert alert-danger" v-if="regexNameWarning">{{ regexNameWarning }}</p>
+                </div>
+
                 <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input v-model="customer.name" @keyup="regexNameCheck(customer.name)" type="text" name="name" class="form-control" required maxlength="50">
-                            <p class="alert alert-warning" v-if="customer.name.length == 50">50 character limit reached!</p>
-                            <p class="alert alert-danger" v-if="regexNameWarning">{{ regexNameWarning }}</p>
-                        </div>
-                    </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -72,9 +71,6 @@
                             <p class="alert alert-warning" v-if="customer.email.length == 50">50 character limit reached!</p>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="phone">Phone</label>
@@ -83,6 +79,9 @@
                             <p class="alert alert-danger" v-if="regexPhoneWarning">{{ regexPhoneWarning }}</p>
                         </div>
                     </div>
+                </div>
+
+                <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="buyer">Buyer</label>
@@ -91,41 +90,52 @@
                             <p class="alert alert-danger" v-if="regexBuyerWarning">{{ regexBuyerWarning }}</p>
                         </div>
                     </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input v-model="customer.country" @keyup="regexCountryCheck(customer.country)" type="text" name="country" class="form-control" maxlength="15">
+                            <p class="alert alert-warning" v-if="customer.country.length == 15">15 character limit reached!</p>
+                            <p class="alert alert-danger" v-if="regexCountryWarning">{{ regexCountryWarning }}</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="country">Country</label>
-                    <input v-model="customer.country" @keyup="regexCountryCheck(customer.country)" type="text" name="country" class="form-control" maxlength="15">
-                    <p class="alert alert-warning" v-if="customer.country.length == 15">15 character limit reached!</p>
-                    <p class="alert alert-danger" v-if="regexCountryWarning">{{ regexCountryWarning }}</p>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="shipto">Ship To Address</label>
+                            <textarea v-model="customer.shipto" @keyup="regexShiptoCheck(customer.shipto)" type="text" name="shipto" class="form-control" rows="3" required maxlength="255"></textarea>
+                            <p class="alert alert-warning" v-if="customer.shipto.length == 255">255 character limit reached!</p>
+                            <p class="alert alert-danger" v-if="regexShiptoWarning">{{ regexShiptoWarning }}</p>
+                        </div>
+                    </div>                
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="billto">Bill To Address</label>
+                            <textarea v-model="customer.billto" @keyup="regexBilltoCheck(customer.billto)" type="text" name="billto" class="form-control" rows="3" required maxlength="255"></textarea>
+                            <p class="alert alert-warning" v-if="customer.billto.length == 255">255 character limit reached!</p>
+                            <p class="alert alert-danger" v-if="regexBilltoWarning">{{ regexBilltoWarning }}</p>
+                        </div>
+                    </div>                
                 </div>
 
-                <div class="form-group">
-                    <label for="shipto">Ship To Address</label>
-                    <textarea v-model="customer.shipto" @keyup="regexShiptoCheck(customer.shipto)" type="text" name="shipto" class="form-control" rows="3" required maxlength="255"></textarea>
-                    <p class="alert alert-warning" v-if="customer.shipto.length == 255">255 character limit reached!</p>
-                    <p class="alert alert-danger" v-if="regexShiptoWarning">{{ regexShiptoWarning }}</p>
-                </div>
-
-                <div class="form-group">
-                    <label for="billto">Bill To Address</label>
-                    <textarea v-model="customer.billto" @keyup="regexBilltoCheck(customer.billto)" type="text" name="billto" class="form-control" rows="3" required maxlength="255"></textarea>
-                    <p class="alert alert-warning" v-if="customer.billto.length == 255">255 character limit reached!</p>
-                    <p class="alert alert-danger" v-if="regexBilltoWarning">{{ regexBilltoWarning }}</p>
-                </div>
-
-                <div class="form-group">
-                    <label for="disclaimer">Disclaimer</label>
-                    <textarea v-model="customer.disclaimer" @keyup="regexDiscCheck(customer.disclaimer)" type="text" name="disclaimer" class="form-control" rows="3" maxlength="255"></textarea>
-                    <p class="alert alert-warning" v-if="customer.disclaimer.length == 255">255 character limit reached!</p>
-                    <p class="alert alert-danger" v-if="regexDiscWarning">{{ regexDiscWarning }}</p>
-                </div>
-
-                <div class="form-group">
-                    <label for="comments">Comments</label>
-                    <textarea v-model="customer.comments" @keyup="regexComCheck(customer.comments)" type="text" name="comments" class="form-control" rows="3" maxlength="255"></textarea>
-                    <p class="alert alert-warning" v-if="customer.comments.length == 255">255 character limit reached!</p>
-                    <p class="alert alert-danger" v-if="regexComWarning">{{ regexComWarning }}</p>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="disclaimer">Disclaimer</label>
+                            <textarea v-model="customer.disclaimer" @keyup="regexDiscCheck(customer.disclaimer)" type="text" name="disclaimer" class="form-control" rows="3" maxlength="255"></textarea>
+                            <p class="alert alert-warning" v-if="customer.disclaimer.length == 255">255 character limit reached!</p>
+                            <p class="alert alert-danger" v-if="regexDiscWarning">{{ regexDiscWarning }}</p>
+                        </div>
+                    </div>                
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="comments">Comments</label>
+                            <textarea v-model="customer.comments" @keyup="regexComCheck(customer.comments)" type="text" name="comments" class="form-control" rows="3" maxlength="255"></textarea>
+                            <p class="alert alert-warning" v-if="customer.comments.length == 255">255 character limit reached!</p>
+                            <p class="alert alert-danger" v-if="regexComWarning">{{ regexComWarning }}</p>
+                        </div>
+                    </div>                
                 </div>
 
                 <div class="form-group">

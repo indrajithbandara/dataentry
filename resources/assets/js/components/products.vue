@@ -38,34 +38,46 @@
             <h2 class="text-center">Add Product</h2>
             <form action="#" @submit.prevent="edit ? updateProduct(product.id) : createProduct()">
             <p class="alert alert-danger" v-if="regWarning">{{ regWarning }}</p>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input v-model="product.name" @keyup="checkName()" type="text" name="name" class="form-control" required maxlength="25">
-                    <p class="alert alert-warning" v-if="product.name.length == 25">25 character limit reached!</p>
-                    <p class="alert alert-warning" v-if="nameAlert">{{ nameAlert }}</p>
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input v-model="product.description" type="text" name="description" class="form-control" maxlength="25">
-                    <p class="alert alert-warning" v-if="product.description.length == 25">25 character limit reached!</p>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input v-model="product.name" @keyup="checkName()" type="text" name="name" class="form-control" required maxlength="25">
+                            <p class="alert alert-warning" v-if="product.name.length == 25">25 character limit reached!</p>
+                            <p class="alert alert-warning" v-if="nameAlert">{{ nameAlert }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input v-model="product.description" type="text" name="description" class="form-control" maxlength="25">
+                            <p class="alert alert-warning" v-if="product.description.length == 25">25 character limit reached!</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="material">Material</label>
                     <input v-model="product.material" type="text" name="material" class="form-control" maxlength="70">
                     <p class="alert alert-warning" v-if="product.material.length == 70">70 character limit reached!</p>
                 </div>
-                <div class="form-group">
-                    <label for="rev">Revision</label>
-                    <input v-model="product.rev" type="text" name="rev" class="form-control" maxlength="3">
-                    <p class="alert alert-warning" v-if="product.rev.length == 3">3 character limit reached!</p>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="rev">Revision</label>
+                            <input v-model="product.rev" type="text" name="rev" class="form-control" maxlength="3">
+                            <p class="alert alert-warning" v-if="product.rev.length == 3">3 character limit reached!</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="rev_date">Revision Date</label>
+                            <input v-model="product.rev_date" type="date" name="rev_date" class="form-control">
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="rev_date">Revision Date</label>
-                    <input v-model="product.rev_date" type="date" name="rev_date" class="form-control">
-                </div>
-                <div class="form-group">
-                    <button v-show="!edit" type="submit" class="btn btn-primary pull-right" name="button">Add Product</button>
-                    <button v-show="edit" type="submit" class="btn btn-primary pull-right" name="button">Update Product</button>
+                    <button v-show="!edit" type="submit" class="btn btn-primary full-width" name="button">Add Product</button>
+                    <button v-show="edit" type="submit" class="btn btn-primary full-width" name="button">Update Product</button>
                 </div>
             </form>
         </div>

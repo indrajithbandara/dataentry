@@ -54,8 +54,8 @@
                         <option>4</option>
                     </select>
                 </div>
-                <button v-show="!edit" type="submit" class="btn btn-primary pull-right" name="button">Add User</button>
-                <button v-show="edit" type="submit" class="btn btn-primary pull-right" name="button">Update User</button>
+                <button v-show="!edit" type="submit" class="btn btn-primary full-width" name="button">Add User</button>
+                <button v-show="edit" type="submit" class="btn btn-primary full-width" name="button">Update User</button>
             </form>
         </div>
         <!-- End of add user form -->

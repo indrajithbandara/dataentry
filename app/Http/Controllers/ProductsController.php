@@ -19,19 +19,33 @@ class ProductsController extends Controller
         $this->middleware('auth');
     }
 
-    // Get all products
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function getProducts() 
     {
         return Product::all();
     }
 
-    // Get One Product
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Product  $id
+     * @return \Illuminate\Http\Response
+     */
     public function getOne($id)
     {
         return Product::findOrFail($id);
     }
 
-    // Add a product
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function addProduct(Request $request)
     {
         $this->validate($request, [
@@ -50,7 +64,13 @@ class ProductsController extends Controller
         ]);
     }
 
-    // Update Product
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Product  $id
+     * @return \Illuminate\Http\Response
+     */
     public function updateProduct(Request $request, $id)
     {
         $this->validate($request, [
@@ -70,7 +90,12 @@ class ProductsController extends Controller
         ]);
     }
 
-    // Delete Product
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Product  $id
+     * @return \Illuminate\Http\Response
+     */
     public function deleteProduct($id)
     {
         $this->authorize('delete', $id);

@@ -29,6 +29,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::patch('customers/{id}', 'CustomersController@updateCustomer'); // Update a Single Customer
     Route::delete('customers/{id}', 'CustomersController@deleteCustomer'); // Delete a Single Customer
     //====================== End of Customers Api ================ //
+
+    //====================== Invoices Api ====================== //
+    Route::get('invoices', 'InvoicesController@getInvoices'); // Get all Invoices
+    Route::get('invoices/{id}', 'InvoicesController@getInvoice'); // Get One Invoice for Editing
+    Route::post('invoices/store', 'InvoicesController@addInvoice'); // Add A Single Invoice
+    Route::patch('invoices/{id}', 'InvoicesController@updateInvoice'); // Update a Single Invoice
+    Route::delete('invoices/{id}', 'InvoicesController@deleteInvoice'); // Delete a Single Invoice
+    //====================== End of Invoices Api ====================== //
 });
 
 

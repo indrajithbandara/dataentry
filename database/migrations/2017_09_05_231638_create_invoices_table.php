@@ -75,6 +75,7 @@ class CreateInvoicesTable extends Migration
             $table->decimal('unit_seven', 5, 2)->nullable();
             $table->decimal('extended_seven', 7, 2)->nullable();
             // End of Line item entries
+            $table->decimal('ship_fee', 7, 2)->nullable();
             $table->decimal('total', 7, 2);
             $table->string('memo', 255)->nullable();
             $table->timestamps();

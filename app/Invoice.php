@@ -66,6 +66,7 @@ class Invoice extends Model
         'unit_seven',
         'extended_seven',
         // End of line item entries
+        'ship_fee',
         'total',
         'memo'
     ];

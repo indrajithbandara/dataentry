@@ -109,6 +109,7 @@ class InvoicesController extends Controller
             'unit_seven' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_seven' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             // End of line item entries
+            'ship_fee' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'total' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'memo' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255'
         ]);
@@ -174,6 +175,7 @@ class InvoicesController extends Controller
             'unit_seven' => $request->input(['unit_seven']),
             'extended_seven' => $request->input(['extended_seven']),
             // End of line item entries
+            'ship_fee' => $request->input(['ship_fee']),
             'total' => $request->input(['total']),
             'memo' => $request->input(['memo'])
         ]);
@@ -249,6 +251,7 @@ class InvoicesController extends Controller
             'unit_seven' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_seven' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             // End of line item entries
+            'ship_fee' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'total' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'memo' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255'
         ]);
@@ -314,6 +317,7 @@ class InvoicesController extends Controller
             'unit_seven' => $request->input(['unit_seven']),
             'extended_seven' => $request->input(['extended_seven']),
             // End of line item entries
+            'ship_fee' => $request->input(['ship_fee']),
             'total' => $request->input(['total']),
             'memo' => $request->input(['memo'])
         ]);

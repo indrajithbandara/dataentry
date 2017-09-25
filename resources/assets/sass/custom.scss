@@ -66,6 +66,11 @@ th {background: #ccc;}
 div.table-checkbox-align {margin-top: 0px;margin-bottom: 0px;margin-left: 13px;}
 .dropdown-menu>li>a {padding: 3px 10px;}
 button.full-width { width: 100%; }
+.dashed { border: 1px dashed #aaa; }
+.background {background:#ccc; }
+.radius { border-radius: 3px;}
+.padding {padding: 10px;}
+.overflow-scroll { max-height:450px; overflow: scroll; border: 1px solid #aaa;}
 #product-table { max-height: 565px; overflow: scroll; }
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) { div.form-middle-center { width: 100%; } }

@@ -8663,6 +8663,28 @@ button.full-width {
   width: 100%;
 }
 
+.dashed {
+  border: 1px dashed #aaa;
+}
+
+.background {
+  background: #ccc;
+}
+
+.radius {
+  border-radius: 3px;
+}
+
+.padding {
+  padding: 10px;
+}
+
+.overflow-scroll {
+  max-height: 450px;
+  overflow: scroll;
+  border: 1px solid #aaa;
+}
+
 #product-table {
   max-height: 565px;
   overflow: scroll;

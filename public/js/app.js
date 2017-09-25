@@ -44353,12 +44353,354 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
             table: true, // If true, the invoices table is showing. If false, the invoices form is showing.
+            // Line Item Forms
+            ln_one: true,
+            ln_two: false,
+            ln_three: false,
+            ln_four: false,
+            ln_five: false,
+            ln_six: false,
+            ln_seven: false,
+            // Line Item Buttons
+            btn_one: true,
+            btn_two: false,
+            btn_three: false,
+            btn_four: false,
+            btn_five: false,
+            btn_six: false,
+            btn_seven: false,
             list: [], // Array for listting out the results of the ajax calls
             invoice: { // Invoices model and it's values
                 inv_num: '',
@@ -44435,6 +44777,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        showTwo: function showTwo() {
+            this.btn_one = false;this.btn_two = true;this.ln_two = true;
+        },
+        hideTwo: function hideTwo() {
+            this.btn_one = true;this.btn_two = false;this.ln_two = false;
+        },
+        showThree: function showThree() {
+            this.btn_two = false;this.btn_three = true;this.ln_three = true;
+        },
+        hideThree: function hideThree() {
+            this.btn_two = true;this.btn_three = false;this.ln_three = false;
+        },
+        showFour: function showFour() {
+            this.btn_three = false;this.btn_four = true;this.ln_four = true;
+        },
+        hideFour: function hideFour() {
+            this.btn_three = true;this.btn_four = false;this.ln_four = false;
+        },
+        showFive: function showFive() {
+            this.btn_four = false;this.btn_five = true;this.ln_five = true;
+        },
+        hideFive: function hideFive() {
+            this.btn_four = true;this.btn_five = false;this.ln_five = false;
+        },
+        showSix: function showSix() {
+            this.btn_five = false;this.btn_six = true;this.ln_six = true;
+        },
+        hideSix: function hideSix() {
+            this.btn_five = true;this.btn_six = false;this.ln_six = false;
+        },
+        showSeven: function showSeven() {
+            this.btn_six = false;this.btn_seven = true;this.ln_seven = true;
+        },
+        hideSeven: function hideSeven() {
+            this.btn_six = true;this.btn_seven = false;this.ln_seven = false;
+        },
         getUser: function getUser() {
             var _this = this;
 
@@ -44871,7 +45249,1345 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.invoice.po_num.length == 30) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("30 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+  }, [_vm._v("30 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_one),
+      expression: "btn_one"
+    }],
+    staticClass: "btn btn-info full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showTwo()
+      }
+    }
+  }, [_vm._v("Add A Second Line Item")]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_two),
+      expression: "btn_two"
+    }],
+    staticClass: "btn btn-info full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showThree()
+      }
+    }
+  }, [_vm._v("Add A Third Line Item")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_two),
+      expression: "btn_two"
+    }],
+    staticClass: "btn btn-warning full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.hideTwo()
+      }
+    }
+  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_three),
+      expression: "btn_three"
+    }],
+    staticClass: "btn btn-info full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showFour()
+      }
+    }
+  }, [_vm._v("Add A Fourth Line Item")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_three),
+      expression: "btn_three"
+    }],
+    staticClass: "btn btn-warning full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.hideThree()
+      }
+    }
+  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_four),
+      expression: "btn_four"
+    }],
+    staticClass: "btn btn-info full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showFive()
+      }
+    }
+  }, [_vm._v("Add A Fifth Line Item")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_four),
+      expression: "btn_four"
+    }],
+    staticClass: "btn btn-warning full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.hideFour()
+      }
+    }
+  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_five),
+      expression: "btn_five"
+    }],
+    staticClass: "btn btn-info full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showSix()
+      }
+    }
+  }, [_vm._v("Add A Sixth Line Item")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_five),
+      expression: "btn_five"
+    }],
+    staticClass: "btn btn-warning full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.hideFive()
+      }
+    }
+  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_six),
+      expression: "btn_six"
+    }],
+    staticClass: "btn btn-info full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.showSeven()
+      }
+    }
+  }, [_vm._v("Add A Seventh Line Item")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_six),
+      expression: "btn_six"
+    }],
+    staticClass: "btn btn-warning full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.hideSix()
+      }
+    }
+  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_seven),
+      expression: "btn_seven"
+    }],
+    staticClass: "btn btn-disabled full-width",
+    attrs: {
+      "type": "button",
+      "disabled": ""
+    }
+  }, [_vm._v("Line Items Limit Reached")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn_seven),
+      expression: "btn_seven"
+    }],
+    staticClass: "btn btn-warning full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.hideSeven()
+      }
+    }
+  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('hr', {
+    staticClass: "dashed"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "overflow-scroll padding radius"
+  }, [_c('div', {
+    attrs: {
+      "id": "line_item_one"
+    }
+  }, [_c('h4', {
+    staticClass: "text-center background padding radius"
+  }, [_vm._v("Line Item One")]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "li_one"
+    }
+  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.li_one),
+      expression: "invoice.li_one"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "li_one",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.li_one)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.li_one = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.product_one),
+      expression: "invoice.product_one"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.invoice.product_one = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "qty_one"
+    }
+  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.qty_one),
+      expression: "invoice.qty_one"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "qty_one",
+      "min": "0",
+      "step": "1",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.qty_one)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.qty_one = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "unit_one"
+    }
+  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.unit_one),
+      expression: "invoice.unit_one"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "unit_one",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.unit_one)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.unit_one = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "extended_one"
+    }
+  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.extended_one),
+      expression: "invoice.extended_one"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "extended_one",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.extended_one)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.extended_one = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('br')]), _vm._v(" "), (_vm.ln_two) ? _c('div', {
+    attrs: {
+      "id": "line_item_two"
+    }
+  }, [_c('h4', {
+    staticClass: "text-center background padding radius"
+  }, [_vm._v("Line Item Two")]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "li_two"
+    }
+  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.li_two),
+      expression: "invoice.li_two"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "li_two",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.li_two)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.li_two = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.product_two),
+      expression: "invoice.product_two"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.invoice.product_two = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "qty_two"
+    }
+  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.qty_two),
+      expression: "invoice.qty_two"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "qty_two",
+      "min": "0",
+      "step": "1",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.qty_two)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.qty_two = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "unit_two"
+    }
+  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.unit_two),
+      expression: "invoice.unit_two"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "unit_two",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.unit_two)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.unit_two = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "extended_two"
+    }
+  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.extended_two),
+      expression: "invoice.extended_two"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "extended_two",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.extended_two)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.extended_two = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln_three) ? _c('div', {
+    attrs: {
+      "id": "line_item_three"
+    }
+  }, [_c('h4', {
+    staticClass: "text-center background padding radius"
+  }, [_vm._v("Line Item Three")]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "li_three"
+    }
+  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.li_three),
+      expression: "invoice.li_three"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "li_three",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.li_three)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.li_three = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.product_three),
+      expression: "invoice.product_three"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.invoice.product_three = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "qty_three"
+    }
+  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.qty_three),
+      expression: "invoice.qty_three"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "qty_three",
+      "min": "0",
+      "step": "1",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.qty_three)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.qty_three = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "unit_three"
+    }
+  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.unit_three),
+      expression: "invoice.unit_three"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "unit_three",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.unit_three)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.unit_three = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "extended_three"
+    }
+  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.extended_three),
+      expression: "invoice.extended_three"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "extended_three",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.extended_three)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.extended_three = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln_four) ? _c('div', {
+    attrs: {
+      "id": "line_item_four"
+    }
+  }, [_c('h4', {
+    staticClass: "text-center background padding radius"
+  }, [_vm._v("Line Item Four")]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "li_four"
+    }
+  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.li_four),
+      expression: "invoice.li_four"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "li_four",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.li_four)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.li_four = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.product_four),
+      expression: "invoice.product_four"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.invoice.product_four = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "qty_four"
+    }
+  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.qty_four),
+      expression: "invoice.qty_four"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "qty_four",
+      "min": "0",
+      "step": "1",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.qty_four)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.qty_four = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "unit_four"
+    }
+  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.unit_four),
+      expression: "invoice.unit_four"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "unit_four",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.unit_four)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.unit_four = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "extended_four"
+    }
+  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.extended_four),
+      expression: "invoice.extended_four"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "extended_four",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.extended_four)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.extended_four = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln_five) ? _c('div', {
+    attrs: {
+      "id": "line_item_five"
+    }
+  }, [_c('h4', {
+    staticClass: "text-center background padding radius"
+  }, [_vm._v("Line Item Five")]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "li_five"
+    }
+  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.li_five),
+      expression: "invoice.li_five"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "li_five",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.li_five)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.li_five = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.product_five),
+      expression: "invoice.product_five"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.invoice.product_five = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "qty_three"
+    }
+  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.qty_five),
+      expression: "invoice.qty_five"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "qty_five",
+      "min": "0",
+      "step": "1",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.qty_five)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.qty_five = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "unit_five"
+    }
+  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.unit_five),
+      expression: "invoice.unit_five"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "unit_five",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.unit_five)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.unit_five = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "extended_five"
+    }
+  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.extended_five),
+      expression: "invoice.extended_five"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "extended_five",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.extended_five)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.extended_five = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln_six) ? _c('div', {
+    attrs: {
+      "id": "line_item_six"
+    }
+  }, [_c('h4', {
+    staticClass: "text-center background padding radius"
+  }, [_vm._v("Line Item Six")]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "li_six"
+    }
+  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.li_six),
+      expression: "invoice.li_six"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "li_six",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.li_six)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.li_six = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.product_six),
+      expression: "invoice.product_six"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.invoice.product_six = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "qty_six"
+    }
+  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.qty_six),
+      expression: "invoice.qty_six"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "qty_six",
+      "min": "0",
+      "step": "1",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.qty_six)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.qty_six = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "unit_six"
+    }
+  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.unit_six),
+      expression: "invoice.unit_six"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "unit_six",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.unit_six)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.unit_six = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "extended_six"
+    }
+  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.extended_six),
+      expression: "invoice.extended_six"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "extended_six",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.extended_six)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.extended_six = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln_seven) ? _c('div', {
+    attrs: {
+      "id": "line_item_seven"
+    }
+  }, [_c('h4', {
+    staticClass: "text-center background padding radius"
+  }, [_vm._v("Line Item Seven")]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "li_seven"
+    }
+  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.li_seven),
+      expression: "invoice.li_seven"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "li_seven",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.li_seven)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.li_seven = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.product_seven),
+      expression: "invoice.product_seven"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.invoice.product_seven = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "qty_seven"
+    }
+  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.qty_seven),
+      expression: "invoice.qty_seven"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "qty_seven",
+      "min": "0",
+      "step": "1",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.qty_seven)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.qty_seven = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "unit_seven"
+    }
+  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.unit_seven),
+      expression: "invoice.unit_seven"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "unit_seven",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.unit_seven)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.unit_seven = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": "extended_seven"
+    }
+  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.extended_seven),
+      expression: "invoice.extended_seven"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "extended_seven",
+      "min": "0",
+      "step": "0.01",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.extended_seven)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.extended_seven = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('br')]) : _vm._e()]), _vm._v(" "), _c('hr', {
+    staticClass: "dashed"
+  }), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -44887,7 +46603,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-control",
     attrs: {
       "type": "number",
-      "name": "ship_fee"
+      "name": "ship_fee",
+      "min": "0",
+      "step": "0.01"
     },
     domProps: {
       "value": (_vm.invoice.ship_fee)

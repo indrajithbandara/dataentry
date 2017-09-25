@@ -44249,15 +44249,430 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            // key: value pairs
+            edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
+            table: true, // If true, the invoices table is showing. If false, the invoices form is showing.
+            list: [], // Array for listting out the results of the ajax calls
+            invoice: { // Invoices model and it's values
+                inv_num: '',
+                date: '',
+                // Copy of the customer in the customers table
+                customer: '',
+                name: '',
+                shipto: '',
+                billto: '',
+                buyer: '',
+                email: '',
+                phone: '',
+                country: '',
+                disclaimer: '',
+                comments: '',
+                // End of customer copy
+                po_num: '',
+                // Start of line item enries x 7
+                // ========================== One
+                li_one: '',
+                product_one: '',
+                qty_one: 0,
+                unit_one: 0,
+                extended_one: 0,
+                // ========================== Two
+                li_two: '',
+                product_tw: '',
+                qty_two: 0,
+                unit_two: 0,
+                extended_two: 0,
+                //=========================== Three
+                li_three: '',
+                product_three: '',
+                qty_three: 0,
+                unit_three: 0,
+                extended_three: 0,
+                // ========================= Four
+                li_four: '',
+                product_four: '',
+                qty_four: 0,
+                unit_four: 0,
+                extended_four: 0,
+                // ========================= Five
+                li_five: '',
+                product_five: '',
+                qty_five: 0,
+                unit_five: 0,
+                extended_five: 0,
+                // ========================= Six
+                li_six: '',
+                product_six: '',
+                qty_six: 0,
+                unit_six: 0,
+                extended_six: 0,
+                // ========================= Seven
+                li_seven: '',
+                product_seven: '',
+                qty_seven: 0,
+                unit_seven: 0,
+                extended_seven: 0,
+                // End of line item entries
+                ship_fee: 0,
+                total: 0,
+                memo: ''
+            },
+            // Property for know who the user is and knowing what to hide form other users. 
+            user: ''
         };
     },
+    mounted: function mounted() {
+        // when vue instance is mounted, get the customers and the authenticated user.
+        this.getInvoices();
+        this.getUser();
+    },
 
-    methods: {}
+    methods: {
+        getUser: function getUser() {
+            var _this = this;
+
+            // ajax call to get the authenticated user
+            axios.get('api/user').then(function (response) {
+                _this.user = response.data.permission;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getInvoices: function getInvoices() {
+            var _this2 = this;
+
+            // ajax call to get all the customers
+            axios.get('api/invoices').then(function (response) {
+                _this2.list = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        createInvoice: function createInvoice() {
+            // post request to add an invoice
+            // this.valueCheck();
+            var self = this;
+            var params = Object.assign({}, self.customer);
+            axios({
+                method: 'post',
+                url: 'api/invoices/store',
+                data: params,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function () {
+                self.resetValues();
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+        },
+        updateInvoice: function updateInvoice(id) {
+            // patch request to update an invoice
+            this.valueCheck();
+            var self = this;
+            var params = Object.assign({}, self.customer);
+            axios({
+                method: 'patch',
+                url: 'api/invoices/' + id,
+                data: params,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function () {
+                self.resetValues();
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+        },
+        showInvoice: function showInvoice(id) {
+            // grad a specific invoice to be edited.
+            var self = this;
+            axios({
+                method: 'get',
+                url: 'api/invoices/' + id,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function (response) {
+                self.table = false;
+                // self.customer.id = response.data.id;
+                // self.customer.name = response.data.name;
+                // self.customer.email = response.data.email;
+                // self.customer.phone = response.data.phone;
+                // self.customer.buyer = response.data.buyer;
+                // self.customer.shipto = response.data.shipto;
+                // self.customer.billto = response.data.billto;
+                // self.customer.country = response.data.country;
+                // self.customer.disclaimer = response.data.disclaimer;
+                // self.customer.comments = response.data.comments;
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+            self.edit = true;
+        },
+        deleteInvoice: function deleteInvoice(id) {
+            // deletes a specific invoice, only the Super Admin can make this request as the button is only visable for that user.
+            if (confirm('Are you sure you want to delete this invoice?')) {
+                var self = this;
+                axios.delete('api/invoices/' + id).then(function (response) {
+                    self.getInvoices();
+                }).catch(function (error) {
+                    console.log(error.message);
+                });
+            } else {
+                return;
+            }
+        },
+
+        /*
+        * Regex methods for each of the feilds. Tried to tie all of this up into one function but
+        * it was buggy and didn't work everytime. It worked a lot better when each field had
+        * it's own regex check. 
+        *
+        * Each regex method has a empty string check because it would throw the error even if the
+        * field was empty, so I added a check for emptiness and it would set the waring to an empty
+        * string as well. 
+        *
+        * In the conditional statment for the pattern test as well, it needed an else statment to get ride
+        * of the error for when the user got ride of the unapproved character but the field wasn't empty. 
+        */
+        regexNameCheck: function regexNameCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+            if (string == '') {
+                this.regexNameWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexNameWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                return;
+            } else {
+                this.regexNameWarning = '';
+            }
+        },
+        regexBuyerCheck: function regexBuyerCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+            if (string == '') {
+                this.regexBuyerWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexBuyerWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                return;
+            } else {
+                this.regexBuyerWarning = '';
+            }
+        },
+        regexCountryCheck: function regexCountryCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+            if (string == '') {
+                this.regexCountryWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexCountryWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                return;
+            } else {
+                this.regexCountryWarning = '';
+            }
+        },
+        regexShiptoCheck: function regexShiptoCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+            if (string == '') {
+                this.regexShiptoWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexShiptoWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
+                return;
+            } else {
+                this.regexShiptoWarning = '';
+            }
+        },
+        regexBilltoCheck: function regexBilltoCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+            if (string == '') {
+                this.regexBilltoWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexBilltoWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
+                return;
+            } else {
+                this.regexBilltoWarning = '';
+            }
+        },
+        regexDiscCheck: function regexDiscCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
+            if (string == '') {
+                this.regexDiscWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexDiscWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
+                return;
+            } else {
+                this.regexDiscWarning = '';
+            }
+        },
+        regexComCheck: function regexComCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
+            if (string == '') {
+                this.regexComWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexComWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
+                return;
+            } else {
+                this.regexComWarning = '';
+            }
+        },
+        regexPhoneCheck: function regexPhoneCheck(string) {
+            var pattern = /^(?!-)(?!.*--)[0-9\(\)\-\s]+$/;
+            if (string == '') {
+                this.regexPhoneWarning = '';
+                return;
+            }
+            if (pattern.test(string) != true) {
+                this.regexPhoneWarning = "Unapproved characters detected! Only numerica characters, parenthesis and dashes. However, '--' is not allowed.";
+                return;
+            } else {
+                this.regexPhoneWarning = '';
+            }
+        },
+        valueCheck: function valueCheck() {
+            if (!this.customer.country) {
+                this.customer.country = 'NA';
+            }
+            if (!this.customer.disclaimer) {
+                this.customer.disclaimer = 'NA';
+            }
+            if (!this.customer.comments) {
+                this.customer.comments = 'NA';
+            }
+        },
+        resetValues: function resetValues() {
+            this.customer.name = '';
+            this.customer.email = '';
+            this.customer.phone = '';
+            this.customer.buyer = '';
+            this.customer.shipto = '';
+            this.customer.billto = '';
+            this.customer.country = '';
+            this.customer.disclaimer = '';
+            this.customer.comments = '';
+            this.edit = false;
+            this.getCustomers();
+            this.table = true;
+        }
+    }
 });
 
 /***/ }),
@@ -44265,7 +44680,286 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h1', [_vm._v("Invoices Template")])
+  return _c('div', [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6"
+  }, [_c('button', {
+    staticClass: "btn btn-primary btn-lg full-width",
+    on: {
+      "click": function($event) {
+        _vm.table = true
+      }
+    }
+  }, [_vm._v("View Invoices")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6"
+  }, [_c('button', {
+    staticClass: "btn btn-success btn-lg full-width",
+    on: {
+      "click": function($event) {
+        _vm.table = false
+      }
+    }
+  }, [_vm._v("Add An Invoice")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.table),
+      expression: "table"
+    }]
+  }, [(_vm.list.length > 0) ? _c('div', {
+    staticClass: "table-responsive",
+    attrs: {
+      "id": "product-table"
+    }
+  }, [_c('table', {
+    staticClass: "table table-condensed"
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Invoice #")]), _vm._v(" "), _c('th', [_vm._v("Ship Date")]), _vm._v(" "), _c('th', [_vm._v("Customer")]), _vm._v(" "), _c('th', [_vm._v("Extended Price")]), _vm._v(" "), _c('th', [_vm._v("Print Shipper")]), _vm._v(" "), _c('th', [_vm._v("Print Invoice")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(invoice) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(invoice.inv_num))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.date))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.customer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.total))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-warning",
+      on: {
+        "click": function($event) {
+          _vm.showInvoice(invoice.id)
+        }
+      }
+    }, [_vm._v("Edit")])]), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          _vm.deleteInvoice(invoice.id)
+        }
+      }
+    }, [_vm._v("Delete")])]) : _vm._e()])
+  }))])]) : _c('div', [_c('p', {
+    staticClass: "alert alert-info text-center"
+  }, [_vm._v("You currently have no invoices to show.")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.table),
+      expression: "!table"
+    }]
+  }, [_c('h2', {
+    staticClass: "text-center"
+  }, [_vm._v("Add Invoice")]), _vm._v(" "), _c('form', {
+    attrs: {
+      "action": "#"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.edit ? _vm.updateInvoice(_vm.invoice.id) : _vm.createInvoice()
+      }
+    }
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "inv_num"
+    }
+  }, [_vm._v("Invoice #")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.inv_num),
+      expression: "invoice.inv_num"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "inv_num",
+      "required": "",
+      "maxlength": "11"
+    },
+    domProps: {
+      "value": (_vm.invoice.inv_num)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.inv_num = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.invoice.inv_num.length == 11) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("11 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "date"
+    }
+  }, [_vm._v("Date")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.date),
+      expression: "invoice.date"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "date",
+      "name": "date",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.invoice.date)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.date = $event.target.value
+      }
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Customer")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.customer),
+      expression: "invoice.customer"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.invoice.customer = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose an option")])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "po_num"
+    }
+  }, [_vm._v("P.O #")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.po_num),
+      expression: "invoice.po_num"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "po_num",
+      "required": "",
+      "maxlength": "30"
+    },
+    domProps: {
+      "value": (_vm.invoice.po_num)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.po_num = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.invoice.po_num.length == 30) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("30 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "ship_fee"
+    }
+  }, [_vm._v("Shipping Fee")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.ship_fee),
+      expression: "invoice.ship_fee"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "name": "ship_fee"
+    },
+    domProps: {
+      "value": (_vm.invoice.ship_fee)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.ship_fee = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "pull-right"
+  }, [_c('h3', [_vm._v("Total: $" + _vm._s(_vm.invoice.total))])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "memo"
+    }
+  }, [_vm._v("Memo")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.memo),
+      expression: "invoice.memo"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "memo",
+      "rows": "3",
+      "maxlength": "255"
+    },
+    domProps: {
+      "value": (_vm.invoice.memo)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.memo = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.invoice.memo.length == 255) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("255 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.edit),
+      expression: "!edit"
+    }],
+    staticClass: "btn btn-primary full-width",
+    attrs: {
+      "type": "submit",
+      "name": "button"
+    }
+  }, [_vm._v("Add Invoice")]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.edit),
+      expression: "edit"
+    }],
+    staticClass: "btn btn-primary full-width",
+    attrs: {
+      "type": "submit",
+      "name": "button"
+    }
+  }, [_vm._v("Update Invoice")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br')])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

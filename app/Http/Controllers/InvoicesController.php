@@ -52,7 +52,6 @@ class InvoicesController extends Controller
         $this->validate($request, [
             'inv_num' => 'required|numeric|max:11',
             'date' => 'required|date',
-            // Copy of the customer in the customers table
             'customer' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
             'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
             'shipto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+(?<!-)$/i|max:255',
@@ -62,53 +61,43 @@ class InvoicesController extends Controller
             'phone' => 'required|string|regex:/^(?!-)(?!.*--)[0-9\(\)\-\s]+(?<!-)$/i|max:25',
             'country' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:15',
             'disclaimer' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255',
-            'comments' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255'
-            // End of customer copy
-            'po_num' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\-\.\s]+(?<!-)$/i|max:30',
-            // Start of line item enries x 7
-            // ========================== One 
+            'comments' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255',
+            'po_num' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:30',
             'li_one' => 'required|string|alpha_num|max:15',
-            'product_one' => 'required|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_one' => 'required|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_one' => 'required|numeric|max:11',
             'unit_one' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_one' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            //=========================== Two
             'li_two' => 'nullable|string|alpha_num|max:15',
-            'product_two' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_two' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_two' => 'nullable|numeric|max:11',
             'unit_two' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_two' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // ========================= Three
             'li_three' => 'nullable|string|alpha_num|max:15',
-            'product_three' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_three' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_three' => 'nullable|numeric|max:11',
             'unit_three' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_three' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // ========================= Four
             'li_four' => 'nullable|string|alpha_num|max:15',
-            'product_four' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_four' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_four' => 'nullable|numeric|max:11',
             'unit_four' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_four' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // ========================= Five
             'li_five' => 'nullable|string|alpha_num|max:15',
-            'product_five' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_five' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_five' => 'nullable|numeric|max:11',
             'unit_five' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_five' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // ========================= Six
             'li_six' => 'nullable|string|alpha_num|max:15',
-            'product_six' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_six' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_six' => 'nullable|numeric|max:11',
             'unit_six' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_six' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // ========================== Seven
             'li_seven' => 'nullable|string|alpha_num|max:15',
-            'product_seven' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_seven' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_seven' => 'nullable|numeric|max:11',
             'unit_seven' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_seven' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // End of line item entries
             'ship_fee' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'total' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'memo' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255'
@@ -194,7 +183,6 @@ class InvoicesController extends Controller
         $this->validate($request, [
             'inv_num' => 'required|numeric|max:11',
             'date' => 'required|date',
-            // Copy of the customer in the customers table
             'customer' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
             'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
             'shipto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+(?<!-)$/i|max:255',
@@ -204,53 +192,43 @@ class InvoicesController extends Controller
             'phone' => 'required|string|regex:/^(?!-)(?!.*--)[0-9\(\)\-\s]+(?<!-)$/i|max:25',
             'country' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:15',
             'disclaimer' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255',
-            'comments' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255'
-            // End of customer copy
+            'comments' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255',
             'po_num' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\-\.\s]+(?<!-)$/i|max:30',
-            // Start of line item enries x 7
-            // ========================== One 
             'li_one' => 'required|string|alpha_num|max:15',
-            'product_one' => 'required|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_one' => 'required|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_one' => 'required|numeric|max:11',
             'unit_one' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_one' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            //=========================== Two
             'li_two' => 'nullable|string|alpha_num|max:15',
-            'product_two' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_two' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_two' => 'nullable|numeric|max:11',
             'unit_two' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_two' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // ========================= Three
             'li_three' => 'nullable|string|alpha_num|max:15',
-            'product_three' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_three' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_three' => 'nullable|numeric|max:11',
             'unit_three' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_three' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // ========================= Four
             'li_four' => 'nullable|string|alpha_num|max:15',
-            'product_four' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_four' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_four' => 'nullable|numeric|max:11',
             'unit_four' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_four' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // ========================= Five
             'li_five' => 'nullable|string|alpha_num|max:15',
-            'product_five' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_five' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_five' => 'nullable|numeric|max:11',
             'unit_five' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_five' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // ========================= Six
             'li_six' => 'nullable|string|alpha_num|max:15',
-            'product_six' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_six' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_six' => 'nullable|numeric|max:11',
             'unit_six' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_six' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // ========================== Seven
             'li_seven' => 'nullable|string|alpha_num|max:15',
-            'product_seven' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',,
+            'product_seven' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
             'qty_seven' => 'nullable|numeric|max:11',
             'unit_seven' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'extended_seven' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            // End of line item entries
             'ship_fee' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'total' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'memo' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255'

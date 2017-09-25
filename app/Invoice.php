@@ -31,7 +31,7 @@ class Invoice extends Model
         'extended_one',
         // ========================== Two
         'li_two',
-        'product_two'
+        'product_two',
         'qty_two',
         'unit_two',
         'extended_two',

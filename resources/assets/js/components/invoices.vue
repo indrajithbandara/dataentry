@@ -73,50 +73,51 @@
                     <p class="alert alert-warning" v-if="invoice.po_num.length == 30">30 character limit reached!</p>
                 </div>
 
-                <button class="btn btn-info full-width" @click="showTwo()" type="button" v-show="btn_one">Add A Second Line Item</button>
+                <!-- Add and Removing Line Item Buttons -->
+                <button class="btn btn-success full-width" @click="showTwo()" type="button" v-show="btn_one">Add A Second Line Item</button>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-info full-width" @click="showThree()" type="button" v-show="btn_two">Add A Third Line Item</button>
+                        <button class="btn btn-success full-width" @click="showThree()" type="button" v-show="btn_two">Add A Third Line Item</button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-warning full-width" @click="hideTwo()" type="button" v-show="btn_two">Remove A Line Item</button>
+                        <button class="btn btn-danger full-width" @click="hideTwo()" type="button" v-show="btn_two">Remove A Line Item</button>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-info full-width" @click="showFour()" type="button" v-show="btn_three">Add A Fourth Line Item</button>
+                        <button class="btn btn-success full-width" @click="showFour()" type="button" v-show="btn_three">Add A Fourth Line Item</button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-warning full-width" @click="hideThree()" type="button" v-show="btn_three">Remove A Line Item</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-info full-width" @click="showFive()" type="button" v-show="btn_four">Add A Fifth Line Item</button>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-warning full-width" @click="hideFour()" type="button" v-show="btn_four">Remove A Line Item</button>
+                        <button class="btn btn-danger full-width" @click="hideThree()" type="button" v-show="btn_three">Remove A Line Item</button>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-info full-width" @click="showSix()" type="button" v-show="btn_five">Add A Sixth Line Item</button>
+                        <button class="btn btn-success full-width" @click="showFive()" type="button" v-show="btn_four">Add A Fifth Line Item</button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-warning full-width" @click="hideFive()" type="button" v-show="btn_five">Remove A Line Item</button>
+                        <button class="btn btn-danger full-width" @click="hideFour()" type="button" v-show="btn_four">Remove A Line Item</button>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-info full-width" @click="showSeven()" type="button" v-show="btn_six">Add A Seventh Line Item</button>
+                        <button class="btn btn-success full-width" @click="showSix()" type="button" v-show="btn_five">Add A Sixth Line Item</button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-warning full-width" @click="hideSix()" type="button" v-show="btn_six">Remove A Line Item</button>
+                        <button class="btn btn-danger full-width" @click="hideFive()" type="button" v-show="btn_five">Remove A Line Item</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <button class="btn btn-success full-width" @click="showSeven()" type="button" v-show="btn_six">Add A Seventh Line Item</button>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <button class="btn btn-danger full-width" @click="hideSix()" type="button" v-show="btn_six">Remove A Line Item</button>
                     </div>
                 </div>
 
@@ -125,14 +126,15 @@
                         <button class="btn btn-disabled full-width" type="button" v-show="btn_seven" disabled>Line Items Limit Reached</button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-warning full-width" @click="hideSeven()" type="button" v-show="btn_seven">Remove A Line Item</button>
+                        <button class="btn btn-danger full-width" @click="hideSeven()" type="button" v-show="btn_seven">Remove A Line Item</button>
                     </div>
                 </div>
+                <!-- End of Adding and Removing Line Item Buttons -->
 
                 <hr class="dashed">
 
                 <!-- ============================================ Line Items ============================================ -->
-                <div class="overflow-scroll padding radius">
+                <div ref="ln_container" class="overflow-scroll padding radius">
                     <div id="line_item_one">
                         <!-- ============== Line Item One ============== -->
                         <h4 class="text-center background padding radius">Line Item One</h4>
@@ -140,7 +142,8 @@
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="li_one">Line Item</label>
-                                    <input v-model="invoice.li_one" type="text" name="li_one" class="form-control" required>
+                                    <input v-model="invoice.li_one" type="text" name="li_one" class="form-control" maxlength="15" required>
+                                    <p class="alert alert-warning" v-if="invoice.li_one.length == 15">15 character limit reached!</p>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
@@ -156,15 +159,18 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_one">Qty</label>
-                                <input v-model="invoice.qty_one" type="number" name="qty_one" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.qty_one" type="number" name="qty_one" min="0" step="1" class="form-control" maxlength="11" required>
+                                <p class="alert alert-warning" v-if="invoice.qty_one.length == 11">11 character limit reached!</p>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_one">Unit Price</label>
-                                <input v-model="invoice.unit_one" type="number" name="unit_one" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.unit_one" type="number" name="unit_one" min="0" step="0.01" class="form-control" maxlength="6" required>
+                                <p class="alert alert-warning" v-if="invoice.unit_one.length == 6">6 character limit reached!</p>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_one">Ext Price</label>
-                                <input v-model="invoice.extended_one" type="number" name="extended_one" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.extended_one" type="number" name="extended_one" min="0" step="0.01" class="form-control" maxlength="8" required>
+                                <p class="alert alert-warning" v-if="invoice.extended_one.length == 8">8 character limit reached!</p>
                             </div>
                         </div>
                         <br />
@@ -529,18 +535,18 @@
             this.getUser();
         },
         methods: {
-            showTwo(){ this.btn_one = false; this.btn_two = true; this.ln_two = true; },
-            hideTwo(){ this.btn_one = true; this.btn_two = false; this.ln_two = false; },
-            showThree(){ this.btn_two = false; this.btn_three = true; this.ln_three = true; },
-            hideThree(){ this.btn_two = true; this.btn_three = false; this.ln_three = false; },
-            showFour(){ this.btn_three = false; this.btn_four = true; this.ln_four = true; },
-            hideFour(){ this.btn_three = true; this.btn_four = false; this.ln_four = false; },
-            showFive(){ this.btn_four = false; this.btn_five = true; this.ln_five = true; },
-            hideFive(){ this.btn_four = true; this.btn_five = false; this.ln_five = false; },
-            showSix(){ this.btn_five = false; this.btn_six = true; this.ln_six = true; },
-            hideSix(){ this.btn_five = true; this.btn_six = false; this.ln_six = false; },
-            showSeven(){ this.btn_six = false; this.btn_seven = true; this.ln_seven = true; },
-            hideSeven(){ this.btn_six = true; this.btn_seven = false; this.ln_seven = false; },
+            showTwo(){ this.btn_one = false; this.btn_two = true; this.ln_two = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            hideTwo(){ this.btn_one = true; this.btn_two = false; this.ln_two = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            showThree(){ this.btn_two = false; this.btn_three = true; this.ln_three = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            hideThree(){ this.btn_two = true; this.btn_three = false; this.ln_three = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            showFour(){ this.btn_three = false; this.btn_four = true; this.ln_four = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            hideFour(){ this.btn_three = true; this.btn_four = false; this.ln_four = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            showFive(){ this.btn_four = false; this.btn_five = true; this.ln_five = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            hideFive(){ this.btn_four = true; this.btn_five = false; this.ln_five = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            showSix(){ this.btn_five = false; this.btn_six = true; this.ln_six = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            hideSix(){ this.btn_five = true; this.btn_six = false; this.ln_six = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            showSeven(){ this.btn_six = false; this.btn_seven = true; this.ln_seven = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; },
+            hideSeven(){ this.btn_six = true; this.btn_seven = false; this.ln_seven = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; },
             getUser(){ // ajax call to get the authenticated user
                 axios.get('api/user')
                 .then((response) => {

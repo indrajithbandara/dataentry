@@ -44679,6 +44679,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -44778,40 +44784,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         showTwo: function showTwo() {
-            this.btn_one = false;this.btn_two = true;this.ln_two = true;
+            this.btn_one = false;this.btn_two = true;this.ln_two = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideTwo: function hideTwo() {
-            this.btn_one = true;this.btn_two = false;this.ln_two = false;
+            this.btn_one = true;this.btn_two = false;this.ln_two = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         showThree: function showThree() {
-            this.btn_two = false;this.btn_three = true;this.ln_three = true;
+            this.btn_two = false;this.btn_three = true;this.ln_three = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideThree: function hideThree() {
-            this.btn_two = true;this.btn_three = false;this.ln_three = false;
+            this.btn_two = true;this.btn_three = false;this.ln_three = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         showFour: function showFour() {
-            this.btn_three = false;this.btn_four = true;this.ln_four = true;
+            this.btn_three = false;this.btn_four = true;this.ln_four = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideFour: function hideFour() {
-            this.btn_three = true;this.btn_four = false;this.ln_four = false;
+            this.btn_three = true;this.btn_four = false;this.ln_four = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         showFive: function showFive() {
-            this.btn_four = false;this.btn_five = true;this.ln_five = true;
+            this.btn_four = false;this.btn_five = true;this.ln_five = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideFive: function hideFive() {
-            this.btn_four = true;this.btn_five = false;this.ln_five = false;
+            this.btn_four = true;this.btn_five = false;this.ln_five = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         showSix: function showSix() {
-            this.btn_five = false;this.btn_six = true;this.ln_six = true;
+            this.btn_five = false;this.btn_six = true;this.ln_six = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideSix: function hideSix() {
-            this.btn_five = true;this.btn_six = false;this.ln_six = false;
+            this.btn_five = true;this.btn_six = false;this.ln_six = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         showSeven: function showSeven() {
-            this.btn_six = false;this.btn_seven = true;this.ln_seven = true;
+            this.btn_six = false;this.btn_seven = true;this.ln_seven = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideSeven: function hideSeven() {
-            this.btn_six = true;this.btn_seven = false;this.ln_seven = false;
+            this.btn_six = true;this.btn_seven = false;this.ln_seven = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         getUser: function getUser() {
             var _this = this;
@@ -45256,7 +45262,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_one),
       expression: "btn_one"
     }],
-    staticClass: "btn btn-info full-width",
+    staticClass: "btn btn-success full-width",
     attrs: {
       "type": "button"
     },
@@ -45276,7 +45282,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_two),
       expression: "btn_two"
     }],
-    staticClass: "btn btn-info full-width",
+    staticClass: "btn btn-success full-width",
     attrs: {
       "type": "button"
     },
@@ -45294,7 +45300,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_two),
       expression: "btn_two"
     }],
-    staticClass: "btn btn-warning full-width",
+    staticClass: "btn btn-danger full-width",
     attrs: {
       "type": "button"
     },
@@ -45314,7 +45320,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_three),
       expression: "btn_three"
     }],
-    staticClass: "btn btn-info full-width",
+    staticClass: "btn btn-success full-width",
     attrs: {
       "type": "button"
     },
@@ -45332,7 +45338,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_three),
       expression: "btn_three"
     }],
-    staticClass: "btn btn-warning full-width",
+    staticClass: "btn btn-danger full-width",
     attrs: {
       "type": "button"
     },
@@ -45352,7 +45358,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_four),
       expression: "btn_four"
     }],
-    staticClass: "btn btn-info full-width",
+    staticClass: "btn btn-success full-width",
     attrs: {
       "type": "button"
     },
@@ -45370,7 +45376,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_four),
       expression: "btn_four"
     }],
-    staticClass: "btn btn-warning full-width",
+    staticClass: "btn btn-danger full-width",
     attrs: {
       "type": "button"
     },
@@ -45390,7 +45396,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_five),
       expression: "btn_five"
     }],
-    staticClass: "btn btn-info full-width",
+    staticClass: "btn btn-success full-width",
     attrs: {
       "type": "button"
     },
@@ -45408,7 +45414,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_five),
       expression: "btn_five"
     }],
-    staticClass: "btn btn-warning full-width",
+    staticClass: "btn btn-danger full-width",
     attrs: {
       "type": "button"
     },
@@ -45428,7 +45434,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_six),
       expression: "btn_six"
     }],
-    staticClass: "btn btn-info full-width",
+    staticClass: "btn btn-success full-width",
     attrs: {
       "type": "button"
     },
@@ -45446,7 +45452,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_six),
       expression: "btn_six"
     }],
-    staticClass: "btn btn-warning full-width",
+    staticClass: "btn btn-danger full-width",
     attrs: {
       "type": "button"
     },
@@ -45480,7 +45486,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.btn_seven),
       expression: "btn_seven"
     }],
-    staticClass: "btn btn-warning full-width",
+    staticClass: "btn btn-danger full-width",
     attrs: {
       "type": "button"
     },
@@ -45492,6 +45498,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('hr', {
     staticClass: "dashed"
   }), _vm._v(" "), _c('div', {
+    ref: "ln_container",
     staticClass: "overflow-scroll padding radius"
   }, [_c('div', {
     attrs: {
@@ -45520,6 +45527,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "text",
       "name": "li_one",
+      "maxlength": "15",
       "required": ""
     },
     domProps: {
@@ -45531,7 +45539,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.invoice.li_one = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), (_vm.invoice.li_one.length == 15) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("15 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-12 col-md-6"
   }, [_c('div', {
     staticClass: "form-group"
@@ -45578,6 +45588,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "qty_one",
       "min": "0",
       "step": "1",
+      "maxlength": "11",
       "required": ""
     },
     domProps: {
@@ -45589,7 +45600,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.invoice.qty_one = $event.target.value
       }
     }
-  })]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), (_vm.invoice.qty_one.length == 11) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("11 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
   }, [_c('label', {
     attrs: {
@@ -45608,6 +45621,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "unit_one",
       "min": "0",
       "step": "0.01",
+      "maxlength": "6",
       "required": ""
     },
     domProps: {
@@ -45619,7 +45633,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.invoice.unit_one = $event.target.value
       }
     }
-  })]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), (_vm.invoice.unit_one.length == 6) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("6 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
   }, [_c('label', {
     attrs: {
@@ -45638,6 +45654,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "extended_one",
       "min": "0",
       "step": "0.01",
+      "maxlength": "8",
       "required": ""
     },
     domProps: {
@@ -45649,7 +45666,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.invoice.extended_one = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _c('br')]), _vm._v(" "), (_vm.ln_two) ? _c('div', {
+  }), _vm._v(" "), (_vm.invoice.extended_one.length == 8) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("8 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('br')]), _vm._v(" "), (_vm.ln_two) ? _c('div', {
     attrs: {
       "id": "line_item_two"
     }

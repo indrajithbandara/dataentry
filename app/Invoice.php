@@ -29,13 +29,13 @@ class Invoice extends Model
         'qty_one',
         'unit_one',
         'extended_one',
-        //=========================== Two
+        // ========================== Two
         'li_two',
         'product_two'
         'qty_two',
         'unit_two',
         'extended_two',
-        // ========================= Three
+        //=========================== Three
         'li_three',
         'product_three',
         'qty_three',
@@ -59,15 +59,15 @@ class Invoice extends Model
         'qty_six',
         'unit_six',
         'extended_six',
-        // ========================== Seven
+        // ========================= Seven
         'li_seven',
         'product_seven',
         'qty_seven',
         'unit_seven',
         'extended_seven',
         // End of line item entries
-        'ship_fee',
         'total',
         'memo'
     ];
+
 }

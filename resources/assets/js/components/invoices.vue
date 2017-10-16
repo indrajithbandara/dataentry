@@ -161,17 +161,17 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_one">Qty</label>
-                                <input v-model="invoice.line_items[0].qty" type="number" name="qty_one" min="0" step="1" class="form-control" maxlength="11" required>
+                                <input v-model="invoice.line_items[0].qty" @keyup="li_one_math()" type="number" name="qty_one" min="0" step="1" class="form-control" maxlength="11" required>
                                 <p class="alert alert-warning" v-if="invoice.line_items[0].qty.length == 11">11 character limit reached!</p>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_one">Unit Price</label>
-                                <input v-model="invoice.line_items[0].unit" type="number" name="unit_one" min="0" step="0.01" class="form-control" maxlength="6" required>
+                                <input v-model="invoice.line_items[0].unit" @keyup="li_one_math()" type="number" name="unit_one" min="0" step="0.01" class="form-control" maxlength="6" required>
                                 <p class="alert alert-warning" v-if="invoice.line_items[0].unit.length == 6">6 character limit reached!</p>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_one">Ext Price</label>
-                                <input v-model="invoice.line_items[0].extended" type="number" name="extended_one" min="0" step="0.01" class="form-control" maxlength="8" required>
+                                <input v-model="invoice.line_items[0].extended" type="number" name="extended_one" min="0" step="0.01" class="form-control"  maxlength="8" required>
                                 <p class="alert alert-warning" v-if="invoice.line_items[0].extended.length == 8">8 character limit reached!</p>
                             </div>
                         </div>
@@ -203,11 +203,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_two">Qty</label>
-                                <input v-model="invoice.line_items[1].qty" type="number" name="qty_two" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[1].qty" @keyup="li_two_math()" type="number" name="qty_two" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_two">Unit Price</label>
-                                <input v-model="invoice.line_items[1].unit" type="number" name="unit_two" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[1].unit" @keyup="li_two_math()" type="number" name="unit_two" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_two">Ext Price</label>
@@ -242,11 +242,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_three">Qty</label>
-                                <input v-model="invoice.line_items[2].qty" type="number" name="qty_three" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[2].qty" @keyup="li_three_math()" type="number" name="qty_three" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_three">Unit Price</label>
-                                <input v-model="invoice.line_items[2].unit" type="number" name="unit_three" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[2].unit" @keyup="li_three_math()" type="number" name="unit_three" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_three">Ext Price</label>
@@ -281,11 +281,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_four">Qty</label>
-                                <input v-model="invoice.line_items[3].qty" type="number" name="qty_four" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[3].qty" @keyup="li_four_math()" type="number" name="qty_four" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_four">Unit Price</label>
-                                <input v-model="invoice.line_items[3].unit" type="number" name="unit_four" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[3].unit" @keyup="li_four_math()" type="number" name="unit_four" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_four">Ext Price</label>
@@ -320,11 +320,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_three">Qty</label>
-                                <input v-model="invoice.line_items[4].qty" type="number" name="qty_five" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[4].qty" @keyup="li_five_math()" type="number" name="qty_five" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_five">Unit Price</label>
-                                <input v-model="invoice.line_items[4].unit" type="number" name="unit_five" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[4].unit" @keyup="li_five_math()" type="number" name="unit_five" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_five">Ext Price</label>
@@ -359,11 +359,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_six">Qty</label>
-                                <input v-model="invoice.line_items[5].qty" type="number" name="qty_six" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[5].qty" @keyup="li_six_math()" type="number" name="qty_six" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_six">Unit Price</label>
-                                <input v-model="invoice.line_items[5].unit" type="number" name="unit_six" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[5].unit" @keyup="li_six_math()" type="number" name="unit_six" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_six">Ext Price</label>
@@ -398,11 +398,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_seven">Qty</label>
-                                <input v-model="invoice.line_items[6].qty" type="number" name="qty_seven" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[6].qty" @keyup="li_seven_math()" type="number" name="qty_seven" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_seven">Unit Price</label>
-                                <input v-model="invoice.line_items[6].unit" type="number" name="unit_seven" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[6].unit" @keyup="li_seven_math()" type="number" name="unit_seven" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_seven">Ext Price</label>
@@ -419,7 +419,7 @@
 
                 <div class="form-group">
                     <label for="ship_fee">Shipping Fee</label>
-                    <input v-model="invoice.ship_fee" type="number" name="ship_fee" min="0" step="0.01" class="form-control">
+                    <input v-model="invoice.ship_fee" type="number" @keyup="getTotal()" name="ship_fee" min="0" step="0.01" class="form-control">
                 </div>
 
                 <div class="pull-right">
@@ -560,6 +560,24 @@
             hideSix(){ this.btn_five = true; this.btn_six = false; this.ln_six = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
             showSeven(){ this.btn_six = false; this.btn_seven = true; this.ln_seven = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; },
             hideSeven(){ this.btn_six = true; this.btn_seven = false; this.ln_seven = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; },
+            getTotal(){
+                this.invoice.total = 
+                this.invoice.line_items[0].extended +
+                this.invoice.line_items[1].extended +
+                this.invoice.line_items[2].extended +
+                this.invoice.line_items[3].extended +
+                this.invoice.line_items[4].extended +
+                this.invoice.line_items[5].extended +
+                this.invoice.line_items[6].extended +
+                parseInt(this.invoice.ship_fee);
+            },
+            li_one_math(){ this.invoice.line_items[0].extended = this.invoice.line_items[0].qty * this.invoice.line_items[0].unit; this.getTotal();},
+            li_two_math(){ this.invoice.line_items[1].extended = this.invoice.line_items[1].qty * this.invoice.line_items[1].unit; this.getTotal();},
+            li_three_math(){ this.invoice.line_items[2].extended = this.invoice.line_items[2].qty * this.invoice.line_items[2].unit; this.getTotal();},
+            li_four_math(){ this.invoice.line_items[3].extended = this.invoice.line_items[3].qty * this.invoice.line_items[3].unit; this.getTotal();},
+            li_five_math(){ this.invoice.line_items[4].extended = this.invoice.line_items[4].qty * this.invoice.line_items[4].unit; this.getTotal();},
+            li_six_math(){ this.invoice.line_items[5].extended = this.invoice.line_items[5].qty * this.invoice.line_items[5].unit; this.getTotal();},
+            li_seven_math(){ this.invoice.line_items[6].extended = this.invoice.line_items[6].qty * this.invoice.line_items[6].unit; this.getTotal();},
             getUser(){ // ajax call to get the authenticated user
                 axios.get('api/user')
                 .then((response) => {
@@ -572,7 +590,7 @@
                 axios.get('api/customers')
                 .then((response) => {
                     this.customers_list = response.data;
-                    console.log(response.data);
+                    console.log('From getCustomers method',response.data);
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -581,7 +599,7 @@
                 axios.get('api/products')
                 .then((response) => {
                     this.products_list = response.data;
-                    console.log(response.data);
+                    console.log('From getProducts method:', response.data);
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -604,14 +622,17 @@
                     }
                 }).then((response) => {
                     self.invoice.customer = response.data;
-                    console.log(response.data);
+                    console.log('From getOneCustomer method:',response.data);
+                    console.log('Model now looks like:', self.invoice.customer);
                 }).catch((error) => {
                     console.log(error.message);
                 });
             },
             createInvoice(){ // post request to add an invoice
-                this.getOneCustomer(this.invoice.customer[0].id[0]);
                 let self = this;
+                var id = parseInt(self.invoice.customer[0].id[0]);
+                console.log(id);
+                self.getOneCustomer(id);
                 let params = Object.assign({}, self.invoice);
                 axios({
                     method: 'post',
@@ -620,8 +641,8 @@
                     validateStatus(status) {
                         return status >= 200 && status < 300;
                     }
-                }).then(() => {
-                    self.resetValues();
+                }).then((response) => {
+                    console.log(response.data);
                 }).catch((error) => {
                     console.log(error.message);
                 });

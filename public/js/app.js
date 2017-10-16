@@ -44820,6 +44820,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         hideSeven: function hideSeven() {
             this.btn_six = true;this.btn_seven = false;this.ln_seven = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
+        getTotal: function getTotal() {
+            this.invoice.total = this.invoice.line_items[0].extended + this.invoice.line_items[1].extended + this.invoice.line_items[2].extended + this.invoice.line_items[3].extended + this.invoice.line_items[4].extended + this.invoice.line_items[5].extended + this.invoice.line_items[6].extended + parseInt(this.invoice.ship_fee);
+        },
+        li_one_math: function li_one_math() {
+            this.invoice.line_items[0].extended = this.invoice.line_items[0].qty * this.invoice.line_items[0].unit;this.getTotal();
+        },
+        li_two_math: function li_two_math() {
+            this.invoice.line_items[1].extended = this.invoice.line_items[1].qty * this.invoice.line_items[1].unit;this.getTotal();
+        },
+        li_three_math: function li_three_math() {
+            this.invoice.line_items[2].extended = this.invoice.line_items[2].qty * this.invoice.line_items[2].unit;this.getTotal();
+        },
+        li_four_math: function li_four_math() {
+            this.invoice.line_items[3].extended = this.invoice.line_items[3].qty * this.invoice.line_items[3].unit;this.getTotal();
+        },
+        li_five_math: function li_five_math() {
+            this.invoice.line_items[4].extended = this.invoice.line_items[4].qty * this.invoice.line_items[4].unit;this.getTotal();
+        },
+        li_six_math: function li_six_math() {
+            this.invoice.line_items[5].extended = this.invoice.line_items[5].qty * this.invoice.line_items[5].unit;this.getTotal();
+        },
+        li_seven_math: function li_seven_math() {
+            this.invoice.line_items[6].extended = this.invoice.line_items[6].qty * this.invoice.line_items[6].unit;this.getTotal();
+        },
         getUser: function getUser() {
             var _this = this;
 
@@ -44835,7 +44859,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('api/customers').then(function (response) {
                 _this2.customers_list = response.data;
-                console.log(response.data);
+                console.log('From getCustomers method', response.data);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -44845,7 +44869,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('api/products').then(function (response) {
                 _this3.products_list = response.data;
-                console.log(response.data);
+                console.log('From getProducts method:', response.data);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -44871,15 +44895,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (response) {
                 self.invoice.customer = response.data;
-                console.log(response.data);
+                console.log('From getOneCustomer method:', response.data);
+                console.log('Model now looks like:', self.invoice.customer);
             }).catch(function (error) {
                 console.log(error.message);
             });
         },
         createInvoice: function createInvoice() {
             // post request to add an invoice
-            this.getOneCustomer(this.invoice.customer[0].id[0]);
             var self = this;
+            var id = parseInt(self.invoice.customer[0].id[0]);
+            console.log(id);
+            self.getOneCustomer(id);
             var params = Object.assign({}, self.invoice);
             axios({
                 method: 'post',
@@ -44888,8 +44915,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 validateStatus: function validateStatus(status) {
                     return status >= 200 && status < 300;
                 }
-            }).then(function () {
-                self.resetValues();
+            }).then(function (response) {
+                console.log(response.data);
             }).catch(function (error) {
                 console.log(error.message);
             });
@@ -45636,6 +45663,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[0].qty)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_one_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[0].qty = $event.target.value
@@ -45669,6 +45699,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[0].unit)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_one_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[0].unit = $event.target.value
@@ -45802,6 +45835,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[1].qty)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_two_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[1].qty = $event.target.value
@@ -45832,6 +45868,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[1].unit)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_two_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[1].unit = $event.target.value
@@ -45960,6 +45999,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[2].qty)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_three_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[2].qty = $event.target.value
@@ -45990,6 +46032,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[2].unit)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_three_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[2].unit = $event.target.value
@@ -46118,6 +46163,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[3].qty)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_four_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[3].qty = $event.target.value
@@ -46148,6 +46196,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[3].unit)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_four_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[3].unit = $event.target.value
@@ -46276,6 +46327,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[4].qty)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_five_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[4].qty = $event.target.value
@@ -46306,6 +46360,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[4].unit)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_five_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[4].unit = $event.target.value
@@ -46434,6 +46491,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[5].qty)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_six_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[5].qty = $event.target.value
@@ -46464,6 +46524,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[5].unit)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_six_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[5].unit = $event.target.value
@@ -46592,6 +46655,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[6].qty)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_seven_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[6].qty = $event.target.value
@@ -46622,6 +46688,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.line_items[6].unit)
     },
     on: {
+      "keyup": function($event) {
+        _vm.li_seven_math()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.line_items[6].unit = $event.target.value
@@ -46683,6 +46752,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.ship_fee)
     },
     on: {
+      "keyup": function($event) {
+        _vm.getTotal()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.ship_fee = $event.target.value

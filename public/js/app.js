@@ -44685,6 +44685,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -44708,65 +44716,56 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             btn_six: false,
             btn_seven: false,
             list: [], // Array for listting out the results of the ajax calls
+            customers_list: [], // Array for listting out the available customers
+            products_list: [], // Array for listting out the available products
             invoice: { // Invoices model and it's values
                 inv_num: '',
                 date: '',
                 // Copy of the customer in the customers table
-                customer: '',
-                name: '',
-                shipto: '',
-                billto: '',
-                buyer: '',
-                email: '',
-                phone: '',
-                country: '',
-                disclaimer: '',
-                comments: '',
+                customer: [{
+                    id: '',
+                    name: '',
+                    shipto: '',
+                    billto: '',
+                    buyer: '',
+                    email: '',
+                    phone: '',
+                    country: '',
+                    disclaimer: '',
+                    comments: ''
+                }],
                 // End of customer copy
                 po_num: '',
                 // Start of line item enries x 7
-                // ========================== One
-                li_one: '',
-                product_one: '',
-                qty_one: 0,
-                unit_one: 0,
-                extended_one: 0,
-                // ========================== Two
-                li_two: '',
-                product_tw: '',
-                qty_two: 0,
-                unit_two: 0,
-                extended_two: 0,
-                //=========================== Three
-                li_three: '',
-                product_three: '',
-                qty_three: 0,
-                unit_three: 0,
-                extended_three: 0,
-                // ========================= Four
-                li_four: '',
-                product_four: '',
-                qty_four: 0,
-                unit_four: 0,
-                extended_four: 0,
-                // ========================= Five
-                li_five: '',
-                product_five: '',
-                qty_five: 0,
-                unit_five: 0,
-                extended_five: 0,
-                // ========================= Six
-                li_six: '',
-                product_six: '',
-                qty_six: 0,
-                unit_six: 0,
-                extended_six: 0,
-                // ========================= Seven
-                li_seven: '',
-                product_seven: '',
-                qty_seven: 0,
-                unit_seven: 0,
-                extended_seven: 0,
+                line_items: [{
+                    // ========================== One
+                    item: '', product: '',
+                    qty: 0, unit: 0, extended: 0
+                }, {
+                    // ========================== Two
+                    item: '', product: '',
+                    qty: 0, unit: 0, extended: 0
+                }, {
+                    //=========================== Three
+                    item: '', product: '',
+                    qty: 0, unit: 0, extended: 0
+                }, {
+                    // ========================= Four
+                    item: '', product: '',
+                    qty: 0, unit: 0, extended: 0
+                }, {
+                    // ========================= Five
+                    item: '', product: '',
+                    qty: 0, unit: 0, extended: 0
+                }, {
+                    // ========================= Six
+                    item: '', product: '',
+                    qty: 0, unit: 0, extended: 0
+                }, {
+                    // ========================= Seven
+                    item: '', product: '',
+                    qty: 0, unit: 0, extended: 0
+                }],
                 // End of line item entries
                 ship_fee: 0,
                 total: 0,
@@ -44779,6 +44778,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         // when vue instance is mounted, get the customers and the authenticated user.
         this.getInvoices();
+        this.getCustomers();
+        this.getProducts();
         this.getUser();
     },
 
@@ -44829,21 +44830,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        getInvoices: function getInvoices() {
+        getCustomers: function getCustomers() {
             var _this2 = this;
 
-            // ajax call to get all the customers
-            axios.get('api/invoices').then(function (response) {
-                _this2.list = response.data;
+            axios.get('api/customers').then(function (response) {
+                _this2.customers_list = response.data;
+                console.log(response.data);
             }).catch(function (error) {
                 console.log(error);
             });
         },
+        getProducts: function getProducts() {
+            var _this3 = this;
+
+            axios.get('api/products').then(function (response) {
+                _this3.products_list = response.data;
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getInvoices: function getInvoices() {
+            var _this4 = this;
+
+            // ajax call to get all the customers
+            axios.get('api/invoices').then(function (response) {
+                _this4.list = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getOneCustomer: function getOneCustomer(id) {
+            // grad a specific customer to store with invoice.
+            var self = this;
+            axios({
+                method: 'get',
+                url: 'api/customers/' + id,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function (response) {
+                self.invoice.customer = response.data;
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+        },
         createInvoice: function createInvoice() {
             // post request to add an invoice
-            // this.valueCheck();
+            this.getOneCustomer(this.invoice.customer[0].id[0]);
             var self = this;
-            var params = Object.assign({}, self.customer);
+            var params = Object.assign({}, self.invoice);
             axios({
                 method: 'post',
                 url: 'api/invoices/store',
@@ -45206,8 +45243,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.customer),
-      expression: "invoice.customer"
+      value: (_vm.invoice.customer[0].id),
+      expression: "invoice.customer[0].id"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45221,10 +45258,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.invoice.customer = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.invoice.customer[0].id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, [_c('option', [_vm._v("Choose an option")])])]), _vm._v(" "), _c('div', {
+  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.customers_list), function(customer) {
+    return _c('option', [_vm._v(_vm._s(customer.id) + " - " + _vm._s(customer.name))])
+  })], 2)]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -45520,8 +45559,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.li_one),
-      expression: "invoice.li_one"
+      value: (_vm.invoice.line_items[0].item),
+      expression: "invoice.line_items[0].item"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45531,15 +45570,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.li_one)
+      "value": (_vm.invoice.line_items[0].item)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.li_one = $event.target.value
+        _vm.invoice.line_items[0].item = $event.target.value
       }
     }
-  }), _vm._v(" "), (_vm.invoice.li_one.length == 15) ? _c('p', {
+  }), _vm._v(" "), (_vm.invoice.line_items[0].item.length == 15) ? _c('p', {
     staticClass: "alert alert-warning"
   }, [_vm._v("15 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-12 col-md-6"
@@ -45549,8 +45588,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.product_one),
-      expression: "invoice.product_one"
+      value: (_vm.invoice.line_items[0].product),
+      expression: "invoice.line_items[0].product"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45564,10 +45603,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.invoice.product_one = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.invoice.line_items[0].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products_list), function(product) {
+    return _c('option', [_vm._v(_vm._s(product.name))])
+  })], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
@@ -45579,8 +45620,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.qty_one),
-      expression: "invoice.qty_one"
+      value: (_vm.invoice.line_items[0].qty),
+      expression: "invoice.line_items[0].qty"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45592,15 +45633,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.qty_one)
+      "value": (_vm.invoice.line_items[0].qty)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.qty_one = $event.target.value
+        _vm.invoice.line_items[0].qty = $event.target.value
       }
     }
-  }), _vm._v(" "), (_vm.invoice.qty_one.length == 11) ? _c('p', {
+  }), _vm._v(" "), (_vm.invoice.line_items[0].qty.length == 11) ? _c('p', {
     staticClass: "alert alert-warning"
   }, [_vm._v("11 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
@@ -45612,8 +45653,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.unit_one),
-      expression: "invoice.unit_one"
+      value: (_vm.invoice.line_items[0].unit),
+      expression: "invoice.line_items[0].unit"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45625,15 +45666,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.unit_one)
+      "value": (_vm.invoice.line_items[0].unit)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.unit_one = $event.target.value
+        _vm.invoice.line_items[0].unit = $event.target.value
       }
     }
-  }), _vm._v(" "), (_vm.invoice.unit_one.length == 6) ? _c('p', {
+  }), _vm._v(" "), (_vm.invoice.line_items[0].unit.length == 6) ? _c('p', {
     staticClass: "alert alert-warning"
   }, [_vm._v("6 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
@@ -45645,8 +45686,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.extended_one),
-      expression: "invoice.extended_one"
+      value: (_vm.invoice.line_items[0].extended),
+      expression: "invoice.line_items[0].extended"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45658,15 +45699,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.extended_one)
+      "value": (_vm.invoice.line_items[0].extended)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.extended_one = $event.target.value
+        _vm.invoice.line_items[0].extended = $event.target.value
       }
     }
-  }), _vm._v(" "), (_vm.invoice.extended_one.length == 8) ? _c('p', {
+  }), _vm._v(" "), (_vm.invoice.line_items[0].extended.length == 8) ? _c('p', {
     staticClass: "alert alert-warning"
   }, [_vm._v("8 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('br')]), _vm._v(" "), (_vm.ln_two) ? _c('div', {
     attrs: {
@@ -45688,8 +45729,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.li_two),
-      expression: "invoice.li_two"
+      value: (_vm.invoice.line_items[1].item),
+      expression: "invoice.line_items[1].item"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45698,12 +45739,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.li_two)
+      "value": (_vm.invoice.line_items[1].item)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.li_two = $event.target.value
+        _vm.invoice.line_items[1].item = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -45714,8 +45755,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.product_two),
-      expression: "invoice.product_two"
+      value: (_vm.invoice.line_items[1].product),
+      expression: "invoice.line_items[1].product"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45729,10 +45770,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.invoice.product_two = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.invoice.line_items[1].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products_list), function(product) {
+    return _c('option', [_vm._v(_vm._s(product.name))])
+  })], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
@@ -45744,8 +45787,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.qty_two),
-      expression: "invoice.qty_two"
+      value: (_vm.invoice.line_items[1].qty),
+      expression: "invoice.line_items[1].qty"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45756,12 +45799,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.qty_two)
+      "value": (_vm.invoice.line_items[1].qty)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.qty_two = $event.target.value
+        _vm.invoice.line_items[1].qty = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -45774,8 +45817,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.unit_two),
-      expression: "invoice.unit_two"
+      value: (_vm.invoice.line_items[1].unit),
+      expression: "invoice.line_items[1].unit"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45786,12 +45829,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.unit_two)
+      "value": (_vm.invoice.line_items[1].unit)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.unit_two = $event.target.value
+        _vm.invoice.line_items[1].unit = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -45804,8 +45847,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.extended_two),
-      expression: "invoice.extended_two"
+      value: (_vm.invoice.line_items[1].extended),
+      expression: "invoice.line_items[1].extended"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45816,12 +45859,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.extended_two)
+      "value": (_vm.invoice.line_items[1].extended)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.extended_two = $event.target.value
+        _vm.invoice.line_items[1].extended = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln_three) ? _c('div', {
@@ -45844,8 +45887,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.li_three),
-      expression: "invoice.li_three"
+      value: (_vm.invoice.line_items[2].item),
+      expression: "invoice.line_items[2].item"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45854,12 +45897,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.li_three)
+      "value": (_vm.invoice.line_items[2].item)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.li_three = $event.target.value
+        _vm.invoice.line_items[2].item = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -45870,8 +45913,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.product_three),
-      expression: "invoice.product_three"
+      value: (_vm.invoice.line_items[2].product),
+      expression: "invoice.line_items[2].product"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45885,10 +45928,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.invoice.product_three = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.invoice.line_items[2].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products_list), function(product) {
+    return _c('option', [_vm._v(_vm._s(product.name))])
+  })], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
@@ -45900,8 +45945,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.qty_three),
-      expression: "invoice.qty_three"
+      value: (_vm.invoice.line_items[2].qty),
+      expression: "invoice.line_items[2].qty"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45912,12 +45957,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.qty_three)
+      "value": (_vm.invoice.line_items[2].qty)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.qty_three = $event.target.value
+        _vm.invoice.line_items[2].qty = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -45930,8 +45975,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.unit_three),
-      expression: "invoice.unit_three"
+      value: (_vm.invoice.line_items[2].unit),
+      expression: "invoice.line_items[2].unit"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45942,12 +45987,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.unit_three)
+      "value": (_vm.invoice.line_items[2].unit)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.unit_three = $event.target.value
+        _vm.invoice.line_items[2].unit = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -45960,8 +46005,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.extended_three),
-      expression: "invoice.extended_three"
+      value: (_vm.invoice.line_items[2].extended),
+      expression: "invoice.line_items[2].extended"
     }],
     staticClass: "form-control",
     attrs: {
@@ -45972,12 +46017,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.extended_three)
+      "value": (_vm.invoice.line_items[2].extended)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.extended_three = $event.target.value
+        _vm.invoice.line_items[2].extended = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln_four) ? _c('div', {
@@ -46000,8 +46045,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.li_four),
-      expression: "invoice.li_four"
+      value: (_vm.invoice.line_items[3].item),
+      expression: "invoice.line_items[3].item"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46010,12 +46055,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.li_four)
+      "value": (_vm.invoice.line_items[3].item)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.li_four = $event.target.value
+        _vm.invoice.line_items[3].item = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -46026,8 +46071,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.product_four),
-      expression: "invoice.product_four"
+      value: (_vm.invoice.line_items[3].product),
+      expression: "invoice.line_items[3].product"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46041,10 +46086,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.invoice.product_four = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.invoice.line_items[3].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products_list), function(product) {
+    return _c('option', [_vm._v(_vm._s(product.name))])
+  })], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
@@ -46056,8 +46103,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.qty_four),
-      expression: "invoice.qty_four"
+      value: (_vm.invoice.line_items[3].qty),
+      expression: "invoice.line_items[3].qty"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46068,12 +46115,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.qty_four)
+      "value": (_vm.invoice.line_items[3].qty)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.qty_four = $event.target.value
+        _vm.invoice.line_items[3].qty = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -46086,8 +46133,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.unit_four),
-      expression: "invoice.unit_four"
+      value: (_vm.invoice.line_items[3].unit),
+      expression: "invoice.line_items[3].unit"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46098,12 +46145,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.unit_four)
+      "value": (_vm.invoice.line_items[3].unit)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.unit_four = $event.target.value
+        _vm.invoice.line_items[3].unit = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -46116,8 +46163,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.extended_four),
-      expression: "invoice.extended_four"
+      value: (_vm.invoice.line_items[3].extended),
+      expression: "invoice.line_items[3].extended"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46128,12 +46175,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.extended_four)
+      "value": (_vm.invoice.line_items[3].extended)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.extended_four = $event.target.value
+        _vm.invoice.line_items[3].extended = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln_five) ? _c('div', {
@@ -46156,8 +46203,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.li_five),
-      expression: "invoice.li_five"
+      value: (_vm.invoice.line_items[4].item),
+      expression: "invoice.line_items[4].item"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46166,12 +46213,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.li_five)
+      "value": (_vm.invoice.line_items[4].item)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.li_five = $event.target.value
+        _vm.invoice.line_items[4].item = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -46182,8 +46229,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.product_five),
-      expression: "invoice.product_five"
+      value: (_vm.invoice.line_items[4].product),
+      expression: "invoice.line_items[4].product"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46197,10 +46244,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.invoice.product_five = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.invoice.line_items[4].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products_list), function(product) {
+    return _c('option', [_vm._v(_vm._s(product.name))])
+  })], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
@@ -46212,8 +46261,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.qty_five),
-      expression: "invoice.qty_five"
+      value: (_vm.invoice.line_items[4].qty),
+      expression: "invoice.line_items[4].qty"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46224,12 +46273,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.qty_five)
+      "value": (_vm.invoice.line_items[4].qty)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.qty_five = $event.target.value
+        _vm.invoice.line_items[4].qty = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -46242,8 +46291,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.unit_five),
-      expression: "invoice.unit_five"
+      value: (_vm.invoice.line_items[4].unit),
+      expression: "invoice.line_items[4].unit"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46254,12 +46303,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.unit_five)
+      "value": (_vm.invoice.line_items[4].unit)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.unit_five = $event.target.value
+        _vm.invoice.line_items[4].unit = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -46272,8 +46321,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.extended_five),
-      expression: "invoice.extended_five"
+      value: (_vm.invoice.line_items[4].extended),
+      expression: "invoice.line_items[4].extended"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46284,12 +46333,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.extended_five)
+      "value": (_vm.invoice.line_items[4].extended)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.extended_five = $event.target.value
+        _vm.invoice.line_items[4].extended = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln_six) ? _c('div', {
@@ -46312,8 +46361,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.li_six),
-      expression: "invoice.li_six"
+      value: (_vm.invoice.line_items[5].item),
+      expression: "invoice.line_items[5].item"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46322,12 +46371,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.li_six)
+      "value": (_vm.invoice.line_items[5].item)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.li_six = $event.target.value
+        _vm.invoice.line_items[5].item = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -46338,8 +46387,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.product_six),
-      expression: "invoice.product_six"
+      value: (_vm.invoice.line_items[5].product),
+      expression: "invoice.line_items[5].product"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46353,10 +46402,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.invoice.product_six = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.invoice.line_items[5].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products_list), function(product) {
+    return _c('option', [_vm._v(_vm._s(product.name))])
+  })], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
@@ -46368,8 +46419,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.qty_six),
-      expression: "invoice.qty_six"
+      value: (_vm.invoice.line_items[5].qty),
+      expression: "invoice.line_items[5].qty"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46380,12 +46431,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.qty_six)
+      "value": (_vm.invoice.line_items[5].qty)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.qty_six = $event.target.value
+        _vm.invoice.line_items[5].qty = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -46398,8 +46449,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.unit_six),
-      expression: "invoice.unit_six"
+      value: (_vm.invoice.line_items[5].unit),
+      expression: "invoice.line_items[5].unit"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46410,12 +46461,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.unit_six)
+      "value": (_vm.invoice.line_items[5].unit)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.unit_six = $event.target.value
+        _vm.invoice.line_items[5].unit = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -46428,8 +46479,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.extended_six),
-      expression: "invoice.extended_six"
+      value: (_vm.invoice.line_items[5].extended),
+      expression: "invoice.line_items[5].extended"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46440,12 +46491,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.extended_six)
+      "value": (_vm.invoice.line_items[5].extended)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.extended_six = $event.target.value
+        _vm.invoice.line_items[5].extended = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln_seven) ? _c('div', {
@@ -46468,8 +46519,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.li_seven),
-      expression: "invoice.li_seven"
+      value: (_vm.invoice.line_items[6].item),
+      expression: "invoice.line_items[6].item"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46478,12 +46529,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.li_seven)
+      "value": (_vm.invoice.line_items[6].item)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.li_seven = $event.target.value
+        _vm.invoice.line_items[6].item = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -46494,8 +46545,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.product_seven),
-      expression: "invoice.product_seven"
+      value: (_vm.invoice.line_items[6].product),
+      expression: "invoice.line_items[6].product"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46509,10 +46560,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.invoice.product_seven = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.invoice.line_items[6].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, [_c('option', [_vm._v("Choose An Option")])])])])]), _vm._v(" "), _c('div', {
+  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products_list), function(product) {
+    return _c('option', [_vm._v(_vm._s(product.name))])
+  })], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
@@ -46524,8 +46577,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.qty_seven),
-      expression: "invoice.qty_seven"
+      value: (_vm.invoice.line_items[6].qty),
+      expression: "invoice.line_items[6].qty"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46536,12 +46589,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.qty_seven)
+      "value": (_vm.invoice.line_items[6].qty)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.qty_seven = $event.target.value
+        _vm.invoice.line_items[6].qty = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -46554,8 +46607,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.unit_seven),
-      expression: "invoice.unit_seven"
+      value: (_vm.invoice.line_items[6].unit),
+      expression: "invoice.line_items[6].unit"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46566,12 +46619,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.unit_seven)
+      "value": (_vm.invoice.line_items[6].unit)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.unit_seven = $event.target.value
+        _vm.invoice.line_items[6].unit = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -46584,8 +46637,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.extended_seven),
-      expression: "invoice.extended_seven"
+      value: (_vm.invoice.line_items[6].extended),
+      expression: "invoice.line_items[6].extended"
     }],
     staticClass: "form-control",
     attrs: {
@@ -46596,12 +46649,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.extended_seven)
+      "value": (_vm.invoice.line_items[6].extended)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.invoice.extended_seven = $event.target.value
+        _vm.invoice.line_items[6].extended = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('br')]) : _vm._e()]), _vm._v(" "), _c('hr', {

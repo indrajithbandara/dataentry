@@ -6,7 +6,7 @@
         </div>
         <hr>
         <div v-show="table">
-            <!-- Customers Table -->
+            <!-- Invoices Table -->
             <div id="product-table" v-if="list.length > 0" class="table-responsive">
                 <table class="table table-condensed">
                     <thead>
@@ -36,10 +36,10 @@
             <div v-else> 
                 <p class="alert alert-info text-center">You currently have no invoices to show.</p>
             </div>
-            <!-- end of customer table -->
+            <!-- end of Invoices table -->
         </div>
         <hr>
-        <!-- Add customer Form -->
+        <!-- Add An Invoice Form -->
         <div v-show="!table">
             <h2 class="text-center">Add Invoice</h2>
             <form action="#" @submit.prevent="edit ? updateInvoice(invoice.id) : createInvoice()">
@@ -62,8 +62,9 @@
 
                 <div class="form-group">
                     <label>Customer</label>
-                    <select v-model="invoice.customer" class="form-control" required>
-                        <option>Choose an option</option>
+                    <select v-model="invoice.customer[0].id" class="form-control" required>
+                        <option>Choose An Item</option>
+                        <option v-for="customer in customers_list">{{ customer.id }} - {{ customer.name }}</option>
                     </select>
                 </div>
 
@@ -142,15 +143,16 @@
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="li_one">Line Item</label>
-                                    <input v-model="invoice.li_one" type="text" name="li_one" class="form-control" maxlength="15" required>
-                                    <p class="alert alert-warning" v-if="invoice.li_one.length == 15">15 character limit reached!</p>
+                                    <input v-model="invoice.line_items[0].item" type="text" name="li_one" class="form-control" maxlength="15" required>
+                                    <p class="alert alert-warning" v-if="invoice.line_items[0].item.length == 15">15 character limit reached!</p>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label>Product</label>
-                                    <select v-model="invoice.product_one" class="form-control" required>
-                                        <option>Choose An Option</option>
+                                    <select v-model="invoice.line_items[0].product" class="form-control" required>
+                                        <option>Choose An Item</option>
+                                        <option v-for="product in products_list">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -159,18 +161,18 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_one">Qty</label>
-                                <input v-model="invoice.qty_one" type="number" name="qty_one" min="0" step="1" class="form-control" maxlength="11" required>
-                                <p class="alert alert-warning" v-if="invoice.qty_one.length == 11">11 character limit reached!</p>
+                                <input v-model="invoice.line_items[0].qty" type="number" name="qty_one" min="0" step="1" class="form-control" maxlength="11" required>
+                                <p class="alert alert-warning" v-if="invoice.line_items[0].qty.length == 11">11 character limit reached!</p>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_one">Unit Price</label>
-                                <input v-model="invoice.unit_one" type="number" name="unit_one" min="0" step="0.01" class="form-control" maxlength="6" required>
-                                <p class="alert alert-warning" v-if="invoice.unit_one.length == 6">6 character limit reached!</p>
+                                <input v-model="invoice.line_items[0].unit" type="number" name="unit_one" min="0" step="0.01" class="form-control" maxlength="6" required>
+                                <p class="alert alert-warning" v-if="invoice.line_items[0].unit.length == 6">6 character limit reached!</p>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_one">Ext Price</label>
-                                <input v-model="invoice.extended_one" type="number" name="extended_one" min="0" step="0.01" class="form-control" maxlength="8" required>
-                                <p class="alert alert-warning" v-if="invoice.extended_one.length == 8">8 character limit reached!</p>
+                                <input v-model="invoice.line_items[0].extended" type="number" name="extended_one" min="0" step="0.01" class="form-control" maxlength="8" required>
+                                <p class="alert alert-warning" v-if="invoice.line_items[0].extended.length == 8">8 character limit reached!</p>
                             </div>
                         </div>
                         <br />
@@ -184,14 +186,15 @@
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="li_two">Line Item</label>
-                                    <input v-model="invoice.li_two" type="text" name="li_two" class="form-control" required>
+                                    <input v-model="invoice.line_items[1].item" type="text" name="li_two" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label>Product</label>
-                                    <select v-model="invoice.product_two" class="form-control" required>
-                                        <option>Choose An Option</option>
+                                    <select v-model="invoice.line_items[1].product" class="form-control" required>
+                                        <option>Choose An Item</option>
+                                        <option v-for="product in products_list">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -200,15 +203,15 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_two">Qty</label>
-                                <input v-model="invoice.qty_two" type="number" name="qty_two" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[1].qty" type="number" name="qty_two" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_two">Unit Price</label>
-                                <input v-model="invoice.unit_two" type="number" name="unit_two" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[1].unit" type="number" name="unit_two" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_two">Ext Price</label>
-                                <input v-model="invoice.extended_two" type="number" name="extended_two" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[1].extended" type="number" name="extended_two" min="0" step="0.01" class="form-control" required>
                             </div>
                         </div>
                         <br />
@@ -222,14 +225,15 @@
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="li_three">Line Item</label>
-                                    <input v-model="invoice.li_three" type="text" name="li_three" class="form-control" required>
+                                    <input v-model="invoice.line_items[2].item" type="text" name="li_three" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label>Product</label>
-                                    <select v-model="invoice.product_three" class="form-control" required>
-                                        <option>Choose An Option</option>
+                                    <select v-model="invoice.line_items[2].product" class="form-control" required>
+                                        <option>Choose An Item</option>
+                                        <option v-for="product in products_list">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -238,15 +242,15 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_three">Qty</label>
-                                <input v-model="invoice.qty_three" type="number" name="qty_three" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[2].qty" type="number" name="qty_three" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_three">Unit Price</label>
-                                <input v-model="invoice.unit_three" type="number" name="unit_three" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[2].unit" type="number" name="unit_three" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_three">Ext Price</label>
-                                <input v-model="invoice.extended_three" type="number" name="extended_three" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[2].extended" type="number" name="extended_three" min="0" step="0.01" class="form-control" required>
                             </div>
                         </div>
                         <br />
@@ -260,14 +264,15 @@
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="li_four">Line Item</label>
-                                    <input v-model="invoice.li_four" type="text" name="li_four" class="form-control" required>
+                                    <input v-model="invoice.line_items[3].item" type="text" name="li_four" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label>Product</label>
-                                    <select v-model="invoice.product_four" class="form-control" required>
-                                        <option>Choose An Option</option>
+                                    <select v-model="invoice.line_items[3].product" class="form-control" required>
+                                        <option>Choose An Item</option>
+                                        <option v-for="product in products_list">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -276,15 +281,15 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_four">Qty</label>
-                                <input v-model="invoice.qty_four" type="number" name="qty_four" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[3].qty" type="number" name="qty_four" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_four">Unit Price</label>
-                                <input v-model="invoice.unit_four" type="number" name="unit_four" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[3].unit" type="number" name="unit_four" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_four">Ext Price</label>
-                                <input v-model="invoice.extended_four" type="number" name="extended_four" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[3].extended" type="number" name="extended_four" min="0" step="0.01" class="form-control" required>
                             </div>
                         </div>
                         <br />
@@ -298,14 +303,15 @@
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="li_five">Line Item</label>
-                                    <input v-model="invoice.li_five" type="text" name="li_five" class="form-control" required>
+                                    <input v-model="invoice.line_items[4].item" type="text" name="li_five" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label>Product</label>
-                                    <select v-model="invoice.product_five" class="form-control" required>
-                                        <option>Choose An Option</option>
+                                    <select v-model="invoice.line_items[4].product" class="form-control" required>
+                                        <option>Choose An Item</option>
+                                        <option v-for="product in products_list">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -314,15 +320,15 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_three">Qty</label>
-                                <input v-model="invoice.qty_five" type="number" name="qty_five" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[4].qty" type="number" name="qty_five" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_five">Unit Price</label>
-                                <input v-model="invoice.unit_five" type="number" name="unit_five" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[4].unit" type="number" name="unit_five" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_five">Ext Price</label>
-                                <input v-model="invoice.extended_five" type="number" name="extended_five" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[4].extended" type="number" name="extended_five" min="0" step="0.01" class="form-control" required>
                             </div>
                         </div>
                         <br />
@@ -336,14 +342,15 @@
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="li_six">Line Item</label>
-                                    <input v-model="invoice.li_six" type="text" name="li_six" class="form-control" required>
+                                    <input v-model="invoice.line_items[5].item" type="text" name="li_six" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label>Product</label>
-                                    <select v-model="invoice.product_six" class="form-control" required>
-                                        <option>Choose An Option</option>
+                                    <select v-model="invoice.line_items[5].product" class="form-control" required>
+                                        <option>Choose An Item</option>
+                                        <option v-for="product in products_list">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -352,15 +359,15 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_six">Qty</label>
-                                <input v-model="invoice.qty_six" type="number" name="qty_six" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[5].qty" type="number" name="qty_six" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_six">Unit Price</label>
-                                <input v-model="invoice.unit_six" type="number" name="unit_six" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[5].unit" type="number" name="unit_six" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_six">Ext Price</label>
-                                <input v-model="invoice.extended_six" type="number" name="extended_six" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[5].extended" type="number" name="extended_six" min="0" step="0.01" class="form-control" required>
                             </div>
                         </div>
                         <br />
@@ -374,14 +381,15 @@
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="li_seven">Line Item</label>
-                                    <input v-model="invoice.li_seven" type="text" name="li_seven" class="form-control" required>
+                                    <input v-model="invoice.line_items[6].item" type="text" name="li_seven" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label>Product</label>
-                                    <select v-model="invoice.product_seven" class="form-control" required>
-                                        <option>Choose An Option</option>
+                                    <select v-model="invoice.line_items[6].product" class="form-control" required>
+                                        <option>Choose An Item</option>
+                                        <option v-for="product in products_list">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -390,15 +398,15 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_seven">Qty</label>
-                                <input v-model="invoice.qty_seven" type="number" name="qty_seven" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[6].qty" type="number" name="qty_seven" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_seven">Unit Price</label>
-                                <input v-model="invoice.unit_seven" type="number" name="unit_seven" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[6].unit" type="number" name="unit_seven" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_seven">Ext Price</label>
-                                <input v-model="invoice.extended_seven" type="number" name="extended_seven" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[6].extended" type="number" name="extended_seven" min="0" step="0.01" class="form-control" required>
                             </div>
                         </div>
                         <br />
@@ -461,24 +469,32 @@
                 btn_six: false,
                 btn_seven: false,
                 list: [], // Array for listting out the results of the ajax calls
+                customers_list: [], // Array for listting out the available customers
+                products_list: [], // Array for listting out the available products
                 invoice: { // Invoices model and it's values
                     inv_num: '',
                     date: '',
                     // Copy of the customer in the customers table
-                    customer: '',
-                    name: '',
-                    shipto: '',
-                    billto: '',
-                    buyer: '',
-                    email: '',
-                    phone: '',
-                    country: '',
-                    disclaimer: '',
-                    comments: '',
+                    customer: 
+                    [
+                        {
+                            id: '',
+                            name: '',
+                            shipto: '',
+                            billto: '',
+                            buyer: '',
+                            email: '',
+                            phone: '',
+                            country: '',
+                            disclaimer: '',
+                            comments: '',
+                        }
+                    ],
                     // End of customer copy
                     po_num: '',
                     // Start of line item enries x 7
-                    line_items: [
+                    line_items: 
+                    [
                         {
                             // ========================== One
                             item: '', product: '', 
@@ -527,6 +543,8 @@
         mounted() { 
             // when vue instance is mounted, get the customers and the authenticated user.
             this.getInvoices();
+            this.getCustomers();
+            this.getProducts();
             this.getUser();
         },
         methods: {
@@ -550,6 +568,24 @@
                     console.log(error);
                 });
             },
+            getCustomers(){
+                axios.get('api/customers')
+                .then((response) => {
+                    this.customers_list = response.data;
+                    console.log(response.data);
+                }).catch((error) => {
+                    console.log(error);
+                });
+            },
+            getProducts(){
+                axios.get('api/products')
+                .then((response) => {
+                    this.products_list = response.data;
+                    console.log(response.data);
+                }).catch((error) => {
+                    console.log(error);
+                });
+            },
             getInvoices(){ // ajax call to get all the customers
                 axios.get('api/invoices')
                 .then((response) => {
@@ -558,10 +594,25 @@
                     console.log(error);
                 });
             },
-            createInvoice(){ // post request to add an invoice
-                // this.valueCheck();
+            getOneCustomer(id){ // grad a specific customer to store with invoice.
                 let self = this;
-                let params = Object.assign({}, self.customer);
+                axios({
+                    method: 'get',
+                    url: 'api/customers/' + id,
+                    validateStatus(status) {
+                        return status >= 200 && status < 300;
+                    }
+                }).then((response) => {
+                    self.invoice.customer = response.data;
+                    console.log(response.data);
+                }).catch((error) => {
+                    console.log(error.message);
+                });
+            },
+            createInvoice(){ // post request to add an invoice
+                this.getOneCustomer(this.invoice.customer[0].id[0]);
+                let self = this;
+                let params = Object.assign({}, self.invoice);
                 axios({
                     method: 'post',
                     url: 'api/invoices/store',

@@ -44700,29 +44700,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
             table: true, // If true, the invoices table is showing. If false, the invoices form is showing.
             // Line Item Forms
-            ln_one: true,
-            ln_two: false,
-            ln_three: false,
-            ln_four: false,
-            ln_five: false,
-            ln_six: false,
-            ln_seven: false,
+            ln_one: true, ln_two: false, ln_three: false, ln_four: false, ln_five: false, ln_six: false, ln_seven: false,
             // Line Item Buttons
-            btn_one: true,
-            btn_two: false,
-            btn_three: false,
-            btn_four: false,
-            btn_five: false,
-            btn_six: false,
-            btn_seven: false,
-            list: [], // Array for listting out the results of the ajax calls
-            customers_list: [], // Array for listting out the available customers
-            products_list: [], // Array for listting out the available products
-            invoice: { // Invoices model and it's values
+            btn_one: true, btn_two: false, btn_three: false, btn_four: false, btn_five: false, btn_six: false, btn_seven: false,
+            // List out Arrays
+            list: [], // Invoices Items
+            customers_list: [], // Customers Dropdown
+            products_list: [], // Products Dropdown
+            // Invoice Model
+            invoice: {
                 inv_num: '',
                 date: '',
                 // Copy of the customer in the customers table
-                customer: [{
+                customer: {
                     id: '',
                     name: '',
                     shipto: '',
@@ -44733,40 +44723,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     country: '',
                     disclaimer: '',
                     comments: ''
-                }],
-                // End of customer copy
+                },
                 po_num: '',
-                // Start of line item enries x 7
-                line_items: [{
-                    // ========================== One
-                    item: '', product: '',
-                    qty: 0, unit: 0, extended: 0
-                }, {
-                    // ========================== Two
-                    item: '', product: '',
-                    qty: 0, unit: 0, extended: 0
-                }, {
-                    //=========================== Three
-                    item: '', product: '',
-                    qty: 0, unit: 0, extended: 0
-                }, {
-                    // ========================= Four
-                    item: '', product: '',
-                    qty: 0, unit: 0, extended: 0
-                }, {
-                    // ========================= Five
-                    item: '', product: '',
-                    qty: 0, unit: 0, extended: 0
-                }, {
-                    // ========================= Six
-                    item: '', product: '',
-                    qty: 0, unit: 0, extended: 0
-                }, {
-                    // ========================= Seven
-                    item: '', product: '',
-                    qty: 0, unit: 0, extended: 0
-                }],
-                // End of line item entries
+                line_items: [{ item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }],
                 ship_fee: 0,
                 total: 0,
                 memo: ''
@@ -44776,7 +44735,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     mounted: function mounted() {
-        // when vue instance is mounted, get the customers and the authenticated user.
+        // when vue instance is mounted, get the display the invoices and the authenticated user.
         this.getInvoices();
         this.getCustomers();
         this.getProducts();
@@ -44857,6 +44816,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getCustomers: function getCustomers() {
             var _this2 = this;
 
+            // ajax call to get available customers for the customers dropdown
             axios.get('api/customers').then(function (response) {
                 _this2.customers_list = response.data;
                 console.log('From getCustomers method', response.data);
@@ -44867,6 +44827,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getProducts: function getProducts() {
             var _this3 = this;
 
+            // ajax call to get available products for the products dropdowns
             axios.get('api/products').then(function (response) {
                 _this3.products_list = response.data;
                 console.log('From getProducts method:', response.data);
@@ -44877,7 +44838,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getInvoices: function getInvoices() {
             var _this4 = this;
 
-            // ajax call to get all the customers
+            // ajax call to get all the Inovices
             axios.get('api/invoices').then(function (response) {
                 _this4.list = response.data;
             }).catch(function (error) {
@@ -44885,7 +44846,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         getOneCustomer: function getOneCustomer(id) {
-            // grad a specific customer to store with invoice.
+            // get a specific customer to store with invoice.
             var self = this;
             axios({
                 method: 'get',
@@ -44894,8 +44855,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return status >= 200 && status < 300;
                 }
             }).then(function (response) {
-                self.invoice.customer = response.data;
                 console.log('From getOneCustomer method:', response.data);
+                self.invoice.customer.id = response.data.id;
+                self.invoice.customer.name = response.data.name;
+                self.invoice.customer.shipto = response.data.shipto;
+                self.invoice.customer.billto = response.data.billto;
+                self.invoice.customer.buyer = response.data.buyer;
+                self.invoice.customer.email = response.data.email;
+                self.invoice.customer.phone = response.data.phone;
+                self.invoice.customer.country = response.data.country;
+                self.invoice.customer.disclaimer = response.data.disclaimer;
+                self.invoice.customer.comments = response.data.comments;
                 console.log('Model now looks like:', self.invoice.customer);
             }).catch(function (error) {
                 console.log(error.message);
@@ -44904,10 +44874,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         createInvoice: function createInvoice() {
             // post request to add an invoice
             var self = this;
-            var id = parseInt(self.invoice.customer[0].id[0]);
-            console.log(id);
+            var id = parseInt(self.invoice.customer.id);
             self.getOneCustomer(id);
             var params = Object.assign({}, self.invoice);
+            console.log('Params are:', params);
             axios({
                 method: 'post',
                 url: 'api/invoices/store',
@@ -44916,7 +44886,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return status >= 200 && status < 300;
                 }
             }).then(function (response) {
-                console.log(response.data);
+                console.log('Successful Send');
             }).catch(function (error) {
                 console.log(error.message);
             });
@@ -45218,6 +45188,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "inv_num",
       "required": "",
@@ -45270,11 +45241,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.customer[0].id),
-      expression: "invoice.customer[0].id"
+      value: (_vm.invoice.customer.id),
+      expression: "invoice.customer.id"
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "required": ""
     },
     on: {
@@ -45285,11 +45257,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.invoice.customer[0].id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.invoice.customer.id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.customers_list), function(customer) {
-    return _c('option', [_vm._v(_vm._s(customer.id) + " - " + _vm._s(customer.name))])
+    return _c('option', [_vm._v(_vm._s(customer.id))])
   })], 2)]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
@@ -45652,6 +45624,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "qty_one",
       "min": "0",
@@ -45688,6 +45661,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "unit_one",
       "min": "0",
@@ -45724,6 +45698,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "extended_one",
       "min": "0",
@@ -45825,6 +45800,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "qty_two",
       "min": "0",
@@ -45858,6 +45834,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "unit_two",
       "min": "0",
@@ -45891,6 +45868,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "extended_two",
       "min": "0",
@@ -45989,6 +45967,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "qty_three",
       "min": "0",
@@ -46022,6 +46001,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "unit_three",
       "min": "0",
@@ -46055,6 +46035,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "extended_three",
       "min": "0",
@@ -46153,6 +46134,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "qty_four",
       "min": "0",
@@ -46186,6 +46168,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "unit_four",
       "min": "0",
@@ -46219,6 +46202,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "extended_four",
       "min": "0",
@@ -46317,6 +46301,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "qty_five",
       "min": "0",
@@ -46350,6 +46335,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "unit_five",
       "min": "0",
@@ -46383,6 +46369,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "extended_five",
       "min": "0",
@@ -46481,6 +46468,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "qty_six",
       "min": "0",
@@ -46514,6 +46502,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "unit_six",
       "min": "0",
@@ -46547,6 +46536,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "extended_six",
       "min": "0",
@@ -46645,6 +46635,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "qty_seven",
       "min": "0",
@@ -46678,6 +46669,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "unit_seven",
       "min": "0",
@@ -46711,6 +46703,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "extended_seven",
       "min": "0",
@@ -46743,6 +46736,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "number": "",
       "type": "number",
       "name": "ship_fee",
       "min": "0",

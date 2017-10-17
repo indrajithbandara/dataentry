@@ -11,5 +11,12 @@
 
 ## Features In Progress
 <ol>
-    <li>Invoiceing Inteface</li>
+    <li>Invoiceing Interface</li>
+</ol>
+
+## Features To Come
+<ol>
+    <li>Traveler Interface</li>
+    <li>Product Department Chart</li>
+    <li>Inventory Interface</li>
 </ol>

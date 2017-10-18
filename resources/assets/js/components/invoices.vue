@@ -77,50 +77,50 @@
                 </div>
 
                 <!-- Add and Removing Line Item Buttons -->
-                <button class="btn btn-success full-width" @click="showTwo()" type="button" v-show="btn_one">Add A Second Line Item</button>
+                <button class="btn btn-success full-width" @click="li_btn_show(1)" type="button" v-show="btn_one">Add A Second Line Item</button>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-success full-width" @click="showThree()" type="button" v-show="btn_two">Add A Third Line Item</button>
+                        <button class="btn btn-success full-width" @click="li_btn_show(2)" type="button" v-show="btn_two">Add A Third Line Item</button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="hideTwo()" type="button" v-show="btn_two">Remove A Line Item</button>
+                        <button class="btn btn-danger full-width" @click="li_btn_hide(1)" type="button" v-show="btn_two">Remove A Line Item</button>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-success full-width" @click="showFour()" type="button" v-show="btn_three">Add A Fourth Line Item</button>
+                        <button class="btn btn-success full-width" @click="li_btn_show(3)" type="button" v-show="btn_three">Add A Fourth Line Item</button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="hideThree()" type="button" v-show="btn_three">Remove A Line Item</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-success full-width" @click="showFive()" type="button" v-show="btn_four">Add A Fifth Line Item</button>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="hideFour()" type="button" v-show="btn_four">Remove A Line Item</button>
+                        <button class="btn btn-danger full-width" @click="li_btn_hide(2)" type="button" v-show="btn_three">Remove A Line Item</button>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-success full-width" @click="showSix()" type="button" v-show="btn_five">Add A Sixth Line Item</button>
+                        <button class="btn btn-success full-width" @click="li_btn_show(4)" type="button" v-show="btn_four">Add A Fifth Line Item</button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="hideFive()" type="button" v-show="btn_five">Remove A Line Item</button>
+                        <button class="btn btn-danger full-width" @click="li_btn_hide(3)" type="button" v-show="btn_four">Remove A Line Item</button>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-success full-width" @click="showSeven()" type="button" v-show="btn_six">Add A Seventh Line Item</button>
+                        <button class="btn btn-success full-width" @click="li_btn_show(5)" type="button" v-show="btn_five">Add A Sixth Line Item</button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="hideSix()" type="button" v-show="btn_six">Remove A Line Item</button>
+                        <button class="btn btn-danger full-width" @click="li_btn_hide(4)" type="button" v-show="btn_five">Remove A Line Item</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <button class="btn btn-success full-width" @click="li_btn_show(6)" type="button" v-show="btn_six">Add A Seventh Line Item</button>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <button class="btn btn-danger full-width" @click="li_btn_hide(5)" type="button" v-show="btn_six">Remove A Line Item</button>
                     </div>
                 </div>
 
@@ -129,7 +129,7 @@
                         <button class="btn btn-disabled full-width" type="button" v-show="btn_seven" disabled>Line Items Limit Reached</button>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="hideSeven()" type="button" v-show="btn_seven">Remove A Line Item</button>
+                        <button class="btn btn-danger full-width" @click="li_btn_hide(6)" type="button" v-show="btn_seven">Remove A Line Item</button>
                     </div>
                 </div>
                 <!-- End of Adding and Removing Line Item Buttons -->
@@ -533,30 +533,47 @@
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     default:
-                        console.log("Something went wrong with the line item buttons");
+                        console.log("Sorry!! Something went wrong with this button!");
                     break;
                 }
             },
-            
-            showTwo(){ this.btn_one = false; this.btn_two = true; this.ln_two = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideTwo(){ 
-                this.btn_one = true; 
-                this.btn_two = false; 
-                this.ln_two = false; 
-                this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                this.resetLineItem(1); 
-                this.getTotal();
+            li_btn_hide(num){
+                switch(num){
+                    case 1:
+                        this.btn_one = true; this.btn_two = false; this.ln_two = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(1); this.getTotal();
+                    break;
+                    case 2:
+                        this.btn_two = true; this.btn_three = false; this.ln_three = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(2); this.getTotal();
+                    break;
+                    case 3:
+                        this.btn_three = true; this.btn_four = false; this.ln_four = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(3); this.getTotal();
+                    break;
+                    case 4:
+                        this.btn_four = true; this.btn_five = false; this.ln_five = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(4); this.getTotal();
+                    break;
+                    case 5:
+                        this.btn_five = true; this.btn_six = false; this.ln_six = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(5); this.getTotal();
+                    break;
+                    case 6:
+                        this.btn_six = true; this.btn_seven = false; this.ln_seven = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(6); this.getTotal();
+                    break;
+                    default:
+                        console.log('Sorry!! Something went wrong with this button!');
+                    break;
+                }
             },
-            showThree(){ this.btn_two = false; this.btn_three = true; this.ln_three = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideThree(){ this.btn_two = true; this.btn_three = false; this.ln_three = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(2); this.getTotal();},
-            showFour(){ this.btn_three = false; this.btn_four = true; this.ln_four = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideFour(){ this.btn_three = true; this.btn_four = false; this.ln_four = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(3); this.getTotal();},
-            showFive(){ this.btn_four = false; this.btn_five = true; this.ln_five = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideFive(){ this.btn_four = true; this.btn_five = false; this.ln_five = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(4); this.getTotal();},
-            showSix(){ this.btn_five = false; this.btn_six = true; this.ln_six = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideSix(){ this.btn_five = true; this.btn_six = false; this.ln_six = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(5); this.getTotal();},
-            showSeven(){ this.btn_six = false; this.btn_seven = true; this.ln_seven = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideSeven(){ this.btn_six = true; this.btn_seven = false; this.ln_seven = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(6); this.getTotal();},
             resetLineItem(num){
                 this.invoice.line_items[num].item = '';
                 this.invoice.line_items[num].product = '';

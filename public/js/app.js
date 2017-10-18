@@ -44772,50 +44772,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                 default:
-                    console.log("Something went wrong with the line item buttons");
+                    console.log("Sorry!! Something went wrong with this button!");
                     break;
             }
         },
-        showTwo: function showTwo() {
-            this.btn_one = false;this.btn_two = true;this.ln_two = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-        },
-        hideTwo: function hideTwo() {
-            this.btn_one = true;
-            this.btn_two = false;
-            this.ln_two = false;
-            this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-            this.resetLineItem(1);
-            this.getTotal();
-        },
-        showThree: function showThree() {
-            this.btn_two = false;this.btn_three = true;this.ln_three = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-        },
-        hideThree: function hideThree() {
-            this.btn_two = true;this.btn_three = false;this.ln_three = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(2);this.getTotal();
-        },
-        showFour: function showFour() {
-            this.btn_three = false;this.btn_four = true;this.ln_four = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-        },
-        hideFour: function hideFour() {
-            this.btn_three = true;this.btn_four = false;this.ln_four = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(3);this.getTotal();
-        },
-        showFive: function showFive() {
-            this.btn_four = false;this.btn_five = true;this.ln_five = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-        },
-        hideFive: function hideFive() {
-            this.btn_four = true;this.btn_five = false;this.ln_five = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(4);this.getTotal();
-        },
-        showSix: function showSix() {
-            this.btn_five = false;this.btn_six = true;this.ln_six = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-        },
-        hideSix: function hideSix() {
-            this.btn_five = true;this.btn_six = false;this.ln_six = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(5);this.getTotal();
-        },
-        showSeven: function showSeven() {
-            this.btn_six = false;this.btn_seven = true;this.ln_seven = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-        },
-        hideSeven: function hideSeven() {
-            this.btn_six = true;this.btn_seven = false;this.ln_seven = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(6);this.getTotal();
+        li_btn_hide: function li_btn_hide(num) {
+            switch (num) {
+                case 1:
+                    this.btn_one = true;this.btn_two = false;this.ln_two = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(1);this.getTotal();
+                    break;
+                case 2:
+                    this.btn_two = true;this.btn_three = false;this.ln_three = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(2);this.getTotal();
+                    break;
+                case 3:
+                    this.btn_three = true;this.btn_four = false;this.ln_four = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(3);this.getTotal();
+                    break;
+                case 4:
+                    this.btn_four = true;this.btn_five = false;this.ln_five = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(4);this.getTotal();
+                    break;
+                case 5:
+                    this.btn_five = true;this.btn_six = false;this.ln_six = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(5);this.getTotal();
+                    break;
+                case 6:
+                    this.btn_six = true;this.btn_seven = false;this.ln_seven = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(6);this.getTotal();
+                    break;
+                default:
+                    console.log('Sorry!! Something went wrong with this button!');
+                    break;
+            }
         },
         resetLineItem: function resetLineItem(num) {
             this.invoice.line_items[num].item = '';
@@ -45277,7 +45273,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showTwo()
+        _vm.li_btn_show(1)
       }
     }
   }, [_vm._v("Add A Second Line Item")]), _vm._v(" "), _c('div', {
@@ -45297,7 +45293,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showThree()
+        _vm.li_btn_show(2)
       }
     }
   }, [_vm._v("Add A Third Line Item")])]), _vm._v(" "), _c('div', {
@@ -45315,7 +45311,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.hideTwo()
+        _vm.li_btn_hide(1)
       }
     }
   }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
@@ -45335,7 +45331,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showFour()
+        _vm.li_btn_show(3)
       }
     }
   }, [_vm._v("Add A Fourth Line Item")])]), _vm._v(" "), _c('div', {
@@ -45353,7 +45349,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.hideThree()
+        _vm.li_btn_hide(2)
       }
     }
   }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
@@ -45373,7 +45369,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showFive()
+        _vm.li_btn_show(4)
       }
     }
   }, [_vm._v("Add A Fifth Line Item")])]), _vm._v(" "), _c('div', {
@@ -45391,7 +45387,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.hideFour()
+        _vm.li_btn_hide(3)
       }
     }
   }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
@@ -45411,7 +45407,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showSix()
+        _vm.li_btn_show(5)
       }
     }
   }, [_vm._v("Add A Sixth Line Item")])]), _vm._v(" "), _c('div', {
@@ -45429,7 +45425,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.hideFive()
+        _vm.li_btn_hide(4)
       }
     }
   }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
@@ -45449,7 +45445,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.showSeven()
+        _vm.li_btn_show(6)
       }
     }
   }, [_vm._v("Add A Seventh Line Item")])]), _vm._v(" "), _c('div', {
@@ -45467,7 +45463,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.hideSix()
+        _vm.li_btn_hide(5)
       }
     }
   }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
@@ -45501,7 +45497,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "click": function($event) {
-        _vm.hideSeven()
+        _vm.li_btn_hide(6)
       }
     }
   }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('hr', {

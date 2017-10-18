@@ -18,9 +18,9 @@ class CreateInvoicesTable extends Migration
             $table->integer('inv_num')->unique();
             $table->date('date');
             $table->index('date');
-            $table->string('customer', 500);
+            $table->json('customer');
             $table->string('po_num', 30);
-            $table->string('line_items', 255);
+            $table->json('line_items');
             $table->decimal('ship_fee', 7, 2)->nullable();
             $table->decimal('total', 7, 2);
             $table->string('memo', 255)->nullable();

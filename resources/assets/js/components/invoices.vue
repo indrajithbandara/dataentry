@@ -25,8 +25,10 @@
                         <tr v-for="invoice in list">
                             <td>{{ invoice.inv_num }}</td>
                             <td>{{ invoice.date }}</td>
-                            <td>{{ invoice.customer }}</td>
+                            <td>{{ invoice.customer.name }}</td>
                             <td>{{ invoice.total }}</td>
+                            <td><button @click="printShipper(invoice.id)" class="btn btn-default">Print Shipper</button></td>
+                            <td><button @click="printInvoice(invoice.id)" class="btn btn-primary">Print Invoice</button></td>
                             <td><button @click="showInvoice(invoice.id)" class="btn btn-warning">Edit</button></td>
                             <td v-if="user == 1"><button @click="deleteInvoice(invoice.id)" class="btn btn-danger">Delete</button></td>
                         </tr>
@@ -48,7 +50,7 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="inv_num">Invoice #</label>
-                            <input v-model="invoice.inv_num" number type="number" name="inv_num" class="form-control" required maxlength="11">
+                            <input v-model="invoice.inv_num" @blur="toInt()" number type="number" name="inv_num" class="form-control" required maxlength="11">
                             <p class="alert alert-warning" v-if="invoice.inv_num.length == 11">11 character limit reached!</p>
                         </div>
                     </div>
@@ -171,7 +173,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_one">Ext Price</label>
-                                <input v-model="invoice.line_items[0].extended" number type="number" name="extended_one" min="0" step="0.01" class="form-control"  maxlength="8" required>
+                                <input v-model="invoice.line_items[0].extended" number type="number" name="extended_one" min="0" step="0.01" class="form-control"  maxlength="8" readonly>
                                 <p class="alert alert-warning" v-if="invoice.line_items[0].extended.length == 8">8 character limit reached!</p>
                             </div>
                         </div>
@@ -211,7 +213,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_two">Ext Price</label>
-                                <input v-model="invoice.line_items[1].extended" number type="number" name="extended_two" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[1].extended" number type="number" name="extended_two" min="0" step="0.01" class="form-control" readonly>
                             </div>
                         </div>
                         <br />
@@ -250,7 +252,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_three">Ext Price</label>
-                                <input v-model="invoice.line_items[2].extended" number type="number" name="extended_three" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[2].extended" number type="number" name="extended_three" min="0" step="0.01" class="form-control" readonly>
                             </div>
                         </div>
                         <br />
@@ -289,7 +291,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_four">Ext Price</label>
-                                <input v-model="invoice.line_items[3].extended" number type="number" name="extended_four" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[3].extended" number type="number" name="extended_four" min="0" step="0.01" class="form-control" readonly>
                             </div>
                         </div>
                         <br />
@@ -328,7 +330,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_five">Ext Price</label>
-                                <input v-model="invoice.line_items[4].extended" number type="number" name="extended_five" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[4].extended" number type="number" name="extended_five" min="0" step="0.01" class="form-control" readonly>
                             </div>
                         </div>
                         <br />
@@ -367,7 +369,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_six">Ext Price</label>
-                                <input v-model="invoice.line_items[5].extended" number type="number" name="extended_six" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[5].extended" number type="number" name="extended_six" min="0" step="0.01" class="form-control" readonly>
                             </div>
                         </div>
                         <br />
@@ -406,7 +408,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_seven">Ext Price</label>
-                                <input v-model="invoice.line_items[6].extended" number type="number" name="extended_seven" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[6].extended" number type="number" name="extended_seven" min="0" step="0.01" class="form-control" readonly>
                             </div>
                         </div>
                         <br />
@@ -442,7 +444,7 @@
         </div>
         <br />
         <br />
-        <!-- End of add customer form -->
+        <!-- End of add invoice form -->
     </div>
 </template>
 
@@ -462,7 +464,7 @@
                 products_list: [], // Products Dropdown
                 // Invoice Model
                 invoice: {
-                    inv_num: '',
+                    inv_num: 0,
                     date: '',
                     // Copy of the customer in the customers table
                     customer: {
@@ -504,8 +506,47 @@
             this.getUser();
         },
         methods: {
+            li_btn_show(num){
+                switch(num){
+                    case 1:
+                        this.btn_one = false; this.btn_two = true; this.ln_two = true; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    case 2:
+                         this.btn_two = false; this.btn_three = true; this.ln_three = true; 
+                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    case 3:
+                        this.btn_three = false; this.btn_four = true; this.ln_four = true; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    case 4:
+                        this.btn_four = false; this.btn_five = true; this.ln_five = true; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    case 5:
+                        this.btn_five = false; this.btn_six = true; this.ln_six = true; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    case 6:
+                        this.btn_six = false; this.btn_seven = true; this.ln_seven = true; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    default:
+                        console.log("Something went wrong with the line item buttons");
+                    break;
+                }
+            },
+            
             showTwo(){ this.btn_one = false; this.btn_two = true; this.ln_two = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideTwo(){ this.btn_one = true; this.btn_two = false; this.ln_two = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(1); this.getTotal();},
+            hideTwo(){ 
+                this.btn_one = true; 
+                this.btn_two = false; 
+                this.ln_two = false; 
+                this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                this.resetLineItem(1); 
+                this.getTotal();
+            },
             showThree(){ this.btn_two = false; this.btn_three = true; this.ln_three = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
             hideThree(){ this.btn_two = true; this.btn_three = false; this.ln_three = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(2); this.getTotal();},
             showFour(){ this.btn_three = false; this.btn_four = true; this.ln_four = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
@@ -538,6 +579,9 @@
             getExtended(num){
                 this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit; this.getTotal();
             },
+            toInt(){
+                this.invoice.inv_num = parseInt(this.invoice.inv_num);
+            },
             getUser(){ // ajax call to get the authenticated user
                 axios.get('api/user')
                 .then((response) => {
@@ -565,7 +609,20 @@
             getInvoices(){ // ajax call to get all the Inovices
                 axios.get('api/invoices')
                 .then((response) => {
-                    this.list = response.data;
+                    var newData = function(){
+                        var data = response.data;
+                        for(var i = 0; i < data.length; i++){
+                            for(var key in data[i]){
+                                if(key === 'customer'){
+                                    data[i].customer = JSON.parse(data[i].customer);
+                                } else if (key === 'line_items') {
+                                    data[i].line_items = JSON.parse(data[i].line_items);
+                                }
+                            }
+                        }
+                        return data;
+                    }
+                    this.list = newData();
                 }).catch((error) => {
                     console.log(error);
                 });

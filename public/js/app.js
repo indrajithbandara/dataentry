@@ -44693,6 +44693,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -44709,7 +44711,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             products_list: [], // Products Dropdown
             // Invoice Model
             invoice: {
-                inv_num: '',
+                inv_num: 0,
                 date: '',
                 // Copy of the customer in the customers table
                 customer: {
@@ -44743,11 +44745,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        li_btn_show: function li_btn_show(num) {
+            switch (num) {
+                case 1:
+                    this.btn_one = false;this.btn_two = true;this.ln_two = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                case 2:
+                    this.btn_two = false;this.btn_three = true;this.ln_three = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                case 3:
+                    this.btn_three = false;this.btn_four = true;this.ln_four = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                case 4:
+                    this.btn_four = false;this.btn_five = true;this.ln_five = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                case 5:
+                    this.btn_five = false;this.btn_six = true;this.ln_six = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                case 6:
+                    this.btn_six = false;this.btn_seven = true;this.ln_seven = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                default:
+                    console.log("Something went wrong with the line item buttons");
+                    break;
+            }
+        },
         showTwo: function showTwo() {
             this.btn_one = false;this.btn_two = true;this.ln_two = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideTwo: function hideTwo() {
-            this.btn_one = true;this.btn_two = false;this.ln_two = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(1);this.getTotal();
+            this.btn_one = true;
+            this.btn_two = false;
+            this.ln_two = false;
+            this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+            this.resetLineItem(1);
+            this.getTotal();
         },
         showThree: function showThree() {
             this.btn_two = false;this.btn_three = true;this.ln_three = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
@@ -44793,6 +44831,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getExtended: function getExtended(num) {
             this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit;this.getTotal();
         },
+        toInt: function toInt() {
+            this.invoice.inv_num = parseInt(this.invoice.inv_num);
+        },
         getUser: function getUser() {
             var _this = this;
 
@@ -44828,7 +44869,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             // ajax call to get all the Inovices
             axios.get('api/invoices').then(function (response) {
-                _this4.list = response.data;
+                var newData = function newData() {
+                    var data = response.data;
+                    for (var i = 0; i < data.length; i++) {
+                        for (var key in data[i]) {
+                            if (key === 'customer') {
+                                data[i].customer = JSON.parse(data[i].customer);
+                            } else if (key === 'line_items') {
+                                data[i].line_items = JSON.parse(data[i].line_items);
+                            }
+                        }
+                    }
+                    return data;
+                };
+                _this4.list = newData();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -45030,7 +45084,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('table', {
     staticClass: "table table-condensed"
   }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Invoice #")]), _vm._v(" "), _c('th', [_vm._v("Ship Date")]), _vm._v(" "), _c('th', [_vm._v("Customer")]), _vm._v(" "), _c('th', [_vm._v("Extended Price")]), _vm._v(" "), _c('th', [_vm._v("Print Shipper")]), _vm._v(" "), _c('th', [_vm._v("Print Invoice")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(invoice) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(invoice.inv_num))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.date))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.customer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.total))]), _vm._v(" "), _c('td', [_c('button', {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(invoice.inv_num))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.date))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.customer.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.total))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-default",
+      on: {
+        "click": function($event) {
+          _vm.printShipper(invoice.id)
+        }
+      }
+    }, [_vm._v("Print Shipper")])]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-primary",
+      on: {
+        "click": function($event) {
+          _vm.printInvoice(invoice.id)
+        }
+      }
+    }, [_vm._v("Print Invoice")])]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-warning",
       on: {
         "click": function($event) {
@@ -45095,6 +45163,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.invoice.inv_num)
     },
     on: {
+      "blur": function($event) {
+        _vm.toInt()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.invoice.inv_num = $event.target.value
@@ -45604,7 +45675,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "min": "0",
       "step": "0.01",
       "maxlength": "8",
-      "required": ""
+      "readonly": ""
     },
     domProps: {
       "value": (_vm.invoice.line_items[0].extended)
@@ -45773,7 +45844,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "extended_two",
       "min": "0",
       "step": "0.01",
-      "required": ""
+      "readonly": ""
     },
     domProps: {
       "value": (_vm.invoice.line_items[1].extended)
@@ -45940,7 +46011,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "extended_three",
       "min": "0",
       "step": "0.01",
-      "required": ""
+      "readonly": ""
     },
     domProps: {
       "value": (_vm.invoice.line_items[2].extended)
@@ -46107,7 +46178,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "extended_four",
       "min": "0",
       "step": "0.01",
-      "required": ""
+      "readonly": ""
     },
     domProps: {
       "value": (_vm.invoice.line_items[3].extended)
@@ -46274,7 +46345,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "extended_five",
       "min": "0",
       "step": "0.01",
-      "required": ""
+      "readonly": ""
     },
     domProps: {
       "value": (_vm.invoice.line_items[4].extended)
@@ -46441,7 +46512,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "extended_six",
       "min": "0",
       "step": "0.01",
-      "required": ""
+      "readonly": ""
     },
     domProps: {
       "value": (_vm.invoice.line_items[5].extended)
@@ -46608,7 +46679,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "extended_seven",
       "min": "0",
       "step": "0.01",
-      "required": ""
+      "readonly": ""
     },
     domProps: {
       "value": (_vm.invoice.line_items[6].extended)

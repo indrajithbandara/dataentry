@@ -870,7 +870,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(10);
-module.exports = __webpack_require__(55);
+module.exports = __webpack_require__(60);
 
 
 /***/ }),
@@ -44204,15 +44204,19 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(53)
+}
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(53),
+  __webpack_require__(58),
   /* template */
-  __webpack_require__(54),
+  __webpack_require__(59),
   /* styles */
-  null,
+  injectStyle,
   /* scopeId */
-  null,
+  "data-v-d2ec6014",
   /* moduleIdentifier (server only) */
   null
 )
@@ -44241,6 +44245,382 @@ module.exports = Component.exports
 
 /***/ }),
 /* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(54);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(56)("edccc1b8", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d2ec6014\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./invoices.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d2ec6014\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./invoices.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(55)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.cust_top_margin[data-v-d2ec6014] {\n    margin-top: 32px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(57)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -44695,25 +45075,92 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
-            table: true, // If true, the invoices table is showing. If false, the invoices form is showing.
-            // Line Item Forms
+            /*
+            * EDIT MODE:
+            * if edit = false, the invoice form is hidden and the invoice table is displayed.
+            * if edit = true, the invoice form is displayed, the invoice table is hidden and the submit button for the updateInvoice method is displayed.
+            * Triggers: Edit buttons on the invoices table.
+            * Methods Involved: showInvoice() | resetValues()
+            */
+            edit: false,
+            /*
+            * INVOICE TABLE AND ADDING AN INVOICE:
+            *
+            * if table = true, the invoice table is displayed and the invoice form is hidden.
+            * if table = false, the invoice table is hidden and the invoice form is displayed for adding an invoice.
+            * Triggers: 'View Invoice' and 'Add An Invoice' buttons 
+            * Methods Involved: showInvoice() | resetValues()
+            */
+            table: true,
+            /*
+            * LINE ITEM FORMS AND LINE IIEM BUTTONS:
+            *
+            * ln_{num} are meant for hidding and showing the seven different line item forms.
+            * if ln_{num} = true, the form is displayed.
+            * if ln_{num} = false, the form is hidden.
+            *
+            * btn_{num} are meant for hidding and showing the seven different button containers for hidding and show the seven different line item forms
+            * if btn_{num} = true, the button container is displayed
+            * if btn_{num} = false, the button container is hidden
+            *
+            * Methods Involved: li_btn_show() | li_btn_hide()
+            */
             ln_one: true, ln_two: false, ln_three: false, ln_four: false, ln_five: false, ln_six: false, ln_seven: false,
-            // Line Item Buttons
             btn_one: true, btn_two: false, btn_three: false, btn_four: false, btn_five: false, btn_six: false, btn_seven: false,
-            // List out Arrays
-            list: [], // Invoices Items
-            customers_list: [], // Customers Dropdown
-            products_list: [], // Products Dropdown
-            // Invoice Model
+            /*
+            * LISTS OF COLLECTIONS:
+            *
+            * These arrays are for looping over to show in tables or dropdown lists.
+            * 1.) invoices_list is an array of objects listing out on the invoices table
+            * Methods Involved: getInvoices()
+            *
+            * 2.) customers_list is an array of objects listing out the customer dropdown list as '{id} - {name}'
+            * Methods Involved: getCustomers()
+            *
+            * 3.) product_list is an array of objects listing out the product dropdown lists as '{name}'
+            * Methods Involved: getProducts()
+            */
+            invoices_list: [],
+            customers_list: [],
+            products_list: [],
+            /*
+            * THE INVOICE MODEL:
+            *
+            * The invoice model is an object conaining the following properties:
+            * 1.) inv_num - Invoice Number | Type: Number
+            * 2.) data - Shipping Date | Type: Date
+            * 3.) customer - Customer Snap Shot | Type: Object | Description: Meant for saving a snap shot of the customer this invoice is 
+            *                made for as json. This is so because the invoice model has no relationship with the customer model. The reason for this
+            *                is so that the customer data per invoice is preserved which allows the user to change customer information with
+            *                out corrupting the information that was truthy at the time of the making of an invoice. This method was prefered 
+            *                over saving multiple versions of a customer model and then setting them to a value like 'edited' which makes for
+            *                more requests being sent to the server for version checking. Even though this method takes up more storage over the
+            *                long run, it allows the app to run more efficiently when internet connections are slow. This object goes thorugh parsing
+            *                in the getInvoices() method.
+            * 4.) po_num - Purchase Order Number | Type: String
+            * 5.) line_items - List of line items | Type: Array of Objects | Description: The list of line items is an array of seven objects stored as 
+            *                as json in one column. This array goes through parsing in the getInvoices() method. Each obeject has three numeric properties
+            *                that get passed through the setExtended() method which is triggered on every keyup event on the 'Qty' and 'Unit Price' inputs. 
+            *                This method sets the value of each 'extended' price property in order to be passed through the setTotal() method which sets 
+            *                the value of the 'invoice.total' property.
+            * 6.) ship_fee - Shipping Fees | Type: Number
+            * 7.) total - Total Price of all Line Items Extended Prices | Type: Number
+            * 8.) memo - Alternate information for the invoice | Type: String
+            */
             invoice: {
                 inv_num: 0,
                 date: '',
-                // Copy of the customer in the customers table
                 customer: {
                     id: '',
                     name: '',
@@ -44732,19 +45179,144 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 total: 0,
                 memo: ''
             },
-            // Property for know who the user is and knowing what to hide form other users. 
+            /*
+            *  THE CURRENT AUTHENTICATED USER:
+            *
+            * The 'user' propertie is to store the permission level (1-4) of the currently logged in user so that certain aspects of the invoice form
+            * can be either off limits or hidden from other users. This property is set in the getUser() method.
+            */
             user: ''
         };
     },
     mounted: function mounted() {
-        // when vue instance is mounted, get the display the invoices and the authenticated user.
+        /*
+        * When Vue instance is mounted:
+        * 1.) Get current user in order to validate there permission level
+        * 2.) Get all invoices to display onto the invoices table
+        * 3.) Get all customers to have for customer dropdown
+        * 4.) Get all products to have for product dropdowns
+        */
+        this.getUser();
         this.getInvoices();
         this.getCustomers();
         this.getProducts();
-        this.getUser();
     },
 
     methods: {
+        /*
+        *===== GETTER METHODS =====
+        */
+        getUser: function getUser() {
+            var _this = this;
+
+            // ajax call to get the authenticated user
+            axios.get('api/user').then(function (response) {
+                _this.user = response.data.permission;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getCustomers: function getCustomers() {
+            var _this2 = this;
+
+            // ajax call to get available customers for the customers dropdown
+            axios.get('api/customers').then(function (response) {
+                _this2.customers_list = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getProducts: function getProducts() {
+            var _this3 = this;
+
+            // ajax call to get available products for the products dropdowns
+            axios.get('api/products').then(function (response) {
+                _this3.products_list = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getInvoices: function getInvoices() {
+            var _this4 = this;
+
+            // ajax call to get all the Inovices and parse nested json data
+            axios.get('api/invoices').then(function (response) {
+                var newData = function newData() {
+                    var data = response.data;
+                    for (var i = 0; i < data.length; i++) {
+                        for (var key in data[i]) {
+                            if (key === 'customer') {
+                                data[i].customer = JSON.parse(data[i].customer);
+                            } else if (key === 'line_items') {
+                                data[i].line_items = JSON.parse(data[i].line_items);
+                            }
+                        }
+                    }
+                    return data;
+                };
+                _this4.invoices_list = newData();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getOneCustomer: function getOneCustomer(cust) {
+            // get a customer snap shot to store with current invoice model
+            var id = parseInt(cust[0]);
+            var self = this;
+            axios({
+                method: 'get',
+                url: 'api/customers/' + id,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function (response) {
+                self.invoice.customer.id = response.data.id;
+                self.invoice.customer.name = response.data.name;
+                self.invoice.customer.shipto = response.data.shipto;
+                self.invoice.customer.billto = response.data.billto;
+                self.invoice.customer.buyer = response.data.buyer;
+                self.invoice.customer.email = response.data.email;
+                self.invoice.customer.phone = response.data.phone;
+                self.invoice.customer.country = response.data.country;
+                self.invoice.customer.disclaimer = response.data.disclaimer;
+                self.invoice.customer.comments = response.data.comments;
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+        },
+
+        /*
+        *===== SETTER METHODS =====
+        */
+        setTotal: function setTotal() {
+            // Adds up extended values and ship_fee value to be stored in the invoice total
+            var total = this.invoice.line_items[0].extended + this.invoice.line_items[1].extended + this.invoice.line_items[2].extended + this.invoice.line_items[3].extended + this.invoice.line_items[4].extended + this.invoice.line_items[5].extended + this.invoice.line_items[6].extended + parseFloat(this.invoice.ship_fee);
+            this.invoice.total = total.toFixed(2);
+        },
+        setExtended: function setExtended(num) {
+            // Adds up the 'qty' and the 'unit' values to set the 'extended' property for this line item
+            this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit;
+            this.setTotal();
+        },
+
+        /*
+        *===== HIDING AND SHOWING METHODS =====
+        *
+        * SHOWING AND HIDING BUTTONS AND LINE ITEMS AS WELL AS SCROLLING THE CONTAINER TO THE BOTTOM
+        *
+        * There are two types of buttons:
+        * 1.) Buttons that show line items
+        * 2.) Buttons that hide line items
+        *
+        * - li_btn_show is meant for showing the next button and line item on the DOM while hiding the button that was just clicked. 
+        *
+        * - li_btn_hide is meant for hiding the most recent button and line item added while showing the previous butten that was hidden again. 
+        *   Each time the one of these buttons is clicked, the resetLineItem() and setTotal() methods are fired in order to reset the values of the 
+        *   now hidden line item as well as re-calculate the total of the invoice. 
+        *   ****** IMPORTANT NOTE *******
+        * - Even though line items are hidden from site on the page, there values are still calculated from the invoice model. These line items
+        *   themselves are no longer on the DOM but the model still remains available for calcultion. 
+        */
         li_btn_show: function li_btn_show(num) {
             switch (num) {
                 case 1:
@@ -44781,132 +45353,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 case 1:
                     this.btn_one = true;this.btn_two = false;this.ln_two = false;
                     this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(1);this.getTotal();
+                    this.resetLineItem(1);this.setTotal();
                     break;
                 case 2:
                     this.btn_two = true;this.btn_three = false;this.ln_three = false;
                     this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(2);this.getTotal();
+                    this.resetLineItem(2);this.setTotal();
                     break;
                 case 3:
                     this.btn_three = true;this.btn_four = false;this.ln_four = false;
                     this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(3);this.getTotal();
+                    this.resetLineItem(3);this.setTotal();
                     break;
                 case 4:
                     this.btn_four = true;this.btn_five = false;this.ln_five = false;
                     this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(4);this.getTotal();
+                    this.resetLineItem(4);this.setTotal();
                     break;
                 case 5:
                     this.btn_five = true;this.btn_six = false;this.ln_six = false;
                     this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(5);this.getTotal();
+                    this.resetLineItem(5);this.setTotal();
                     break;
                 case 6:
                     this.btn_six = true;this.btn_seven = false;this.ln_seven = false;
                     this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(6);this.getTotal();
+                    this.resetLineItem(6);this.setTotal();
                     break;
                 default:
                     console.log('Sorry!! Something went wrong with this button!');
                     break;
             }
         },
-        resetLineItem: function resetLineItem(num) {
-            this.invoice.line_items[num].item = '';
-            this.invoice.line_items[num].product = '';
-            this.invoice.line_items[num].qty = 0;
-            this.invoice.line_items[num].unit = 0;
-            this.invoice.line_items[num].extended = 0;
-        },
-        getTotal: function getTotal() {
-            var total = this.invoice.line_items[0].extended + this.invoice.line_items[1].extended + this.invoice.line_items[2].extended + this.invoice.line_items[3].extended + this.invoice.line_items[4].extended + this.invoice.line_items[5].extended + this.invoice.line_items[6].extended + parseFloat(this.invoice.ship_fee);
-            this.invoice.total = total.toFixed(2);
-        },
-        getExtended: function getExtended(num) {
-            this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit;this.getTotal();
-        },
+
+        /*
+        *===== CONVERSION METHODS =====
+        */
         toInt: function toInt() {
+            // converting the invoice number (starting as a string) to a number to be stored in the database.
             this.invoice.inv_num = parseInt(this.invoice.inv_num);
         },
-        getUser: function getUser() {
-            var _this = this;
 
-            // ajax call to get the authenticated user
-            axios.get('api/user').then(function (response) {
-                _this.user = response.data.permission;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        getCustomers: function getCustomers() {
-            var _this2 = this;
-
-            // ajax call to get available customers for the customers dropdown
-            axios.get('api/customers').then(function (response) {
-                _this2.customers_list = response.data;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        getProducts: function getProducts() {
-            var _this3 = this;
-
-            // ajax call to get available products for the products dropdowns
-            axios.get('api/products').then(function (response) {
-                _this3.products_list = response.data;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        getInvoices: function getInvoices() {
-            var _this4 = this;
-
-            // ajax call to get all the Inovices
-            axios.get('api/invoices').then(function (response) {
-                var newData = function newData() {
-                    var data = response.data;
-                    for (var i = 0; i < data.length; i++) {
-                        for (var key in data[i]) {
-                            if (key === 'customer') {
-                                data[i].customer = JSON.parse(data[i].customer);
-                            } else if (key === 'line_items') {
-                                data[i].line_items = JSON.parse(data[i].line_items);
-                            }
-                        }
-                    }
-                    return data;
-                };
-                _this4.list = newData();
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        getOneCustomer: function getOneCustomer(id) {
-            // get a specific customer to store with invoice.
-            var self = this;
-            axios({
-                method: 'get',
-                url: 'api/customers/' + id,
-                validateStatus: function validateStatus(status) {
-                    return status >= 200 && status < 300;
-                }
-            }).then(function (response) {
-                self.invoice.customer.id = response.data.id;
-                self.invoice.customer.name = response.data.name;
-                self.invoice.customer.shipto = response.data.shipto;
-                self.invoice.customer.billto = response.data.billto;
-                self.invoice.customer.buyer = response.data.buyer;
-                self.invoice.customer.email = response.data.email;
-                self.invoice.customer.phone = response.data.phone;
-                self.invoice.customer.country = response.data.country;
-                self.invoice.customer.disclaimer = response.data.disclaimer;
-                self.invoice.customer.comments = response.data.comments;
-            }).catch(function (error) {
-                console.log(error.message);
-            });
-        },
+        /*
+        *===== C.R.U.D METHODS =====
+        */
         createInvoice: function createInvoice() {
             // post request to add an invoice
             var self = this;
@@ -44943,7 +45433,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         showInvoice: function showInvoice(id) {
-            // grad a specific invoice to be edited.
+            // get request to show an invoice for editing
             var self = this;
             axios({
                 method: 'get',
@@ -44953,23 +45443,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (response) {
                 self.table = false;
-                // self.customer.id = response.data.id;
-                // self.customer.name = response.data.name;
-                // self.customer.email = response.data.email;
-                // self.customer.phone = response.data.phone;
-                // self.customer.buyer = response.data.buyer;
-                // self.customer.shipto = response.data.shipto;
-                // self.customer.billto = response.data.billto;
-                // self.customer.country = response.data.country;
-                // self.customer.disclaimer = response.data.disclaimer;
-                // self.customer.comments = response.data.comments;
+                // set model values to response.data
             }).catch(function (error) {
                 console.log(error.message);
             });
             self.edit = true;
         },
         deleteInvoice: function deleteInvoice(id) {
-            // deletes a specific invoice, only the Super Admin can make this request as the button is only visable for that user.
+            // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
             if (confirm('Are you sure you want to delete this invoice?')) {
                 var self = this;
                 axios.delete('api/invoices/' + id).then(function (response) {
@@ -44981,67 +45462,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return;
             }
         },
+
+        /*
+        *===== RESET METHODS =====
+        */
         resetValues: function resetValues() {
-            this.invoice.inv_num = '';
-            this.invoice.date = '';
-            this.invoice.customer.id = '';
-            this.invoice.customer.name = '';
-            this.invoice.customer.shipto = '';
-            this.invoice.customer.billto = '';
-            this.invoice.customer.buyer = '';
-            this.invoice.customer.email = '';
-            this.invoice.customer.phone = '';
-            this.invoice.customer.country = '';
-            this.invoice.customer.disclaimer = '';
-            this.invoice.customer.comments = '';
-            this.invoice.po_num = '';
-            this.invoice.line_items[0].item = '';
-            this.invoice.line_items[0].product = '';
-            this.invoice.line_items[0].qty = 0;
-            this.invoice.line_items[0].unit = 0;
-            this.invoice.line_items[0].extended = 0;
-            this.invoice.line_items[1].item = '';
-            this.invoice.line_items[1].product = '';
-            this.invoice.line_items[1].qty = 0;
-            this.invoice.line_items[1].unit = 0;
-            this.invoice.line_items[1].extended = 0;
-            this.invoice.line_items[2].item = '';
-            this.invoice.line_items[2].product = '';
-            this.invoice.line_items[2].qty = 0;
-            this.invoice.line_items[2].unit = 0;
-            this.invoice.line_items[2].extended = 0;
-            this.invoice.line_items[3].item = '';
-            this.invoice.line_items[3].product = '';
-            this.invoice.line_items[3].qty = 0;
-            this.invoice.line_items[3].unit = 0;
-            this.invoice.line_items[3].extended = 0;
-            this.invoice.line_items[4].item = '';
-            this.invoice.line_items[4].product = '';
-            this.invoice.line_items[4].qty = 0;
-            this.invoice.line_items[4].unit = 0;
-            this.invoice.line_items[4].extended = 0;
-            this.invoice.line_items[5].item = '';
-            this.invoice.line_items[5].product = '';
-            this.invoice.line_items[5].qty = 0;
-            this.invoice.line_items[5].unit = 0;
-            this.invoice.line_items[5].extended = 0;
-            this.invoice.line_items[6].item = '';
-            this.invoice.line_items[6].product = '';
-            this.invoice.line_items[6].qty = 0;
-            this.invoice.line_items[6].unit = 0;
-            this.invoice.line_items[6].extended = 0;
-            this.invoice.ship_fee = 0;
-            this.invoice.total = 0;
-            this.invoice.memo = '';
+            // After form is submitted, values are reset to either 0 or empty string
+            var self = this;
+            for (var key in self.invoice) {
+                if (key == 'inv_num' || key == 'ship_fee' || key == 'total') {
+                    self.invoice[key] = 0;
+                } else if (key == 'date' || key == 'po_num' || key == 'memo') {
+                    self.invoice[key] = '';
+                } else if (key == 'customer') {
+                    for (var k in self.invoice.customer) {
+                        self.invoice.customer[k] = '';
+                    }
+                } else if (key == 'line_items') {
+                    for (var i = 0; i < 7; i++) {
+                        self.resetLineItem(i);
+                    }
+                }
+            }
             this.edit = false;
             this.getInvoices();
             this.table = true;
+        },
+        resetLineItem: function resetLineItem(num) {
+            var self = this;
+            for (var key in self.invoice.line_items[num]) {
+                if (key == 'item' || key == 'product') {
+                    self.invoice.line_items[num][key] = '';
+                } else {
+                    self.invoice.line_items[num][key] = 0;
+                }
+            }
         }
     }
 });
 
 /***/ }),
-/* 54 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -45072,14 +45533,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.table),
       expression: "table"
     }]
-  }, [(_vm.list.length > 0) ? _c('div', {
+  }, [(_vm.invoices_list.length > 0) ? _c('div', {
     staticClass: "table-responsive",
     attrs: {
       "id": "product-table"
     }
   }, [_c('table', {
     staticClass: "table table-condensed"
-  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Invoice #")]), _vm._v(" "), _c('th', [_vm._v("Ship Date")]), _vm._v(" "), _c('th', [_vm._v("Customer")]), _vm._v(" "), _c('th', [_vm._v("Extended Price")]), _vm._v(" "), _c('th', [_vm._v("Print Shipper")]), _vm._v(" "), _c('th', [_vm._v("Print Invoice")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(invoice) {
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Invoice #")]), _vm._v(" "), _c('th', [_vm._v("Ship Date")]), _vm._v(" "), _c('th', [_vm._v("Customer")]), _vm._v(" "), _c('th', [_vm._v("Extended Price")]), _vm._v(" "), _c('th', [_vm._v("Print Shipper")]), _vm._v(" "), _c('th', [_vm._v("Print Invoice")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.invoices_list), function(invoice) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(invoice.inv_num))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.date))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.customer.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.total))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-default",
       on: {
@@ -45200,6 +45661,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', [_vm._v("Customer")]), _vm._v(" "), _c('select', {
     directives: [{
@@ -45210,8 +45675,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
-      "number": "",
-      "required": ""
+      "number": ""
     },
     on: {
       "blur": function($event) {
@@ -45228,8 +45692,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.customers_list), function(customer) {
-    return _c('option', [_vm._v(_vm._s(customer.id))])
-  })], 2)]), _vm._v(" "), _c('div', {
+    return _c('option', [_vm._v(_vm._s(customer.id) + " - " + _vm._s(customer.name))])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('h4', {
+    staticClass: "cust_top_margin"
+  }, [_c('strong', [_vm._v("Customer:")]), _vm._v(" " + _vm._s(_vm.invoice.customer.name))])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -45604,7 +46072,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(0)
+        _vm.setExtended(0)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -45641,7 +46109,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(0)
+        _vm.setExtended(0)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -45779,7 +46247,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(1)
+        _vm.setExtended(1)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -45813,7 +46281,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(1)
+        _vm.setExtended(1)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -45946,7 +46414,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(2)
+        _vm.setExtended(2)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -45980,7 +46448,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(2)
+        _vm.setExtended(2)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46113,7 +46581,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(3)
+        _vm.setExtended(3)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46147,7 +46615,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(3)
+        _vm.setExtended(3)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46280,7 +46748,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(4)
+        _vm.setExtended(4)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46314,7 +46782,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(4)
+        _vm.setExtended(4)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46447,7 +46915,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(5)
+        _vm.setExtended(5)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46481,7 +46949,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(5)
+        _vm.setExtended(5)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46614,7 +47082,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(6)
+        _vm.setExtended(6)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46648,7 +47116,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getExtended(6)
+        _vm.setExtended(6)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46714,7 +47182,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.getTotal()
+        _vm.setTotal()
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46793,7 +47261,7 @@ if (false) {
 }
 
 /***/ }),
-/* 55 */
+/* 60 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

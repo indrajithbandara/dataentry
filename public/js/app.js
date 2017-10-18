@@ -44747,61 +44747,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.btn_one = false;this.btn_two = true;this.ln_two = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideTwo: function hideTwo() {
-            this.btn_one = true;this.btn_two = false;this.ln_two = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+            this.btn_one = true;this.btn_two = false;this.ln_two = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(1);this.getTotal();
         },
         showThree: function showThree() {
             this.btn_two = false;this.btn_three = true;this.ln_three = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideThree: function hideThree() {
-            this.btn_two = true;this.btn_three = false;this.ln_three = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+            this.btn_two = true;this.btn_three = false;this.ln_three = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(2);this.getTotal();
         },
         showFour: function showFour() {
             this.btn_three = false;this.btn_four = true;this.ln_four = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideFour: function hideFour() {
-            this.btn_three = true;this.btn_four = false;this.ln_four = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+            this.btn_three = true;this.btn_four = false;this.ln_four = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(3);this.getTotal();
         },
         showFive: function showFive() {
             this.btn_four = false;this.btn_five = true;this.ln_five = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideFive: function hideFive() {
-            this.btn_four = true;this.btn_five = false;this.ln_five = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+            this.btn_four = true;this.btn_five = false;this.ln_five = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(4);this.getTotal();
         },
         showSix: function showSix() {
             this.btn_five = false;this.btn_six = true;this.ln_six = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideSix: function hideSix() {
-            this.btn_five = true;this.btn_six = false;this.ln_six = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+            this.btn_five = true;this.btn_six = false;this.ln_six = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(5);this.getTotal();
         },
         showSeven: function showSeven() {
             this.btn_six = false;this.btn_seven = true;this.ln_seven = true;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
         },
         hideSeven: function hideSeven() {
-            this.btn_six = true;this.btn_seven = false;this.ln_seven = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+            this.btn_six = true;this.btn_seven = false;this.ln_seven = false;this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;this.resetLineItem(6);this.getTotal();
+        },
+        resetLineItem: function resetLineItem(num) {
+            this.invoice.line_items[num].item = '';
+            this.invoice.line_items[num].product = '';
+            this.invoice.line_items[num].qty = 0;
+            this.invoice.line_items[num].unit = 0;
+            this.invoice.line_items[num].extended = 0;
         },
         getTotal: function getTotal() {
-            this.invoice.total = this.invoice.line_items[0].extended + this.invoice.line_items[1].extended + this.invoice.line_items[2].extended + this.invoice.line_items[3].extended + this.invoice.line_items[4].extended + this.invoice.line_items[5].extended + this.invoice.line_items[6].extended + parseInt(this.invoice.ship_fee);
+            var total = this.invoice.line_items[0].extended + this.invoice.line_items[1].extended + this.invoice.line_items[2].extended + this.invoice.line_items[3].extended + this.invoice.line_items[4].extended + this.invoice.line_items[5].extended + this.invoice.line_items[6].extended + parseFloat(this.invoice.ship_fee);
+            this.invoice.total = total.toFixed(2);
         },
-        li_one_math: function li_one_math() {
-            this.invoice.line_items[0].extended = this.invoice.line_items[0].qty * this.invoice.line_items[0].unit;this.getTotal();
-        },
-        li_two_math: function li_two_math() {
-            this.invoice.line_items[1].extended = this.invoice.line_items[1].qty * this.invoice.line_items[1].unit;this.getTotal();
-        },
-        li_three_math: function li_three_math() {
-            this.invoice.line_items[2].extended = this.invoice.line_items[2].qty * this.invoice.line_items[2].unit;this.getTotal();
-        },
-        li_four_math: function li_four_math() {
-            this.invoice.line_items[3].extended = this.invoice.line_items[3].qty * this.invoice.line_items[3].unit;this.getTotal();
-        },
-        li_five_math: function li_five_math() {
-            this.invoice.line_items[4].extended = this.invoice.line_items[4].qty * this.invoice.line_items[4].unit;this.getTotal();
-        },
-        li_six_math: function li_six_math() {
-            this.invoice.line_items[5].extended = this.invoice.line_items[5].qty * this.invoice.line_items[5].unit;this.getTotal();
-        },
-        li_seven_math: function li_seven_math() {
-            this.invoice.line_items[6].extended = this.invoice.line_items[6].qty * this.invoice.line_items[6].unit;this.getTotal();
+        getExtended: function getExtended(num) {
+            this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit;this.getTotal();
         },
         getUser: function getUser() {
             var _this = this;
@@ -44819,7 +44809,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // ajax call to get available customers for the customers dropdown
             axios.get('api/customers').then(function (response) {
                 _this2.customers_list = response.data;
-                console.log('From getCustomers method', response.data);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -44830,7 +44819,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // ajax call to get available products for the products dropdowns
             axios.get('api/products').then(function (response) {
                 _this3.products_list = response.data;
-                console.log('From getProducts method:', response.data);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -44855,7 +44843,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return status >= 200 && status < 300;
                 }
             }).then(function (response) {
-                console.log('From getOneCustomer method:', response.data);
                 self.invoice.customer.id = response.data.id;
                 self.invoice.customer.name = response.data.name;
                 self.invoice.customer.shipto = response.data.shipto;
@@ -44866,7 +44853,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.invoice.customer.country = response.data.country;
                 self.invoice.customer.disclaimer = response.data.disclaimer;
                 self.invoice.customer.comments = response.data.comments;
-                console.log('Model now looks like:', self.invoice.customer);
             }).catch(function (error) {
                 console.log(error.message);
             });
@@ -44874,10 +44860,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         createInvoice: function createInvoice() {
             // post request to add an invoice
             var self = this;
-            var id = parseInt(self.invoice.customer.id);
-            self.getOneCustomer(id);
             var params = Object.assign({}, self.invoice);
-            console.log('Params are:', params);
             axios({
                 method: 'post',
                 url: 'api/invoices/store',
@@ -44886,7 +44869,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return status >= 200 && status < 300;
                 }
             }).then(function (response) {
-                console.log('Successful Send');
+                self.resetValues();
             }).catch(function (error) {
                 console.log(error.message);
             });
@@ -44948,146 +44931,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return;
             }
         },
-
-        /*
-        * Regex methods for each of the feilds. Tried to tie all of this up into one function but
-        * it was buggy and didn't work everytime. It worked a lot better when each field had
-        * it's own regex check. 
-        *
-        * Each regex method has a empty string check because it would throw the error even if the
-        * field was empty, so I added a check for emptiness and it would set the waring to an empty
-        * string as well. 
-        *
-        * In the conditional statment for the pattern test as well, it needed an else statment to get ride
-        * of the error for when the user got ride of the unapproved character but the field wasn't empty. 
-        */
-        regexNameCheck: function regexNameCheck(string) {
-            var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
-            if (string == '') {
-                this.regexNameWarning = '';
-                return;
-            }
-            if (pattern.test(string) != true) {
-                this.regexNameWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
-                return;
-            } else {
-                this.regexNameWarning = '';
-            }
-        },
-        regexBuyerCheck: function regexBuyerCheck(string) {
-            var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
-            if (string == '') {
-                this.regexBuyerWarning = '';
-                return;
-            }
-            if (pattern.test(string) != true) {
-                this.regexBuyerWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
-                return;
-            } else {
-                this.regexBuyerWarning = '';
-            }
-        },
-        regexCountryCheck: function regexCountryCheck(string) {
-            var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
-            if (string == '') {
-                this.regexCountryWarning = '';
-                return;
-            }
-            if (pattern.test(string) != true) {
-                this.regexCountryWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
-                return;
-            } else {
-                this.regexCountryWarning = '';
-            }
-        },
-        regexShiptoCheck: function regexShiptoCheck(string) {
-            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
-            if (string == '') {
-                this.regexShiptoWarning = '';
-                return;
-            }
-            if (pattern.test(string) != true) {
-                this.regexShiptoWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
-                return;
-            } else {
-                this.regexShiptoWarning = '';
-            }
-        },
-        regexBilltoCheck: function regexBilltoCheck(string) {
-            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
-            if (string == '') {
-                this.regexBilltoWarning = '';
-                return;
-            }
-            if (pattern.test(string) != true) {
-                this.regexBilltoWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
-                return;
-            } else {
-                this.regexBilltoWarning = '';
-            }
-        },
-        regexDiscCheck: function regexDiscCheck(string) {
-            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
-            if (string == '') {
-                this.regexDiscWarning = '';
-                return;
-            }
-            if (pattern.test(string) != true) {
-                this.regexDiscWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
-                return;
-            } else {
-                this.regexDiscWarning = '';
-            }
-        },
-        regexComCheck: function regexComCheck(string) {
-            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
-            if (string == '') {
-                this.regexComWarning = '';
-                return;
-            }
-            if (pattern.test(string) != true) {
-                this.regexComWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
-                return;
-            } else {
-                this.regexComWarning = '';
-            }
-        },
-        regexPhoneCheck: function regexPhoneCheck(string) {
-            var pattern = /^(?!-)(?!.*--)[0-9\(\)\-\s]+$/;
-            if (string == '') {
-                this.regexPhoneWarning = '';
-                return;
-            }
-            if (pattern.test(string) != true) {
-                this.regexPhoneWarning = "Unapproved characters detected! Only numerica characters, parenthesis and dashes. However, '--' is not allowed.";
-                return;
-            } else {
-                this.regexPhoneWarning = '';
-            }
-        },
-        valueCheck: function valueCheck() {
-            if (!this.customer.country) {
-                this.customer.country = 'NA';
-            }
-            if (!this.customer.disclaimer) {
-                this.customer.disclaimer = 'NA';
-            }
-            if (!this.customer.comments) {
-                this.customer.comments = 'NA';
-            }
-        },
         resetValues: function resetValues() {
-            this.customer.name = '';
-            this.customer.email = '';
-            this.customer.phone = '';
-            this.customer.buyer = '';
-            this.customer.shipto = '';
-            this.customer.billto = '';
-            this.customer.country = '';
-            this.customer.disclaimer = '';
-            this.customer.comments = '';
+            this.invoice.inv_num = '';
+            this.invoice.date = '';
+            this.invoice.customer.id = '';
+            this.invoice.customer.name = '';
+            this.invoice.customer.shipto = '';
+            this.invoice.customer.billto = '';
+            this.invoice.customer.buyer = '';
+            this.invoice.customer.email = '';
+            this.invoice.customer.phone = '';
+            this.invoice.customer.country = '';
+            this.invoice.customer.disclaimer = '';
+            this.invoice.customer.comments = '';
+            this.invoice.po_num = '';
+            this.invoice.line_items[0].item = '';
+            this.invoice.line_items[0].product = '';
+            this.invoice.line_items[0].qty = 0;
+            this.invoice.line_items[0].unit = 0;
+            this.invoice.line_items[0].extended = 0;
+            this.invoice.line_items[1].item = '';
+            this.invoice.line_items[1].product = '';
+            this.invoice.line_items[1].qty = 0;
+            this.invoice.line_items[1].unit = 0;
+            this.invoice.line_items[1].extended = 0;
+            this.invoice.line_items[2].item = '';
+            this.invoice.line_items[2].product = '';
+            this.invoice.line_items[2].qty = 0;
+            this.invoice.line_items[2].unit = 0;
+            this.invoice.line_items[2].extended = 0;
+            this.invoice.line_items[3].item = '';
+            this.invoice.line_items[3].product = '';
+            this.invoice.line_items[3].qty = 0;
+            this.invoice.line_items[3].unit = 0;
+            this.invoice.line_items[3].extended = 0;
+            this.invoice.line_items[4].item = '';
+            this.invoice.line_items[4].product = '';
+            this.invoice.line_items[4].qty = 0;
+            this.invoice.line_items[4].unit = 0;
+            this.invoice.line_items[4].extended = 0;
+            this.invoice.line_items[5].item = '';
+            this.invoice.line_items[5].product = '';
+            this.invoice.line_items[5].qty = 0;
+            this.invoice.line_items[5].unit = 0;
+            this.invoice.line_items[5].extended = 0;
+            this.invoice.line_items[6].item = '';
+            this.invoice.line_items[6].product = '';
+            this.invoice.line_items[6].qty = 0;
+            this.invoice.line_items[6].unit = 0;
+            this.invoice.line_items[6].extended = 0;
+            this.invoice.ship_fee = 0;
+            this.invoice.total = 0;
+            this.invoice.memo = '';
             this.edit = false;
-            this.getCustomers();
+            this.getInvoices();
             this.table = true;
         }
     }
@@ -45250,6 +45147,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     on: {
+      "blur": function($event) {
+        _vm.getOneCustomer(_vm.invoice.customer.id)
+      },
       "change": function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
@@ -45637,7 +45537,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_one_math()
+        _vm.getExtended(0)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -45674,7 +45574,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_one_math()
+        _vm.getExtended(0)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -45812,7 +45712,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_two_math()
+        _vm.getExtended(1)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -45846,7 +45746,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_two_math()
+        _vm.getExtended(1)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -45979,7 +45879,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_three_math()
+        _vm.getExtended(2)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46013,7 +45913,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_three_math()
+        _vm.getExtended(2)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46146,7 +46046,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_four_math()
+        _vm.getExtended(3)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46180,7 +46080,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_four_math()
+        _vm.getExtended(3)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46313,7 +46213,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_five_math()
+        _vm.getExtended(4)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46347,7 +46247,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_five_math()
+        _vm.getExtended(4)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46480,7 +46380,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_six_math()
+        _vm.getExtended(5)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46514,7 +46414,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_six_math()
+        _vm.getExtended(5)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46647,7 +46547,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_seven_math()
+        _vm.getExtended(6)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -46681,7 +46581,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.li_seven_math()
+        _vm.getExtended(6)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }

@@ -62,7 +62,7 @@
 
                 <div class="form-group">
                     <label>Customer</label>
-                    <select v-model="invoice.customer.id" number class="form-control" required>
+                    <select v-model="invoice.customer.id" @blur="getOneCustomer(invoice.customer.id)" number class="form-control" required>
                         <option>Choose An Item</option>
                         <option v-for="customer in customers_list">{{ customer.id }}</option>
                     </select>
@@ -161,12 +161,12 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_one">Qty</label>
-                                <input v-model="invoice.line_items[0].qty" number @keyup="li_one_math()" type="number" name="qty_one" min="0" step="1" class="form-control" maxlength="11" required>
+                                <input v-model="invoice.line_items[0].qty" number @keyup="getExtended(0)" type="number" name="qty_one" min="0" step="1" class="form-control" maxlength="11" required>
                                 <p class="alert alert-warning" v-if="invoice.line_items[0].qty.length == 11">11 character limit reached!</p>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_one">Unit Price</label>
-                                <input v-model="invoice.line_items[0].unit" number @keyup="li_one_math()" type="number" name="unit_one" min="0" step="0.01" class="form-control" maxlength="6" required>
+                                <input v-model="invoice.line_items[0].unit" number @keyup="getExtended(0)" type="number" name="unit_one" min="0" step="0.01" class="form-control" maxlength="6" required>
                                 <p class="alert alert-warning" v-if="invoice.line_items[0].unit.length == 6">6 character limit reached!</p>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
@@ -203,11 +203,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_two">Qty</label>
-                                <input v-model="invoice.line_items[1].qty" number @keyup="li_two_math()" type="number" name="qty_two" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[1].qty" number @keyup="getExtended(1)" type="number" name="qty_two" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_two">Unit Price</label>
-                                <input v-model="invoice.line_items[1].unit" number @keyup="li_two_math()" type="number" name="unit_two" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[1].unit" number @keyup="getExtended(1)" type="number" name="unit_two" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_two">Ext Price</label>
@@ -242,11 +242,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_three">Qty</label>
-                                <input v-model="invoice.line_items[2].qty" number @keyup="li_three_math()" type="number" name="qty_three" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[2].qty" number @keyup="getExtended(2)" type="number" name="qty_three" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_three">Unit Price</label>
-                                <input v-model="invoice.line_items[2].unit" number @keyup="li_three_math()" type="number" name="unit_three" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[2].unit" number @keyup="getExtended(2)" type="number" name="unit_three" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_three">Ext Price</label>
@@ -281,11 +281,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_four">Qty</label>
-                                <input v-model="invoice.line_items[3].qty" number @keyup="li_four_math()" type="number" name="qty_four" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[3].qty" number @keyup="getExtended(3)" type="number" name="qty_four" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_four">Unit Price</label>
-                                <input v-model="invoice.line_items[3].unit" number @keyup="li_four_math()" type="number" name="unit_four" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[3].unit" number @keyup="getExtended(3)" type="number" name="unit_four" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_four">Ext Price</label>
@@ -320,11 +320,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_three">Qty</label>
-                                <input v-model="invoice.line_items[4].qty" number @keyup="li_five_math()" type="number" name="qty_five" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[4].qty" number @keyup="getExtended(4)" type="number" name="qty_five" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_five">Unit Price</label>
-                                <input v-model="invoice.line_items[4].unit" number @keyup="li_five_math()" type="number" name="unit_five" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[4].unit" number @keyup="getExtended(4)" type="number" name="unit_five" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_five">Ext Price</label>
@@ -359,11 +359,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_six">Qty</label>
-                                <input v-model="invoice.line_items[5].qty" number @keyup="li_six_math()" type="number" name="qty_six" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[5].qty" number @keyup="getExtended(5)" type="number" name="qty_six" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_six">Unit Price</label>
-                                <input v-model="invoice.line_items[5].unit" number @keyup="li_six_math()" type="number" name="unit_six" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[5].unit" number @keyup="getExtended(5)" type="number" name="unit_six" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_six">Ext Price</label>
@@ -398,11 +398,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="qty_seven">Qty</label>
-                                <input v-model="invoice.line_items[6].qty" number @keyup="li_seven_math()" type="number" name="qty_seven" min="0" step="1" class="form-control" required>
+                                <input v-model="invoice.line_items[6].qty" number @keyup="getExtended(6)" type="number" name="qty_seven" min="0" step="1" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="unit_seven">Unit Price</label>
-                                <input v-model="invoice.line_items[6].unit" number @keyup="li_seven_math()" type="number" name="unit_seven" min="0" step="0.01" class="form-control" required>
+                                <input v-model="invoice.line_items[6].unit" number @keyup="getExtended(6)" type="number" name="unit_seven" min="0" step="0.01" class="form-control" required>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_seven">Ext Price</label>
@@ -505,19 +505,26 @@
         },
         methods: {
             showTwo(){ this.btn_one = false; this.btn_two = true; this.ln_two = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideTwo(){ this.btn_one = true; this.btn_two = false; this.ln_two = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            hideTwo(){ this.btn_one = true; this.btn_two = false; this.ln_two = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(1); this.getTotal();},
             showThree(){ this.btn_two = false; this.btn_three = true; this.ln_three = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideThree(){ this.btn_two = true; this.btn_three = false; this.ln_three = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            hideThree(){ this.btn_two = true; this.btn_three = false; this.ln_three = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(2); this.getTotal();},
             showFour(){ this.btn_three = false; this.btn_four = true; this.ln_four = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideFour(){ this.btn_three = true; this.btn_four = false; this.ln_four = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            hideFour(){ this.btn_three = true; this.btn_four = false; this.ln_four = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(3); this.getTotal();},
             showFive(){ this.btn_four = false; this.btn_five = true; this.ln_five = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideFive(){ this.btn_four = true; this.btn_five = false; this.ln_five = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            hideFive(){ this.btn_four = true; this.btn_five = false; this.ln_five = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(4); this.getTotal();},
             showSix(){ this.btn_five = false; this.btn_six = true; this.ln_six = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            hideSix(){ this.btn_five = true; this.btn_six = false; this.ln_six = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
-            showSeven(){ this.btn_six = false; this.btn_seven = true; this.ln_seven = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; },
-            hideSeven(){ this.btn_six = true; this.btn_seven = false; this.ln_seven = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; },
+            hideSix(){ this.btn_five = true; this.btn_six = false; this.ln_six = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(5); this.getTotal();},
+            showSeven(){ this.btn_six = false; this.btn_seven = true; this.ln_seven = true; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;},
+            hideSeven(){ this.btn_six = true; this.btn_seven = false; this.ln_seven = false; this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; this.resetLineItem(6); this.getTotal();},
+            resetLineItem(num){
+                this.invoice.line_items[num].item = '';
+                this.invoice.line_items[num].product = '';
+                this.invoice.line_items[num].qty = 0;
+                this.invoice.line_items[num].unit = 0;
+                this.invoice.line_items[num].extended = 0;
+            },
             getTotal(){
-                this.invoice.total = 
+                var total = 
                 this.invoice.line_items[0].extended +
                 this.invoice.line_items[1].extended +
                 this.invoice.line_items[2].extended +
@@ -525,15 +532,12 @@
                 this.invoice.line_items[4].extended +
                 this.invoice.line_items[5].extended +
                 this.invoice.line_items[6].extended +
-                parseInt(this.invoice.ship_fee);
+                parseFloat(this.invoice.ship_fee);
+                this.invoice.total = total.toFixed(2);
             },
-            li_one_math(){ this.invoice.line_items[0].extended = this.invoice.line_items[0].qty * this.invoice.line_items[0].unit; this.getTotal();},
-            li_two_math(){ this.invoice.line_items[1].extended = this.invoice.line_items[1].qty * this.invoice.line_items[1].unit; this.getTotal();},
-            li_three_math(){ this.invoice.line_items[2].extended = this.invoice.line_items[2].qty * this.invoice.line_items[2].unit; this.getTotal();},
-            li_four_math(){ this.invoice.line_items[3].extended = this.invoice.line_items[3].qty * this.invoice.line_items[3].unit; this.getTotal();},
-            li_five_math(){ this.invoice.line_items[4].extended = this.invoice.line_items[4].qty * this.invoice.line_items[4].unit; this.getTotal();},
-            li_six_math(){ this.invoice.line_items[5].extended = this.invoice.line_items[5].qty * this.invoice.line_items[5].unit; this.getTotal();},
-            li_seven_math(){ this.invoice.line_items[6].extended = this.invoice.line_items[6].qty * this.invoice.line_items[6].unit; this.getTotal();},
+            getExtended(num){
+                this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit; this.getTotal();
+            },
             getUser(){ // ajax call to get the authenticated user
                 axios.get('api/user')
                 .then((response) => {
@@ -546,7 +550,6 @@
                 axios.get('api/customers')
                 .then((response) => {
                     this.customers_list = response.data;
-                    console.log('From getCustomers method',response.data);
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -555,7 +558,6 @@
                 axios.get('api/products')
                 .then((response) => {
                     this.products_list = response.data;
-                    console.log('From getProducts method:', response.data);
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -577,7 +579,6 @@
                         return status >= 200 && status < 300;
                     }
                 }).then((response) => {
-                    console.log('From getOneCustomer method:',response.data);
                     self.invoice.customer.id = response.data.id;
                     self.invoice.customer.name = response.data.name;
                     self.invoice.customer.shipto = response.data.shipto;
@@ -588,17 +589,13 @@
                     self.invoice.customer.country = response.data.country;
                     self.invoice.customer.disclaimer = response.data.disclaimer;
                     self.invoice.customer.comments = response.data.comments;
-                    console.log('Model now looks like:', self.invoice.customer);
                 }).catch((error) => {
                     console.log(error.message);
                 });
             },
             createInvoice(){ // post request to add an invoice
                 let self = this;
-                var id = parseInt(self.invoice.customer.id);
-                self.getOneCustomer(id);
                 let params = Object.assign({}, self.invoice);
-                console.log('Params are:', params);
                 axios({
                     method: 'post',
                     url: 'api/invoices/store',
@@ -607,7 +604,7 @@
                         return status >= 200 && status < 300;
                     }
                 }).then((response) => {
-                    console.log('Successful Send');
+                    self.resetValues();
                 }).catch((error) => {
                     console.log(error.message);
                 });
@@ -667,139 +664,60 @@
                     return;
                 }
             },
-            /*
-            * Regex methods for each of the feilds. Tried to tie all of this up into one function but
-            * it was buggy and didn't work everytime. It worked a lot better when each field had
-            * it's own regex check. 
-            *
-            * Each regex method has a empty string check because it would throw the error even if the
-            * field was empty, so I added a check for emptiness and it would set the waring to an empty
-            * string as well. 
-            *
-            * In the conditional statment for the pattern test as well, it needed an else statment to get ride
-            * of the error for when the user got ride of the unapproved character but the field wasn't empty. 
-            */
-            regexNameCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
-                if(string == ''){
-                    this.regexNameWarning = '';
-                    return;
-                }
-                if(pattern.test(string) != true){
-                    this.regexNameWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
-                    return;
-                } else {
-                    this.regexNameWarning = '';
-                }
-            },
-            regexBuyerCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
-                if(string == ''){
-                    this.regexBuyerWarning = '';
-                    return;
-                }
-                if(pattern.test(string) != true){
-                    this.regexBuyerWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
-                    return;
-                } else {
-                    this.regexBuyerWarning = '';
-                }
-            },
-            regexCountryCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
-                if(string == ''){
-                    this.regexCountryWarning = '';
-                    return;
-                }
-                if(pattern.test(string) != true){
-                    this.regexCountryWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
-                    return;
-                } else {
-                    this.regexCountryWarning = '';
-                }
-            },
-            regexShiptoCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
-                if(string == ''){
-                    this.regexShiptoWarning = '';
-                    return;
-                }
-                if(pattern.test(string) != true){
-                    this.regexShiptoWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
-                    return;
-                } else {
-                    this.regexShiptoWarning = '';
-                } 
-            },
-            regexBilltoCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
-                if(string == ''){
-                    this.regexBilltoWarning = '';
-                    return;
-                }
-                if(pattern.test(string) != true){
-                    this.regexBilltoWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
-                    return;
-                } else {
-                    this.regexBilltoWarning = '';
-                } 
-            },
-            regexDiscCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
-                if(string == ''){
-                    this.regexDiscWarning = '';
-                    return;
-                }
-                if(pattern.test(string) != true){
-                    this.regexDiscWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
-                    return;
-                } else {
-                    this.regexDiscWarning = '';
-                }
-            },
-            regexComCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
-                if(string == ''){
-                    this.regexComWarning = '';
-                    return;
-                }
-                if(pattern.test(string) != true){
-                    this.regexComWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, *, #, commas and periods. However, '--' is not allowed.";
-                    return;
-                } else {
-                    this.regexComWarning = '';
-                } 
-            },
-            regexPhoneCheck(string){
-                var pattern = /^(?!-)(?!.*--)[0-9\(\)\-\s]+$/;
-                if(string == ''){
-                    this.regexPhoneWarning = '';
-                    return;
-                }
-                if(pattern.test(string) != true){
-                    this.regexPhoneWarning = "Unapproved characters detected! Only numerica characters, parenthesis and dashes. However, '--' is not allowed.";
-                    return;
-                } else {
-                    this.regexPhoneWarning = '';
-                }
-            },
-            valueCheck(){
-                if(!this.customer.country){this.customer.country = 'NA';}
-                if(!this.customer.disclaimer){this.customer.disclaimer = 'NA';}
-                if(!this.customer.comments){this.customer.comments = 'NA';}
-            },
             resetValues(){
-                this.customer.name = '';
-                this.customer.email = '';
-                this.customer.phone = '';
-                this.customer.buyer = '';
-                this.customer.shipto = '';
-                this.customer.billto = '';
-                this.customer.country = '';
-                this.customer.disclaimer = '';
-                this.customer.comments = '';
+                this.invoice.inv_num = '';
+                this.invoice.date = '';
+                this.invoice.customer.id = '';
+                this.invoice.customer.name = '';
+                this.invoice.customer.shipto = '';
+                this.invoice.customer.billto = '';
+                this.invoice.customer.buyer = '';
+                this.invoice.customer.email = '';
+                this.invoice.customer.phone = '';
+                this.invoice.customer.country = '';
+                this.invoice.customer.disclaimer = '';
+                this.invoice.customer.comments = '';
+                this.invoice.po_num = '';
+                this.invoice.line_items[0].item = '';
+                this.invoice.line_items[0].product = '';
+                this.invoice.line_items[0].qty = 0;
+                this.invoice.line_items[0].unit = 0;
+                this.invoice.line_items[0].extended = 0;
+                this.invoice.line_items[1].item = '';
+                this.invoice.line_items[1].product = '';
+                this.invoice.line_items[1].qty = 0;
+                this.invoice.line_items[1].unit = 0;
+                this.invoice.line_items[1].extended = 0;
+                this.invoice.line_items[2].item = '';
+                this.invoice.line_items[2].product = '';
+                this.invoice.line_items[2].qty = 0;
+                this.invoice.line_items[2].unit = 0;
+                this.invoice.line_items[2].extended = 0;
+                this.invoice.line_items[3].item = '';
+                this.invoice.line_items[3].product = '';
+                this.invoice.line_items[3].qty = 0;
+                this.invoice.line_items[3].unit = 0;
+                this.invoice.line_items[3].extended = 0;
+                this.invoice.line_items[4].item = '';
+                this.invoice.line_items[4].product = '';
+                this.invoice.line_items[4].qty = 0;
+                this.invoice.line_items[4].unit = 0;
+                this.invoice.line_items[4].extended = 0;
+                this.invoice.line_items[5].item = '';
+                this.invoice.line_items[5].product = '';
+                this.invoice.line_items[5].qty = 0;
+                this.invoice.line_items[5].unit = 0;
+                this.invoice.line_items[5].extended = 0;
+                this.invoice.line_items[6].item = '';
+                this.invoice.line_items[6].product = '';
+                this.invoice.line_items[6].qty = 0;
+                this.invoice.line_items[6].unit = 0;
+                this.invoice.line_items[6].extended = 0;
+                this.invoice.ship_fee = 0;
+                this.invoice.total = 0;
+                this.invoice.memo = '';
                 this.edit = false;
-                this.getCustomers();
+                this.getInvoices();
                 this.table = true;
             }
         }

@@ -85,6 +85,7 @@
 <script>
     // Imports
     import SubmitBtns from '../components/partials/submit-btn.vue';
+    // Export
     export default {
         data() {
             return {
@@ -129,10 +130,11 @@
             },
             createProduct(){
                 let self = this;
-                self.nameDatabase();
-                self.regex(self.product.name);
-                self.regex(self.product.description);
-                self.regex(self.product.material);
+                self.noDuplicateNames();
+                self.regexCheck();
+                // self.regex(self.product.name);
+                // self.regex(self.product.description);
+                // self.regex(self.product.material);
                 if(!self.product.description){self.product.description = 'NA';}
                 if(!self.product.material){self.product.material = 'NA';}
                 if(!self.product.rev){self.product.rev = 'NA';}
@@ -145,15 +147,7 @@
                         return status >= 200 && status < 300;
                     }
                 }).then(() => {
-                    self.product.name = '';
-                    self.product.description = '';
-                    self.product.material = '';
-                    self.product.rev = '';
-                    self.product.rev_date = '';
-                    self.regWarning = '';
-                    self.nameAlert = '';
-                    self.edit = false;
-                    self.getProducts();
+                    self.resetValues();
                 }).catch((error) => {
                     console.log(error.message);
                 });
@@ -175,15 +169,7 @@
                         return status >= 200 && status < 300;
                     }
                 }).then(() => {
-                    self.product.name = '';
-                    self.product.description = '';
-                    self.product.material = '';
-                    self.product.rev = '';
-                    self.product.rev_date = '';
-                    self.regWarning = '';
-                    self.nameAlert = '';
-                    self.edit = false;
-                    self.getProducts();
+                    self.resetValues();
                 }).catch((error) => {
                     console.log(error.message);
                 });
@@ -197,12 +183,13 @@
                         return status >= 200 && status < 300;
                     }
                 }).then((response) => {
-                    self.product.id = response.data.id;
-                    self.product.name = response.data.name;
-                    self.product.description = response.data.description;
-                    self.product.material = response.data.material;
-                    self.product.rev = response.data.rev;
-                    self.product.rev_date = response.data.rev_date;
+                    for(var key in self.product){
+                        for(var k in response.data){
+                            if(key === k){
+                                self.product[key] = response.data[k];
+                            }
+                        }
+                    }
                 }).catch((error) => {
                     console.log(error.message);
                 });
@@ -221,27 +208,43 @@
                     return;
                 }
             },
-            regex(string){
-                if(string){
-                    var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\-\.\,\s]+$/;
-                    if(pattern.test(string) != true){
-                        this.regWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed.";
-                        return;
-                    } 
+            resetValues(){
+                for(var key in this.product){
+                    this.product[key] = '';
+                }
+                this.regWarning = '';
+                this.nameAlert = '';
+                this.edit = false;
+                this.getProducts();
+            },
+            regexCheck(){
+                var arr = [this.product.name, this.product.description, this.product.material];
+                var pattern = /^$|^(?!-)(?!.*--)[A-Za-z0-9\-\.\,\s]+$/;
+                var newArr = arr.filter(function(val){
+                    return pattern.test(val) === false;
+                });
+                if(newArr.length > 0){
+                    this.regWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed. Current values rejected: "; 
+                    for(var i = 0; i < newArr.length; i++){
+                        this.regWarning += "'"+newArr[i]+"'    ";
+                    }
+                    throw new Error("Unapproved characters rejected by the client.");
+                } else {
+                    this.regWarning = '';
                 }
             },
             checkName(){
                 let self = this;
-                self.list.forEach(function(arrayItem){
-                    var x = arrayItem;
-                    if(self.product.name == x.name){
-                        self.nameAlert = 'This name has already been taken.';
-                    }else{
-                        self.nameAlert = '';
-                    }
+                var nameTaken = self.list.some(function(val){
+                    return self.product.name === val.name;
                 });
+                if(nameTaken){
+                    self.nameAlert = 'This name has already been taken.';
+                }else{
+                    self.nameAlert = '';
+                }
             },
-            nameDatabase(){
+            noDuplicateNames(){
                 let self = this;
                 self.list.forEach(function(arrayItem){
                     var x = arrayItem;

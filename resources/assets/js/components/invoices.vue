@@ -5,6 +5,7 @@
             <div class="col-xs-6 col-sm-6 col-md-6"><button @click="table = false" class="btn btn-success btn-lg full-width">Add An Invoice</button></div>
         </div>
         <hr>
+        <!-- Start of Invoice Table -->
         <div v-show="table">
             <!-- Invoices Table -->
             <div id="product-table" v-if="invoices_list.length > 0" class="table-responsive">
@@ -40,6 +41,7 @@
             </div>
             <!-- end of Invoices table -->
         </div>
+        <!-- End of Invoice Table -->
         <hr>
         <!-- Add An Invoice Form -->
         <div v-show="!table">
@@ -449,9 +451,9 @@
                 </div>
             </form>
         </div>
+        <!-- End of Invoice Form -->
         <br />
         <br />
-        <!-- End of add invoice form -->
     </div>
 </template>
 

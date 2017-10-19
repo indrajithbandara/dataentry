@@ -896,29 +896,24 @@ Vue.component('invoices', __webpack_require__(52));
 // Vue Instances
 if (document.getElementById('dashboard-app')) {
     var dashboardApp = new Vue({ el: '#dashboard-app' });
-}
-if (document.getElementById('settings-app')) {
+} else if (document.getElementById('settings-app')) {
     var settingsApp = new Vue({ el: '#settings-app' });
-}
-if (document.getElementById('users-app')) {
+} else if (document.getElementById('users-app')) {
     var usersApp = new Vue({ el: '#users-app' });
-}
-if (document.getElementById('customers-app')) {
+} else if (document.getElementById('customers-app')) {
     var custApp = new Vue({ el: '#customers-app' });
-}
-if (document.getElementById('products-app')) {
+} else if (document.getElementById('products-app')) {
     var prodApp = new Vue({ el: '#products-app' });
-}
-if (document.getElementById('invoice-app')) {
+} else if (document.getElementById('invoice-app')) {
     var invApp = new Vue({ el: '#invoice-app' });
 }
-// if (document.getElementById('purchaseorders-app')) {
+// else if (document.getElementById('purchaseorders-app')) {
 //     const purchApp = new Vue({ el: '#purchaseorders-app' });
 // }
-// if (document.getElementById('routers-app')) {
+// else if (document.getElementById('routers-app')) {
 //     const routApp = new Vue({ el: '#routers-app' });
 // }
-// if (document.getElementById('inventory-app')) {
+// else if (document.getElementById('inventory-app')) {
 //     const invApp = new Vue({ el: '#inventory-app' });
 // }
 
@@ -44625,6 +44620,8 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //

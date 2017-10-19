@@ -2,7 +2,7 @@
 require('./bootstrap');
 window.Vue = require('vue');
 
-// Vue Components
+// Parents Components
 Vue.component('dashboard', require('./components/dashboard.vue'));
 Vue.component('settings', require('./components/settings.vue'));
 Vue.component('users', require('./components/users.vue'));
@@ -14,7 +14,7 @@ Vue.component('invoices', require('./components/invoices.vue'));
 // Vue.component('inventory', require('./components/inventory.vue'));
 
 
-// Vue Instances
+// Parent Vue Instances
 if (document.getElementById('dashboard-app')) {
     const dashboardApp = new Vue({ el: '#dashboard-app' });
 } else if (document.getElementById('settings-app')) {
@@ -37,3 +37,4 @@ if (document.getElementById('dashboard-app')) {
 // else if (document.getElementById('inventory-app')) {
 //     const invApp = new Vue({ el: '#inventory-app' });
 // }
+

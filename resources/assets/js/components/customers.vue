@@ -1,9 +1,13 @@
 <template>
     <div>
-        <div class="row"> 
+<!--         <div class="row"> 
             <div class="col-xs-6 col-sm-6 col-md-6"><button @click="table = true" class="btn btn-primary btn-lg full-width">View Customers</button></div>
             <div class="col-xs-6 col-sm-6 col-md-6"><button @click="table = false" class="btn btn-success btn-lg full-width">Add A Customer</button></div>
-        </div>
+        </div> -->
+        <viewAddBtns 
+            :toTable="switchToTable"
+            :toForm="switchToForm">    
+        </viewAddBtns>
         <hr>
         <div v-show="table">
             <!-- Customers Table -->
@@ -137,11 +141,7 @@
                         </div>
                     </div>                
                 </div>
-
-                <div class="form-group">
-                    <button v-show="!edit" type="submit" class="btn btn-primary full-width" name="button">Add Customer</button>
-                    <button v-show="edit" type="submit" class="btn btn-primary full-width" name="button">Update Customer</button>
-                </div>
+                <submitBtns :editMode="edit" :name="name='Customer'"></submitBtns>
             </form>
         </div>
         <br />
@@ -151,6 +151,10 @@
 </template>
 
 <script>
+    // Imports
+    import ViewAddBtns from '../components/partials/view-add-btns.vue';
+    import SubmitBtns from '../components/partials/submit-btn.vue';
+    // Export
     export default {
         data() {
             return {
@@ -186,7 +190,20 @@
             this.getCustomers();
             this.getUser();
         },
+        components: {
+            viewAddBtns: ViewAddBtns,
+            submitBtns: SubmitBtns
+        }, 
         methods: {
+            /*
+            *===== COMPONENT METHODS =====
+            */
+            switchToTable(){ // prop: toTable | component: <viewAddBtns>
+                this.table = true;
+            },
+            switchToForm(){ // prop: toForm | component: <viewAddBtns>
+                this.table = false;
+            },
             getUser(){ // ajax call to get the authenticated user
                 axios.get('api/user')
                 .then((response) => {

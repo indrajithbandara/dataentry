@@ -75,10 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button v-show="!edit" type="submit" class="btn btn-primary full-width" name="button">Add Product</button>
-                    <button v-show="edit" type="submit" class="btn btn-primary full-width" name="button">Update Product</button>
-                </div>
+                <submitBtns :editMode="edit" :name="name='Product'"></submitBtns>
             </form>
         </div>
         <!-- End of add product form -->
@@ -86,6 +83,8 @@
 </template>
 
 <script>
+    // Imports
+    import SubmitBtns from '../components/partials/submit-btn.vue';
     export default {
         data() {
             return {
@@ -107,6 +106,9 @@
         mounted() {
             this.getProducts();
             this.getUser();
+        },
+        components: {
+            submitBtns: SubmitBtns
         },
         methods: {
             getUser(){

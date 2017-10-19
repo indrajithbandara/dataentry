@@ -54,8 +54,7 @@
                         <option>4</option>
                     </select>
                 </div>
-                <button v-show="!edit" type="submit" class="btn btn-primary full-width" name="button">Add User</button>
-                <button v-show="edit" type="submit" class="btn btn-primary full-width" name="button">Update User</button>
+                <submitBtns :editMode="edit" :name="name='User'"></submitBtns>
             </form>
         </div>
         <!-- End of add user form -->
@@ -63,6 +62,8 @@
 </template>
 
 <script>
+    // Imports
+    import SubmitBtns from '../components/partials/submit-btn.vue';
     export default {
         data() {
             return {
@@ -81,6 +82,9 @@
             this.getUsers();
             this.getUser();
             console.log(this.list);
+        },
+        components: {
+            submitBtns: SubmitBtns
         },
         methods: {
             getUser(){

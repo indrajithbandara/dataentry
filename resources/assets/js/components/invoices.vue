@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="row"> 
-            <div class="col-xs-6 col-sm-6 col-md-6"><button @click="table = true" class="btn btn-primary btn-lg full-width">View Invoices</button></div>
-            <div class="col-xs-6 col-sm-6 col-md-6"><button @click="table = false" class="btn btn-success btn-lg full-width">Add An Invoice</button></div>
-        </div>
+        <viewAddBtns 
+            :toTable="switchToTable"
+            :toForm="switchToForm">    
+        </viewAddBtns>
         <hr>
         <!-- Start of Invoice Table -->
         <div v-show="table">
@@ -87,60 +87,12 @@
 
                 <!-- Add and Removing Line Item Buttons -->
                 <button class="btn btn-success full-width" @click="li_btn_show(1)" type="button" v-show="btn_one">Add A Second Line Item</button>
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-success full-width" @click="li_btn_show(2)" type="button" v-show="btn_two">Add A Third Line Item</button>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="li_btn_hide(1)" type="button" v-show="btn_two">Remove A Line Item</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-success full-width" @click="li_btn_show(3)" type="button" v-show="btn_three">Add A Fourth Line Item</button>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="li_btn_hide(2)" type="button" v-show="btn_three">Remove A Line Item</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-success full-width" @click="li_btn_show(4)" type="button" v-show="btn_four">Add A Fifth Line Item</button>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="li_btn_hide(3)" type="button" v-show="btn_four">Remove A Line Item</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-success full-width" @click="li_btn_show(5)" type="button" v-show="btn_five">Add A Sixth Line Item</button>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="li_btn_hide(4)" type="button" v-show="btn_five">Remove A Line Item</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-success full-width" @click="li_btn_show(6)" type="button" v-show="btn_six">Add A Seventh Line Item</button>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="li_btn_hide(5)" type="button" v-show="btn_six">Remove A Line Item</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-disabled full-width" type="button" v-show="btn_seven" disabled>Line Items Limit Reached</button>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6">
-                        <button class="btn btn-danger full-width" @click="li_btn_hide(6)" type="button" v-show="btn_seven">Remove A Line Item</button>
-                    </div>
-                </div>
+                <lnBtns :numOne="2" :btnNum="btn_two" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="3" :btnNum="btn_three" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="4" :btnNum="btn_four" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="5" :btnNum="btn_five" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="6" :btnNum="btn_six" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="7" :btnNum="btn_seven" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="true"></lnBtns>
                 <!-- End of Adding and Removing Line Item Buttons -->
 
                 <hr class="dashed">
@@ -444,11 +396,7 @@
                     <textarea v-model="invoice.memo" type="text" name="memo" class="form-control" rows="3" maxlength="255"></textarea>
                     <p class="alert alert-warning" v-if="invoice.memo.length == 255">255 character limit reached!</p>
                 </div>
-
-                <div class="form-group">
-                    <button v-show="!edit" type="submit" class="btn btn-primary full-width" name="button">Add Invoice</button>
-                    <button v-show="edit" type="submit" class="btn btn-primary full-width" name="button">Update Invoice</button>
-                </div>
+                <submitBtns :editMode="edit" :name="name='Invoice'"></submitBtns>
             </form>
         </div>
         <!-- End of Invoice Form -->
@@ -458,6 +406,11 @@
 </template>
 
 <script>
+    // Imports
+    import ViewAddBtns from '../components/partials/view-add-btns.vue';
+    import LnBtns from '../components/partials/ln-btns.vue';
+    import SubmitBtns from '../components/partials/submit-btn.vue';
+    // Export
     export default {
         data() {
             return {
@@ -584,7 +537,105 @@
             this.getCustomers();
             this.getProducts();
         },
+        components: {
+            viewAddBtns: ViewAddBtns, 
+            lnBtns: LnBtns,
+            submitBtns: SubmitBtns
+        },
         methods: {
+            /*
+            *===== COMPONENT METHODS =====
+            */
+            switchToTable(){ // prop: toTable | component: <viewAddBtns>
+                this.table = true;
+            },
+            switchToForm(){ // prop: toForm | component: <viewAddBtns>
+                this.table = false;
+            },
+            /*
+            * SHOWING AND HIDING BUTTONS AND LINE ITEMS AS WELL AS SCROLLING THE CONTAINER TO THE BOTTOM
+            *
+            * There are two types of buttons:
+            * 1.) Buttons that show line items
+            * 2.) Buttons that hide line items
+            *
+            * - li_btn_show is meant for showing the next button and line item on the DOM while hiding the button that was just clicked. 
+            *
+            * - li_btn_hide is meant for hiding the most recent button and line item added while showing the previous butten that was hidden again. 
+            *   Each time the one of these buttons is clicked, the resetLineItem() and setTotal() methods are fired in order to reset the values of the 
+            *   now hidden line item as well as re-calculate the total of the invoice. 
+            *   ****** IMPORTANT NOTE *******
+            * - Even though line items are hidden from site on the page, there values are still calculated from the invoice model. These line items
+            *   themselves are no longer on the DOM but the model still remains available for calcultion. 
+            */
+            li_btn_show(num){
+                switch(num){
+                    case 1:
+                        this.btn_one = false; this.btn_two = true; this.ln_two = true; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    case 2:
+                         this.btn_two = false; this.btn_three = true; this.ln_three = true; 
+                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    case 3:
+                        this.btn_three = false; this.btn_four = true; this.ln_four = true; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    case 4:
+                        this.btn_four = false; this.btn_five = true; this.ln_five = true; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    case 5:
+                        this.btn_five = false; this.btn_six = true; this.ln_six = true; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    case 6:
+                        this.btn_six = false; this.btn_seven = true; this.ln_seven = true; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                    default:
+                        console.log("Sorry!! Something went wrong with this button!");
+                    break;
+                }
+            },
+            li_btn_hide(num){
+                switch(num){
+                    case 1:
+                        this.btn_one = true; this.btn_two = false; this.ln_two = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(1); this.setTotal();
+                    break;
+                    case 2:
+                        this.btn_two = true; this.btn_three = false; this.ln_three = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(2); this.setTotal();
+                    break;
+                    case 3:
+                        this.btn_three = true; this.btn_four = false; this.ln_four = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(3); this.setTotal();
+                    break;
+                    case 4:
+                        this.btn_four = true; this.btn_five = false; this.ln_five = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(4); this.setTotal();
+                    break;
+                    case 5:
+                        this.btn_five = true; this.btn_six = false; this.ln_six = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(5); this.setTotal();
+                    break;
+                    case 6:
+                        this.btn_six = true; this.btn_seven = false; this.ln_seven = false; 
+                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                        this.resetLineItem(6); this.setTotal();
+                    break;
+                    default:
+                        console.log('Sorry!! Something went wrong with this button!');
+                    break;
+                }
+            },
             /*
             *===== GETTER METHODS =====
             */
@@ -675,92 +726,6 @@
             setExtended(num){ // Adds up the 'qty' and the 'unit' values to set the 'extended' property for this line item
                 this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit; 
                 this.setTotal();
-            },
-            /*
-            *===== HIDING AND SHOWING METHODS =====
-            *
-            * SHOWING AND HIDING BUTTONS AND LINE ITEMS AS WELL AS SCROLLING THE CONTAINER TO THE BOTTOM
-            *
-            * There are two types of buttons:
-            * 1.) Buttons that show line items
-            * 2.) Buttons that hide line items
-            *
-            * - li_btn_show is meant for showing the next button and line item on the DOM while hiding the button that was just clicked. 
-            *
-            * - li_btn_hide is meant for hiding the most recent button and line item added while showing the previous butten that was hidden again. 
-            *   Each time the one of these buttons is clicked, the resetLineItem() and setTotal() methods are fired in order to reset the values of the 
-            *   now hidden line item as well as re-calculate the total of the invoice. 
-            *   ****** IMPORTANT NOTE *******
-            * - Even though line items are hidden from site on the page, there values are still calculated from the invoice model. These line items
-            *   themselves are no longer on the DOM but the model still remains available for calcultion. 
-            */
-            li_btn_show(num){
-                switch(num){
-                    case 1:
-                        this.btn_one = false; this.btn_two = true; this.ln_two = true; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                    case 2:
-                         this.btn_two = false; this.btn_three = true; this.ln_three = true; 
-                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                    case 3:
-                        this.btn_three = false; this.btn_four = true; this.ln_four = true; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                    case 4:
-                        this.btn_four = false; this.btn_five = true; this.ln_five = true; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                    case 5:
-                        this.btn_five = false; this.btn_six = true; this.ln_six = true; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                    case 6:
-                        this.btn_six = false; this.btn_seven = true; this.ln_seven = true; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                    default:
-                        console.log("Sorry!! Something went wrong with this button!");
-                    break;
-                }
-            },
-            li_btn_hide(num){
-                switch(num){
-                    case 1:
-                        this.btn_one = true; this.btn_two = false; this.ln_two = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(1); this.setTotal();
-                    break;
-                    case 2:
-                        this.btn_two = true; this.btn_three = false; this.ln_three = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(2); this.setTotal();
-                    break;
-                    case 3:
-                        this.btn_three = true; this.btn_four = false; this.ln_four = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(3); this.setTotal();
-                    break;
-                    case 4:
-                        this.btn_four = true; this.btn_five = false; this.ln_five = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(4); this.setTotal();
-                    break;
-                    case 5:
-                        this.btn_five = true; this.btn_six = false; this.ln_six = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(5); this.setTotal();
-                    break;
-                    case 6:
-                        this.btn_six = true; this.btn_seven = false; this.ln_seven = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(6); this.setTotal();
-                    break;
-                    default:
-                        console.log('Sorry!! Something went wrong with this button!');
-                    break;
-                }
             },
             /*
             *===== CONVERSION METHODS =====

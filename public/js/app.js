@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,7 +71,7 @@
 
 
 var bind = __webpack_require__(4);
-var isBuffer = __webpack_require__(18);
+var isBuffer = __webpack_require__(19);
 
 /*global toString:true*/
 
@@ -478,7 +478,7 @@ module.exports = function normalizeComponent (
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(21);
+var normalizeHeaderName = __webpack_require__(22);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -568,7 +568,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
 
 /***/ }),
 /* 3 */
@@ -623,12 +623,12 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(22);
-var buildURL = __webpack_require__(24);
-var parseHeaders = __webpack_require__(25);
-var isURLSameOrigin = __webpack_require__(26);
+var settle = __webpack_require__(23);
+var buildURL = __webpack_require__(25);
+var parseHeaders = __webpack_require__(26);
+var isURLSameOrigin = __webpack_require__(27);
 var createError = __webpack_require__(6);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(27);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(28);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -725,7 +725,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(28);
+      var cookies = __webpack_require__(29);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -809,7 +809,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(23);
+var enhanceError = __webpack_require__(24);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -869,31 +869,71 @@ module.exports = Cancel;
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(10);
-module.exports = __webpack_require__(60);
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(49),
+  /* template */
+  __webpack_require__(50),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/view-add-btns.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] view-add-btns.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0fd4bf84", Component.options)
+  } else {
+    hotAPI.reload("data-v-0fd4bf84", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
 
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
 __webpack_require__(11);
-window.Vue = __webpack_require__(36);
+module.exports = __webpack_require__(63);
 
-// Vue Components
-Vue.component('dashboard', __webpack_require__(37));
-Vue.component('settings', __webpack_require__(40));
-Vue.component('users', __webpack_require__(43));
-Vue.component('customers', __webpack_require__(46));
-Vue.component('products', __webpack_require__(49));
-Vue.component('invoices', __webpack_require__(52));
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+__webpack_require__(12);
+window.Vue = __webpack_require__(37);
+
+// Parents Components
+Vue.component('dashboard', __webpack_require__(38));
+Vue.component('settings', __webpack_require__(41));
+Vue.component('users', __webpack_require__(44));
+Vue.component('customers', __webpack_require__(47));
+Vue.component('products', __webpack_require__(52));
+Vue.component('invoices', __webpack_require__(55));
 // Vue.component('purchaseorders', require('./components/purchaseorders.vue'));
 // Vue.component('routers', require('./components/routers.vue'));
 // Vue.component('inventory', require('./components/inventory.vue'));
 
 
-// Vue Instances
+// Parent Vue Instances
 if (document.getElementById('dashboard-app')) {
     var dashboardApp = new Vue({ el: '#dashboard-app' });
 } else if (document.getElementById('settings-app')) {
@@ -918,11 +958,11 @@ if (document.getElementById('dashboard-app')) {
 // }
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(12);
+window._ = __webpack_require__(13);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -931,9 +971,9 @@ window._ = __webpack_require__(12);
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(14);
+  window.$ = window.jQuery = __webpack_require__(15);
 
-  __webpack_require__(15);
+  __webpack_require__(16);
 } catch (e) {}
 
 /**
@@ -942,7 +982,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(16);
+window.axios = __webpack_require__(17);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -976,7 +1016,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -18065,10 +18105,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(13)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(14)(module)))
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -18096,7 +18136,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -28356,7 +28396,7 @@ return jQuery;
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 /*!
@@ -30739,13 +30779,13 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(17);
+module.exports = __webpack_require__(18);
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30753,7 +30793,7 @@ module.exports = __webpack_require__(17);
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(4);
-var Axios = __webpack_require__(19);
+var Axios = __webpack_require__(20);
 var defaults = __webpack_require__(2);
 
 /**
@@ -30788,14 +30828,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(8);
-axios.CancelToken = __webpack_require__(34);
+axios.CancelToken = __webpack_require__(35);
 axios.isCancel = __webpack_require__(7);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(35);
+axios.spread = __webpack_require__(36);
 
 module.exports = axios;
 
@@ -30804,7 +30844,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 /*!
@@ -30831,7 +30871,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30839,10 +30879,10 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(2);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(29);
-var dispatchRequest = __webpack_require__(30);
-var isAbsoluteURL = __webpack_require__(32);
-var combineURLs = __webpack_require__(33);
+var InterceptorManager = __webpack_require__(30);
+var dispatchRequest = __webpack_require__(31);
+var isAbsoluteURL = __webpack_require__(33);
+var combineURLs = __webpack_require__(34);
 
 /**
  * Create a new instance of Axios
@@ -30924,7 +30964,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -31114,7 +31154,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31133,7 +31173,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31166,7 +31206,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31194,7 +31234,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31269,7 +31309,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31313,7 +31353,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31388,7 +31428,7 @@ module.exports = (
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31431,7 +31471,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31491,7 +31531,7 @@ module.exports = (
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31550,14 +31590,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(31);
+var transformData = __webpack_require__(32);
 var isCancel = __webpack_require__(7);
 var defaults = __webpack_require__(2);
 
@@ -31636,7 +31676,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31663,7 +31703,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31684,7 +31724,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31705,7 +31745,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31769,7 +31809,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31803,7 +31843,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41898,15 +41938,15 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(38),
-  /* template */
   __webpack_require__(39),
+  /* template */
+  __webpack_require__(40),
   /* styles */
   null,
   /* scopeId */
@@ -41938,7 +41978,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42052,7 +42092,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -42191,15 +42231,15 @@ if (false) {
 }
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(41),
-  /* template */
   __webpack_require__(42),
+  /* template */
+  __webpack_require__(43),
   /* styles */
   null,
   /* scopeId */
@@ -42231,7 +42271,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42255,7 +42295,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -42270,15 +42310,15 @@ if (false) {
 }
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(44),
-  /* template */
   __webpack_require__(45),
+  /* template */
+  __webpack_require__(46),
   /* styles */
   null,
   /* scopeId */
@@ -42310,11 +42350,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue__);
 //
 //
 //
@@ -42378,7 +42420,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
+
+// Imports
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -42400,6 +42443,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log(this.list);
     },
 
+    components: {
+        submitBtns: __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default.a
+    },
     methods: {
         getUser: function getUser() {
             var _this = this;
@@ -42495,7 +42541,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -42649,31 +42695,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.users.permission = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }, [_c('option', [_vm._v("Choose an option")]), _vm._v(" "), _c('option', [_vm._v("1")]), _vm._v(" "), _c('option', [_vm._v("2")]), _vm._v(" "), _c('option', [_vm._v("3")]), _vm._v(" "), _c('option', [_vm._v("4")])])]), _vm._v(" "), _c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.edit),
-      expression: "!edit"
-    }],
-    staticClass: "btn btn-primary full-width",
+  }, [_c('option', [_vm._v("Choose an option")]), _vm._v(" "), _c('option', [_vm._v("1")]), _vm._v(" "), _c('option', [_vm._v("2")]), _vm._v(" "), _c('option', [_vm._v("3")]), _vm._v(" "), _c('option', [_vm._v("4")])])]), _vm._v(" "), _c('submitBtns', {
     attrs: {
-      "type": "submit",
-      "name": "button"
+      "editMode": _vm.edit,
+      "name": _vm.name = 'User'
     }
-  }, [_vm._v("Add User")]), _vm._v(" "), _c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.edit),
-      expression: "edit"
-    }],
-    staticClass: "btn btn-primary full-width",
-    attrs: {
-      "type": "submit",
-      "name": "button"
-    }
-  }, [_vm._v("Update User")])])])])
+  })], 1)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -42684,15 +42711,15 @@ if (false) {
 }
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(47),
-  /* template */
   __webpack_require__(48),
+  /* template */
+  __webpack_require__(51),
   /* styles */
   null,
   /* scopeId */
@@ -42724,11 +42751,15 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_submit_btn_vue__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_partials_submit_btn_vue__);
 //
 //
 //
@@ -42882,6 +42913,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+// Imports
+
+
+// Export
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
@@ -42918,7 +42953,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getUser();
     },
 
+    components: {
+        viewAddBtns: __WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue___default.a,
+        submitBtns: __WEBPACK_IMPORTED_MODULE_1__components_partials_submit_btn_vue___default.a
+    },
     methods: {
+        /*
+        *===== COMPONENT METHODS =====
+        */
+        switchToTable: function switchToTable() {
+            // prop: toTable | component: <viewAddBtns>
+            this.table = true;
+        },
+        switchToForm: function switchToForm() {
+            // prop: toForm | component: <viewAddBtns>
+            this.table = false;
+        },
         getUser: function getUser() {
             var _this = this;
 
@@ -43160,31 +43210,67 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 48 */
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        toTable: Function, // prop from invoices.vue & customers.vue
+        toForm: Function // prop from invoices.vue & customers.vue
+    }
+});
+
+/***/ }),
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
+  return _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6"
   }, [_c('button', {
     staticClass: "btn btn-primary btn-lg full-width",
     on: {
-      "click": function($event) {
-        _vm.table = true
-      }
+      "click": _vm.toTable
     }
-  }, [_vm._v("View Customers")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("View Invoices")])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6"
   }, [_c('button', {
     staticClass: "btn btn-success btn-lg full-width",
     on: {
-      "click": function($event) {
-        _vm.table = false
-      }
+      "click": _vm.toForm
     }
-  }, [_vm._v("Add A Customer")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+  }, [_vm._v("Add An Invoice")])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-0fd4bf84", module.exports)
+  }
+}
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('viewAddBtns', {
+    attrs: {
+      "toTable": _vm.switchToTable,
+      "toForm": _vm.switchToForm
+    }
+  }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -43595,33 +43681,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexComWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexComWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.edit),
-      expression: "!edit"
-    }],
-    staticClass: "btn btn-primary full-width",
+  }, [_vm._v(_vm._s(_vm.regexComWarning))]) : _vm._e()])])]), _vm._v(" "), _c('submitBtns', {
     attrs: {
-      "type": "submit",
-      "name": "button"
+      "editMode": _vm.edit,
+      "name": _vm.name = 'Customer'
     }
-  }, [_vm._v("Add Customer")]), _vm._v(" "), _c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.edit),
-      expression: "edit"
-    }],
-    staticClass: "btn btn-primary full-width",
-    attrs: {
-      "type": "submit",
-      "name": "button"
-    }
-  }, [_vm._v("Update Customer")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br')])
+  })], 1)]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br')], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -43632,15 +43697,15 @@ if (false) {
 }
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(50),
+  __webpack_require__(53),
   /* template */
-  __webpack_require__(51),
+  __webpack_require__(54),
   /* styles */
   null,
   /* scopeId */
@@ -43672,11 +43737,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 50 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue__);
 //
 //
 //
@@ -43761,9 +43828,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
+
+// Imports
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -43788,6 +43854,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getUser();
     },
 
+    components: {
+        submitBtns: __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default.a
+    },
     methods: {
         getUser: function getUser() {
             var _this = this;
@@ -43946,7 +44015,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 51 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -44158,33 +44227,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.product.rev_date = $event.target.value
       }
     }
-  })])])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.edit),
-      expression: "!edit"
-    }],
-    staticClass: "btn btn-primary full-width",
+  })])])]), _vm._v(" "), _c('submitBtns', {
     attrs: {
-      "type": "submit",
-      "name": "button"
+      "editMode": _vm.edit,
+      "name": _vm.name = 'Product'
     }
-  }, [_vm._v("Add Product")]), _vm._v(" "), _c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.edit),
-      expression: "edit"
-    }],
-    staticClass: "btn btn-primary full-width",
-    attrs: {
-      "type": "submit",
-      "name": "button"
-    }
-  }, [_vm._v("Update Product")])])])])])
+  })], 1)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -44195,19 +44243,19 @@ if (false) {
 }
 
 /***/ }),
-/* 52 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(53)
+  __webpack_require__(56)
 }
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(58),
+  __webpack_require__(61),
   /* template */
-  __webpack_require__(59),
+  __webpack_require__(62),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -44239,17 +44287,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 53 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(54);
+var content = __webpack_require__(57);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(56)("edccc1b8", content, false);
+var update = __webpack_require__(59)("edccc1b8", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -44265,10 +44313,10 @@ if(false) {
 }
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(55)(undefined);
+exports = module.exports = __webpack_require__(58)(undefined);
 // imports
 
 
@@ -44279,7 +44327,7 @@ exports.push([module.i, "\n.cust_top_margin[data-v-d2ec6014] {\n    margin-top: 
 
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ (function(module, exports) {
 
 /*
@@ -44361,7 +44409,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -44380,7 +44428,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(57)
+var listToStyles = __webpack_require__(60)
 
 /*
 type StyleObject = {
@@ -44582,7 +44630,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports) {
 
 /**
@@ -44615,63 +44663,17 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue__);
 //
 //
 //
@@ -45080,6 +45082,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+// Imports
+
+
+
+// Export
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
@@ -45199,7 +45206,109 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getProducts();
     },
 
+    components: {
+        viewAddBtns: __WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue___default.a,
+        lnBtns: __WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue___default.a,
+        submitBtns: __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default.a
+    },
     methods: {
+        /*
+        *===== COMPONENT METHODS =====
+        */
+        switchToTable: function switchToTable() {
+            // prop: toTable | component: <viewAddBtns>
+            this.table = true;
+        },
+        switchToForm: function switchToForm() {
+            // prop: toForm | component: <viewAddBtns>
+            this.table = false;
+        },
+
+        /*
+        * SHOWING AND HIDING BUTTONS AND LINE ITEMS AS WELL AS SCROLLING THE CONTAINER TO THE BOTTOM
+        *
+        * There are two types of buttons:
+        * 1.) Buttons that show line items
+        * 2.) Buttons that hide line items
+        *
+        * - li_btn_show is meant for showing the next button and line item on the DOM while hiding the button that was just clicked. 
+        *
+        * - li_btn_hide is meant for hiding the most recent button and line item added while showing the previous butten that was hidden again. 
+        *   Each time the one of these buttons is clicked, the resetLineItem() and setTotal() methods are fired in order to reset the values of the 
+        *   now hidden line item as well as re-calculate the total of the invoice. 
+        *   ****** IMPORTANT NOTE *******
+        * - Even though line items are hidden from site on the page, there values are still calculated from the invoice model. These line items
+        *   themselves are no longer on the DOM but the model still remains available for calcultion. 
+        */
+        li_btn_show: function li_btn_show(num) {
+            switch (num) {
+                case 1:
+                    this.btn_one = false;this.btn_two = true;this.ln_two = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                case 2:
+                    this.btn_two = false;this.btn_three = true;this.ln_three = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                case 3:
+                    this.btn_three = false;this.btn_four = true;this.ln_four = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                case 4:
+                    this.btn_four = false;this.btn_five = true;this.ln_five = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                case 5:
+                    this.btn_five = false;this.btn_six = true;this.ln_six = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                case 6:
+                    this.btn_six = false;this.btn_seven = true;this.ln_seven = true;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    break;
+                default:
+                    console.log("Sorry!! Something went wrong with this button!");
+                    break;
+            }
+        },
+        li_btn_hide: function li_btn_hide(num) {
+            switch (num) {
+                case 1:
+                    this.btn_one = true;this.btn_two = false;this.ln_two = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(1);this.setTotal();
+                    break;
+                case 2:
+                    this.btn_two = true;this.btn_three = false;this.ln_three = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(2);this.setTotal();
+                    break;
+                case 3:
+                    this.btn_three = true;this.btn_four = false;this.ln_four = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(3);this.setTotal();
+                    break;
+                case 4:
+                    this.btn_four = true;this.btn_five = false;this.ln_five = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(4);this.setTotal();
+                    break;
+                case 5:
+                    this.btn_five = true;this.btn_six = false;this.ln_six = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(5);this.setTotal();
+                    break;
+                case 6:
+                    this.btn_six = true;this.btn_seven = false;this.ln_seven = false;
+                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
+                    this.resetLineItem(6);this.setTotal();
+                    break;
+                default:
+                    console.log('Sorry!! Something went wrong with this button!');
+                    break;
+            }
+        },
+
         /*
         *===== GETTER METHODS =====
         */
@@ -45294,93 +45403,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // Adds up the 'qty' and the 'unit' values to set the 'extended' property for this line item
             this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit;
             this.setTotal();
-        },
-
-        /*
-        *===== HIDING AND SHOWING METHODS =====
-        *
-        * SHOWING AND HIDING BUTTONS AND LINE ITEMS AS WELL AS SCROLLING THE CONTAINER TO THE BOTTOM
-        *
-        * There are two types of buttons:
-        * 1.) Buttons that show line items
-        * 2.) Buttons that hide line items
-        *
-        * - li_btn_show is meant for showing the next button and line item on the DOM while hiding the button that was just clicked. 
-        *
-        * - li_btn_hide is meant for hiding the most recent button and line item added while showing the previous butten that was hidden again. 
-        *   Each time the one of these buttons is clicked, the resetLineItem() and setTotal() methods are fired in order to reset the values of the 
-        *   now hidden line item as well as re-calculate the total of the invoice. 
-        *   ****** IMPORTANT NOTE *******
-        * - Even though line items are hidden from site on the page, there values are still calculated from the invoice model. These line items
-        *   themselves are no longer on the DOM but the model still remains available for calcultion. 
-        */
-        li_btn_show: function li_btn_show(num) {
-            switch (num) {
-                case 1:
-                    this.btn_one = false;this.btn_two = true;this.ln_two = true;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                case 2:
-                    this.btn_two = false;this.btn_three = true;this.ln_three = true;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                case 3:
-                    this.btn_three = false;this.btn_four = true;this.ln_four = true;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                case 4:
-                    this.btn_four = false;this.btn_five = true;this.ln_five = true;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                case 5:
-                    this.btn_five = false;this.btn_six = true;this.ln_six = true;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                case 6:
-                    this.btn_six = false;this.btn_seven = true;this.ln_seven = true;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    break;
-                default:
-                    console.log("Sorry!! Something went wrong with this button!");
-                    break;
-            }
-        },
-        li_btn_hide: function li_btn_hide(num) {
-            switch (num) {
-                case 1:
-                    this.btn_one = true;this.btn_two = false;this.ln_two = false;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(1);this.setTotal();
-                    break;
-                case 2:
-                    this.btn_two = true;this.btn_three = false;this.ln_three = false;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(2);this.setTotal();
-                    break;
-                case 3:
-                    this.btn_three = true;this.btn_four = false;this.ln_four = false;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(3);this.setTotal();
-                    break;
-                case 4:
-                    this.btn_four = true;this.btn_five = false;this.ln_five = false;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(4);this.setTotal();
-                    break;
-                case 5:
-                    this.btn_five = true;this.btn_six = false;this.ln_six = false;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(5);this.setTotal();
-                    break;
-                case 6:
-                    this.btn_six = true;this.btn_seven = false;this.ln_seven = false;
-                    this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-                    this.resetLineItem(6);this.setTotal();
-                    break;
-                default:
-                    console.log('Sorry!! Something went wrong with this button!');
-                    break;
-            }
         },
 
         /*
@@ -45499,31 +45521,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-6 col-sm-6 col-md-6"
-  }, [_c('button', {
-    staticClass: "btn btn-primary btn-lg full-width",
-    on: {
-      "click": function($event) {
-        _vm.table = true
-      }
+  return _c('div', [_c('viewAddBtns', {
+    attrs: {
+      "toTable": _vm.switchToTable,
+      "toForm": _vm.switchToForm
     }
-  }, [_vm._v("View Invoices")])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-6 col-sm-6 col-md-6"
-  }, [_c('button', {
-    staticClass: "btn btn-success btn-lg full-width",
-    on: {
-      "click": function($event) {
-        _vm.table = false
-      }
-    }
-  }, [_vm._v("Add An Invoice")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -45741,231 +45748,55 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.li_btn_show(1)
       }
     }
-  }, [_vm._v("Add A Second Line Item")]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_two),
-      expression: "btn_two"
-    }],
-    staticClass: "btn btn-success full-width",
+  }, [_vm._v("Add A Second Line Item")]), _vm._v(" "), _c('lnBtns', {
     attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_show(2)
-      }
+      "numOne": 2,
+      "btnNum": _vm.btn_two,
+      "liShow": _vm.li_btn_show,
+      "liHide": _vm.li_btn_hide,
+      "disabled": false
     }
-  }, [_vm._v("Add A Third Line Item")])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_two),
-      expression: "btn_two"
-    }],
-    staticClass: "btn btn-danger full-width",
+  }), _vm._v(" "), _c('lnBtns', {
     attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_hide(1)
-      }
+      "numOne": 3,
+      "btnNum": _vm.btn_three,
+      "liShow": _vm.li_btn_show,
+      "liHide": _vm.li_btn_hide,
+      "disabled": false
     }
-  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_three),
-      expression: "btn_three"
-    }],
-    staticClass: "btn btn-success full-width",
+  }), _vm._v(" "), _c('lnBtns', {
     attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_show(3)
-      }
+      "numOne": 4,
+      "btnNum": _vm.btn_four,
+      "liShow": _vm.li_btn_show,
+      "liHide": _vm.li_btn_hide,
+      "disabled": false
     }
-  }, [_vm._v("Add A Fourth Line Item")])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_three),
-      expression: "btn_three"
-    }],
-    staticClass: "btn btn-danger full-width",
+  }), _vm._v(" "), _c('lnBtns', {
     attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_hide(2)
-      }
+      "numOne": 5,
+      "btnNum": _vm.btn_five,
+      "liShow": _vm.li_btn_show,
+      "liHide": _vm.li_btn_hide,
+      "disabled": false
     }
-  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_four),
-      expression: "btn_four"
-    }],
-    staticClass: "btn btn-success full-width",
+  }), _vm._v(" "), _c('lnBtns', {
     attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_show(4)
-      }
+      "numOne": 6,
+      "btnNum": _vm.btn_six,
+      "liShow": _vm.li_btn_show,
+      "liHide": _vm.li_btn_hide,
+      "disabled": false
     }
-  }, [_vm._v("Add A Fifth Line Item")])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_four),
-      expression: "btn_four"
-    }],
-    staticClass: "btn btn-danger full-width",
+  }), _vm._v(" "), _c('lnBtns', {
     attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_hide(3)
-      }
+      "numOne": 7,
+      "btnNum": _vm.btn_seven,
+      "liShow": _vm.li_btn_show,
+      "liHide": _vm.li_btn_hide,
+      "disabled": true
     }
-  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_five),
-      expression: "btn_five"
-    }],
-    staticClass: "btn btn-success full-width",
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_show(5)
-      }
-    }
-  }, [_vm._v("Add A Sixth Line Item")])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_five),
-      expression: "btn_five"
-    }],
-    staticClass: "btn btn-danger full-width",
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_hide(4)
-      }
-    }
-  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_six),
-      expression: "btn_six"
-    }],
-    staticClass: "btn btn-success full-width",
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_show(6)
-      }
-    }
-  }, [_vm._v("Add A Seventh Line Item")])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_six),
-      expression: "btn_six"
-    }],
-    staticClass: "btn btn-danger full-width",
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_hide(5)
-      }
-    }
-  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_seven),
-      expression: "btn_seven"
-    }],
-    staticClass: "btn btn-disabled full-width",
-    attrs: {
-      "type": "button",
-      "disabled": ""
-    }
-  }, [_vm._v("Line Items Limit Reached")])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn_seven),
-      expression: "btn_seven"
-    }],
-    staticClass: "btn btn-danger full-width",
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_hide(6)
-      }
-    }
-  }, [_vm._v("Remove A Line Item")])])]), _vm._v(" "), _c('hr', {
+  }), _vm._v(" "), _c('hr', {
     staticClass: "dashed"
   }), _vm._v(" "), _c('div', {
     ref: "ln_container",
@@ -47221,33 +47052,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.invoice.memo.length == 255) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("255 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.edit),
-      expression: "!edit"
-    }],
-    staticClass: "btn btn-primary full-width",
+  }, [_vm._v("255 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('submitBtns', {
     attrs: {
-      "type": "submit",
-      "name": "button"
+      "editMode": _vm.edit,
+      "name": _vm.name = 'Invoice'
     }
-  }, [_vm._v("Add Invoice")]), _vm._v(" "), _c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.edit),
-      expression: "edit"
-    }],
-    staticClass: "btn btn-primary full-width",
-    attrs: {
-      "type": "submit",
-      "name": "button"
-    }
-  }, [_vm._v("Update Invoice")])])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br')])
+  })], 1)]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br')], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -47258,10 +47068,321 @@ if (false) {
 }
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(73),
+  /* template */
+  __webpack_require__(74),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/ln-btns.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ln-btns.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-43a58295", Component.options)
+  } else {
+    hotAPI.reload("data-v-43a58295", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        numOne: Number,
+        btnNum: Boolean,
+        disabled: Boolean,
+        liShow: Function,
+        liHide: Function
+    },
+    methods: {
+        changeText: function changeText() {
+            if (this.numOne == 2) {
+                return 'Add A Third Line Item';
+            } else if (this.numOne === 3) {
+                return 'Add A Fourth Line Item';
+            } else if (this.numOne === 4) {
+                return 'Add A Fifth Line Item';
+            } else if (this.numOne === 5) {
+                return 'Add A Sixth Line Item';
+            } else if (this.numOne === 6) {
+                return 'Add A Seventh Line Item';
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [(_vm.disabled === true) ? _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btnNum),
+      expression: "btnNum"
+    }],
+    staticClass: "btn btn-disabled full-width",
+    attrs: {
+      "type": "button",
+      "disabled": ""
+    }
+  }, [_vm._v("Line Items Limit Reached")])]) : _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btnNum),
+      expression: "btnNum"
+    }],
+    staticClass: "btn btn-success full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.liShow(_vm.numOne)
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.changeText()))])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btnNum),
+      expression: "btnNum"
+    }],
+    staticClass: "btn btn-danger full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.liHide(_vm.numOne - 1)
+      }
+    }
+  }, [_vm._v("Remove A Line Item")])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-43a58295", module.exports)
+  }
+}
+
+/***/ }),
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(83)
+}
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(79),
+  /* template */
+  __webpack_require__(85),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  "data-v-17988a64",
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/submit-btn.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] submit-btn.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-17988a64", Component.options)
+  } else {
+    hotAPI.reload("data-v-17988a64", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        editMode: Boolean,
+        name: String
+    }
+});
+
+/***/ }),
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(84);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(59)("bc0f1c9a", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-17988a64\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./submit-btn.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-17988a64\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./submit-btn.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(58)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.margin-top[data-v-17988a64] {\n    margin-top: 20px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "form-group margin-top"
+  }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.editMode),
+      expression: "!editMode"
+    }],
+    staticClass: "btn btn-primary full-width",
+    attrs: {
+      "type": "submit",
+      "name": "button"
+    }
+  }, [_vm._v("Add " + _vm._s(_vm.name))]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.editMode),
+      expression: "editMode"
+    }],
+    staticClass: "btn btn-primary full-width",
+    attrs: {
+      "type": "submit",
+      "name": "button"
+    }
+  }, [_vm._v("Update " + _vm._s(_vm.name))])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-17988a64", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

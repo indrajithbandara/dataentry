@@ -569,69 +569,60 @@
                 switch(num){
                     case 1:
                         this.btn[0].button = false; this.btn[1].button = true; this.ln[1].line = true; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     case 2:
                          this.btn[1].button = false; this.btn[2].button = true; this.ln[2].line = true; 
-                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     case 3:
                         this.btn[2].button = false; this.btn[3].button = true; this.ln[3].line = true; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     case 4:
                         this.btn[3].button = false; this.btn[4].button = true; this.ln[4].line = true; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     case 5:
                         this.btn[4].button = false; this.btn[5].button = true; this.ln[5].line = true; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     case 6:
                         this.btn[5].button = false; this.btn[6].button = true; this.ln[6].line = true; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     default:
                         console.log("Sorry!! Something went wrong with this button!");
                     break;
                 }
+                this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
             },
             li_btn_hide(num){
                 switch(num){
                     case 1:
                         this.btn[0].button = true; this.btn[1].button = false; this.ln[1].line = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(1); this.setTotal();
+                        this.resetLineItem(1);
                     break;
                     case 2:
                         this.btn[1].button = true; this.btn[2].button = false; this.ln[2].line = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(2); this.setTotal();
+                        this.resetLineItem(2);
                     break;
                     case 3:
                         this.btn[2].button = true; this.btn[3].button = false; this.ln[3].line = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(3); this.setTotal();
+                        this.resetLineItem(3);
                     break;
                     case 4:
                         this.btn[3].button = true; this.btn[4].button = false; this.ln[4].line = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(4); this.setTotal();
+                        this.resetLineItem(4);
                     break;
                     case 5:
                         this.btn[4].button = true; this.btn[5].button = false; this.ln[5].line = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(5); this.setTotal();
+                        this.resetLineItem(5);
                     break;
                     case 6:
                         this.btn[5].button = true; this.btn[6].button = false; this.ln[6].line = false; 
-                        this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                        this.resetLineItem(6); this.setTotal();
+                        this.resetLineItem(6);
                     break;
                     default:
                         console.log('Sorry!! Something went wrong with this button!');
                     break;
                 }
+                this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
+                this.setTotal();
             },
             /*
             *===== GETTER METHODS =====
@@ -691,16 +682,9 @@
                         return status >= 200 && status < 300;
                     }
                 }).then((response) => {
-                    self.invoice.customer.id = response.data.id;
-                    self.invoice.customer.name = response.data.name;
-                    self.invoice.customer.shipto = response.data.shipto;
-                    self.invoice.customer.billto = response.data.billto;
-                    self.invoice.customer.buyer = response.data.buyer;
-                    self.invoice.customer.email = response.data.email;
-                    self.invoice.customer.phone = response.data.phone;
-                    self.invoice.customer.country = response.data.country;
-                    self.invoice.customer.disclaimer = response.data.disclaimer;
-                    self.invoice.customer.comments = response.data.comments;
+                    for(var key in response.data){
+                        self.invoice.customer[key] = response.data[key];
+                    }
                 }).catch((error) => {
                     console.log(error.message);
                 });

@@ -1,12 +1,12 @@
 <template>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6" v-if="disabled === true">
+        <div class="col-xs-12 col-sm-6 col-md-6" v-if="disabled === true">
             <button class="btn btn-disabled full-width" type="button" v-show="btnNum" disabled>Line Items Limit Reached</button>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6" v-else>
+        <div class="col-xs-12 col-sm-6 col-md-6" v-else>
             <button class="btn btn-success full-width" @click="liShowHide(numOne, 'show')" type="button" v-show="btnNum">{{ changeText() }}</button>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="col-xs-12 col-sm-6 col-md-6">
             <button class="btn btn-danger full-width" @click="liShowHide(numOne - 1, 'hide')" type="button" v-show="btnNum">Remove A Line Item</button>
         </div>
     </div>

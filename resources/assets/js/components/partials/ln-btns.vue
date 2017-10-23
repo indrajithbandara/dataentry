@@ -4,10 +4,10 @@
             <button class="btn btn-disabled full-width" type="button" v-show="btnNum" disabled>Line Items Limit Reached</button>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6" v-else>
-            <button class="btn btn-success full-width" @click="liShow(numOne)" type="button" v-show="btnNum">{{ changeText() }}</button>
+            <button class="btn btn-success full-width" @click="liShowHide(numOne, 'show')" type="button" v-show="btnNum">{{ changeText() }}</button>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
-            <button class="btn btn-danger full-width" @click="liHide(numOne - 1)" type="button" v-show="btnNum">Remove A Line Item</button>
+            <button class="btn btn-danger full-width" @click="liShowHide(numOne - 1, 'hide')" type="button" v-show="btnNum">Remove A Line Item</button>
         </div>
     </div>
 </template>
@@ -17,8 +17,7 @@
             numOne: Number,
             btnNum: Boolean,
             disabled: Boolean,
-            liShow: Function,
-            liHide: Function
+            liShowHide: Function
         },
         methods: {
             changeText(){

@@ -83,13 +83,13 @@
                 </div>
 
                 <!-- Add and Removing Line Item Buttons -->
-                <button class="btn btn-success full-width" @click="li_btn_show(1)" type="button" v-show="btn[0].button">Add A Second Line Item</button>
-                <lnBtns :numOne="2" :btnNum="btn[1].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="3" :btnNum="btn[2].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="4" :btnNum="btn[3].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="5" :btnNum="btn[4].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="6" :btnNum="btn[5].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="7" :btnNum="btn[6].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="true"></lnBtns>
+                <button class="btn btn-success full-width" @click="li_btn_show_hide(1, 'show')" type="button" v-show="btn[0].button">Add A Second Line Item</button>
+                <lnBtns :numOne="2" :btnNum="btn[1].button" :liShowHide="li_btn_show_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="3" :btnNum="btn[2].button" :liShowHide="li_btn_show_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="4" :btnNum="btn[3].button" :liShowHide="li_btn_show_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="5" :btnNum="btn[4].button" :liShowHide="li_btn_show_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="6" :btnNum="btn[5].button" :liShowHide="li_btn_show_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="7" :btnNum="btn[6].button" :liShowHide="li_btn_show_hide" :disabled="true"></lnBtns>
                 <!-- End of Adding and Removing Line Item Buttons -->
 
                 <hr class="dashed">
@@ -439,7 +439,10 @@
                 * if btn[i].button = true, the button container is displayed
                 * if btn[i].button = false, the button container is hidden
                 *
-                * Methods Involved: li_btn_show() | li_btn_hide()
+                * The reason for using arrays of objects is so that these values can be looped over for when an invoice is brought in through an ajax call and the
+                * proper buttons and line items need to be showing based on the information provided about the lines items. See 'setLineItems' method for more explination.
+                *
+                * Methods Involved: li_btn_show_hide() | setLineItems()
                 */
                 ln: [{line: true}, {line: false}, {line: false}, {line: false}, {line: false}, {line: false}, {line: false}], // array of 7 objects
                 btn: [{button: true}, {button: false}, {button: false}, {button: false}, {button: false}, {button: false}, {button: false}], // array of 7 objects
@@ -551,83 +554,61 @@
             },
             /*
             * SHOWING AND HIDING BUTTONS AND LINE ITEMS AS WELL AS SCROLLING THE CONTAINER TO THE BOTTOM
+            * Params: 1.) Number from 1-7,
+            *         2.) String 'hide' or 'show'
             *
-            * There are two types of buttons:
-            * 1.) Buttons that show line items
-            * 2.) Buttons that hide line items
+            * - li_btn_show_hide with the 'show' action word is meant for showing the next button and line item on the DOM while hiding the button that was just clicked. 
             *
-            * - li_btn_show is meant for showing the next button and line item on the DOM while hiding the button that was just clicked. 
-            *
-            * - li_btn_hide is meant for hiding the most recent button and line item added while showing the previous butten that was hidden again. 
+            * - li_btn_show_hide with the 'hide' action word is meant for hiding the most recent button and line item added while showing the previous butten that was hidden again. 
             *   Each time the one of these buttons is clicked, the resetLineItem() and setTotal() methods are fired in order to reset the values of the 
             *   now hidden line item as well as re-calculate the total of the invoice. 
             *   ****** IMPORTANT NOTE *******
             * - Even though line items are hidden from site on the page, there values are still calculated from the invoice model. These line items
             *   themselves are no longer on the DOM but the model still remains available for calcultion. 
             */
-            li_btn_show(num){
+            li_btn_show_hide(num, action){
+                if(action === 'hide'){
+                    var actOne = true;
+                    var actTwo = false;
+                }else if(action === 'show'){
+                    var actOne = false;
+                    var actTwo = true;
+                }else{
+                    throw new Error("li_btn_show_hide requires one of two optional actions words: 'hide' or 'show'");
+                }
                 switch(num){
                     case 1:
-                        this.btn[0].button = false; this.btn[1].button = true; this.ln[1].line = true; 
+                        this.btn[num-1].button = actOne; this.btn[num].button = actTwo; this.ln[num].line = actTwo;
                     break;
                     case 2:
-                         this.btn[1].button = false; this.btn[2].button = true; this.ln[2].line = true; 
+                         this.btn[num-1].button = actOne; this.btn[num].button = actTwo; this.ln[num].line = actTwo;
                     break;
                     case 3:
-                        this.btn[2].button = false; this.btn[3].button = true; this.ln[3].line = true; 
+                        this.btn[num-1].button = actOne; this.btn[num].button = actTwo; this.ln[num].line = actTwo;
                     break;
                     case 4:
-                        this.btn[3].button = false; this.btn[4].button = true; this.ln[4].line = true; 
+                        this.btn[num-1].button = actOne; this.btn[num].button = actTwo; this.ln[num].line = actTwo;
                     break;
                     case 5:
-                        this.btn[4].button = false; this.btn[5].button = true; this.ln[5].line = true; 
+                        this.btn[num-1].button = actOne; this.btn[num].button = actTwo; this.ln[num].line = actTwo;
                     break;
                     case 6:
-                        this.btn[5].button = false; this.btn[6].button = true; this.ln[6].line = true; 
+                        this.btn[num-1].button = actOne; this.btn[num].button = actTwo; this.ln[num].line = actTwo;
                     break;
                     default:
                         console.log("Sorry!! Something went wrong with this button!");
                     break;
                 }
                 this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
-            },
-            li_btn_hide(num){
-                switch(num){
-                    case 1:
-                        this.btn[0].button = true; this.btn[1].button = false; this.ln[1].line = false; 
-                        this.resetLineItem(1);
-                    break;
-                    case 2:
-                        this.btn[1].button = true; this.btn[2].button = false; this.ln[2].line = false; 
-                        this.resetLineItem(2);
-                    break;
-                    case 3:
-                        this.btn[2].button = true; this.btn[3].button = false; this.ln[3].line = false; 
-                        this.resetLineItem(3);
-                    break;
-                    case 4:
-                        this.btn[3].button = true; this.btn[4].button = false; this.ln[4].line = false; 
-                        this.resetLineItem(4);
-                    break;
-                    case 5:
-                        this.btn[4].button = true; this.btn[5].button = false; this.ln[5].line = false; 
-                        this.resetLineItem(5);
-                    break;
-                    case 6:
-                        this.btn[5].button = true; this.btn[6].button = false; this.ln[6].line = false; 
-                        this.resetLineItem(6);
-                    break;
-                    default:
-                        console.log('Sorry!! Something went wrong with this button!');
-                    break;
+                if(action === 'hide'){
+                    this.resetLineItem(num);
+                    this.setTotal();
                 }
-                this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
-                this.setTotal();
             },
             /*
             *===== GETTER METHODS =====
             */
-            getUser(){ // ajax call to get the authenticated user
+            getUser(){ // ajax call to get the authenticated users permission level
                 axios.get('api/user')
                 .then((response) => {
                     this.user = response.data.permission;
@@ -654,7 +635,7 @@
             getInvoices(){ // ajax call to get all the Inovices and parse nested json data
                 axios.get('api/invoices')
                 .then((response) => {
-                    var newData = function(){
+                    var newData = () => {
                         var data = response.data;
                         for(var i = 0; i < data.length; i++){
                             for(var key in data[i]){
@@ -693,16 +674,16 @@
             *===== SETTER METHODS =====
             */
             setTotal(){ // Adds up extended values and ship_fee value to be stored in the invoice total
-                var total = 
-                this.invoice.line_items[0].extended +
-                this.invoice.line_items[1].extended +
-                this.invoice.line_items[2].extended +
-                this.invoice.line_items[3].extended +
-                this.invoice.line_items[4].extended +
-                this.invoice.line_items[5].extended +
-                this.invoice.line_items[6].extended +
-                parseFloat(this.invoice.ship_fee);
-                this.invoice.total = total.toFixed(2);
+                var total = () => {
+                    var t = 0;
+                    for(var i = 0; i < 7; i++){
+                        t += this.invoice.line_items[i].extended;
+                    }
+                    t += parseFloat(this.invoice.ship_fee);
+                    return t;
+                }
+                var totalToFloat = total();
+                this.invoice.total = totalToFloat.toFixed(2);
             },
             setExtended(num){ // Adds up the 'qty' and the 'unit' values to set the 'extended' property for this line item
                 this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit; 
@@ -728,6 +709,11 @@
                 }
                 this.setLineItems();
             },
+            /*
+            * This method is used when an invoice is shown for updating. After the model has been updated by the 'setInvoiceData' method, this method
+            * is called in order to show the line item containers that do not have null or 0 values. Once those have been set to true, the relevant button
+            * for that line item is set to true as well. The first button is set to false by default and will be shown if there is only one line item to show.
+            */
             setLineItems(){
                 this.btn[0].button = false;
                 for(var i = 0; i < this.invoice.line_items.length; i++){
@@ -818,19 +804,18 @@
             *===== RESET METHODS =====
             */
             resetValues(){ // After form is submitted, values are reset to either 0 or empty string
-                let self = this;
-                for(var key in self.invoice){
+                for(var key in this.invoice){
                     if(key == 'inv_num' || key == 'ship_fee' || key == 'total'){
-                        self.invoice[key] = 0;
+                        this.invoice[key] = 0;
                     }else if(key == 'date' || key == 'po_num' || key == 'memo'){
-                        self.invoice[key] = '';
+                        this.invoice[key] = '';
                     }else if(key == 'customer'){
-                        for(var k in self.invoice.customer){
-                            self.invoice.customer[k] = '';
+                        for(var k in this.invoice.customer){
+                            this.invoice.customer[k] = '';
                         }
                     }else if(key == 'line_items'){
                         for(var i = 0; i < 7; i++){
-                            self.resetLineItem(i);
+                            this.resetLineItem(i);
                         }  
                     }
                 }
@@ -850,12 +835,11 @@
                 this.table = true;
             },
             resetLineItem(num){
-                let self = this;
-                for(var key in self.invoice.line_items[num]){
+                for(var key in this.invoice.line_items[num]){
                     if(key == 'item' || key == 'product'){
-                        self.invoice.line_items[num][key] = '';
+                        this.invoice.line_items[num][key] = '';
                     }else{
-                        self.invoice.line_items[num][key] = 0;
+                        this.invoice.line_items[num][key] = 0;
                     }
                 }
             }

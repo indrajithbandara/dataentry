@@ -83,13 +83,13 @@
                 </div>
 
                 <!-- Add and Removing Line Item Buttons -->
-                <button class="btn btn-success full-width" @click="li_btn_show(1)" type="button" v-show="btn_one">Add A Second Line Item</button>
-                <lnBtns :numOne="2" :btnNum="btn_two" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="3" :btnNum="btn_three" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="4" :btnNum="btn_four" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="5" :btnNum="btn_five" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="6" :btnNum="btn_six" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="7" :btnNum="btn_seven" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="true"></lnBtns>
+                <button class="btn btn-success full-width" @click="li_btn_show(1)" type="button" v-show="btn[0].button">Add A Second Line Item</button>
+                <lnBtns :numOne="2" :btnNum="btn[1].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="3" :btnNum="btn[2].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="4" :btnNum="btn[3].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="5" :btnNum="btn[4].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="6" :btnNum="btn[5].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="false"></lnBtns>
+                <lnBtns :numOne="7" :btnNum="btn[6].button" :liShow="li_btn_show" :liHide="li_btn_hide" :disabled="true"></lnBtns>
                 <!-- End of Adding and Removing Line Item Buttons -->
 
                 <hr class="dashed">
@@ -139,7 +139,7 @@
                         <!-- ============== End of Line Item One ============== -->
                     </div>
 
-                    <div id="line_item_two" v-if="ln_two">
+                    <div id="line_item_two" v-if="ln[1].line">
                         <!-- ============== Line Item Two ============== -->
                         <h4 class="text-center background padding radius">Line Item Two</h4>
                         <div class="row">
@@ -178,7 +178,7 @@
                         <!-- ============== End of Line Item Two ============== -->
                     </div>
 
-                    <div id="line_item_three" v-if="ln_three">
+                    <div id="line_item_three" v-if="ln[2].line">
                         <!-- ============== Line Item Three ============== -->
                         <h4 class="text-center background padding radius">Line Item Three</h4>
                         <div class="row">
@@ -217,7 +217,7 @@
                         <!-- ============== End of Line Item Three ============== -->
                     </div>
 
-                    <div id="line_item_four" v-if="ln_four">
+                    <div id="line_item_four" v-if="ln[3].line">
                         <!-- ============== Line Item Four ============== -->
                         <h4 class="text-center background padding radius">Line Item Four</h4>
                         <div class="row">
@@ -256,7 +256,7 @@
                         <!-- ============== End of Line Item Four ============== -->
                     </div>
 
-                    <div id="line_item_five" v-if="ln_five">
+                    <div id="line_item_five" v-if="ln[4].line">
                         <!-- ============== Line Item five ============== -->
                         <h4 class="text-center background padding radius">Line Item Five</h4>
                         <div class="row">
@@ -295,7 +295,7 @@
                         <!-- ============== End of Line Item Five ============== -->
                     </div>
 
-                    <div id="line_item_six" v-if="ln_six">
+                    <div id="line_item_six" v-if="ln[5].line">
                         <!-- ============== Line Item Six ============== -->
                         <h4 class="text-center background padding radius">Line Item Six</h4>
                         <div class="row">
@@ -334,7 +334,7 @@
                         <!-- ============== End of Line Item Six ============== -->
                     </div>
 
-                    <div id="line_item_seven" v-if="ln_seven">
+                    <div id="line_item_seven" v-if="ln[6].line">
                         <!-- ============== Line Item Seven ============== -->
                         <h4 class="text-center background padding radius">Line Item Seven</h4>
                         <div class="row">
@@ -431,18 +431,18 @@
                 /*
                 * LINE ITEM FORMS AND LINE IIEM BUTTONS:
                 *
-                * ln_{num} are meant for hidding and showing the seven different line item forms.
-                * if ln_{num} = true, the form is displayed.
-                * if ln_{num} = false, the form is hidden.
+                * ln[i].line is meant for hidding and showing the seven different line item forms.
+                * if ln[i].line = true, the form is displayed.
+                * if ln[i].line = false, the form is hidden.
                 *
-                * btn_{num} are meant for hidding and showing the seven different button containers for hidding and show the seven different line item forms
-                * if btn_{num} = true, the button container is displayed
-                * if btn_{num} = false, the button container is hidden
+                * btn[i].button is meant for hidding and showing the seven different button containers for hidding and show the seven different line item forms
+                * if btn[i].button = true, the button container is displayed
+                * if btn[i].button = false, the button container is hidden
                 *
                 * Methods Involved: li_btn_show() | li_btn_hide()
                 */
-                ln_one: true, ln_two: false, ln_three: false, ln_four: false, ln_five: false, ln_six: false, ln_seven: false,
-                btn_one: true, btn_two: false, btn_three: false, btn_four: false, btn_five: false, btn_six: false, btn_seven: false,
+                ln: [{line: true}, {line: false}, {line: false}, {line: false}, {line: false}, {line: false}, {line: false}], // array of 7 objects
+                btn: [{button: true}, {button: false}, {button: false}, {button: false}, {button: false}, {button: false}, {button: false}], // array of 7 objects
                 /*
                 * LISTS OF COLLECTIONS:
                 *
@@ -568,27 +568,27 @@
             li_btn_show(num){
                 switch(num){
                     case 1:
-                        this.btn_one = false; this.btn_two = true; this.ln_two = true; 
+                        this.btn[0].button = false; this.btn[1].button = true; this.ln[1].line = true; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     case 2:
-                         this.btn_two = false; this.btn_three = true; this.ln_three = true; 
+                         this.btn[1].button = false; this.btn[2].button = true; this.ln[2].line = true; 
                          this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     case 3:
-                        this.btn_three = false; this.btn_four = true; this.ln_four = true; 
+                        this.btn[2].button = false; this.btn[3].button = true; this.ln[3].line = true; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     case 4:
-                        this.btn_four = false; this.btn_five = true; this.ln_five = true; 
+                        this.btn[3].button = false; this.btn[4].button = true; this.ln[4].line = true; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     case 5:
-                        this.btn_five = false; this.btn_six = true; this.ln_six = true; 
+                        this.btn[4].button = false; this.btn[5].button = true; this.ln[5].line = true; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     case 6:
-                        this.btn_six = false; this.btn_seven = true; this.ln_seven = true; 
+                        this.btn[5].button = false; this.btn[6].button = true; this.ln[6].line = true; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                     break;
                     default:
@@ -599,32 +599,32 @@
             li_btn_hide(num){
                 switch(num){
                     case 1:
-                        this.btn_one = true; this.btn_two = false; this.ln_two = false; 
+                        this.btn[0].button = true; this.btn[1].button = false; this.ln[1].line = false; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
                         this.resetLineItem(1); this.setTotal();
                     break;
                     case 2:
-                        this.btn_two = true; this.btn_three = false; this.ln_three = false; 
+                        this.btn[1].button = true; this.btn[2].button = false; this.ln[2].line = false; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
                         this.resetLineItem(2); this.setTotal();
                     break;
                     case 3:
-                        this.btn_three = true; this.btn_four = false; this.ln_four = false; 
+                        this.btn[2].button = true; this.btn[3].button = false; this.ln[3].line = false; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
                         this.resetLineItem(3); this.setTotal();
                     break;
                     case 4:
-                        this.btn_four = true; this.btn_five = false; this.ln_five = false; 
+                        this.btn[3].button = true; this.btn[4].button = false; this.ln[4].line = false; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
                         this.resetLineItem(4); this.setTotal();
                     break;
                     case 5:
-                        this.btn_five = true; this.btn_six = false; this.ln_six = false; 
+                        this.btn[4].button = true; this.btn[5].button = false; this.ln[5].line = false; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
                         this.resetLineItem(5); this.setTotal();
                     break;
                     case 6:
-                        this.btn_six = true; this.btn_seven = false; this.ln_seven = false; 
+                        this.btn[5].button = true; this.btn[6].button = false; this.ln[6].line = false; 
                         this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight; 
                         this.resetLineItem(6); this.setTotal();
                     break;
@@ -742,6 +742,23 @@
                         this.invoice[key] = response.data[key];
                     }
                 }
+                this.setLineItems();
+            },
+            setLineItems(){
+                this.btn[0].button = false;
+                for(var i = 0; i < this.invoice.line_items.length; i++){
+                    for(var key in this.invoice.line_items[i]){
+                        if(this.invoice.line_items[i][key] == null){
+                            this.btn[i-1].button = true;
+                            return;
+                        } else if(i === 6){
+                            this.btn[i].button = true;
+                            this.ln[i].line = true;
+                        } else {
+                            this.ln[i].line = true;
+                        }
+                    }
+                }
             },
             /*
             *===== CONVERSION METHODS =====
@@ -831,6 +848,17 @@
                         for(var i = 0; i < 7; i++){
                             self.resetLineItem(i);
                         }  
+                    }
+                }
+                for(var i = 0; i < this.ln.length; i++){
+                    for(var b in this.ln[i]){
+                        if(i == 0){
+                            this.ln[i][b] = true;
+                            this.btn[i].button = true;
+                        }else {
+                            this.ln[i][b] = false;
+                            this.btn[i].button = false;
+                        }
                     }
                 }
                 this.edit = false;

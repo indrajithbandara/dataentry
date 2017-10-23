@@ -1,9 +1,6 @@
 <template>
     <div>
-        <viewAddBtns 
-            :toTable="switchToTable"
-            :toForm="switchToForm">    
-        </viewAddBtns>
+        <viewAddBtns :toTable="switchToTable" :toForm="switchToForm"></viewAddBtns>
         <hr>
         <!-- Start of Invoice Table -->
         <div v-show="table">
@@ -727,6 +724,25 @@
                 this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit; 
                 this.setTotal();
             },
+            setInvoiceData(response){ // sets the invoice data to the invoice model for updating
+                for(var key in response.data){
+                    if(key === 'customer'){
+                        var cust = JSON.parse(response.data[key]);
+                        for(var k in this.invoice.customer){
+                            this.invoice.customer[k] = cust[k];
+                        }
+                    } else if (key === 'line_items'){
+                        var line = JSON.parse(response.data[key]);
+                        for(var i = 0; i < line.length; i++){
+                            for(var l in line[i]){
+                                this.invoice.line_items[i][l] = line[i][l];
+                            }
+                        }
+                    } else {
+                        this.invoice[key] = response.data[key];
+                    }
+                }
+            },
             /*
             *===== CONVERSION METHODS =====
             */
@@ -753,9 +769,8 @@
                 });
             },
             updateInvoice(id){ // patch request to update an invoice
-                this.valueCheck();
                 let self = this;
-                let params = Object.assign({}, self.customer);
+                let params = Object.assign({}, self.invoice);
                 axios({
                     method: 'patch',
                     url: 'api/invoices/' + id,
@@ -779,7 +794,7 @@
                     }
                 }).then((response) => {
                     self.table = false;
-                    // set model values to response.data
+                    self.setInvoiceData(response);
                 }).catch((error) => {
                     console.log(error.message);
                 });

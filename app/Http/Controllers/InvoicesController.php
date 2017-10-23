@@ -85,7 +85,7 @@ class InvoicesController extends Controller
     {
         // Validate the Request
         $this->validate($request, [
-            'inv_num' => 'required|numeric|max:11',
+            'inv_num' => 'required|numeric',
             'date' => 'required|date',
             'customer' => 'required|array', // array of customer info
             'po_num' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:30',
@@ -99,9 +99,9 @@ class InvoicesController extends Controller
         Invoice::findOrFail($id)->update([
             'inv_num' => $request->input(['inv_num']),
             'date' => $request->input(['date']),
-            'customer' => $request->input(['customer']), // array of customer info
+            'customer' => json_encode($request->input(['customer'])), // array of customer info
             'po_num' => $request->input(['po_num']),
-            'line_items' => $request->input(['line_items']), // arry of line items
+            'line_items' => json_encode($request->input(['line_items'])), // arry of line items
             'ship_fee' => $request->input(['ship_fee']),
             'total' => $request->input(['total']),
             'memo' => $request->input(['memo'])

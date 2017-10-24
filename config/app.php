@@ -180,6 +180,8 @@ return [
 
         // Adding support for Laravel Passport
         Laravel\Passport\PassportServiceProvider::class,
+        // PDF Library
+        Vsmoraes\Pdf\PdfServiceProvider::class,
     ],
 
     /*
@@ -228,6 +230,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'PDF' => 'Vsmoraes\Pdf\PdfFacade'
     ],
 
 ];

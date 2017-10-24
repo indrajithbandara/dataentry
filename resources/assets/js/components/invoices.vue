@@ -25,8 +25,8 @@
                             <td>{{ invoice.date }}</td>
                             <td>{{ invoice.customer.name }}</td>
                             <td>{{ invoice.total }}</td>
-                            <td><button @click="printShipper(invoice.id)" class="btn btn-default">Print Shipper</button></td>
-                            <td><button @click="printInvoice(invoice.id)" class="btn btn-primary">Print Invoice</button></td>
+                            <td><a :href="'/pdf/shipper/' + invoice.id" class="btn btn-default">Print Shipper</a></td>
+                            <td><a :href="'/pdf/invoice/' + invoice.id" class="btn btn-primary">Print Invoice</a></td>
                             <td><button @click="showInvoice(invoice.id)" class="btn btn-warning">Edit</button></td>
                             <td v-if="user == 1"><button @click="deleteInvoice(invoice.id)" class="btn btn-danger">Delete</button></td>
                         </tr>

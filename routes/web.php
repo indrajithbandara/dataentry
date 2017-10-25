@@ -31,6 +31,7 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     Route::get('/customers', 'PagesController@customers');
     Route::get('/products', 'PagesController@products');
     Route::get('/pdf/invoice/{id}', 'PDFController@invoice');
+    Route::get('/pdf/shipper/{id}', 'PDFController@shipper');
     
     // Routes to be determined
     // Route::get('/purchaseorders', 'PagesController@vuePage');

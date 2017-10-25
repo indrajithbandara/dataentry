@@ -1,10 +1,8 @@
 <template>
     <div>
-<!--         <div class="row"> 
-            <div class="col-xs-6 col-sm-6 col-md-6"><button @click="table = true" class="btn btn-primary btn-lg full-width">View Customers</button></div>
-            <div class="col-xs-6 col-sm-6 col-md-6"><button @click="table = false" class="btn btn-success btn-lg full-width">Add A Customer</button></div>
-        </div> -->
         <viewAddBtns 
+            :textOne="'View Customers'"
+            :textTwo="'Add A Customer'"
             :toTable="switchToTable"
             :toForm="switchToForm">    
         </viewAddBtns>
@@ -107,18 +105,20 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label for="shipto">Ship To Address</label>
-                            <textarea v-model="customer.shipto" @keyup="regexShiptoCheck(customer.shipto)" type="text" name="shipto" class="form-control" rows="3" required maxlength="255"></textarea>
-                            <p class="alert alert-warning" v-if="customer.shipto.length == 255">255 character limit reached!</p>
-                            <p class="alert alert-danger" v-if="regexShiptoWarning">{{ regexShiptoWarning }}</p>
-                        </div>
-                    </div>                
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
                             <label for="billto">Bill To Address</label>
                             <textarea v-model="customer.billto" @keyup="regexBilltoCheck(customer.billto)" type="text" name="billto" class="form-control" rows="3" required maxlength="255"></textarea>
                             <p class="alert alert-warning" v-if="customer.billto.length == 255">255 character limit reached!</p>
                             <p class="alert alert-danger" v-if="regexBilltoWarning">{{ regexBilltoWarning }}</p>
+                            <p class="alert alert-info" v-if="customer.billto.length > 0">Add '#' at the end of every line when you want the next line to be placed in a new line on the invoice and shipper. Add '##' at the end of a line if you want an empty line below it.</p>
+                        </div>
+                    </div>                
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="shipto">Ship To Address</label>
+                            <textarea v-model="customer.shipto" @keyup="regexShiptoCheck(customer.shipto)" type="text" name="shipto" class="form-control" rows="3" required maxlength="255"></textarea>
+                            <p class="alert alert-warning" v-if="customer.shipto.length == 255">255 character limit reached!</p>
+                            <p class="alert alert-danger" v-if="regexShiptoWarning">{{ regexShiptoWarning }}</p>
+                            <p class="alert alert-info" v-if="customer.shipto.length > 0">Add '#' at the end of every line when you want the next line to be placed in a new line on the invoice and shipper. Add '##' at the end of a line if you want an empty line below it.</p>
                         </div>
                     </div>                
                 </div>
@@ -344,7 +344,7 @@
                 }
             },
             regexShiptoCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+$/;
                 if(string == ''){
                     this.regexShiptoWarning = '';
                     return;
@@ -357,7 +357,7 @@
                 } 
             },
             regexBilltoCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+$/;
                 if(string == ''){
                     this.regexBilltoWarning = '';
                     return;

@@ -43598,7 +43598,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         regexShiptoCheck: function regexShiptoCheck(string) {
-            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+$/;
             if (string == '') {
                 this.regexShiptoWarning = '';
                 return;
@@ -43611,7 +43611,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         regexBilltoCheck: function regexBilltoCheck(string) {
-            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+$/;
+            var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+$/;
             if (string == '') {
                 this.regexBilltoWarning = '';
                 return;
@@ -43705,6 +43705,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
+        textOne: String,
+        textTwo: String,
         toTable: Function, // prop from invoices.vue & customers.vue
         toForm: Function // prop from invoices.vue & customers.vue
     }
@@ -43724,14 +43726,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.toTable
     }
-  }, [_vm._v("View Invoices")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.textOne))])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6"
   }, [_c('button', {
     staticClass: "btn btn-success btn-lg full-width",
     on: {
       "click": _vm.toForm
     }
-  }, [_vm._v("Add An Invoice")])])])
+  }, [_vm._v(_vm._s(_vm.textTwo))])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -43748,6 +43750,8 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('viewAddBtns', {
     attrs: {
+      "textOne": 'View Customers',
+      "textTwo": 'Add A Customer',
       "toTable": _vm.switchToTable,
       "toForm": _vm.switchToForm
     }
@@ -44012,45 +44016,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
-      "for": "shipto"
-    }
-  }, [_vm._v("Ship To Address")]), _vm._v(" "), _c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.customer.shipto),
-      expression: "customer.shipto"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "shipto",
-      "rows": "3",
-      "required": "",
-      "maxlength": "255"
-    },
-    domProps: {
-      "value": (_vm.customer.shipto)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.regexShiptoCheck(_vm.customer.shipto)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.customer.shipto = $event.target.value
-      }
-    }
-  }), _vm._v(" "), (_vm.customer.shipto.length == 255) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexShiptoWarning) ? _c('p', {
-    staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexShiptoWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
       "for": "billto"
     }
   }, [_vm._v("Bill To Address")]), _vm._v(" "), _c('textarea', {
@@ -44084,7 +44049,50 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBilltoWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexBilltoWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexBilltoWarning))]) : _vm._e(), _vm._v(" "), (_vm.customer.billto.length > 0) ? _c('p', {
+    staticClass: "alert alert-info"
+  }, [_vm._v("Add '#' at the end of every line when you want the next line to be placed in a new line on the invoice and shipper. Add '##' at the end of a line if you want an empty line below it.")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "shipto"
+    }
+  }, [_vm._v("Ship To Address")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.customer.shipto),
+      expression: "customer.shipto"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "shipto",
+      "rows": "3",
+      "required": "",
+      "maxlength": "255"
+    },
+    domProps: {
+      "value": (_vm.customer.shipto)
+    },
+    on: {
+      "keyup": function($event) {
+        _vm.regexShiptoCheck(_vm.customer.shipto)
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.customer.shipto = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.customer.shipto.length == 255) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexShiptoWarning) ? _c('p', {
+    staticClass: "alert alert-danger"
+  }, [_vm._v(_vm._s(_vm.regexShiptoWarning))]) : _vm._e(), _vm._v(" "), (_vm.customer.shipto.length > 0) ? _c('p', {
+    staticClass: "alert alert-info"
+  }, [_vm._v("Add '#' at the end of every line when you want the next line to be placed in a new line on the invoice and shipper. Add '##' at the end of a line if you want an empty line below it.")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-sm-12 col-md-6"
@@ -44480,19 +44488,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         checkName: function checkName() {
-            var nameTaken = this.list.some(function (val) {
-                return this.product.name === val.name;
+            var self = this;
+            var nameTaken = self.list.some(function (val) {
+                return self.product.name === val.name;
             });
             if (nameTaken) {
-                this.nameAlert = 'This name has already been taken.';
+                self.nameAlert = 'This name has already been taken.';
             } else {
-                this.nameAlert = '';
+                self.nameAlert = '';
             }
         },
         noDuplicateNames: function noDuplicateNames() {
-            this.list.forEach(function (arrayItem) {
+            var self = this;
+            self.list.forEach(function (arrayItem) {
                 var x = arrayItem;
-                if (this.product.name == x.name) {
+                if (self.product.name == x.name) {
                     alert('This product name has already been taken. Please choose a different one to avoid duplicate information.');
                     throw new Error("This product name already exisits. Server rejects duplicate values.");
                 }
@@ -44985,6 +44995,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -46012,6 +46027,8 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('viewAddBtns', {
     attrs: {
+      "textOne": 'View Invoices',
+      "textTwo": 'Add An Invoice',
       "toTable": _vm.switchToTable,
       "toForm": _vm.switchToForm
     }

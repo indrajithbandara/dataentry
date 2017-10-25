@@ -229,19 +229,21 @@
                 }
             },
             checkName(){
-                var nameTaken = this.list.some(function(val){
-                    return this.product.name === val.name;
+                var self = this;
+                var nameTaken = self.list.some(function(val){
+                    return self.product.name === val.name;
                 });
                 if(nameTaken){
-                    this.nameAlert = 'This name has already been taken.';
+                    self.nameAlert = 'This name has already been taken.';
                 }else{
-                    this.nameAlert = '';
+                    self.nameAlert = '';
                 }
             },
             noDuplicateNames(){
-                this.list.forEach(function(arrayItem){
+                var self = this;
+                self.list.forEach(function(arrayItem){
                     var x = arrayItem;
-                    if(this.product.name == x.name){
+                    if(self.product.name == x.name){
                         alert('This product name has already been taken. Please choose a different one to avoid duplicate information.');
                         throw new Error("This product name already exisits. Server rejects duplicate values.");
                     }

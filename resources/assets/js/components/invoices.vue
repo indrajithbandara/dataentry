@@ -1,6 +1,11 @@
 <template>
     <div>
-        <viewAddBtns :toTable="switchToTable" :toForm="switchToForm"></viewAddBtns>
+        <viewAddBtns 
+            :textOne="'View Invoices'" 
+            :textTwo="'Add An Invoice'"
+            :toTable="switchToTable" 
+            :toForm="switchToForm"
+        ></viewAddBtns>
         <hr>
         <!-- Start of Invoice Table -->
         <div v-show="table">

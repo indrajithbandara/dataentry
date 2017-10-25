@@ -50,8 +50,8 @@ class CustomersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
-            'shipto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+(?<!-)$/i|max:255',
-            'billto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+(?<!-)$/i|max:255',
+            'shipto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+(?<!-)$/i|max:255',
+            'billto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+(?<!-)$/i|max:255',
             'buyer' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
             'email' => 'required|string|email|max:50',
             'phone' => 'required|string|regex:/^(?!-)(?!.*--)[0-9\(\)\-\s]+(?<!-)$/i|max:25',
@@ -83,8 +83,8 @@ class CustomersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
-            'shipto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+(?<!-)$/i|max:255',
-            'billto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\.\s]+(?<!-)$/i|max:255',
+            'shipto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+(?<!-)$/i|max:255',
+            'billto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+(?<!-)$/i|max:255',
             'buyer' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
             'email' => 'required|string|email|max:50',
             'phone' => 'required|string|regex:/^(?!-)(?!.*--)[0-9\(\)\-\s]+(?<!-)$/i|max:25',

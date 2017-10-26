@@ -12,6 +12,7 @@
 ## Features In Progress
 <ol>
     <li>Invoiceing Interface</li>
+    <li>Company / Settings Interface</li>
 </ol>
 
 ## Features To Come

@@ -8679,6 +8679,10 @@ button.full-width {
   padding: 10px;
 }
 
+.margin-top-20 {
+  margin-top: 20px;
+}
+
 .overflow-scroll {
   max-height: 450px;
   overflow: scroll;

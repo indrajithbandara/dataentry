@@ -8,15 +8,6 @@ use Illuminate\Http\Request;
 class CompanyController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getCompany()
-    {
-        return Company::all();
-    }
-    /**
      * Display the specified resource.
      *
      * @param  \App\Company  $company
@@ -27,6 +18,12 @@ class CompanyController extends Controller
         return Company::findOrFail($id);
     }
 
+    /*
+    * Get the one company for displaying
+    */
+    public function getName(){
+        return Company::where('id', 1)->get();
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -37,7 +34,7 @@ class CompanyController extends Controller
     public function addCompany(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50|max:50',
+            'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:50|max:50',
             'address' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+(?<!-)$/i|max:255',
             'phone' => 'required|string|regex:/^(?!-)(?!.*--)[0-9\(\)\-\s]+(?<!-)$/i|max:25',
             'fax' => 'string|regex:/^(?!-)(?!.*--)[0-9\(\)\-\s]+(?<!-)$/i|max:25',
@@ -71,7 +68,7 @@ class CompanyController extends Controller
     public function updateCompany(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50|max:50',
+            'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:50|max:50',
             'address' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+(?<!-)$/i|max:255',
             'phone' => 'required|string|regex:/^(?!-)(?!.*--)[0-9\(\)\-\s]+(?<!-)$/i|max:25',
             'fax' => 'string|regex:/^(?!-)(?!.*--)[0-9\(\)\-\s]+(?<!-)$/i|max:25',

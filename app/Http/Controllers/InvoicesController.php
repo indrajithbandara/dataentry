@@ -48,7 +48,6 @@ class InvoicesController extends Controller
      */
     public function addInvoice(Request $request)
     {
-        // dd($request);
         // Validate the Request
         $this->validate($request, [
             'inv_num' => 'required|numeric',

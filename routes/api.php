@@ -37,6 +37,13 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::patch('invoices/{id}', 'InvoicesController@updateInvoice'); // Update a Single Invoice
     Route::delete('invoices/{id}', 'InvoicesController@deleteInvoice'); // Delete a Single Invoice
     //====================== End of Invoices Api ====================== //
+
+    //====================== Company Api ====================== //
+    Route::get('company', 'CompanyController@getCompany'); //Get company info for viewing
+    Route::get('company/{id}', 'CompanyController@getOne'); // Get company for editing
+    Route::post('company/store', 'CompanyController@addCompany'); // Add the company info
+    Route::patch('company/{id}', 'CompanyController@updateCompany'); // Update the company info
+    // No Delete Functionality. This api is for the company info using the application.
 });
 
 

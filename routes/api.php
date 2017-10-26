@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     //====================== End of Invoices Api ====================== //
 
     //====================== Company Api ====================== //
-    Route::get('company', 'CompanyController@getCompany'); //Get company info for viewing
+    Route::get('company', 'CompanyController@getName'); //Get company info for viewing
     Route::get('company/{id}', 'CompanyController@getOne'); // Get company for editing
     Route::post('company/store', 'CompanyController@addCompany'); // Add the company info
     Route::patch('company/{id}', 'CompanyController@updateCompany'); // Update the company info

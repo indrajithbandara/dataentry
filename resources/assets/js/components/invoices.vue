@@ -83,18 +83,10 @@
 
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
-                        <div class="form-group">
-                            <label for="cust_rel">Customer Release #</label>
-                            <input v-model="invoice.cust_rel" type="text" name="cust_rel" class="form-control" required maxlength="50">
-                            <p class="alert alert-warning" v-if="invoice.cust_rel.length == 50">50 character limit reached!</p>
-                        </div>
+                        <textForm :dataModel="invoice.cust_rel" :inputName="'Customer Release #'" :forVal="'cust_rel'" :inputClass="'form-control'" :max="50" @setModel="invoice.cust_rel = $event" ></textForm>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                        <div class="form-group">
-                            <label for="po_num">P.O #</label>
-                            <input v-model="invoice.po_num" type="text" name="po_num" class="form-control" required maxlength="30">
-                            <p class="alert alert-warning" v-if="invoice.po_num.length == 30">30 character limit reached!</p>
-                        </div>
+                        <textForm :dataModel="invoice.po_num" :inputName="'P.O #'" :forVal="'po_num'" :inputClass="'form-control'" :max="30" @setModel="invoice.po_num = $event" ></textForm>
                     </div>
                 </div>
 
@@ -419,41 +411,22 @@
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="cartons">Cartons</label>
-                            <input v-model="invoice.cartons" number type="number" name="cartons" class="form-control">
-                        </div>
+                        <numberForm :dataModel="invoice.cartons" :inputName="'Cartons'" :forVal="'cartons'" :inputClass="'form-control'" :max="50" @setModel="invoice.cartons = $event"></numberForm>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="weight">Weight</label>
-                            <input v-model="invoice.weight" type="text" name="weight" class="form-control" maxlength="50">
-                            <p class="alert alert-warning" v-if="invoice.weight.length == 50">50 character limit reached!</p>
-                        </div>
+                        <textForm :dataModel="invoice.weight" :inputName="'Weight'" :forVal="'weight'" :inputClass="'form-control'" :max="50" @setModel="invoice.weight = $event" ></textForm>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="carrier">Carrier</label>
-                            <input v-model="invoice.carrier" type="text" name="carrier" class="form-control" maxlength="50">
-                            <p class="alert alert-warning" v-if="invoice.carrier.length == 50">50 character limit reached!</p>
-                        </div>
+                        <textForm :dataModel="invoice.carrier" :inputName="'Carrier'" :forVal="'carrier'" :inputClass="'form-control'" :max="50" @setModel="invoice.carrier = $event" ></textForm>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label for="appv_num">Approval Number</label>
-                            <input v-model="invoice.appv_num" type="text" name="appv_num" class="form-control" maxlength="50">
-                            <p class="alert alert-warning" v-if="invoice.appv_num.length == 50">50 character limit reached!</p>
-                        </div>
+                        <textForm :dataModel="invoice.appv_num" :inputName="'Approval Number'" :forVal="'appv_num'" :inputClass="'form-control'" :max="50" @setModel="invoice.appv_num = $event" ></textForm>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6">
-                        <div class="form-group">
-                            <label for="supl_num">Supplier Number</label>
-                            <input v-model="invoice.supl_num" type="text" name="supl_num" class="form-control" maxlength="50">
-                            <p class="alert alert-warning" v-if="invoice.supl_num.length == 50">50 character limit reached!</p>
-                        </div>
+                        <textForm :dataModel="invoice.supl_num" :inputName="'Supplier Number'" :forVal="'supl_num'" :inputClass="'form-control'" :max="50" @setModel="invoice.supl_num = $event" ></textForm>
                     </div>
                 </div>
 
@@ -461,12 +434,8 @@
                 <!-- TOGGLE BUTTON FOR TURNING ON AND OFF WITH THE COMPLETE, MAKE A COMPONENT -->
 
 
+                <textAreaForm :dataModel="invoice.memo" :inputName="'Memo'" :forVal="'memo'" :inputClass="'form-control'" :rows="3" :max="255" @setModel="invoice.memo = $event" ></textAreaForm>
 
-                <div class="form-group">
-                    <label for="memo">Memo</label>
-                    <textarea v-model="invoice.memo" type="text" name="memo" class="form-control" rows="3" maxlength="255"></textarea>
-                    <p class="alert alert-warning" v-if="invoice.memo.length == 255">255 character limit reached!</p>
-                </div>
                 <submitBtns :editMode="edit" :name="name='Invoice'"></submitBtns>
             </form>
         </div>
@@ -481,6 +450,9 @@
     import ViewAddBtns from '../components/partials/view-add-btns.vue';
     import LnBtns from '../components/partials/ln-btns.vue';
     import SubmitBtns from '../components/partials/submit-btn.vue';
+    import TextForm from '../components/partials/form-text.vue';
+    import TextAreaForm from '../components/partials/form-textarea.vue';
+    import NumberForm from '../components/partials/form-number.vue';
     // Export
     export default {
         data() {
@@ -622,7 +594,10 @@
         components: {
             viewAddBtns: ViewAddBtns, 
             lnBtns: LnBtns,
-            submitBtns: SubmitBtns
+            submitBtns: SubmitBtns,
+            textForm: TextForm,
+            textAreaForm: TextAreaForm,
+            numberForm: NumberForm
         },
         methods: {
             /*
@@ -863,7 +838,6 @@
                         return status >= 200 && status < 300;
                     }
                 }).then((response) => {
-                    console.log(response);
                     self.table = false;
                     self.setInvoiceData(response);
                 }).catch((error) => {

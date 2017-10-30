@@ -45611,37 +45611,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_partials_form_textarea_vue__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_partials_form_textarea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_partials_form_textarea_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_partials_form_number_vue__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_partials_form_number_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_partials_form_number_vue__);
 //
 //
 //
@@ -46094,6 +46069,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
+
 // Export
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -46228,7 +46206,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         viewAddBtns: __WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue___default.a,
         lnBtns: __WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue___default.a,
-        submitBtns: __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default.a
+        submitBtns: __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default.a,
+        textForm: __WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue___default.a,
+        textAreaForm: __WEBPACK_IMPORTED_MODULE_4__components_partials_form_textarea_vue___default.a,
+        numberForm: __WEBPACK_IMPORTED_MODULE_5__components_partials_form_number_vue___default.a
     },
     methods: {
         /*
@@ -46495,7 +46476,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return status >= 200 && status < 300;
                 }
             }).then(function (response) {
-                console.log(response);
                 self.table = false;
                 self.setInvoiceData(response);
             }).catch(function (error) {
@@ -46718,9 +46698,182 @@ if (false) {
 }
 
 /***/ }),
-/* 75 */,
-/* 76 */,
-/* 77 */,
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(76),
+  /* template */
+  __webpack_require__(77),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-text.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] form-text.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-290b912e", Component.options)
+  } else {
+    hotAPI.reload("data-v-290b912e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 76 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        dataModel: String,
+        forVal: String,
+        inputName: String,
+        inputClass: String,
+        max: Number
+    },
+    data: function data() {
+        return {
+            model: ''
+        };
+    },
+
+    methods: {
+        updateModel: function updateModel() {
+            this.$emit('setModel', this.model);
+            this.model = '';
+        },
+        setInnerModel: function setInnerModel() {
+            this.model = this.dataModel;
+        }
+    }
+});
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return (_vm.max) ? _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dataModel),
+      expression: "dataModel"
+    }],
+    class: _vm.inputClass,
+    attrs: {
+      "type": "text",
+      "name": _vm.forVal,
+      "maxlength": _vm.max
+    },
+    domProps: {
+      "value": (_vm.dataModel)
+    },
+    on: {
+      "keyup": _vm.setInnerModel,
+      "focus": _vm.setInnerModel,
+      "blur": _vm.updateModel,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.dataModel = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.model.length == _vm.max) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dataModel),
+      expression: "dataModel"
+    }],
+    class: _vm.inputClass,
+    attrs: {
+      "type": "text",
+      "name": _vm.forVal
+    },
+    domProps: {
+      "value": (_vm.dataModel)
+    },
+    on: {
+      "keyup": _vm.setInnerModel,
+      "focus": _vm.setInnerModel,
+      "blur": _vm.updateModel,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.dataModel = $event.target.value
+      }
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-290b912e", module.exports)
+  }
+}
+
+/***/ }),
 /* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -46903,71 +47056,35 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
+  }, [_c('textForm', {
     attrs: {
-      "for": "cust_rel"
-    }
-  }, [_vm._v("Customer Release #")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.cust_rel),
-      expression: "invoice.cust_rel"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "cust_rel",
-      "required": "",
-      "maxlength": "50"
-    },
-    domProps: {
-      "value": (_vm.invoice.cust_rel)
+      "dataModel": _vm.invoice.cust_rel,
+      "inputName": 'Customer Release #',
+      "forVal": 'cust_rel',
+      "inputClass": 'form-control',
+      "max": 50
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.cust_rel = $event.target.value
+      "setModel": function($event) {
+        _vm.invoice.cust_rel = $event
       }
     }
-  }), _vm._v(" "), (_vm.invoice.cust_rel.length == 50) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("50 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
+  }, [_c('textForm', {
     attrs: {
-      "for": "po_num"
-    }
-  }, [_vm._v("P.O #")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.po_num),
-      expression: "invoice.po_num"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "po_num",
-      "required": "",
-      "maxlength": "30"
-    },
-    domProps: {
-      "value": (_vm.invoice.po_num)
+      "dataModel": _vm.invoice.po_num,
+      "inputName": 'P.O #',
+      "forVal": 'po_num',
+      "inputClass": 'form-control',
+      "max": 30
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.po_num = $event.target.value
+      "setModel": function($event) {
+        _vm.invoice.po_num = $event
       }
     }
-  }), _vm._v(" "), (_vm.invoice.po_num.length == 30) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("30 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('button', {
+  })], 1)]), _vm._v(" "), _c('button', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -48295,196 +48412,96 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-6 col-md-4"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
+  }, [_c('numberForm', {
     attrs: {
-      "for": "cartons"
-    }
-  }, [_vm._v("Cartons")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.cartons),
-      expression: "invoice.cartons"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "cartons"
-    },
-    domProps: {
-      "value": (_vm.invoice.cartons)
+      "dataModel": _vm.invoice.cartons,
+      "inputName": 'Cartons',
+      "forVal": 'cartons',
+      "inputClass": 'form-control',
+      "max": 50
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.cartons = $event.target.value
+      "setModel": function($event) {
+        _vm.invoice.cartons = $event
       }
     }
-  })])]), _vm._v(" "), _c('div', {
+  })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-6 col-md-4"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
+  }, [_c('textForm', {
     attrs: {
-      "for": "weight"
-    }
-  }, [_vm._v("Weight")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.weight),
-      expression: "invoice.weight"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "weight",
-      "maxlength": "50"
-    },
-    domProps: {
-      "value": (_vm.invoice.weight)
+      "dataModel": _vm.invoice.weight,
+      "inputName": 'Weight',
+      "forVal": 'weight',
+      "inputClass": 'form-control',
+      "max": 50
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.weight = $event.target.value
+      "setModel": function($event) {
+        _vm.invoice.weight = $event
       }
     }
-  }), _vm._v(" "), (_vm.invoice.weight.length == 50) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("50 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-6 col-md-4"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
+  }, [_c('textForm', {
     attrs: {
-      "for": "carrier"
-    }
-  }, [_vm._v("Carrier")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.carrier),
-      expression: "invoice.carrier"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "carrier",
-      "maxlength": "50"
-    },
-    domProps: {
-      "value": (_vm.invoice.carrier)
+      "dataModel": _vm.invoice.carrier,
+      "inputName": 'Carrier',
+      "forVal": 'carrier',
+      "inputClass": 'form-control',
+      "max": 50
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.carrier = $event.target.value
+      "setModel": function($event) {
+        _vm.invoice.carrier = $event
       }
     }
-  }), _vm._v(" "), (_vm.invoice.carrier.length == 50) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("50 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+  })], 1)]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-6 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
+  }, [_c('textForm', {
     attrs: {
-      "for": "appv_num"
-    }
-  }, [_vm._v("Approval Number")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.appv_num),
-      expression: "invoice.appv_num"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "appv_num",
-      "maxlength": "50"
-    },
-    domProps: {
-      "value": (_vm.invoice.appv_num)
+      "dataModel": _vm.invoice.appv_num,
+      "inputName": 'Approval Number',
+      "forVal": 'appv_num',
+      "inputClass": 'form-control',
+      "max": 50
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.appv_num = $event.target.value
+      "setModel": function($event) {
+        _vm.invoice.appv_num = $event
       }
     }
-  }), _vm._v(" "), (_vm.invoice.appv_num.length == 50) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("50 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-6 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
+  }, [_c('textForm', {
     attrs: {
-      "for": "supl_num"
-    }
-  }, [_vm._v("Supplier Number")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.supl_num),
-      expression: "invoice.supl_num"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "supl_num",
-      "maxlength": "50"
-    },
-    domProps: {
-      "value": (_vm.invoice.supl_num)
+      "dataModel": _vm.invoice.supl_num,
+      "inputName": 'Supplier Number',
+      "forVal": 'supl_num',
+      "inputClass": 'form-control',
+      "max": 50
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.supl_num = $event.target.value
+      "setModel": function($event) {
+        _vm.invoice.supl_num = $event
       }
     }
-  }), _vm._v(" "), (_vm.invoice.supl_num.length == 50) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("50 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
+  })], 1)]), _vm._v(" "), _c('textAreaForm', {
     attrs: {
-      "for": "memo"
-    }
-  }, [_vm._v("Memo")]), _vm._v(" "), _c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.memo),
-      expression: "invoice.memo"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "memo",
-      "rows": "3",
-      "maxlength": "255"
-    },
-    domProps: {
-      "value": (_vm.invoice.memo)
+      "dataModel": _vm.invoice.memo,
+      "inputName": 'Memo',
+      "forVal": 'memo',
+      "inputClass": 'form-control',
+      "rows": 3,
+      "max": 255
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.memo = $event.target.value
+      "setModel": function($event) {
+        _vm.invoice.memo = $event
       }
     }
-  }), _vm._v(" "), (_vm.invoice.memo.length == 255) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("255 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('submitBtns', {
+  }), _vm._v(" "), _c('submitBtns', {
     attrs: {
       "editMode": _vm.edit,
       "name": _vm.name = 'Invoice'
@@ -48504,6 +48521,380 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(89),
+  /* template */
+  __webpack_require__(90),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-textarea.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] form-textarea.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6e2228f6", Component.options)
+  } else {
+    hotAPI.reload("data-v-6e2228f6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        dataModel: String,
+        forVal: String,
+        inputName: String,
+        inputClass: String,
+        max: Number,
+        rows: Number
+    },
+    data: function data() {
+        return {
+            model: ''
+        };
+    },
+
+    methods: {
+        updateModel: function updateModel() {
+            this.$emit('setModel', this.model);
+            this.model = '';
+        },
+        setInnerModel: function setInnerModel() {
+            this.model = this.dataModel;
+        }
+    }
+});
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return (_vm.max) ? _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dataModel),
+      expression: "dataModel"
+    }],
+    class: _vm.inputClass,
+    attrs: {
+      "type": "text",
+      "name": _vm.forVal,
+      "row": _vm.rows,
+      "maxlength": _vm.max
+    },
+    domProps: {
+      "value": (_vm.dataModel)
+    },
+    on: {
+      "keyup": _vm.setInnerModel,
+      "focus": _vm.setInnerModel,
+      "blur": _vm.updateModel,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.dataModel = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.model.length == _vm.max) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dataModel),
+      expression: "dataModel"
+    }],
+    class: _vm.inputClass,
+    attrs: {
+      "type": "text",
+      "name": _vm.forVal,
+      "row": _vm.rows
+    },
+    domProps: {
+      "value": (_vm.dataModel)
+    },
+    on: {
+      "keyup": _vm.setInnerModel,
+      "focus": _vm.setInnerModel,
+      "blur": _vm.updateModel,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.dataModel = $event.target.value
+      }
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-6e2228f6", module.exports)
+  }
+}
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(92),
+  /* template */
+  __webpack_require__(93),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-number.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] form-number.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a20532f6", Component.options)
+  } else {
+    hotAPI.reload("data-v-a20532f6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 92 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        dataModel: [Number, String],
+        forVal: String,
+        inputName: String,
+        inputClass: String,
+        max: Number,
+        rows: Number
+    },
+    data: function data() {
+        return {
+            model: 0
+        };
+    },
+
+    methods: {
+        updateModel: function updateModel() {
+            this.$emit('setModel', this.model);
+            this.model = 0;
+        },
+        setInnerModel: function setInnerModel() {
+            this.model = this.dataModel;
+        }
+    }
+});
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return (_vm.max) ? _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dataModel),
+      expression: "dataModel"
+    }],
+    class: _vm.inputClass,
+    attrs: {
+      "number": "",
+      "type": "number",
+      "name": _vm.forVal,
+      "row": _vm.rows,
+      "maxlength": _vm.max
+    },
+    domProps: {
+      "value": (_vm.dataModel)
+    },
+    on: {
+      "keyup": _vm.setInnerModel,
+      "focus": _vm.setInnerModel,
+      "blur": _vm.updateModel,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.dataModel = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.model.length == _vm.max) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dataModel),
+      expression: "dataModel"
+    }],
+    class: _vm.inputClass,
+    attrs: {
+      "number": "",
+      "type": "number",
+      "name": _vm.forVal,
+      "row": _vm.rows
+    },
+    domProps: {
+      "value": (_vm.dataModel)
+    },
+    on: {
+      "keyup": _vm.setInnerModel,
+      "focus": _vm.setInnerModel,
+      "blur": _vm.updateModel,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.dataModel = $event.target.value
+      }
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-a20532f6", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

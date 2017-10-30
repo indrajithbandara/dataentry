@@ -1301,7 +1301,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(76);
+module.exports = __webpack_require__(79);
 
 
 /***/ }),
@@ -45528,7 +45528,7 @@ var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(71),
   /* template */
-  __webpack_require__(75),
+  __webpack_require__(78),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -45611,6 +45611,75 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -46119,10 +46188,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     disclaimer: '',
                     comments: ''
                 },
+                cust_rel: '',
                 po_num: '',
                 line_items: [{ item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }],
+                misc_char: 0,
                 ship_fee: 0,
                 total: 0,
+                cartons: '',
+                weight: '',
+                complete: false,
+                appv_num: '',
+                supl_num: '',
+                carrier: '',
                 memo: ''
             },
             /*
@@ -46301,13 +46378,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         setTotal: function setTotal() {
             var _this5 = this;
 
-            // Adds up extended values and ship_fee value to be stored in the invoice total
+            // Adds up extended values, misc_char and ship_fee values to be stored in the invoice total
             var total = function total() {
                 var t = 0;
                 for (var i = 0; i < 7; i++) {
                     t += _this5.invoice.line_items[i].extended;
                 }
                 t += parseFloat(_this5.invoice.ship_fee);
+                t += parseFloat(_this5.invoice.misc_char);
                 return t;
             };
             var totalToFloat = total();
@@ -46417,6 +46495,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return status >= 200 && status < 300;
                 }
             }).then(function (response) {
+                console.log(response);
                 self.table = false;
                 self.setInvoiceData(response);
             }).catch(function (error) {
@@ -46444,10 +46523,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         resetValues: function resetValues() {
             // After form is submitted, values are reset to either 0 or empty string
             for (var key in this.invoice) {
-                if (key == 'inv_num' || key == 'ship_fee' || key == 'total') {
+                if (key == 'inv_num' || key == 'ship_fee' || key == 'misc_char' || key == 'total') {
                     this.invoice[key] = 0;
-                } else if (key == 'date' || key == 'po_num' || key == 'memo') {
-                    this.invoice[key] = '';
                 } else if (key == 'customer') {
                     for (var k in this.invoice.customer) {
                         this.invoice.customer[k] = '';
@@ -46456,6 +46533,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     for (var i = 0; i < 7; i++) {
                         this.resetLineItem(i);
                     }
+                } else if (key == 'complete') {
+                    this.invoice[key] = false;
+                } else {
+                    this.invoice[key] = '';
                 }
             }
             for (var i = 0; i < this.ln.length; i++) {
@@ -46637,7 +46718,10 @@ if (false) {
 }
 
 /***/ }),
-/* 75 */
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -46699,7 +46783,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }]
   }, [_c('h2', {
     staticClass: "text-center"
-  }, [_vm._v("Add Invoice")]), _vm._v(" "), _c('form', {
+  }, [_vm._v("Invoice Details")]), _vm._v(" "), _c('form', {
     attrs: {
       "action": "#"
     },
@@ -46816,6 +46900,43 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h4', {
     staticClass: "cust_top_margin"
   }, [_c('strong', [_vm._v("Customer:")]), _vm._v(" " + _vm._s(_vm.invoice.customer.name))])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "cust_rel"
+    }
+  }, [_vm._v("Customer Release #")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.cust_rel),
+      expression: "invoice.cust_rel"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "cust_rel",
+      "required": "",
+      "maxlength": "50"
+    },
+    domProps: {
+      "value": (_vm.invoice.cust_rel)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.cust_rel = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.invoice.cust_rel.length == 50) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("50 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -46846,7 +46967,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.invoice.po_num.length == 30) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("30 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('button', {
+  }, [_vm._v("30 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('button', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -48093,6 +48214,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])]), _vm._v(" "), _c('br')]) : _vm._e()]), _vm._v(" "), _c('hr', {
     staticClass: "dashed"
   }), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -48125,11 +48250,210 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.invoice.ship_fee = $event.target.value
       }
     }
-  })]), _vm._v(" "), _c('div', {
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "misc_char"
+    }
+  }, [_vm._v("Misc. Charges")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.misc_char),
+      expression: "invoice.misc_char"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "number": "",
+      "type": "number",
+      "name": "misc_char",
+      "min": "0",
+      "step": "0.01"
+    },
+    domProps: {
+      "value": (_vm.invoice.misc_char)
+    },
+    on: {
+      "keyup": function($event) {
+        _vm.setTotal()
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.misc_char = $event.target.value
+      }
+    }
+  })])])]), _vm._v(" "), _c('div', {
     staticClass: "pull-right"
   }, [_c('h3', [_vm._v("Total: $" + _vm._s(_vm.invoice.total))])]), _vm._v(" "), _c('div', {
     staticClass: "clearfix"
-  }), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('h2', {
+    staticClass: "text-center"
+  }, [_vm._v("Shipping Details")]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-6 col-md-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "cartons"
+    }
+  }, [_vm._v("Cartons")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.cartons),
+      expression: "invoice.cartons"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "number": "",
+      "type": "number",
+      "name": "cartons"
+    },
+    domProps: {
+      "value": (_vm.invoice.cartons)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.cartons = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-6 col-md-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "weight"
+    }
+  }, [_vm._v("Weight")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.weight),
+      expression: "invoice.weight"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "weight",
+      "maxlength": "50"
+    },
+    domProps: {
+      "value": (_vm.invoice.weight)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.weight = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.invoice.weight.length == 50) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("50 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-6 col-md-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "carrier"
+    }
+  }, [_vm._v("Carrier")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.carrier),
+      expression: "invoice.carrier"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "carrier",
+      "maxlength": "50"
+    },
+    domProps: {
+      "value": (_vm.invoice.carrier)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.carrier = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.invoice.carrier.length == 50) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("50 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-6 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "appv_num"
+    }
+  }, [_vm._v("Approval Number")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.appv_num),
+      expression: "invoice.appv_num"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "appv_num",
+      "maxlength": "50"
+    },
+    domProps: {
+      "value": (_vm.invoice.appv_num)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.appv_num = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.invoice.appv_num.length == 50) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("50 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-6 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "supl_num"
+    }
+  }, [_vm._v("Supplier Number")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.supl_num),
+      expression: "invoice.supl_num"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "supl_num",
+      "maxlength": "50"
+    },
+    domProps: {
+      "value": (_vm.invoice.supl_num)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.invoice.supl_num = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.invoice.supl_num.length == 50) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("50 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -48176,7 +48500,7 @@ if (false) {
 }
 
 /***/ }),
-/* 76 */
+/* 79 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

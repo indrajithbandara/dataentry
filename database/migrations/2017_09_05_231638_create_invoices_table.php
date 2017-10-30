@@ -20,7 +20,7 @@ class CreateInvoicesTable extends Migration
             $table->date('date');
             $table->index('date');
             $table->json('customer');
-            $table->string('cust_rel', 50);->nullable();
+            $table->string('cust_rel', 50)->nullable();
             $table->string('po_num', 30);
             $table->json('line_items');
             $table->decimal('misc_char', 7, 2)->nullable();

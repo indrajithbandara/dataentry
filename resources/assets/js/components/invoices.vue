@@ -418,20 +418,20 @@
                 <h2 class="text-center">Shipping Details</h2>
 
                 <div class="row">
-                    <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="cartons">Cartons</label>
-                            <input v-model="invoice.cartons" type="text" name="cartons" class="form-control">
+                            <input v-model="invoice.cartons" number type="number" name="cartons" class="form-control">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="weight">Weight</label>
                             <input v-model="invoice.weight" type="text" name="weight" class="form-control" maxlength="50">
                             <p class="alert alert-warning" v-if="invoice.weight.length == 50">50 character limit reached!</p>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="carrier">Carrier</label>
                             <input v-model="invoice.carrier" type="text" name="carrier" class="form-control" maxlength="50">
@@ -441,14 +441,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group">
                             <label for="appv_num">Approval Number</label>
                             <input v-model="invoice.appv_num" type="text" name="appv_num" class="form-control" maxlength="50">
                             <p class="alert alert-warning" v-if="invoice.appv_num.length == 50">50 character limit reached!</p>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group">
                             <label for="supl_num">Supplier Number</label>
                             <input v-model="invoice.supl_num" type="text" name="supl_num" class="form-control" maxlength="50">
@@ -863,6 +863,7 @@
                         return status >= 200 && status < 300;
                     }
                 }).then((response) => {
+                    console.log(response);
                     self.table = false;
                     self.setInvoiceData(response);
                 }).catch((error) => {

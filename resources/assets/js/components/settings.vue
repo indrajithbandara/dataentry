@@ -1,4 +1,4 @@
-<template>
+ <template>
     <div>
         <!-- Add your company info box with add button -->
         <div v-if="!companyAdded()">
@@ -11,7 +11,7 @@
                     <h2>{{ companyName }}</h2>
                 </div>
                 <div class="col-sm-12 col-md-4">
-                    <button class="btn btn-primary margin-top-20" @click="toEdit()">Update</button>
+                    <button class="btn btn-primary margin-top-20" v-show="!edit" @click="toEdit()">Update</button>
                 </div>
             </div>
         </div>
@@ -34,14 +34,14 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="address">Address</label>
-                            <input v-model="company.address" type="text" name="address" class="form-control" maxlength="255">
+                            <textarea v-model="company.address" name="address" class="form-control" maxlength="255"></textarea>
                             <p class="alert alert-warning" v-if="company.address.length == 255">255 character limit reached!</p>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="desc">Description</label>
-                            <input v-model="company.desc" type="text" name="desc" class="form-control">
+                            <textarea v-model="company.desc" name="desc" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
@@ -55,9 +55,9 @@
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label for="fax">Fax</label>
-                            <input v-model="company.fax" type="text" name="fax" class="form-control" maxlength="25">
-                            <p class="alert alert-warning" v-if="company.fax.length == 25">25 character limit reached!</p>
+                            <label for="email">Email</label>
+                            <input v-model="company.email" type="email" name="email" class="form-control" maxlength="50">
+                            <p class="alert alert-warning" v-if="company.email.length == 50">50 character limit reached!</p>
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                     name: '',
                     address: '',
                     phone: '',
-                    fax: '',
+                    email: '',
                     desc: '',
                     invoice_con: '',
                     shipper_con: '',
@@ -167,7 +167,7 @@
                     this.companyName = response.data[0].name;
                     this.companyId = response.data[0].id;
                 }).catch((error) => {
-                    this.errorHandeler(error);
+                    console.log(error.message);
                 });
             },
             createCompany(){
@@ -233,20 +233,20 @@
                 this.companyAdded();
             },
             regexCheck(){
-                // var arr = [this.product.name, this.product.description, this.product.material],
-                //     pattern = /^$|^(?!-)(?!.*--)[A-Za-z0-9\-\.\,\s]+$/;
-                // var newArr = arr.filter(function(val){
-                //     return pattern.test(val) === false;
-                // });
-                // if(newArr.length > 0){
-                //     this.regWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed. Current values rejected: "; 
-                //     for(var i = 0; i < newArr.length; i++){
-                //         this.regWarning += "'"+newArr[i]+"'    ";
-                //     }
-                //     throw new Error("Unapproved characters rejected by the client.");
-                // } else {
-                //     this.regWarning = '';
-                // }
+                var arr = [this.company.invoice_con, this.company.shipper_con, this.company.router_con, this.company.po_con],
+                    pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/i;
+                var newArr = arr.filter(function(val){
+                    return pattern.test(val) === false;
+                });
+                if(newArr.length > 0){
+                    this.regWarning = "Unapproved characters detected with the control numbers! List of approved characters: a-z, A-Z, 0-9, '()-/&*#\"' commas and periods. However, '--' is not allowed. Current values rejected: "; 
+                    for(var i = 0; i < newArr.length; i++){
+                        this.regWarning += "'"+newArr[i]+"'    ";
+                    }
+                    throw new Error("Unapproved characters rejected by the client.");
+                } else {
+                    this.regWarning = '';
+                }
             },
             errorHandeler(error){
                 if(error.response){

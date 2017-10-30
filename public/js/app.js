@@ -615,7 +615,88 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25)))
 
 /***/ }),
-/* 4 */,
+/* 4 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -42711,7 +42792,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 name: '',
                 address: '',
                 phone: '',
-                fax: '',
+                email: '',
                 desc: '',
                 invoice_con: '',
                 shipper_con: '',
@@ -42762,7 +42843,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.companyName = response.data[0].name;
                 _this2.companyId = response.data[0].id;
             }).catch(function (error) {
-                _this2.errorHandeler(error);
+                console.log(error.message);
             });
         },
         createCompany: function createCompany() {
@@ -42834,20 +42915,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.companyAdded();
         },
         regexCheck: function regexCheck() {
-            // var arr = [this.product.name, this.product.description, this.product.material],
-            //     pattern = /^$|^(?!-)(?!.*--)[A-Za-z0-9\-\.\,\s]+$/;
-            // var newArr = arr.filter(function(val){
-            //     return pattern.test(val) === false;
-            // });
-            // if(newArr.length > 0){
-            //     this.regWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed. Current values rejected: "; 
-            //     for(var i = 0; i < newArr.length; i++){
-            //         this.regWarning += "'"+newArr[i]+"'    ";
-            //     }
-            //     throw new Error("Unapproved characters rejected by the client.");
-            // } else {
-            //     this.regWarning = '';
-            // }
+            var arr = [this.company.invoice_con, this.company.shipper_con, this.company.router_con, this.company.po_con],
+                pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/i;
+            var newArr = arr.filter(function (val) {
+                return pattern.test(val) === false;
+            });
+            if (newArr.length > 0) {
+                this.regWarning = "Unapproved characters detected with the control numbers! List of approved characters: a-z, A-Z, 0-9, '()-/&*#\"' commas and periods. However, '--' is not allowed. Current values rejected: ";
+                for (var i = 0; i < newArr.length; i++) {
+                    this.regWarning += "'" + newArr[i] + "'    ";
+                }
+                throw new Error("Unapproved characters rejected by the client.");
+            } else {
+                this.regWarning = '';
+            }
         },
         errorHandeler: function errorHandeler(error) {
             if (error.response) {
@@ -42907,7 +42988,7 @@ if(false) {
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(85)(undefined);
+exports = module.exports = __webpack_require__(4)(undefined);
 // imports
 
 
@@ -43041,7 +43122,7 @@ if(false) {
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(85)(undefined);
+exports = module.exports = __webpack_require__(4)(undefined);
 // imports
 
 
@@ -43119,6 +43200,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h2', [_vm._v(_vm._s(_vm.companyName))])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-12 col-md-4"
   }, [_c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.edit),
+      expression: "!edit"
+    }],
     staticClass: "btn btn-primary margin-top-20",
     on: {
       "click": function($event) {
@@ -43186,7 +43273,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "address"
     }
-  }, [_vm._v("Address")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Address")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -43195,7 +43282,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
       "name": "address",
       "maxlength": "255"
     },
@@ -43218,7 +43304,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "desc"
     }
-  }, [_vm._v("Description")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Description")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -43227,7 +43313,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
       "name": "desc"
     },
     domProps: {
@@ -43279,33 +43364,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
-      "for": "fax"
+      "for": "email"
     }
-  }, [_vm._v("Fax")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Email")]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.company.fax),
-      expression: "company.fax"
+      value: (_vm.company.email),
+      expression: "company.email"
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
-      "name": "fax",
-      "maxlength": "25"
+      "type": "email",
+      "name": "email",
+      "maxlength": "50"
     },
     domProps: {
-      "value": (_vm.company.fax)
+      "value": (_vm.company.email)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.company.fax = $event.target.value
+        _vm.company.email = $event.target.value
       }
     }
-  }), _vm._v(" "), (_vm.company.fax.length == 25) ? _c('p', {
+  }), _vm._v(" "), (_vm.company.email.length == 50) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("25 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("50 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-sm-12 col-md-6"
@@ -45504,7 +45589,7 @@ if(false) {
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(85)(undefined);
+exports = module.exports = __webpack_require__(4)(undefined);
 // imports
 
 
@@ -48095,96 +48180,6 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
 
 /***/ })
 /******/ ]);

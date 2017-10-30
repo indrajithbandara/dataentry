@@ -47,7 +47,7 @@
         <hr>
         <!-- Add An Invoice Form -->
         <div v-show="!table">
-            <h2 class="text-center">Add Invoice</h2>
+            <h2 class="text-center">Invoice Details</h2>
             <form action="#" @submit.prevent="edit ? updateInvoice(invoice.id) : createInvoice()">
 
                 <div class="row">
@@ -81,10 +81,21 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="po_num">P.O #</label>
-                    <input v-model="invoice.po_num" type="text" name="po_num" class="form-control" required maxlength="30">
-                    <p class="alert alert-warning" v-if="invoice.po_num.length == 30">30 character limit reached!</p>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <label for="cust_rel">Customer Release #</label>
+                            <input v-model="invoice.cust_rel" type="text" name="cust_rel" class="form-control" required maxlength="50">
+                            <p class="alert alert-warning" v-if="invoice.cust_rel.length == 50">50 character limit reached!</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <label for="po_num">P.O #</label>
+                            <input v-model="invoice.po_num" type="text" name="po_num" class="form-control" required maxlength="30">
+                            <p class="alert alert-warning" v-if="invoice.po_num.length == 30">30 character limit reached!</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Add and Removing Line Item Buttons -->
@@ -382,9 +393,19 @@
 
                 <hr class="dashed">
 
-                <div class="form-group">
-                    <label for="ship_fee">Shipping Fee</label>
-                    <input v-model="invoice.ship_fee" number type="number" @keyup="setTotal()" name="ship_fee" min="0" step="0.01" class="form-control">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <label for="ship_fee">Shipping Fee</label>
+                            <input v-model="invoice.ship_fee" number type="number" @keyup="setTotal()" name="ship_fee" min="0" step="0.01" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <label for="misc_char">Misc. Charges</label>
+                            <input v-model="invoice.misc_char" number type="number" @keyup="setTotal()" name="misc_char" min="0" step="0.01" class="form-control">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="pull-right">
@@ -392,7 +413,55 @@
                 </div>
 
                 <div class="clearfix"></div>
-              
+
+                <!-- ============ Shipping Details Section ============== -->
+                <h2 class="text-center">Shipping Details</h2>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <label for="cartons">Cartons</label>
+                            <input v-model="invoice.cartons" type="text" name="cartons" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <label for="weight">Weight</label>
+                            <input v-model="invoice.weight" type="text" name="weight" class="form-control" maxlength="50">
+                            <p class="alert alert-warning" v-if="invoice.weight.length == 50">50 character limit reached!</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <label for="carrier">Carrier</label>
+                            <input v-model="invoice.carrier" type="text" name="carrier" class="form-control" maxlength="50">
+                            <p class="alert alert-warning" v-if="invoice.carrier.length == 50">50 character limit reached!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <label for="appv_num">Approval Number</label>
+                            <input v-model="invoice.appv_num" type="text" name="appv_num" class="form-control" maxlength="50">
+                            <p class="alert alert-warning" v-if="invoice.appv_num.length == 50">50 character limit reached!</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="form-group">
+                            <label for="supl_num">Supplier Number</label>
+                            <input v-model="invoice.supl_num" type="text" name="supl_num" class="form-control" maxlength="50">
+                            <p class="alert alert-warning" v-if="invoice.supl_num.length == 50">50 character limit reached!</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- TOGGLE BUTTON FOR TURNING ON AND OFF WITH THE COMPLETE, MAKE A COMPONENT -->
+
+
+
                 <div class="form-group">
                     <label for="memo">Memo</label>
                     <textarea v-model="invoice.memo" type="text" name="memo" class="form-control" rows="3" maxlength="255"></textarea>
@@ -506,6 +575,7 @@
                         disclaimer: '',
                         comments: '',
                     },
+                    cust_rel: '',
                     po_num: '',
                     line_items: [
                         { item: '', product: '', qty: 0, unit: 0, extended: 0 },
@@ -516,8 +586,15 @@
                         { item: '', product: '', qty: 0, unit: 0, extended: 0 },
                         { item: '', product: '', qty: 0, unit: 0, extended: 0 }
                     ],
+                    misc_char: 0,
                     ship_fee: 0,
                     total: 0,
+                    cartons: '',
+                    weight: '',
+                    complete: false,
+                    appv_num: '',
+                    supl_num: '',
+                    carrier: '',
                     memo: ''
                 },
                 /*
@@ -678,13 +755,14 @@
             /*
             *===== SETTER METHODS =====
             */
-            setTotal(){ // Adds up extended values and ship_fee value to be stored in the invoice total
+            setTotal(){ // Adds up extended values, misc_char and ship_fee values to be stored in the invoice total
                 var total = () => {
                     var t = 0;
                     for(var i = 0; i < 7; i++){
                         t += this.invoice.line_items[i].extended;
                     }
                     t += parseFloat(this.invoice.ship_fee);
+                    t += parseFloat(this.invoice.misc_char);
                     return t;
                 }
                 var totalToFloat = total();
@@ -810,10 +888,8 @@
             */
             resetValues(){ // After form is submitted, values are reset to either 0 or empty string
                 for(var key in this.invoice){
-                    if(key == 'inv_num' || key == 'ship_fee' || key == 'total'){
+                    if(key == 'inv_num' || key == 'ship_fee' || key == 'misc_char' || key == 'total'){
                         this.invoice[key] = 0;
-                    }else if(key == 'date' || key == 'po_num' || key == 'memo'){
-                        this.invoice[key] = '';
                     }else if(key == 'customer'){
                         for(var k in this.invoice.customer){
                             this.invoice.customer[k] = '';
@@ -822,6 +898,10 @@
                         for(var i = 0; i < 7; i++){
                             this.resetLineItem(i);
                         }  
+                    }else if(key == 'complete'){
+                        this.invoice[key] = false;
+                    }else {
+                        this.invoice[key] = '';
                     }
                 }
                 for(var i = 0; i < this.ln.length; i++){

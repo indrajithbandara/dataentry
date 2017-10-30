@@ -3,16 +3,18 @@
 @section('content')
 <div class="padding-50 font">
     <div>
-        <div class="float-left"><strong>K&amp;S Enterprises</strong></div>
+        <div class="float-left"><strong>{{ $invoice[15] }}</strong></div>
         <div class="float-right"><strong>Invoice #  </strong><span>{{ $invoice[1] }}</span></div>
         <div class="clear-fix"></div>
     </div>
 
     <div>
         <div class="float-left">
-            <span>10515 Rancho Road</span><br>
-            <span>Adelanto, CA 92301 USA</span><br>
-            <span>(760) 246-4010 FAX (760) 246-4017</span><br>
+            @for($i = 0; $i < count($invoice[16]); $i++)
+                <span>{{ $invoice[16][$i] }}</span><br>
+            @endfor
+            <span>Ph: {{ $invoice[17] }}</span><br>
+            <span>Em: {{ $invoice[18] }}</span><br>
         </div>
         <div class="clear-fix"></div>
     </div>
@@ -137,7 +139,7 @@
     <div class="space"></div>
 
     <div class="float-left sm-text">
-        <span>KS-D-95 Revision B 2/23/11</span>
+        <span>{{ $invoice[20] }}</span>
     </div>
     <div class="clear-fix"></div>
 

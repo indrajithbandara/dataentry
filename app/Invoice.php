@@ -7,14 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     protected $fillable = [
-        'inv_num', // int(11)
-        'date', // date
-        'customer', // varchar(500)
-        'po_num', // varchar(30)
-        'line_items', // varchar(255)
-        'ship_fee', // deciaml(7,2)
-        'total', // decimal(7,2)
-        'memo' // varchar(255)
+        'inv_num',
+        'date',
+        'customer',
+        'cust_rel',
+        'po_num',
+        'line_items',
+        'misc_char',
+        'ship_fee',
+        'total',
+        'cartons',
+        'weight',
+        'complete',
+        'appv_num',
+        'supl_num',
+        'carrier',
+        'memo'
     ];
     protected $casts = [
         'customer' => 'object',

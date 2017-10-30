@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
+use App\Company;
 use Illuminate\Http\Request;
 use Vsmoraes\Pdf\Pdf;
 
@@ -25,6 +26,8 @@ class PDFController extends Controller
     {
         // Get Invoice Data by id
         $invoice = Invoice::find($id);
+        // Get Company Data
+        $company = Company::find(1);
         /*
         * The data coming from the invoice's tables needs some processing in order for it to be more accessable on the
         * pdf templates. Though php computation is possible on blade templates, this method functions to take the logic
@@ -73,13 +76,23 @@ class PDFController extends Controller
             }
         }
         /*
-        * lastly, a 'sub total' value is needed for the invoice information. The total property includes the shipping already.
+        * A 'sub total' value is needed for the invoice information. The total property includes the shipping already.
         * This math is handled on the frontend of the invoice section. Here, we create a new array value to passed on to the pdf
         * template. 
         */
         $sub_total = floatval($invoice['original']['total']) - floatval($invoice['original']['ship_fee']);
         array_push($newInvoice, $sub_total);
-
+        /*
+        * lastly, we need to add the company information to place onto the pdf document. 
+        */
+        foreach($company['original'] as $key => $value){
+            if($key === 'address'){
+                $addArr = explode('#', $value);
+                array_push($newInvoice, $addArr);
+            }else{
+                array_push($newInvoice, $value);
+            }
+        }   
         /*
         * Finally, the view and the newInvoice data is stored in a variable to be passed to the PDF objects instance for pdf
         * generation. 
@@ -101,6 +114,8 @@ class PDFController extends Controller
     {
         // Get Invoice Data by id
         $invoice = Invoice::find($id);
+        // Get Company Data
+        $company = Company::find(1);
         /*
         * The data coming from the invoice's tables needs some processing in order for it to be more accessable on the
         * pdf templates. Though php computation is possible on blade templates, this method functions to take the logic
@@ -145,6 +160,17 @@ class PDFController extends Controller
                 array_push($newInvoice, $newDate);
             // All other values need no further processing, they are pushed to the 'newInvoice' array.
             } else {
+                array_push($newInvoice, $value);
+            }
+        }
+        /*
+        * lastly, we need to add the company information to place onto the pdf document. 
+        */
+        foreach($company['original'] as $key => $value){
+            if($key === 'address'){
+                $addArr = explode('#', $value);
+                array_push($newInvoice, $addArr);
+            }else{
                 array_push($newInvoice, $value);
             }
         }

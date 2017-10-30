@@ -18,7 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->string('name', 50);
             $table->string('address', 255);
             $table->string('phone', 25);
-            $table->string('fax', 25)->nullable();
+            $table->string('email', 50);
             $table->text('desc')->nullable();
             $table->string('invoice_con', 50)->nullable();
             $table->string('shipper_con', 50)->nullable();

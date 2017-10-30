@@ -10,7 +10,7 @@ class Company extends Model
         'name',
         'address',
         'phone',
-        'fax',
+        'email',
         'desc',
         'invoice_con',
         'shipper_con',

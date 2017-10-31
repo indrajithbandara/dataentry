@@ -83,10 +83,24 @@
 
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
-                        <textForm :dataModel="invoice.cust_rel" :inputName="'Customer Release #'" :forVal="'cust_rel'" :inputClass="'form-control'" :max="50" @setModel="invoice.cust_rel = $event" ></textForm>
+                        <textForm 
+                            :dataModel="invoice.cust_rel" 
+                            :inputName="'Customer Release #'" 
+                            :forVal="'cust_rel'" 
+                            :inputClass="'form-control'" 
+                            :max="50" 
+                            @setModel="invoice.cust_rel = $event" 
+                        ></textForm>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                        <textForm :dataModel="invoice.po_num" :inputName="'P.O #'" :forVal="'po_num'" :inputClass="'form-control'" :max="30" @setModel="invoice.po_num = $event" ></textForm>
+                        <textForm 
+                            :dataModel="invoice.po_num" 
+                            :inputName="'P.O #'" 
+                            :forVal="'po_num'" 
+                            :inputClass="'form-control'" 
+                            :max="30" 
+                            @setModel="invoice.po_num = $event" 
+                        ></textForm>
                     </div>
                 </div>
 
@@ -411,30 +425,71 @@
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <numberForm :dataModel="invoice.cartons" :inputName="'Cartons'" :forVal="'cartons'" :inputClass="'form-control'" :max="50" @setModel="invoice.cartons = $event"></numberForm>
+                        <numberForm 
+                            :dataModel="invoice.cartons" 
+                            :inputName="'Cartons'" 
+                            :forVal="'cartons'" 
+                            :inputClass="'form-control'" 
+                            :max="50" 
+                            @setModel="invoice.cartons = $event"
+                        ></numberForm>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <textForm :dataModel="invoice.weight" :inputName="'Weight'" :forVal="'weight'" :inputClass="'form-control'" :max="50" @setModel="invoice.weight = $event" ></textForm>
+                        <textForm 
+                            :dataModel="invoice.weight" 
+                            :inputName="'Weight'" 
+                            :forVal="'weight'" 
+                            :inputClass="'form-control'" 
+                            :max="50" 
+                            @setModel="invoice.weight = $event" 
+                        ></textForm>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4">
-                        <textForm :dataModel="invoice.carrier" :inputName="'Carrier'" :forVal="'carrier'" :inputClass="'form-control'" :max="50" @setModel="invoice.carrier = $event" ></textForm>
+                        <textForm 
+                            :dataModel="invoice.carrier" 
+                            :inputName="'Carrier'" 
+                            :forVal="'carrier'" 
+                            :inputClass="'form-control'" 
+                            :max="50" 
+                            @setModel="invoice.carrier = $event" 
+                        ></textForm>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6">
-                        <textForm :dataModel="invoice.appv_num" :inputName="'Approval Number'" :forVal="'appv_num'" :inputClass="'form-control'" :max="50" @setModel="invoice.appv_num = $event" ></textForm>
+                        <textForm 
+                            :dataModel="invoice.appv_num" 
+                            :inputName="'Approval Number'" 
+                            :forVal="'appv_num'" 
+                            :inputClass="'form-control'" 
+                            :max="50" 
+                            @setModel="invoice.appv_num = $event" 
+                        ></textForm>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6">
-                        <textForm :dataModel="invoice.supl_num" :inputName="'Supplier Number'" :forVal="'supl_num'" :inputClass="'form-control'" :max="50" @setModel="invoice.supl_num = $event" ></textForm>
+                        <textForm 
+                            :dataModel="invoice.supl_num" 
+                            :inputName="'Supplier Number'" 
+                            :forVal="'supl_num'" 
+                            :inputClass="'form-control'" 
+                            :max="50" 
+                            @setModel="invoice.supl_num = $event" 
+                        ></textForm>
                     </div>
                 </div>
 
-
                 <!-- TOGGLE BUTTON FOR TURNING ON AND OFF WITH THE COMPLETE, MAKE A COMPONENT -->
 
-
-                <textAreaForm :dataModel="invoice.memo" :inputName="'Memo'" :forVal="'memo'" :inputClass="'form-control'" :rows="3" :max="255" @setModel="invoice.memo = $event" ></textAreaForm>
+                <textAreaForm 
+                    :dataModel="invoice.memo" 
+                    :inputName="'Memo'" 
+                    :forVal="'memo'" 
+                    :inputClass="'form-control'" 
+                    :rows="3" 
+                    :max="255" 
+                    @setModel="invoice.memo = $event" 
+                ></textAreaForm>
 
                 <submitBtns :editMode="edit" :name="name='Invoice'"></submitBtns>
             </form>

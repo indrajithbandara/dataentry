@@ -52,7 +52,7 @@ class InvoicesController extends Controller
         $this->validate($request, [
             'inv_num' => 'required|numeric',
             'date' => 'required|date',
-            'customer' => 'required|array', // array of customer info
+            'customer' => 'required|array', // array of customer info3
             'cust_rel' => 'nullable|string|max:50',
             'po_num' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:30',
             'line_items' => 'required|array', // array of line items

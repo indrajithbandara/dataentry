@@ -3,18 +3,18 @@
 @section('content')
 <div class="padding-50 font">
     <div>
-        <div class="float-left"><strong>{{ $invoice[14] }}</strong></div>
+        <div class="float-left"><strong>{{ $invoice[17] }}</strong></div>
         <div class="float-right"><strong>Shipper #  </strong><span>{{ $invoice[1] }}</span></div>
         <div class="clear-fix"></div>
     </div>
 
     <div>
         <div class="float-left">
-            @for($i = 0; $i < count($invoice[15]); $i++)
-                <span>{{ $invoice[15][$i] }}</span><br>
+            @for($i = 0; $i < count($invoice[18]); $i++)
+                <span>{{ $invoice[18][$i] }}</span><br>
             @endfor
-            <span>Ph: {{ $invoice[16] }}</span><br>
-            <span>Em: {{ $invoice[17] }}</span><br>
+            <span>Ph: {{ $invoice[19] }}</span><br>
+            <span>Em: {{ $invoice[20] }}</span><br>
         </div>
         <div class="clear-fix"></div>
     </div>
@@ -50,21 +50,22 @@
             <div class="inline half-width sm-text"><span>Customer Order #</span></div>
             <div class="inline half-width md-text"><span>{{ $invoice[6] }}</span></div>
             <div></div>
-            <div class="inline half-width sm-text"><span>Approval No. #<span></div>
-            <div class="inline half-width md-text"><span>N/A<span></div>
+            <div class="inline half-width sm-text"><span>Order Complete<span></div>
+            @if($invoice[11] === 0)
+                <div class="inline half-width md-text"><span>No<span></div>
+            @elseif($invoice[11] === 1)
+                <div class="inline half-width md-text"><span>Yes<span></div>
+            @endif
         </div>
         <div class="light-border qtr-width padding-5 float-left set-height">
             <div class="inline half-width sm-text"><span>Ship Date</span></div>
             <div class="inline half-width md-text"><span>{{ $invoice[2] }}</span></div>
             <div></div>
             <div class="text-center full-width sm-text"><span>HSCID 3910.00.00/8803.30<span></div>
-            <div></div>
-            <div class="inline half-width sm-text"><span>Supplier No.</span></div>
-            <div class="inline half-width md-text"><span>N/A</span></div>
         </div>
         <div class="light-border qtr-width padding-5 float-left set-height">
             <div class="inline half-width sm-text">Carrier</div>
-            <div class="inline half-width md-text"><strong>UPS</strong></div>
+            <div class="inline half-width md-text"><strong>{{ $invoice[12] }}</strong></div>
         </div>
         <div class="clear-fix"></div>
     </div>
@@ -106,13 +107,6 @@
 
     <div class="space"></div>
 
-    <div class="full-width">
-        <div class="inline underline sm-text margin-none padding-25-sides"><span>Cartons:  </span><span>1</span></div>
-        <div class="inline underline sm-text margin-none padding-25-sides"><span>Total Weight:  </span><span>14#</span></div>
-        <div class="inline underline sm-text margin-none padding-25-sides"><span>Order Complete:  </span><span>Yes</span></div>
-        <div class="inline underline sm-text margin-none padding-25-sides"><span>Packed By:  </span><span>155</span></div>
-    </div>
-
     <div class="space"></div>
 
     <div class="text-center full-width sm-text padding-46-sides">
@@ -129,7 +123,7 @@
     <div class="space"></div>
 
     <div class="float-left sm-text">
-        <span>{{ $invoice[20] }}</span>
+        <span>{{ $invoice[23] }}</span>
     </div>
     <div class="clear-fix"></div>
 

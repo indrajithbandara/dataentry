@@ -415,7 +415,14 @@
                     @setModel="invoice.carrier = $event" 
                 ></textForm>
 
-                <!-- TOGGLE BUTTON FOR TURNING ON AND OFF WITH THE COMPLETE, MAKE A COMPONENT -->
+                <div class="form-group">
+                    <label>Order Complete</label>
+                    <select v-model="invoice.complete" class="form-control">
+                        <option>Choose An Option</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
 
                 <textAreaForm 
                     :dataModel="invoice.memo" 
@@ -535,7 +542,7 @@
                     misc_char: 0,
                     ship_fee: 0,
                     total: 0,
-                    complete: false,
+                    complete: 0,
                     carrier: '',
                     memo: ''
                 }

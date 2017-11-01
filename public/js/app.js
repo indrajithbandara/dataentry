@@ -47242,6 +47242,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -47333,7 +47340,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 misc_char: 0,
                 ship_fee: 0,
                 total: 0,
-                complete: false,
+                complete: 0,
                 carrier: '',
                 memo: ''
             }
@@ -49897,7 +49904,36 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.invoice.carrier = $event
       }
     }
-  }), _vm._v(" "), _c('textAreaForm', {
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Order Complete")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.invoice.complete),
+      expression: "invoice.complete"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.invoice.complete = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose An Option")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "1"
+    }
+  }, [_vm._v("Yes")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "0"
+    }
+  }, [_vm._v("No")])])]), _vm._v(" "), _c('textAreaForm', {
     attrs: {
       "dataModel": _vm.invoice.memo,
       "inputName": 'Memo',

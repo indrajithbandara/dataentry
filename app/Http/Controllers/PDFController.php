@@ -80,7 +80,7 @@ class PDFController extends Controller
         * This math is handled on the frontend of the invoice section. Here, we create a new array value to passed on to the pdf
         * template. 
         */
-        $sub_total = floatval($invoice['original']['total']) - floatval($invoice['original']['ship_fee']);
+        $sub_total = floatval($invoice['original']['total']) - ( floatval($invoice['original']['ship_fee'] + floatval($invoice['original']['misc_char']) ) );
         array_push($newInvoice, $sub_total);
         /*
         * lastly, we need to add the company information to place onto the pdf document. 

@@ -3,18 +3,18 @@
 @section('content')
 <div class="padding-50 font">
     <div>
-        <div class="float-left"><strong>{{ $invoice[15] }}</strong></div>
+        <div class="float-left"><strong>{{ $invoice[18] }}</strong></div>
         <div class="float-right"><strong>Invoice #  </strong><span>{{ $invoice[1] }}</span></div>
         <div class="clear-fix"></div>
     </div>
 
     <div>
         <div class="float-left">
-            @for($i = 0; $i < count($invoice[16]); $i++)
-                <span>{{ $invoice[16][$i] }}</span><br>
+            @for($i = 0; $i < count($invoice[19]); $i++)
+                <span>{{ $invoice[19][$i] }}</span><br>
             @endfor
-            <span>Ph: {{ $invoice[17] }}</span><br>
-            <span>Em: {{ $invoice[18] }}</span><br>
+            <span>Ph: {{ $invoice[20] }}</span><br>
+            <span>Em: {{ $invoice[21] }}</span><br>
         </div>
         <div class="clear-fix"></div>
     </div>
@@ -49,9 +49,6 @@
         <div class="light-border under-half padding-5 float-left set-height">
             <div class="inline half-width sm-text"><span>Customer Order #</span></div>
             <div class="inline half-width md-text"><span>{{ $invoice[6] }}</span></div>
-            <div></div>
-            <div class="inline half-width sm-text"><span>Customer Release #<span></div>
-            <div class="inline half-width md-text"><span>45<span></div>
         </div>
         <div class="light-border qtr-width padding-5 float-left set-height">
             <div class="inline half-width sm-text"><span>Ship Date</span></div>
@@ -61,7 +58,7 @@
         </div>
         <div class="light-border qtr-width padding-5 float-left set-height">
             <div class="inline half-width sm-text">Carrier</div>
-            <div class="inline half-width md-text"><strong>UPS</strong></div>
+            <div class="inline half-width md-text"><strong>{{ $invoice[12] }}</strong></div>
         </div>
         <div class="clear-fix"></div>
     </div>
@@ -106,7 +103,7 @@
                 <span>Sub Total</span>
             </div>
             <div class="inline small-width text-right">
-                <span>${{ $invoice[13] }}</span>
+                <span>${{ $invoice[16] }}</span>
             </div>
         </div>
         <div class="full-width margin-bottom-20">
@@ -114,7 +111,7 @@
                 <span>Shipping Charges</span>
             </div>
             <div class="inline small-width text-right">
-                <span>${{ $invoice[8] }}</span>
+                <span>${{ $invoice[9] }}</span>
             </div>
         </div>
         <div class="full-width margin-bottom-20">
@@ -122,7 +119,7 @@
                 <span>Misc. Charges</span>
             </div>
             <div class="inline small-width text-right">
-                <span>$0.00</span>
+                <span>${{ $invoice[8] }}</span>
             </div>
         </div>
         <div class="full-width">
@@ -130,7 +127,7 @@
                 <span>Invoice Total</span>
             </div>
             <div class="inline small-width text-right">
-                <span>${{ $invoice[9] }}</span>
+                <span>${{ $invoice[10] }}</span>
             </div>
         </div>
     </div>
@@ -139,7 +136,7 @@
     <div class="space"></div>
 
     <div class="float-left sm-text">
-        <span>{{ $invoice[20] }}</span>
+        <span>{{ $invoice[23] }}</span>
     </div>
     <div class="clear-fix"></div>
 

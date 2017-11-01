@@ -92,7 +92,6 @@
         data() {
             return {
                 edit: false,
-                list: [],
                 product: {
                     id: '',
                     name: '',
@@ -117,6 +116,9 @@
         computed: {
             user() {
                 return this.$store.getters.getUser;
+            },
+            list() {
+                return this.$store.getters.getProducts;
             }
         },
         methods: {
@@ -124,12 +126,7 @@
                 this.$store.dispatch('commitPermission');
             },
             getProducts(){
-                axios.get('api/products')
-                .then((response) => {
-                    this.list = response.data;
-                }).catch((error) => {
-                    this.errorHandeler(error);
-                });
+                this.$store.dispatch('commitProducts');
             },
             createProduct(){
                 this.noDuplicateNames();

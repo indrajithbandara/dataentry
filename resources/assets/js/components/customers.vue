@@ -160,7 +160,6 @@
             return {
                 edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
                 table: true, // If true, the customers table is showing. If false, the customers form is showing.
-                list: [], // Array for listting out the results of the ajax calls
                 customer: { // Customer model and it's values
                     name: '',
                     email: '',
@@ -195,6 +194,9 @@
         computed: {
             user() {
                 return this.$store.getters.getUser;
+            },
+            list() {
+                return this.$store.getters.getCustomers;
             }
         },
         methods: {
@@ -211,12 +213,7 @@
                 this.$store.dispatch('commitPermission');
             },
             getCustomers(){ // ajax call to get all the customers
-                axios.get('api/customers')
-                .then((response) => {
-                    this.list = response.data;
-                }).catch((error) => {
-                    console.log(error);
-                });
+                this.$store.dispatch('commitCustomers');
             },
             createCustomer(){ // post request to add a customer
                 this.valueCheck();

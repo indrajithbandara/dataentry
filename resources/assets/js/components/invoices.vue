@@ -10,7 +10,7 @@
         <!-- Start of Invoice Table -->
         <div v-show="table">
             <!-- Invoices Table -->
-            <div id="product-table" v-if="invoices_list.length > 0" class="table-responsive">
+            <div id="product-table" v-if="list.length > 0" class="table-responsive">
                 <table class="table table-condensed">
                     <thead>
                         <tr>
@@ -25,7 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="invoice in invoices_list">
+                        <tr v-for="invoice in list">
                             <td>{{ invoice.inv_num }}</td>
                             <td>{{ invoice.date }}</td>
                             <td>{{ invoice.customer.name }}</td>
@@ -72,7 +72,7 @@
                             <label>Customer</label>
                             <select v-model="invoice.customer.id" @blur="getOneCustomer(invoice.customer.id)" number class="form-control">
                                 <option>Choose An Item</option>
-                                <option v-for="customer in customers_list" >{{ customer.id }} - {{ customer.name }}</option>
+                                <option v-for="customer in customers" >{{ customer.id }} - {{ customer.name }}</option>
                             </select>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                                     <label>Product</label>
                                     <select v-model="invoice.line_items[0].product" class="form-control" required>
                                         <option>Choose An Item</option>
-                                        <option v-for="product in products_list">{{ product.name }}</option>
+                                        <option v-for="product in products">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -176,7 +176,7 @@
                                     <label>Product</label>
                                     <select v-model="invoice.line_items[1].product" class="form-control" required>
                                         <option>Choose An Item</option>
-                                        <option v-for="product in products_list">{{ product.name }}</option>
+                                        <option v-for="product in products">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@
                                     <label>Product</label>
                                     <select v-model="invoice.line_items[2].product" class="form-control" required>
                                         <option>Choose An Item</option>
-                                        <option v-for="product in products_list">{{ product.name }}</option>
+                                        <option v-for="product in products">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -254,7 +254,7 @@
                                     <label>Product</label>
                                     <select v-model="invoice.line_items[3].product" class="form-control" required>
                                         <option>Choose An Item</option>
-                                        <option v-for="product in products_list">{{ product.name }}</option>
+                                        <option v-for="product in products">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -293,7 +293,7 @@
                                     <label>Product</label>
                                     <select v-model="invoice.line_items[4].product" class="form-control" required>
                                         <option>Choose An Item</option>
-                                        <option v-for="product in products_list">{{ product.name }}</option>
+                                        <option v-for="product in products">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -332,7 +332,7 @@
                                     <label>Product</label>
                                     <select v-model="invoice.line_items[5].product" class="form-control" required>
                                         <option>Choose An Item</option>
-                                        <option v-for="product in products_list">{{ product.name }}</option>
+                                        <option v-for="product in products">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -371,7 +371,7 @@
                                     <label>Product</label>
                                     <select v-model="invoice.line_items[6].product" class="form-control" required>
                                         <option>Choose An Item</option>
-                                        <option v-for="product in products_list">{{ product.name }}</option>
+                                        <option v-for="product in products">{{ product.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -548,22 +548,6 @@
                 ln: [{line: true}, {line: false}, {line: false}, {line: false}, {line: false}, {line: false}, {line: false}], // array of 7 objects
                 btn: [{button: true}, {button: false}, {button: false}, {button: false}, {button: false}, {button: false}, {button: false}], // array of 7 objects
                 /*
-                * LISTS OF COLLECTIONS:
-                *
-                * These arrays are for looping over to show in tables or dropdown lists.
-                * 1.) invoices_list is an array of objects listing out on the invoices table
-                * Methods Involved: getInvoices()
-                *
-                * 2.) customers_list is an array of objects listing out the customer dropdown list as '{id} - {name}'
-                * Methods Involved: getCustomers()
-                *
-                * 3.) product_list is an array of objects listing out the product dropdown lists as '{name}'
-                * Methods Involved: getProducts()
-                */
-                invoices_list: [],
-                customers_list: [],
-                products_list: [],
-                /*
                 * THE INVOICE MODEL:
                 *
                 * The invoice model is an object conaining the following properties:
@@ -648,14 +632,12 @@
             numberForm: NumberForm
         },
         computed: {
-            user() {
-                return this.$store.getters.getUser;
-            }
+            user() { return this.$store.getters.getUser; },
+            products() { return this.$store.getters.getProducts; },
+            customers() { return this.$store.getters.getCustomers; },
+            list() { return this.$store.getters.getInvoices; }
         },
         methods: {
-            getUser() {
-                this.$store.dispatch('commitPermission');
-            },
             /*
             *===== COMPONENT METHODS =====
             */
@@ -729,42 +711,17 @@
             //         console.log(error);
             //     });
             // },
+            getUser() {
+                this.$store.dispatch('commitPermission');
+            },
             getCustomers(){ // ajax call to get available customers for the customers dropdown
-                axios.get('api/customers')
-                .then((response) => {
-                    this.customers_list = response.data;
-                }).catch((error) => {
-                    console.log(error);
-                });
+                this.$store.dispatch('commitCustomers');
             },
             getProducts(){ // ajax call to get available products for the products dropdowns
-                axios.get('api/products')
-                .then((response) => {
-                    this.products_list = response.data;
-                }).catch((error) => {
-                    console.log(error);
-                });
+                this.$store.dispatch('commitProducts');
             },
             getInvoices(){ // ajax call to get all the Inovices and parse nested json data
-                axios.get('api/invoices')
-                .then((response) => {
-                    var newData = () => {
-                        var data = response.data;
-                        for(var i = 0; i < data.length; i++){
-                            for(var key in data[i]){
-                                if(key === 'customer'){
-                                    data[i].customer = JSON.parse(data[i].customer);
-                                } else if (key === 'line_items') {
-                                    data[i].line_items = JSON.parse(data[i].line_items);
-                                }
-                            }
-                        }
-                        return data;
-                    }
-                    this.invoices_list = newData();
-                }).catch((error) => {
-                    console.log(error);
-                });
+                this.$store.dispatch('commitInvoices');
             },
             getOneCustomer(cust){ // get a customer snap shot to store with current invoice model
                 let id = parseInt(cust[0]);

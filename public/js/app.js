@@ -47242,70 +47242,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 // Imports
 
@@ -47392,17 +47328,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     disclaimer: '',
                     comments: ''
                 },
-                cust_rel: '',
                 po_num: '',
                 line_items: [{ item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }],
                 misc_char: 0,
                 ship_fee: 0,
                 total: 0,
-                cartons: '',
-                weight: '',
                 complete: false,
-                appv_num: '',
-                supl_num: '',
                 carrier: '',
                 memo: ''
             }
@@ -47526,15 +47457,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$store.dispatch('commitPermission');
         },
         getCustomers: function getCustomers() {
-            // ajax call to get available customers for the customers dropdown
             this.$store.dispatch('commitCustomers');
         },
         getProducts: function getProducts() {
-            // ajax call to get available products for the products dropdowns
             this.$store.dispatch('commitProducts');
         },
         getInvoices: function getInvoices() {
-            // ajax call to get all the Inovices and parse nested json data
             this.$store.dispatch('commitInvoices');
         },
         getOneCustomer: function getOneCustomer(cust) {
@@ -48621,26 +48549,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-xs-12 col-md-6"
   }, [_c('h4', {
     staticClass: "cust_top_margin"
-  }, [_c('strong', [_vm._v("Customer:")]), _vm._v(" " + _vm._s(_vm.invoice.customer.name))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-md-6"
-  }, [_c('textForm', {
-    attrs: {
-      "dataModel": _vm.invoice.cust_rel,
-      "inputName": 'Customer Release #',
-      "forVal": 'cust_rel',
-      "inputClass": 'form-control',
-      "max": 50
-    },
-    on: {
-      "setModel": function($event) {
-        _vm.invoice.cust_rel = $event
-      }
-    }
-  })], 1), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-md-6"
-  }, [_c('textForm', {
+  }, [_c('strong', [_vm._v("Customer:")]), _vm._v(" " + _vm._s(_vm.invoice.customer.name))])])]), _vm._v(" "), _c('textForm', {
     attrs: {
       "dataModel": _vm.invoice.po_num,
       "inputName": 'P.O #',
@@ -48653,7 +48562,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.invoice.po_num = $event
       }
     }
-  })], 1)]), _vm._v(" "), _c('button', {
+  }), _vm._v(" "), _c('button', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -49975,43 +49884,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "pull-right"
   }, [_c('h3', [_vm._v("Total: $" + _vm._s(_vm.invoice.total))])]), _vm._v(" "), _c('div', {
     staticClass: "clearfix"
-  }), _vm._v(" "), _c('h2', {
-    staticClass: "text-center"
-  }, [_vm._v("Shipping Details")]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-6 col-md-4"
-  }, [_c('numberForm', {
-    attrs: {
-      "dataModel": _vm.invoice.cartons,
-      "inputName": 'Cartons',
-      "forVal": 'cartons',
-      "inputClass": 'form-control',
-      "max": 50
-    },
-    on: {
-      "setModel": function($event) {
-        _vm.invoice.cartons = $event
-      }
-    }
-  })], 1), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-6 col-md-4"
-  }, [_c('textForm', {
-    attrs: {
-      "dataModel": _vm.invoice.weight,
-      "inputName": 'Weight',
-      "forVal": 'weight',
-      "inputClass": 'form-control',
-      "max": 50
-    },
-    on: {
-      "setModel": function($event) {
-        _vm.invoice.weight = $event
-      }
-    }
-  })], 1), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-6 col-md-4"
-  }, [_c('textForm', {
+  }), _vm._v(" "), _c('textForm', {
     attrs: {
       "dataModel": _vm.invoice.carrier,
       "inputName": 'Carrier',
@@ -50024,39 +49897,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.invoice.carrier = $event
       }
     }
-  })], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-6 col-md-6"
-  }, [_c('textForm', {
-    attrs: {
-      "dataModel": _vm.invoice.appv_num,
-      "inputName": 'Approval Number',
-      "forVal": 'appv_num',
-      "inputClass": 'form-control',
-      "max": 50
-    },
-    on: {
-      "setModel": function($event) {
-        _vm.invoice.appv_num = $event
-      }
-    }
-  })], 1), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-6 col-md-6"
-  }, [_c('textForm', {
-    attrs: {
-      "dataModel": _vm.invoice.supl_num,
-      "inputName": 'Supplier Number',
-      "forVal": 'supl_num',
-      "inputClass": 'form-control',
-      "max": 50
-    },
-    on: {
-      "setModel": function($event) {
-        _vm.invoice.supl_num = $event
-      }
-    }
-  })], 1)]), _vm._v(" "), _c('textAreaForm', {
+  }), _vm._v(" "), _c('textAreaForm', {
     attrs: {
       "dataModel": _vm.invoice.memo,
       "inputName": 'Memo',

@@ -10,17 +10,12 @@ class Invoice extends Model
         'inv_num',
         'date',
         'customer',
-        'cust_rel',
         'po_num',
         'line_items',
         'misc_char',
         'ship_fee',
         'total',
-        'cartons',
-        'weight',
         'complete',
-        'appv_num',
-        'supl_num',
         'carrier',
         'memo'
     ];

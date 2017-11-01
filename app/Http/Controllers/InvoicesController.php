@@ -53,17 +53,12 @@ class InvoicesController extends Controller
             'inv_num' => 'required|numeric',
             'date' => 'required|date',
             'customer' => 'required|array', // array of customer info3
-            'cust_rel' => 'nullable|string|max:50',
             'po_num' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:30',
             'line_items' => 'required|array', // array of line items
             'misc_char' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'ship_fee' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'total' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            'cartons' => 'nullable|numeric',
-            'weight' => 'nullable|string|max:50',
             'complete' => 'nullable|boolean',
-            'appv_num' => 'nullable|string|max:50',
-            'supl_num' => 'nullable|string|max:50',
             'carrier' => 'nullable|string|max:50',
             'memo' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255'
         ]);
@@ -73,17 +68,12 @@ class InvoicesController extends Controller
             'inv_num' => $request->input(['inv_num']),
             'date' => $request->input(['date']),
             'customer' => json_encode($request->input(['customer'])), // array of customer info
-            'cust_rel' => $request->input(['cust_rel']),
             'po_num' => $request->input(['po_num']),
             'line_items' => json_encode($request->input(['line_items'])), // arry of line items
             'misc_char' => $request->input(['misc_char']),
             'ship_fee' => $request->input(['ship_fee']),
             'total' => $request->input(['total']),
-            'cartons' => $request->input(['cartons']),
-            'weight' => $request->input(['weight']),
             'complete' => $request->input(['complete']),
-            'appv_num' => $request->input(['appv_num']),
-            'supl_num' => $request->input(['supl_num']),
             'carrier' => $request->input(['carrier']),
             'memo' => $request->input(['memo'])
         ]);
@@ -103,17 +93,12 @@ class InvoicesController extends Controller
             'inv_num' => 'required|numeric',
             'date' => 'required|date',
             'customer' => 'required|array', // array of customer info
-            'cust_rel' => 'nullable|string|max:50',
             'po_num' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:30',
             'line_items' => 'required|array', // array of line items
             'misc_char' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'ship_fee' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'total' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            'cartons' => 'nullable|numeric',
-            'weight' => 'nullable|string|max:50',
             'complete' => 'nullable|boolean',
-            'appv_num' => 'nullable|string|max:50',
-            'supl_num' => 'nullable|string|max:50',
             'carrier' => 'nullable|string|max:50',
             'memo' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255'
         ]);
@@ -123,17 +108,12 @@ class InvoicesController extends Controller
             'inv_num' => $request->input(['inv_num']),
             'date' => $request->input(['date']),
             'customer' => json_encode($request->input(['customer'])), // array of customer info
-            'cust_rel' => $request->input(['cust_rel']),
             'po_num' => $request->input(['po_num']),
             'line_items' => json_encode($request->input(['line_items'])), // arry of line items
             'misc_char' => $request->input(['misc_char']),
             'ship_fee' => $request->input(['ship_fee']),
             'total' => $request->input(['total']),
-            'cartons' => $request->input(['cartons']),
-            'weight' => $request->input(['weight']),
             'complete' => $request->input(['complete']),
-            'appv_num' => $request->input(['appv_num']),
-            'supl_num' => $request->input(['supl_num']),
             'carrier' => $request->input(['carrier']),
             'memo' => $request->input(['memo'])
         ]);

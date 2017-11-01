@@ -68,7 +68,6 @@
         data() {
             return {
                 edit: false,
-                list: [],
                 users: {
                     id: '',
                     name: '',
@@ -87,20 +86,14 @@
         computed: {
             user() {
                 return this.$store.getters.getUser;
+            },
+            list() {
+                return this.$store.getters.getUsers;
             }
         },
         methods: {
-            getUser(){
-                this.$store.dispatch('commitPermission');
-            },
-            getUsers(){
-                axios.get('api/users')
-                .then((response) => {
-                    this.list = response.data;
-                }).catch((error) => {
-                    console.log(error);
-                });
-            },
+            getUser(){ this.$store.dispatch('commitPermission'); },
+            getUsers(){ this.$store.dispatch('commitUsers'); },
             createUser(){
                 let self = this;
                 let params = Object.assign({}, self.users);

@@ -2,9 +2,10 @@ require('./../bootstrap');
 import Vue from 'vue';
 import Vuex from 'vuex';
 // Modules
-import customers from './modules/customers';
-import products from './modules/products';
 import invoices from './modules/invoices';
+import users from './modules/users';
+import products from './modules/products';
+import customers from './modules/customers';
 // Tasks
 import * as getters from './getters';
 import * as mutations from './mutations';
@@ -20,8 +21,9 @@ export const store = new Vuex.Store({
     mutations,
     actions,
     modules: {
-        customers,
+        invoices,
+        users,
         products,
-        invoices
+        customers
     }
 });

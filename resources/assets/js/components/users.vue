@@ -74,26 +74,24 @@
                     name: '',
                     email: '',
                     permission: ''
-                },
-                user: ''
+                }
             }
         },
         mounted() {
-            this.getUsers();
             this.getUser();
-            console.log(this.list);
+            this.getUsers();
         },
         components: {
             submitBtns: SubmitBtns
         },
+        computed: {
+            user() {
+                return this.$store.getters.getUser;
+            }
+        },
         methods: {
             getUser(){
-                axios.get('api/user')
-                .then((response) => {
-                    this.user = response.data.permission;
-                }).catch((error) => {
-                    console.log(error);
-                });
+                this.$store.dispatch('commitPermission');
             },
             getUsers(){
                 axios.get('api/users')

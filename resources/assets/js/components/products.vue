@@ -103,8 +103,7 @@
                 },
                 regWarning: '',
                 nameAlert: '',
-                errorMessage: '',
-                user: ''
+                errorMessage: ''
             }
         },
         mounted() {
@@ -115,14 +114,14 @@
             submitBtns: SubmitBtns,
             errorMessage: ErrorMessage
         },
+        computed: {
+            user() {
+                return this.$store.getters.getUser;
+            }
+        },
         methods: {
             getUser(){
-                axios.get('api/user')
-                .then((response) => {
-                    this.user = response.data.permission;
-                }).catch((error) => {
-                    throw new Error("Was not able to find user.");
-                });
+                this.$store.dispatch('commitPermission');
             },
             getProducts(){
                 axios.get('api/products')

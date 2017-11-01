@@ -180,20 +180,23 @@
                 regexShiptoWarning: '',
                 regexBilltoWarning: '',
                 regexDiscWarning: '',
-                regexComWarning: '',
-                // Property for know who the user is and knowing what to hide form other users. 
-                user: ''
+                regexComWarning: ''
             }
         },
         mounted() { 
             // when vue instance is mounted, get the customers and the authenticated user.
-            this.getCustomers();
             this.getUser();
+            this.getCustomers();
         },
         components: {
             viewAddBtns: ViewAddBtns,
             submitBtns: SubmitBtns
-        }, 
+        },
+        computed: {
+            user() {
+                return this.$store.getters.getUser;
+            }
+        },
         methods: {
             /*
             *===== COMPONENT METHODS =====
@@ -205,12 +208,7 @@
                 this.table = false;
             },
             getUser(){ // ajax call to get the authenticated user
-                axios.get('api/user')
-                .then((response) => {
-                    this.user = response.data.permission;
-                }).catch((error) => {
-                    console.log(error);
-                });
+                this.$store.dispatch('commitPermission');
             },
             getCustomers(){ // ajax call to get all the customers
                 axios.get('api/customers')

@@ -1,6 +1,7 @@
-
 require('./bootstrap');
 window.Vue = require('vue');
+
+import { store } from './store/store'
 
 // Parents Components
 Vue.component('dashboard', require('./components/dashboard.vue'));
@@ -16,17 +17,17 @@ Vue.component('invoices', require('./components/invoices.vue'));
 
 // Parent Vue Instances
 if (document.getElementById('dashboard-app')) {
-    const dashboardApp = new Vue({ el: '#dashboard-app' });
+    const dashboardApp = new Vue({ el: '#dashboard-app', store: store });
 } else if (document.getElementById('settings-app')) {
-    const settingsApp = new Vue({ el: '#settings-app' });
+    const settingsApp = new Vue({ el: '#settings-app', store: store });
 } else if (document.getElementById('users-app')) {
-    const usersApp = new Vue({ el: '#users-app' });
+    const usersApp = new Vue({ el: '#users-app', store: store });
 } else if (document.getElementById('customers-app')) {
-    const custApp = new Vue({ el: '#customers-app' });
+    const custApp = new Vue({ el: '#customers-app', store: store });
 } else if (document.getElementById('products-app')) {
-    const prodApp = new Vue({ el: '#products-app' });
+    const prodApp = new Vue({ el: '#products-app', store: store });
 } else if (document.getElementById('invoice-app')) {
-    const invApp = new Vue({ el: '#invoice-app' });
+    const invApp = new Vue({ el: '#invoice-app', store: store });
 }
 // else if (document.getElementById('purchaseorders-app')) {
 //     const purchApp = new Vue({ el: '#purchaseorders-app' });

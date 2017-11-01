@@ -623,14 +623,7 @@
                     supl_num: '',
                     carrier: '',
                     memo: ''
-                },
-                /*
-                *  THE CURRENT AUTHENTICATED USER:
-                *
-                * The 'user' propertie is to store the permission level (1-4) of the currently logged in user so that certain aspects of the invoice form
-                * can be either off limits or hidden from other users. This property is set in the getUser() method.
-                */
-                user: ''
+                }
             }
         },
         mounted() { 
@@ -654,7 +647,15 @@
             textAreaForm: TextAreaForm,
             numberForm: NumberForm
         },
+        computed: {
+            user() {
+                return this.$store.getters.getUser;
+            }
+        },
         methods: {
+            getUser() {
+                this.$store.dispatch('commitPermission');
+            },
             /*
             *===== COMPONENT METHODS =====
             */
@@ -720,14 +721,14 @@
             /*
             *===== GETTER METHODS =====
             */
-            getUser(){ // ajax call to get the authenticated users permission level
-                axios.get('api/user')
-                .then((response) => {
-                    this.user = response.data.permission;
-                }).catch((error) => {
-                    console.log(error);
-                });
-            },
+            // getUser(){
+            //     axios.get('api/user')
+            //     .then((response) => {
+            //         this.user = response.data.permission;
+            //     }).catch((error) => {
+            //         console.log(error);
+            //     });
+            // },
             getCustomers(){ // ajax call to get available customers for the customers dropdown
                 axios.get('api/customers')
                 .then((response) => {

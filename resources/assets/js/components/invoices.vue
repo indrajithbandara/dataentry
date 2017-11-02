@@ -54,14 +54,14 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="inv_num">Invoice #</label>
-                            <input v-model="invoice.inv_num" @blur="toInt()" number type="number" name="inv_num" class="form-control" required maxlength="11">
-                            <p class="alert alert-warning" v-if="invoice.inv_num.length == 11">11 character limit reached!</p>
+                            <input :value="invoiceObj.inv_num" @blur="updateInvNum" number type="number" name="inv_num" class="form-control" required maxlength="11">
+                            <p class="alert alert-warning" v-if="invoiceObj.inv_num.length == 11">11 character limit reached!</p>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <input v-model="invoice.date" type="date" name="date" class="form-control" required>
+                            <input :value="invoiceObj.date" @blur="updateDate" type="date" name="date" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -560,6 +560,7 @@
             this.getInvoices();
             this.getCustomers();
             this.getProducts();
+            console.log(this.invoiceObj);
         },
         components: {
             viewAddBtns: ViewAddBtns, 
@@ -573,9 +574,12 @@
             user() { return this.$store.getters.getUser; },
             products() { return this.$store.getters.getProducts; },
             customers() { return this.$store.getters.getCustomers; },
-            list() { return this.$store.getters.getInvoices; }
+            list() { return this.$store.getters.getInvoices; },
+            invoiceObj() { return this.$store.state.invoices.invoice; }
         },
         methods: {
+            updateInvNum (e) { this.$store.commit('updateInvNum', e.target.value); },
+            updateDate (e) { this.$store.commit('updateDate', e.target.value); },
             /*
             *===== COMPONENT METHODS =====
             */
@@ -722,12 +726,6 @@
                         }
                     }
                 }
-            },
-            /*
-            *===== CONVERSION METHODS =====
-            */
-            toInt(){ // converting the invoice number (starting as a string) to a number to be stored in the database.
-                this.invoice.inv_num = parseInt(this.invoice.inv_num);
             },
             /*
             *===== C.R.U.D METHODS =====

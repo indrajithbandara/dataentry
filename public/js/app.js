@@ -43329,7 +43329,31 @@ var index_esm = {
 
 "use strict";
 var state = {
-    invoices: []
+    invoices: [],
+    invoice: {
+        inv_num: 0,
+        date: '',
+        customer: {
+            id: '',
+            name: '',
+            shipto: '',
+            billto: '',
+            buyer: '',
+            email: '',
+            phone: '',
+            country: '',
+            disclaimer: '',
+            comments: ''
+        },
+        po_num: '',
+        line_items: [{ item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }],
+        misc_char: 0,
+        ship_fee: 0,
+        total: 0,
+        complete: 0,
+        carrier: '',
+        memo: ''
+    }
 };
 
 var getters = {
@@ -43341,6 +43365,13 @@ var getters = {
 var mutations = {
     setInvoices: function setInvoices(state, payload) {
         state.invoices = payload;
+    },
+    updateInvNum: function updateInvNum(state, payload) {
+        payload = parseInt(payload);
+        state.invoice.inv_num = payload;
+    },
+    updateDate: function updateDate(state, payload) {
+        state.invoice.date = payload;
     }
 };
 
@@ -47358,6 +47389,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getInvoices();
         this.getCustomers();
         this.getProducts();
+        console.log(this.invoiceObj);
     },
 
     components: {
@@ -47380,9 +47412,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         list: function list() {
             return this.$store.getters.getInvoices;
+        },
+        invoiceObj: function invoiceObj() {
+            return this.$store.state.invoices.invoice;
         }
     },
     methods: {
+        updateInvNum: function updateInvNum(e) {
+            this.$store.commit('updateInvNum', e.target.value);
+        },
+        updateDate: function updateDate(e) {
+            this.$store.commit('updateDate', e.target.value);
+        },
+
         /*
         *===== COMPONENT METHODS =====
         */
@@ -47549,14 +47591,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             }
-        },
-
-        /*
-        *===== CONVERSION METHODS =====
-        */
-        toInt: function toInt() {
-            // converting the invoice number (starting as a string) to a number to be stored in the database.
-            this.invoice.inv_num = parseInt(this.invoice.inv_num);
         },
 
         /*
@@ -48453,12 +48487,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": "inv_num"
     }
   }, [_vm._v("Invoice #")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.inv_num),
-      expression: "invoice.inv_num"
-    }],
     staticClass: "form-control",
     attrs: {
       "number": "",
@@ -48468,18 +48496,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "maxlength": "11"
     },
     domProps: {
-      "value": (_vm.invoice.inv_num)
+      "value": _vm.invoiceObj.inv_num
     },
     on: {
-      "blur": function($event) {
-        _vm.toInt()
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.inv_num = $event.target.value
-      }
+      "blur": _vm.updateInvNum
     }
-  }), _vm._v(" "), (_vm.invoice.inv_num.length == 11) ? _c('p', {
+  }), _vm._v(" "), (_vm.invoiceObj.inv_num.length == 11) ? _c('p', {
     staticClass: "alert alert-warning"
   }, [_vm._v("11 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-12 col-md-6"
@@ -48490,12 +48512,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": "date"
     }
   }, [_vm._v("Date")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.date),
-      expression: "invoice.date"
-    }],
     staticClass: "form-control",
     attrs: {
       "type": "date",
@@ -48503,13 +48519,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "required": ""
     },
     domProps: {
-      "value": (_vm.invoice.date)
+      "value": _vm.invoiceObj.date
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.date = $event.target.value
-      }
+      "blur": _vm.updateDate
     }
   })])])]), _vm._v(" "), _c('div', {
     staticClass: "row"

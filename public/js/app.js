@@ -47452,14 +47452,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         /*
         *===== GETTER METHODS =====
         */
-        // getUser(){
-        //     axios.get('api/user')
-        //     .then((response) => {
-        //         this.user = response.data.permission;
-        //     }).catch((error) => {
-        //         console.log(error);
-        //     });
-        // },
         getUser: function getUser() {
             this.$store.dispatch('commitPermission');
         },

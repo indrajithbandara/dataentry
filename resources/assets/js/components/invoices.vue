@@ -641,14 +641,6 @@
             /*
             *===== GETTER METHODS =====
             */
-            // getUser(){
-            //     axios.get('api/user')
-            //     .then((response) => {
-            //         this.user = response.data.permission;
-            //     }).catch((error) => {
-            //         console.log(error);
-            //     });
-            // },
             getUser() { this.$store.dispatch('commitPermission'); },
             getCustomers(){ this.$store.dispatch('commitCustomers'); },
             getProducts(){ this.$store.dispatch('commitProducts'); },

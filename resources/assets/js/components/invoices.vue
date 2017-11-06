@@ -112,20 +112,23 @@
                         <h4 class="text-center background padding radius">Line Item One</h4>
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="li_one">Line Item</label>
-                                    <input v-model="invoice.line_items[0].item" type="text" name="li_one" class="form-control" maxlength="15" required>
-                                    <p class="alert alert-warning" v-if="invoice.line_items[0].item.length == 15">15 character limit reached!</p>
-                                </div>
+                                <textFormLineItem
+                                    :dataModel="invoiceObj.line_items[0].item" 
+                                    :forVal="'li_one'"
+                                    :inputName="'Line Item'" 
+                                    :inputClass="'form-control'" 
+                                    :max="15" 
+                                    :item="0" 
+                                ></textFormLineItem>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label>Product</label>
-                                    <select v-model="invoice.line_items[0].product" class="form-control" required>
-                                        <option>Choose An Item</option>
-                                        <option v-for="product in products">{{ product.name }}</option>
-                                    </select>
-                                </div>
+                                <selectForm
+                                    :dataModel="invoiceObj.line_items[0].product"  
+                                    :inputName="'Product'" 
+                                    :inputClass="'form-control'" 
+                                    :list="products" 
+                                    :item="0"
+                                ></selectForm>
                             </div>
                         </div>
 
@@ -452,8 +455,11 @@
     import LnBtns from '../components/partials/ln-btns.vue';
     import SubmitBtns from '../components/partials/submit-btn.vue';
     import TextForm from '../components/partials/form-text.vue';
+    import TextFormLineItem from '../components/partials/form-text-li.vue';
     import TextAreaForm from '../components/partials/form-textarea.vue';
     import NumberForm from '../components/partials/form-number.vue';
+    import NumberFormLineItem from '../components/partials/form-number-li.vue';
+    import SelectForm from '../components/partials/form-select-li.vue';
     // Export
     export default {
         data() {
@@ -570,8 +576,11 @@
             lnBtns: LnBtns,
             submitBtns: SubmitBtns,
             textForm: TextForm,
+            textFormLineItem: TextFormLineItem,
             textAreaForm: TextAreaForm,
-            numberForm: NumberForm
+            numberForm: NumberForm,
+            numberFormLineItem: NumberFormLineItem,
+            selectForm: SelectForm
         },
         computed: {
             user() { return this.$store.getters.getUser; },

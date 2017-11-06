@@ -62,6 +62,13 @@ const mutations = {
     },
     updateComplete: (state, payload) => {
         state.invoice.complete = parseInt(payload);
+    },
+    // Line item Mutations
+    updateLineItem: (state, payload) => {
+        state.invoice.line_items[payload.item].item = payload.event;
+    },
+    updateProduct: (state, payload) => {
+        state.invoice.line_items[payload.item].product = payload.event;
     }
 };
 

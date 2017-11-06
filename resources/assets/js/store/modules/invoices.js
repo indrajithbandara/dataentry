@@ -69,6 +69,24 @@ const mutations = {
     },
     updateProduct: (state, payload) => {
         state.invoice.line_items[payload.item].product = payload.event;
+    },
+    updateQty: (state, payload) => {
+        state.invoice.line_items[payload.item].qty = payload.event;
+    },
+    updateUnit: (state, payload) => {
+        state.invoice.line_items[payload.item].unit = payload.event;
+    },
+    updateExtended: (state, payload) => {
+        state.invoice.line_items[payload.item].extended = payload.ext;
+    },
+    updateShipFee: (state, payload) => {
+        state.invoice.ship_fee = payload;  
+    },
+    updateMiscChar: (state, payload) => {
+        state.invoice.misc_char = payload;  
+    },
+    updateTotal: (state, payload) => {
+        state.invoice.total = payload;  
     }
 };
 
@@ -106,6 +124,39 @@ const actions = {
         }).catch((error) => {
             console.log(error.message);
         });
+    },
+    /*
+    payload = { event = keyup
+        item: Number,
+        event: input value,
+        set: Number: 0 = qty, 1 = unit
+    }
+    */
+    commitMath: ( { commit }, payload ) => {
+        console.log(payload);
+        if(payload.set === 0){
+            commit('updateQty', {item: payload.item, event: payload.event});
+            console.log("qty commited");
+        } else if(payload.set === 1){
+            commit('updateUnit', {item: payload.item, event: payload.event});
+            console.log("unit commited");
+        }
+            let extended = state.invoice.line_items[payload.item].qty * 
+                           state.invoice.line_items[payload.item].unit;
+            commit('updateExtended', {item: payload.item, ext: extended});
+    },
+    commitTotal: ({ commit }) => {
+        let total = () => {
+            let t = 0;
+            for(let i = 0; i < 7; i++){
+                t += state.invoice.line_items[i].extended;
+            }
+            t += parseFloat(state.invoice.ship_fee);
+            t += parseFloat(state.invoice.misc_char);
+            return t;
+        }
+        let totalToFloat = total();
+        commit('updateTotal', totalToFloat.toFixed(2));
     }
 }
 

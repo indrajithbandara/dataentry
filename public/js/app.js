@@ -11454,7 +11454,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(17);
-module.exports = __webpack_require__(97);
+module.exports = __webpack_require__(103);
 
 
 /***/ }),
@@ -43393,6 +43393,24 @@ var mutations = {
     },
     updateProduct: function updateProduct(state, payload) {
         state.invoice.line_items[payload.item].product = payload.event;
+    },
+    updateQty: function updateQty(state, payload) {
+        state.invoice.line_items[payload.item].qty = payload.event;
+    },
+    updateUnit: function updateUnit(state, payload) {
+        state.invoice.line_items[payload.item].unit = payload.event;
+    },
+    updateExtended: function updateExtended(state, payload) {
+        state.invoice.line_items[payload.item].extended = payload.ext;
+    },
+    updateShipFee: function updateShipFee(state, payload) {
+        state.invoice.ship_fee = payload;
+    },
+    updateMiscChar: function updateMiscChar(state, payload) {
+        state.invoice.misc_char = payload;
+    },
+    updateTotal: function updateTotal(state, payload) {
+        state.invoice.total = payload;
     }
 };
 
@@ -43433,6 +43451,42 @@ var actions = {
         }).catch(function (error) {
             console.log(error.message);
         });
+    },
+    /*
+    payload = { event = keyup
+        item: Number,
+        event: input value,
+        set: Number: 0 = qty, 1 = unit
+    }
+    */
+    commitMath: function commitMath(_ref3, payload) {
+        var commit = _ref3.commit;
+
+        console.log(payload);
+        if (payload.set === 0) {
+            commit('updateQty', { item: payload.item, event: payload.event });
+            console.log("qty commited");
+        } else if (payload.set === 1) {
+            commit('updateUnit', { item: payload.item, event: payload.event });
+            console.log("unit commited");
+        }
+        var extended = state.invoice.line_items[payload.item].qty * state.invoice.line_items[payload.item].unit;
+        commit('updateExtended', { item: payload.item, ext: extended });
+    },
+    commitTotal: function commitTotal(_ref4) {
+        var commit = _ref4.commit;
+
+        var total = function total() {
+            var t = 0;
+            for (var i = 0; i < 7; i++) {
+                t += state.invoice.line_items[i].extended;
+            }
+            t += parseFloat(state.invoice.ship_fee);
+            t += parseFloat(state.invoice.misc_char);
+            return t;
+        };
+        var totalToFloat = total();
+        commit('updateTotal', totalToFloat.toFixed(2));
     }
 };
 
@@ -46782,7 +46836,7 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(80),
   /* template */
-  __webpack_require__(96),
+  __webpack_require__(102),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -46867,16 +46921,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_partials_form_text_li_vue__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_partials_form_text_li_vue__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_partials_form_text_li_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_partials_form_text_li_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_partials_form_textarea_vue__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_partials_form_textarea_vue__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_partials_form_textarea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_partials_form_textarea_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_vue__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_vue__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_form_number_li_vue__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_form_number_li_vue__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_form_number_li_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_partials_form_number_li_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_partials_form_select_li_vue__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_partials_form_select_li_vue__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_partials_form_select_li_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_partials_form_select_li_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -48048,6 +48113,150 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-text-li.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] form-text-li.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7cbf2191", Component.options)
+  } else {
+    hotAPI.reload("data-v-7cbf2191", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        dataModel: String,
+        forVal: String,
+        inputName: String,
+        inputClass: String,
+        max: Number,
+        item: Number
+    },
+    methods: {
+        updateModel: function updateModel(e) {
+            this.$store.commit('updateLineItem', {
+                item: this.item,
+                event: e.target.value
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return (_vm.max) ? _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    class: _vm.inputClass,
+    attrs: {
+      "type": "text",
+      "name": _vm.forVal,
+      "maxlength": _vm.max,
+      "required": ""
+    },
+    domProps: {
+      "value": _vm.dataModel
+    },
+    on: {
+      "keyup": _vm.updateModel
+    }
+  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    class: _vm.inputClass,
+    attrs: {
+      "type": "text",
+      "name": _vm.forVal
+    },
+    domProps: {
+      "value": _vm.dataModel
+    },
+    on: {
+      "keyup": _vm.updateModel
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7cbf2191", module.exports)
+  }
+}
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(91),
+  /* template */
+  __webpack_require__(92),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
 Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-textarea.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] form-textarea.vue: functional components are not supported with templates, they should use render functions.")}
@@ -48072,7 +48281,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 88 */
+/* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48122,7 +48331,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 89 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -48178,15 +48387,15 @@ if (false) {
 }
 
 /***/ }),
-/* 90 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(91),
+  __webpack_require__(94),
   /* template */
-  __webpack_require__(92),
+  __webpack_require__(95),
   /* styles */
   null,
   /* scopeId */
@@ -48218,7 +48427,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 91 */
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48263,7 +48472,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 92 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -48329,10 +48538,286 @@ if (false) {
 }
 
 /***/ }),
-/* 93 */,
-/* 94 */,
-/* 95 */,
 /* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(97),
+  /* template */
+  __webpack_require__(98),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-number-li.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] form-number-li.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7bc64cf5", Component.options)
+  } else {
+    hotAPI.reload("data-v-7bc64cf5", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 97 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        dataModel: [Number, String],
+        forVal: String,
+        inputName: String,
+        inputClass: String,
+        max: Number,
+        item: Number, // array index for line item
+        set: Number // 0 or 1
+    },
+    methods: {
+        updateModel: function updateModel(e) {
+            this.$store.dispatch('commitMath', {
+                item: this.item,
+                set: this.set,
+                event: e.target.value
+            });
+        },
+        updateTotal: function updateTotal() {
+            this.$store.dispatch('commitTotal');
+        }
+    }
+});
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return (_vm.max) ? _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    class: _vm.inputClass,
+    attrs: {
+      "number": "",
+      "type": "number",
+      "name": _vm.forVal,
+      "min": "0",
+      "step": "1",
+      "maxlength": _vm.max,
+      "required": ""
+    },
+    domProps: {
+      "value": _vm.dataModel
+    },
+    on: {
+      "keyup": _vm.updateModel,
+      "blur": _vm.updateTotal
+    }
+  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.dataModel),
+      expression: "dataModel"
+    }],
+    class: _vm.inputClass,
+    attrs: {
+      "number": "",
+      "type": "number",
+      "name": _vm.forVal,
+      "min": "0",
+      "step": "1",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.dataModel)
+    },
+    on: {
+      "keyup": _vm.updateModel,
+      "blur": _vm.updateTotal,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.dataModel = $event.target.value
+      }
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7bc64cf5", module.exports)
+  }
+}
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(100),
+  /* template */
+  __webpack_require__(101),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-select-li.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] form-select-li.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-cf27983c", Component.options)
+  } else {
+    hotAPI.reload("data-v-cf27983c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        dataModel: String,
+        inputName: String,
+        inputClass: String,
+        list: Array,
+        item: Number
+    },
+    methods: {
+        updateModel: function updateModel(e) {
+            this.$store.commit('updateProduct', {
+                item: this.item,
+                event: e.target.value
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('select', {
+    class: _vm.inputClass,
+    attrs: {
+      "required": ""
+    },
+    domProps: {
+      "value": _vm.dataModel
+    },
+    on: {
+      "blur": _vm.updateModel
+    }
+  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.list), function(item) {
+    return _c('option', [_vm._v(_vm._s(item.name))])
+  })], 2)])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-cf27983c", module.exports)
+  }
+}
+
+/***/ }),
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -48580,91 +49065,35 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
+  }, [_c('numberFormLineItem', {
     attrs: {
-      "for": "qty_one"
+      "dataModel": _vm.invoiceObj.line_items[0].qty,
+      "forVal": 'qty_one',
+      "inputName": 'Qty',
+      "inputClass": 'form-control',
+      "max": 11,
+      "item": 0,
+      "set": 0
     }
-  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[0].qty),
-      expression: "invoice.line_items[0].qty"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "qty_one",
-      "min": "0",
-      "step": "1",
-      "maxlength": "11",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[0].qty)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(0)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[0].qty = $event.target.value
-      }
-    }
-  }), _vm._v(" "), (_vm.invoice.line_items[0].qty.length == 11) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("11 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
+  })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
+  }, [_c('numberFormLineItem', {
     attrs: {
-      "for": "unit_one"
+      "dataModel": _vm.invoiceObj.line_items[0].unit,
+      "forVal": 'unit_one',
+      "inputName": 'Unit Price',
+      "inputClass": 'form-control',
+      "max": 6,
+      "item": 0,
+      "set": 1
     }
-  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[0].unit),
-      expression: "invoice.line_items[0].unit"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "unit_one",
-      "min": "0",
-      "step": "0.01",
-      "maxlength": "6",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[0].unit)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(0)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[0].unit = $event.target.value
-      }
-    }
-  }), _vm._v(" "), (_vm.invoice.line_items[0].unit.length == 6) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("6 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
+  })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-4 col-md-4"
   }, [_c('label', {
     attrs: {
       "for": "extended_one"
     }
   }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[0].extended),
-      expression: "invoice.line_items[0].extended"
-    }],
     staticClass: "form-control",
     attrs: {
       "number": "",
@@ -48676,17 +49105,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "readonly": ""
     },
     domProps: {
-      "value": (_vm.invoice.line_items[0].extended)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[0].extended = $event.target.value
-      }
+      "value": _vm.invoiceObj.line_items[0].extended
     }
-  }), _vm._v(" "), (_vm.invoice.line_items[0].extended.length == 8) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("8 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('br')]), _vm._v(" "), (_vm.ln[1].line) ? _c('div', {
+  })])]), _vm._v(" "), _c('br')]), _vm._v(" "), (_vm.ln[1].line) ? _c('div', {
     attrs: {
       "id": "line_item_two"
     }
@@ -49819,417 +50240,10 @@ if (false) {
 }
 
 /***/ }),
-/* 97 */
+/* 103 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var Component = __webpack_require__(0)(
-  /* script */
-  __webpack_require__(107),
-  /* template */
-  __webpack_require__(108),
-  /* styles */
-  null,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-text-li.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] form-text-li.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7cbf2191", Component.options)
-  } else {
-    hotAPI.reload("data-v-7cbf2191", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 107 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        dataModel: String,
-        forVal: String,
-        inputName: String,
-        inputClass: String,
-        max: Number,
-        item: Number
-    },
-    methods: {
-        updateModel: function updateModel(e) {
-            this.$store.commit('updateLineItem', {
-                item: this.item,
-                event: e.target.value
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 108 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return (_vm.max) ? _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": _vm.forVal
-    }
-  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    class: _vm.inputClass,
-    attrs: {
-      "type": "text",
-      "name": _vm.forVal,
-      "maxlength": _vm.max,
-      "required": ""
-    },
-    domProps: {
-      "value": _vm.dataModel
-    },
-    on: {
-      "keyup": _vm.updateModel
-    }
-  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": _vm.forVal
-    }
-  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    class: _vm.inputClass,
-    attrs: {
-      "type": "text",
-      "name": _vm.forVal
-    },
-    domProps: {
-      "value": _vm.dataModel
-    },
-    on: {
-      "keyup": _vm.updateModel
-    }
-  })])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-7cbf2191", module.exports)
-  }
-}
-
-/***/ }),
-/* 109 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var Component = __webpack_require__(0)(
-  /* script */
-  __webpack_require__(110),
-  /* template */
-  __webpack_require__(111),
-  /* styles */
-  null,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-select-li.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] form-select-li.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-cf27983c", Component.options)
-  } else {
-    hotAPI.reload("data-v-cf27983c", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 110 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        dataModel: String,
-        inputName: String,
-        inputClass: String,
-        list: Array,
-        item: Number
-    },
-    methods: {
-        updateModel: function updateModel(e) {
-            this.$store.commit('updateProduct', {
-                item: this.item,
-                event: e.target.value
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 111 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('select', {
-    class: _vm.inputClass,
-    attrs: {
-      "required": ""
-    },
-    domProps: {
-      "value": _vm.dataModel
-    },
-    on: {
-      "blur": _vm.updateModel
-    }
-  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.list), function(item) {
-    return _c('option', [_vm._v(_vm._s(item.name))])
-  })], 2)])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-cf27983c", module.exports)
-  }
-}
-
-/***/ }),
-/* 112 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var Component = __webpack_require__(0)(
-  /* script */
-  __webpack_require__(113),
-  /* template */
-  __webpack_require__(114),
-  /* styles */
-  null,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-number-li.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] form-number-li.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7bc64cf5", Component.options)
-  } else {
-    hotAPI.reload("data-v-7bc64cf5", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 113 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        dataModel: [Number, String],
-        forVal: String,
-        inputName: String,
-        inputClass: String,
-        max: Number,
-        update: Function
-    },
-    methods: {
-        updateModel: function updateModel(e) {
-            this.update(e);
-        }
-    }
-});
-
-/***/ }),
-/* 114 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return (_vm.max) ? _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": _vm.forVal
-    }
-  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    class: _vm.inputClass,
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": _vm.forVal,
-      "maxlength": _vm.max
-    },
-    domProps: {
-      "value": _vm.dataModel
-    },
-    on: {
-      "keyup": _vm.updateModel
-    }
-  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": _vm.forVal
-    }
-  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.dataModel),
-      expression: "dataModel"
-    }],
-    class: _vm.inputClass,
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": _vm.forVal
-    },
-    domProps: {
-      "value": (_vm.dataModel)
-    },
-    on: {
-      "keyup": _vm.updateModel,
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.dataModel = $event.target.value
-      }
-    }
-  })])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-7bc64cf5", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

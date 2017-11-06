@@ -6,8 +6,12 @@
             number type="number" 
             :name="forVal" 
             @keyup="updateModel" 
+            @blur="updateTotal"
             :class="inputClass" 
-            :maxlength="max">
+            min="0" 
+            step="1" 
+            :maxlength="max"
+            required>
         <p class="alert alert-warning" v-if="dataModel.length == max">{{ max }} character limit reached!</p>
     </div>
     <div class="form-group" v-else>
@@ -17,7 +21,11 @@
             number type="number" 
             :name="forVal" 
             @keyup="updateModel" 
-            :class="inputClass">
+            @blur="updateTotal"
+            :class="inputClass" 
+            min="0" 
+            step="1" 
+            required>
     </div>
 </template>
 <script>
@@ -28,11 +36,22 @@
         inputName: String,
         inputClass: String,
         max: Number,
-        update: Function
+        item: Number, // array index for line item
+        set: Number // 0 or 1
         },
         methods: {
             updateModel(e) {
-                this.update(e);
+                this.$store.dispatch(
+                    'commitMath', 
+                    {
+                        item: this.item,
+                        set: this.set,
+                        event: e.target.value
+                    }
+                );
+            },
+            updateTotal() {
+                this.$store.dispatch('commitTotal');
             }
         }
     }

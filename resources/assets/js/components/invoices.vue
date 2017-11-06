@@ -134,19 +134,30 @@
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="qty_one">Qty</label>
-                                <input v-model="invoice.line_items[0].qty" number @keyup="setExtended(0)" type="number" name="qty_one" min="0" step="1" class="form-control" maxlength="11" required>
-                                <p class="alert alert-warning" v-if="invoice.line_items[0].qty.length == 11">11 character limit reached!</p>
+                                <numberFormLineItem
+                                :dataModel="invoiceObj.line_items[0].qty" 
+                                :forVal="'qty_one'" 
+                                :inputName="'Qty'" 
+                                :inputClass="'form-control'" 
+                                :max="11"
+                                :item="0"  
+                                :set="0" 
+                                ></numberFormLineItem>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="unit_one">Unit Price</label>
-                                <input v-model="invoice.line_items[0].unit" number @keyup="setExtended(0)" type="number" name="unit_one" min="0" step="0.01" class="form-control" maxlength="6" required>
-                                <p class="alert alert-warning" v-if="invoice.line_items[0].unit.length == 6">6 character limit reached!</p>
+                                <numberFormLineItem
+                                :dataModel="invoiceObj.line_items[0].unit" 
+                                :forVal="'unit_one'" 
+                                :inputName="'Unit Price'" 
+                                :inputClass="'form-control'" 
+                                :max="6"
+                                :item="0"  
+                                :set="1" 
+                                ></numberFormLineItem>
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-4">
                                 <label for="extended_one">Ext Price</label>
-                                <input v-model="invoice.line_items[0].extended" number type="number" name="extended_one" min="0" step="0.01" class="form-control"  maxlength="8" readonly>
-                                <p class="alert alert-warning" v-if="invoice.line_items[0].extended.length == 8">8 character limit reached!</p>
+                                <input :value="invoiceObj.line_items[0].extended" number type="number" name="extended_one" min="0" step="0.01" class="form-control"  maxlength="8" readonly>
                             </div>
                         </div>
                         <br />

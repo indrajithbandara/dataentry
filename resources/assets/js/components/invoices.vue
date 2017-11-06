@@ -52,11 +52,14 @@
 
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="inv_num">Invoice #</label>
-                            <input :value="invoiceObj.inv_num" @blur="updateInvNum" number type="number" name="inv_num" class="form-control" required maxlength="11">
-                            <p class="alert alert-warning" v-if="invoiceObj.inv_num.length == 11">11 character limit reached!</p>
-                        </div>
+                        <numberForm
+                            :dataModel="invoiceObj.inv_num" 
+                            :forVal="'inv_num'" 
+                            :inputName="'Invoice #'" 
+                            :inputClass="'form-control'" 
+                            :max="11" 
+                            :update="updateInvNum"
+                        ></numberForm>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">

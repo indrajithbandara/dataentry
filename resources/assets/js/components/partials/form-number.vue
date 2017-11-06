@@ -6,7 +6,6 @@
             number type="number" 
             :name="forVal" 
             @keyup="updateModel" 
-            :row="rows" 
             :class="inputClass" 
             :maxlength="max">
         <p class="alert alert-warning" v-if="dataModel.length == max">{{ max }} character limit reached!</p>
@@ -18,7 +17,6 @@
             number type="number" 
             :name="forVal" 
             @keyup="updateModel" 
-            :row="rows" 
             :class="inputClass">
     </div>
 </template>
@@ -30,7 +28,6 @@
         inputName: String,
         inputClass: String,
         max: Number,
-        rows: Number,
         update: Function
         },
         methods: {

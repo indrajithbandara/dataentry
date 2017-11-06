@@ -47309,6 +47309,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 // Imports
 
@@ -48220,8 +48223,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -48230,7 +48231,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         inputName: String,
         inputClass: String,
         max: Number,
-        rows: Number,
         update: Function
     },
     methods: {
@@ -48257,7 +48257,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "number": "",
       "type": "number",
       "name": _vm.forVal,
-      "row": _vm.rows,
       "maxlength": _vm.max
     },
     domProps: {
@@ -48285,8 +48284,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "number": "",
       "type": "number",
-      "name": _vm.forVal,
-      "row": _vm.rows
+      "name": _vm.forVal
     },
     domProps: {
       "value": (_vm.dataModel)
@@ -48385,30 +48383,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
+  }, [_c('numberForm', {
     attrs: {
-      "for": "inv_num"
+      "dataModel": _vm.invoiceObj.inv_num,
+      "forVal": 'inv_num',
+      "inputName": 'Invoice #',
+      "inputClass": 'form-control',
+      "max": 11,
+      "update": _vm.updateInvNum
     }
-  }, [_vm._v("Invoice #")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "inv_num",
-      "required": "",
-      "maxlength": "11"
-    },
-    domProps: {
-      "value": _vm.invoiceObj.inv_num
-    },
-    on: {
-      "blur": _vm.updateInvNum
-    }
-  }), _vm._v(" "), (_vm.invoiceObj.inv_num.length == 11) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v("11 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-sm-12 col-md-6"
   }, [_c('div', {
     staticClass: "form-group"

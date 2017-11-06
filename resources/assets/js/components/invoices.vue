@@ -70,14 +70,14 @@
                     <div class="col-xs-12 col-md-6">
                         <div class="form-group">
                             <label>Customer</label>
-                            <select v-model="invoice.customer.id" @blur="getOneCustomer(invoice.customer.id)" number class="form-control">
+                            <select v-model="cust_id" @blur="setCustomerInfo(cust_id)" number class="form-control">
                                 <option>Choose An Item</option>
                                 <option v-for="customer in customers" >{{ customer.id }} - {{ customer.name }}</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                        <h4 class="cust_top_margin"><strong>Customer:</strong> {{ invoice.customer.name }}</h4>
+                        <h4 class="cust_top_margin"><strong>Customer:</strong> {{ invoiceObj.customer.name }}</h4>
                     </div>
                 </div>
 
@@ -455,6 +455,7 @@
     export default {
         data() {
             return {
+                cust_id: '',
                 /*
                 * EDIT MODE:
                 * if edit = false, the invoice form is hidden and the invoice table is displayed.
@@ -583,6 +584,7 @@
             getInvoices(){ this.$store.dispatch('commitInvoices'); },
             updateInvNum(e) { this.$store.commit('updateInvNum', e.target.value); },
             updateDate(e) { this.$store.commit('updateDate', e.target.value); },
+            setCustomerInfo(id) { this.$store.dispatch('commitOneCustomer', id); },
             updatePo(e) { this.$store.commit('updatePo', e.target.value); },
             updateCarrier(e) { this.$store.commit('updateCarrier', e.target.value); },
             updateComplete(e) { this.$store.commit('updateComplete', e.target.value); },
@@ -645,23 +647,6 @@
                     this.resetLineItem(num);
                     this.setTotal();
                 }
-            },
-            getOneCustomer(cust){ // get a customer snap shot to store with current invoice model
-                let id = parseInt(cust[0]);
-                let self = this;
-                axios({
-                    method: 'get',
-                    url: 'api/customers/' + id,
-                    validateStatus(status) {
-                        return status >= 200 && status < 300;
-                    }
-                }).then((response) => {
-                    for(var key in response.data){
-                        self.invoice.customer[key] = response.data[key];
-                    }
-                }).catch((error) => {
-                    console.log(error.message);
-                });
             },
             setTotal(){ // Adds up extended values, misc_char and ship_fee values to be stored in the invoice total
                 var total = () => {

@@ -43366,6 +43366,9 @@ var mutations = {
     setInvoices: function setInvoices(state, payload) {
         state.invoices = payload;
     },
+    setCustomer: function setCustomer(state, payload) {
+        state.invoice.customer = payload;
+    },
     updateInvNum: function updateInvNum(state, payload) {
         state.invoice.inv_num = parseInt(payload);
     },
@@ -43407,6 +43410,21 @@ var actions = {
             commit('setInvoices', newData());
         }).catch(function (error) {
             console.log(error);
+        });
+    },
+    commitOneCustomer: function commitOneCustomer(_ref2, payload) {
+        var commit = _ref2.commit;
+
+        axios({
+            method: 'get',
+            url: 'api/customers/' + parseInt(payload[0]),
+            validateStatus: function validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then(function (response) {
+            commit('setCustomer', response.data);
+        }).catch(function (error) {
+            console.log(error.message);
         });
     }
 };
@@ -47303,6 +47321,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            cust_id: '',
             /*
             * EDIT MODE:
             * if edit = false, the invoice form is hidden and the invoice table is displayed.
@@ -47446,6 +47465,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateDate: function updateDate(e) {
             this.$store.commit('updateDate', e.target.value);
         },
+        setCustomerInfo: function setCustomerInfo(id) {
+            this.$store.dispatch('commitOneCustomer', id);
+        },
         updatePo: function updatePo(e) {
             this.$store.commit('updatePo', e.target.value);
         },
@@ -47519,24 +47541,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.resetLineItem(num);
                 this.setTotal();
             }
-        },
-        getOneCustomer: function getOneCustomer(cust) {
-            // get a customer snap shot to store with current invoice model
-            var id = parseInt(cust[0]);
-            var self = this;
-            axios({
-                method: 'get',
-                url: 'api/customers/' + id,
-                validateStatus: function validateStatus(status) {
-                    return status >= 200 && status < 300;
-                }
-            }).then(function (response) {
-                for (var key in response.data) {
-                    self.invoice.customer[key] = response.data[key];
-                }
-            }).catch(function (error) {
-                console.log(error.message);
-            });
         },
         setTotal: function setTotal() {
             var _this = this;
@@ -48435,8 +48439,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.invoice.customer.id),
-      expression: "invoice.customer.id"
+      value: (_vm.cust_id),
+      expression: "cust_id"
     }],
     staticClass: "form-control",
     attrs: {
@@ -48444,7 +48448,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "blur": function($event) {
-        _vm.getOneCustomer(_vm.invoice.customer.id)
+        _vm.setCustomerInfo(_vm.cust_id)
       },
       "change": function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
@@ -48453,7 +48457,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.invoice.customer.id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.cust_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.customers), function(customer) {
@@ -48462,7 +48466,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-xs-12 col-md-6"
   }, [_c('h4', {
     staticClass: "cust_top_margin"
-  }, [_c('strong', [_vm._v("Customer:")]), _vm._v(" " + _vm._s(_vm.invoice.customer.name))])])]), _vm._v(" "), _c('textForm', {
+  }, [_c('strong', [_vm._v("Customer:")]), _vm._v(" " + _vm._s(_vm.invoiceObj.customer.name))])])]), _vm._v(" "), _c('textForm', {
     attrs: {
       "dataModel": _vm.invoiceObj.po_num,
       "inputName": 'P.O #',

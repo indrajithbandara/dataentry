@@ -42,6 +42,9 @@ const mutations = {
     setInvoices: (state, payload) => {
         state.invoices = payload;
     },
+    setCustomer: (state, payload) => {
+        state.invoice.customer = payload;
+    },
     updateInvNum: (state, payload) => {
         state.invoice.inv_num = parseInt(payload);
     },
@@ -82,6 +85,19 @@ const actions = {
             commit('setInvoices', newData());
         }).catch((error) => {
             console.log(error);
+        });
+    },
+    commitOneCustomer: ( { commit }, payload ) => {
+        axios({
+            method: 'get',
+            url: 'api/customers/' + parseInt(payload[0]),
+            validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then((response) => {
+            commit('setCustomer', response.data);
+        }).catch((error) => {
+            console.log(error.message);
         });
     }
 }

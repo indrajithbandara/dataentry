@@ -11454,7 +11454,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(17);
-module.exports = __webpack_require__(103);
+module.exports = __webpack_require__(97);
 
 
 /***/ }),
@@ -43330,6 +43330,30 @@ var index_esm = {
 "use strict";
 var state = {
     invoices: [],
+    /*
+    * THE INVOICE MODEL:
+    *
+    * The invoice model is an object conaining the following properties:
+    * 1.) inv_num - Invoice Number | Type: Number
+    * 2.) data - Shipping Date | Type: Date
+    * 3.) customer - Customer Snap Shot | Type: Object | Description: Meant for saving a snap shot of the customer this invoice is 
+    *                made for as json. This is so because the invoice model has no relationship with the customer model. The reason for this
+    *                is so that the customer data per invoice is preserved which allows the user to change customer information with
+    *                out corrupting the information that was truthy at the time of the making of an invoice. This method was prefered 
+    *                over saving multiple versions of a customer model and then setting them to a value like 'edited' which makes for
+    *                more requests being sent to the server for version checking. Even though this method takes up more storage over the
+    *                long run, it allows the app to run more efficiently when internet connections are slow. This object goes thorugh parsing
+    *                in the getInvoices() method.
+    * 4.) po_num - Purchase Order Number | Type: String
+    * 5.) line_items - List of line items | Type: Array of Objects | Description: The list of line items is an array of seven objects stored as 
+    *                as json in one column. This array goes through parsing in the getInvoices() method. Each obeject has three numeric properties
+    *                that get passed through the setExtended() method which is triggered on every keyup event on the 'Qty' and 'Unit Price' inputs. 
+    *                This method sets the value of each 'extended' price property in order to be passed through the setTotal() method which sets 
+    *                the value of the 'invoice.total' property.
+    * 6.) ship_fee - Shipping Fees | Type: Number
+    * 7.) total - Total Price of all Line Items Extended Prices | Type: Number
+    * 8.) memo - Alternate information for the invoice | Type: String
+    */
     invoice: {
         inv_num: 0,
         date: '',
@@ -43462,13 +43486,10 @@ var actions = {
     commitMath: function commitMath(_ref3, payload) {
         var commit = _ref3.commit;
 
-        console.log(payload);
         if (payload.set === 0) {
             commit('updateQty', { item: payload.item, event: payload.event });
-            console.log("qty commited");
         } else if (payload.set === 1) {
             commit('updateUnit', { item: payload.item, event: payload.event });
-            console.log("unit commited");
         }
         var extended = state.invoice.line_items[payload.item].qty * state.invoice.line_items[payload.item].unit;
         commit('updateExtended', { item: payload.item, ext: extended });
@@ -46836,7 +46857,7 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(80),
   /* template */
-  __webpack_require__(102),
+  __webpack_require__(96),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -46921,232 +46942,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_partials_form_text_li_vue__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_partials_form_text_li_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_partials_form_text_li_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_partials_form_textarea_vue__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_partials_form_textarea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_partials_form_textarea_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_vue__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_form_number_li_vue__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_form_number_li_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_partials_form_number_li_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_partials_form_select_li_vue__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_partials_form_select_li_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_partials_form_select_li_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_partials_form_textarea_vue__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_partials_form_textarea_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_partials_form_textarea_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_partials_form_number_vue__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_partials_form_number_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_partials_form_number_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_fee_vue__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_fee_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_fee_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue__);
 //
 //
 //
@@ -47403,7 +47206,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
 // Export
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47443,55 +47245,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             * Methods Involved: li_btn_show_hide() | setLineItems()
             */
             ln: [{ line: true }, { line: false }, { line: false }, { line: false }, { line: false }, { line: false }, { line: false }], // array of 7 objects
-            btn: [{ button: true }, { button: false }, { button: false }, { button: false }, { button: false }, { button: false }, { button: false }], // array of 7 objects
-            /*
-            * THE INVOICE MODEL:
-            *
-            * The invoice model is an object conaining the following properties:
-            * 1.) inv_num - Invoice Number | Type: Number
-            * 2.) data - Shipping Date | Type: Date
-            * 3.) customer - Customer Snap Shot | Type: Object | Description: Meant for saving a snap shot of the customer this invoice is 
-            *                made for as json. This is so because the invoice model has no relationship with the customer model. The reason for this
-            *                is so that the customer data per invoice is preserved which allows the user to change customer information with
-            *                out corrupting the information that was truthy at the time of the making of an invoice. This method was prefered 
-            *                over saving multiple versions of a customer model and then setting them to a value like 'edited' which makes for
-            *                more requests being sent to the server for version checking. Even though this method takes up more storage over the
-            *                long run, it allows the app to run more efficiently when internet connections are slow. This object goes thorugh parsing
-            *                in the getInvoices() method.
-            * 4.) po_num - Purchase Order Number | Type: String
-            * 5.) line_items - List of line items | Type: Array of Objects | Description: The list of line items is an array of seven objects stored as 
-            *                as json in one column. This array goes through parsing in the getInvoices() method. Each obeject has three numeric properties
-            *                that get passed through the setExtended() method which is triggered on every keyup event on the 'Qty' and 'Unit Price' inputs. 
-            *                This method sets the value of each 'extended' price property in order to be passed through the setTotal() method which sets 
-            *                the value of the 'invoice.total' property.
-            * 6.) ship_fee - Shipping Fees | Type: Number
-            * 7.) total - Total Price of all Line Items Extended Prices | Type: Number
-            * 8.) memo - Alternate information for the invoice | Type: String
-            */
-            invoice: {
-                inv_num: 0,
-                date: '',
-                customer: {
-                    id: '',
-                    name: '',
-                    shipto: '',
-                    billto: '',
-                    buyer: '',
-                    email: '',
-                    phone: '',
-                    country: '',
-                    disclaimer: '',
-                    comments: ''
-                },
-                po_num: '',
-                line_items: [{ item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }],
-                misc_char: 0,
-                ship_fee: 0,
-                total: 0,
-                complete: 0,
-                carrier: '',
-                memo: ''
-            }
+            btn: [{ button: true }, { button: false }, { button: false }, { button: false }, { button: false }, { button: false }, { button: false }] // array of 7 objects
         };
     },
     mounted: function mounted() {
@@ -47509,15 +47263,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     components: {
-        viewAddBtns: __WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue___default.a,
-        lnBtns: __WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue___default.a,
-        submitBtns: __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default.a,
-        textForm: __WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue___default.a,
-        textFormLineItem: __WEBPACK_IMPORTED_MODULE_4__components_partials_form_text_li_vue___default.a,
-        textAreaForm: __WEBPACK_IMPORTED_MODULE_5__components_partials_form_textarea_vue___default.a,
-        numberForm: __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_vue___default.a,
-        numberFormLineItem: __WEBPACK_IMPORTED_MODULE_7__components_partials_form_number_li_vue___default.a,
-        selectForm: __WEBPACK_IMPORTED_MODULE_8__components_partials_form_select_li_vue___default.a
+        ViewAddBtns: __WEBPACK_IMPORTED_MODULE_0__components_partials_view_add_btns_vue___default.a,
+        LnBtns: __WEBPACK_IMPORTED_MODULE_1__components_partials_ln_btns_vue___default.a,
+        SubmitBtns: __WEBPACK_IMPORTED_MODULE_2__components_partials_submit_btn_vue___default.a,
+        TextForm: __WEBPACK_IMPORTED_MODULE_3__components_partials_form_text_vue___default.a,
+        TextAreaForm: __WEBPACK_IMPORTED_MODULE_4__components_partials_form_textarea_vue___default.a,
+        NumberForm: __WEBPACK_IMPORTED_MODULE_5__components_partials_form_number_vue___default.a,
+        NumberFormFee: __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_fee_vue___default.a,
+        LineItem: __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue___default.a
     },
     computed: {
         user: function user() {
@@ -47561,11 +47314,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updatePo: function updatePo(e) {
             this.$store.commit('updatePo', e.target.value);
         },
-        updateCarrier: function updateCarrier(e) {
-            this.$store.commit('updateCarrier', e.target.value);
+        updateShip: function updateShip(e) {
+            this.$store.commit('updateShipFee', e.target.value);
+        },
+        updateMisc: function updateMisc(e) {
+            this.$store.commit('updateMiscChar', e.target.value);
         },
         updateComplete: function updateComplete(e) {
             this.$store.commit('updateComplete', e.target.value);
+        },
+        updateCarrier: function updateCarrier(e) {
+            this.$store.commit('updateCarrier', e.target.value);
         },
         updateMemo: function updateMemo(e) {
             this.$store.commit('updateMemo', e.target.value);
@@ -47623,7 +47382,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     this.btn[num - 1].button = actOne;this.btn[num].button = actTwo;this.ln[num].line = actTwo;
                     break;
                 default:
-                    console.log("Sorry!! Something went wrong with this button!");
+                    throw new Error('Sorry, Something went wrong with the line item buttons.');
                     break;
             }
             this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
@@ -48113,150 +47872,6 @@ var Component = __webpack_require__(0)(
   /* moduleIdentifier (server only) */
   null
 )
-Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-text-li.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] form-text-li.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7cbf2191", Component.options)
-  } else {
-    hotAPI.reload("data-v-7cbf2191", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 88 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        dataModel: String,
-        forVal: String,
-        inputName: String,
-        inputClass: String,
-        max: Number,
-        item: Number
-    },
-    methods: {
-        updateModel: function updateModel(e) {
-            this.$store.commit('updateLineItem', {
-                item: this.item,
-                event: e.target.value
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return (_vm.max) ? _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": _vm.forVal
-    }
-  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    class: _vm.inputClass,
-    attrs: {
-      "type": "text",
-      "name": _vm.forVal,
-      "maxlength": _vm.max,
-      "required": ""
-    },
-    domProps: {
-      "value": _vm.dataModel
-    },
-    on: {
-      "keyup": _vm.updateModel
-    }
-  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": _vm.forVal
-    }
-  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    class: _vm.inputClass,
-    attrs: {
-      "type": "text",
-      "name": _vm.forVal
-    },
-    domProps: {
-      "value": _vm.dataModel
-    },
-    on: {
-      "keyup": _vm.updateModel
-    }
-  })])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-7cbf2191", module.exports)
-  }
-}
-
-/***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var Component = __webpack_require__(0)(
-  /* script */
-  __webpack_require__(91),
-  /* template */
-  __webpack_require__(92),
-  /* styles */
-  null,
-  /* scopeId */
-  null,
-  /* moduleIdentifier (server only) */
-  null
-)
 Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-textarea.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] form-textarea.vue: functional components are not supported with templates, they should use render functions.")}
@@ -48281,7 +47896,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 91 */
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48331,7 +47946,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 92 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -48387,15 +48002,15 @@ if (false) {
 }
 
 /***/ }),
-/* 93 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(94),
+  __webpack_require__(91),
   /* template */
-  __webpack_require__(95),
+  __webpack_require__(92),
   /* styles */
   null,
   /* scopeId */
@@ -48427,7 +48042,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 94 */
+/* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48472,7 +48087,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 95 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -48538,15 +48153,799 @@ if (false) {
 }
 
 /***/ }),
-/* 96 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(97),
+  __webpack_require__(94),
   /* template */
-  __webpack_require__(98),
+  __webpack_require__(95),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/line-item.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] line-item.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3ef405c2", Component.options)
+  } else {
+    hotAPI.reload("data-v-3ef405c2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 94 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_form_text_li_vue__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_form_text_li_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_form_text_li_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_form_number_li_vue__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_form_number_li_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__partials_form_number_li_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_form_select_li_vue__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__partials_form_select_li_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__partials_form_select_li_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// imports
+
+
+
+// export
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        textFormLineItem: __WEBPACK_IMPORTED_MODULE_0__partials_form_text_li_vue___default.a,
+        numberFormLineItem: __WEBPACK_IMPORTED_MODULE_1__partials_form_number_li_vue___default.a,
+        selectForm: __WEBPACK_IMPORTED_MODULE_2__partials_form_select_li_vue___default.a
+    },
+    props: {
+        model: Object,
+        products: Array,
+        header: String,
+        itemNum: Number,
+        forValLi: String,
+        forValQty: String,
+        forValUnit: String,
+        forValExt: String
+    }
+});
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('h4', {
+    staticClass: "text-center background padding radius"
+  }, [_vm._v(_vm._s(_vm.header))]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('textFormLineItem', {
+    attrs: {
+      "dataModel": _vm.model.line_items[_vm.itemNum].item,
+      "forVal": _vm.forValLi,
+      "inputName": 'Line Item',
+      "inputClass": 'form-control',
+      "max": 15,
+      "item": _vm.itemNum
+    }
+  })], 1), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-12 col-md-6"
+  }, [_c('selectForm', {
+    attrs: {
+      "dataModel": _vm.model.line_items[_vm.itemNum].product,
+      "inputName": 'Product',
+      "inputClass": 'form-control',
+      "list": _vm.products,
+      "item": _vm.itemNum
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('numberFormLineItem', {
+    attrs: {
+      "dataModel": _vm.model.line_items[_vm.itemNum].qty,
+      "forVal": _vm.forValQty,
+      "inputName": 'Qty',
+      "inputClass": 'form-control',
+      "max": 11,
+      "item": _vm.itemNum,
+      "set": 0
+    }
+  })], 1), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('numberFormLineItem', {
+    attrs: {
+      "dataModel": _vm.model.line_items[_vm.itemNum].unit,
+      "forVal": _vm.forValUnit,
+      "inputName": 'Unit Price',
+      "inputClass": 'form-control',
+      "max": 6,
+      "item": _vm.itemNum,
+      "set": 1
+    }
+  })], 1), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4 col-md-4"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forValExt
+    }
+  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "number": "",
+      "type": "number",
+      "name": _vm.forValExt,
+      "min": "0",
+      "step": "0.01",
+      "maxlength": "8",
+      "readonly": ""
+    },
+    domProps: {
+      "value": _vm.model.line_items[_vm.itemNum].extended
+    }
+  })])]), _vm._v(" "), _c('br')])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-3ef405c2", module.exports)
+  }
+}
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('ViewAddBtns', {
+    attrs: {
+      "textOne": 'View Invoices',
+      "textTwo": 'Add An Invoice',
+      "toTable": _vm.switchToTable,
+      "toForm": _vm.switchToForm
+    }
+  }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.table),
+      expression: "table"
+    }]
+  }, [(_vm.list.length > 0) ? _c('div', {
+    staticClass: "table-responsive",
+    attrs: {
+      "id": "product-table"
+    }
+  }, [_c('table', {
+    staticClass: "table table-condensed"
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Invoice #")]), _vm._v(" "), _c('th', [_vm._v("Ship Date")]), _vm._v(" "), _c('th', [_vm._v("Customer")]), _vm._v(" "), _c('th', [_vm._v("Extended Price")]), _vm._v(" "), _c('th', [_vm._v("Print Shipper")]), _vm._v(" "), _c('th', [_vm._v("Print Invoice")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(invoice) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(invoice.inv_num))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.date))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.customer.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.total))]), _vm._v(" "), _c('td', [_c('a', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "href": '/pdf/shipper/' + invoice.id
+      }
+    }, [_vm._v("Print Shipper")])]), _vm._v(" "), _c('td', [_c('a', {
+      staticClass: "btn btn-primary",
+      attrs: {
+        "href": '/pdf/invoice/' + invoice.id
+      }
+    }, [_vm._v("Print Invoice")])]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-warning",
+      on: {
+        "click": function($event) {
+          _vm.showInvoice(invoice.id)
+        }
+      }
+    }, [_vm._v("Edit")])]), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          _vm.deleteInvoice(invoice.id)
+        }
+      }
+    }, [_vm._v("Delete")])]) : _vm._e()])
+  }))])]) : _c('div', [_c('p', {
+    staticClass: "alert alert-info text-center"
+  }, [_vm._v("You currently have no invoices to show.")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.table),
+      expression: "!table"
+    }]
+  }, [_c('h2', {
+    staticClass: "text-center"
+  }, [_vm._v("Invoice Details")]), _vm._v(" "), _c('form', {
+    attrs: {
+      "action": "#"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.edit ? _vm.updateInvoice(_vm.invoice.id) : _vm.createInvoice()
+      }
+    }
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('NumberForm', {
+    attrs: {
+      "dataModel": _vm.invoiceObj.inv_num,
+      "forVal": 'inv_num',
+      "inputName": 'Invoice #',
+      "inputClass": 'form-control',
+      "max": 11,
+      "update": _vm.updateInvNum
+    }
+  })], 1), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "date"
+    }
+  }, [_vm._v("Date")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "type": "date",
+      "name": "date",
+      "required": ""
+    },
+    domProps: {
+      "value": _vm.invoiceObj.date
+    },
+    on: {
+      "blur": _vm.updateDate
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Customer")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.cust_id),
+      expression: "cust_id"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "number": ""
+    },
+    on: {
+      "blur": function($event) {
+        _vm.setCustomerInfo(_vm.cust_id)
+      },
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.cust_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.customers), function(customer) {
+    return _c('option', [_vm._v(_vm._s(customer.id) + " - " + _vm._s(customer.name))])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('h4', {
+    staticClass: "cust_top_margin"
+  }, [_c('strong', [_vm._v("Customer:")]), _vm._v(" " + _vm._s(_vm.invoiceObj.customer.name))])])]), _vm._v(" "), _c('TextForm', {
+    attrs: {
+      "dataModel": _vm.invoiceObj.po_num,
+      "inputName": 'P.O #',
+      "forVal": 'po_num',
+      "inputClass": 'form-control',
+      "max": 30,
+      "update": _vm.updatePo
+    }
+  }), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.btn[0].button),
+      expression: "btn[0].button"
+    }],
+    staticClass: "btn btn-success full-width",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.li_btn_show_hide(1, 'show')
+      }
+    }
+  }, [_vm._v("Add A Second Line Item")]), _vm._v(" "), _c('LnBtns', {
+    attrs: {
+      "numOne": 2,
+      "btnNum": _vm.btn[1].button,
+      "liShowHide": _vm.li_btn_show_hide,
+      "disabled": false
+    }
+  }), _vm._v(" "), _c('LnBtns', {
+    attrs: {
+      "numOne": 3,
+      "btnNum": _vm.btn[2].button,
+      "liShowHide": _vm.li_btn_show_hide,
+      "disabled": false
+    }
+  }), _vm._v(" "), _c('LnBtns', {
+    attrs: {
+      "numOne": 4,
+      "btnNum": _vm.btn[3].button,
+      "liShowHide": _vm.li_btn_show_hide,
+      "disabled": false
+    }
+  }), _vm._v(" "), _c('LnBtns', {
+    attrs: {
+      "numOne": 5,
+      "btnNum": _vm.btn[4].button,
+      "liShowHide": _vm.li_btn_show_hide,
+      "disabled": false
+    }
+  }), _vm._v(" "), _c('LnBtns', {
+    attrs: {
+      "numOne": 6,
+      "btnNum": _vm.btn[5].button,
+      "liShowHide": _vm.li_btn_show_hide,
+      "disabled": false
+    }
+  }), _vm._v(" "), _c('LnBtns', {
+    attrs: {
+      "numOne": 7,
+      "btnNum": _vm.btn[6].button,
+      "liShowHide": _vm.li_btn_show_hide,
+      "disabled": true
+    }
+  }), _vm._v(" "), _c('hr', {
+    staticClass: "dashed"
+  }), _vm._v(" "), _c('div', {
+    ref: "ln_container",
+    staticClass: "overflow-scroll padding radius"
+  }, [_c('div', {
+    attrs: {
+      "id": "line_item_one"
+    }
+  }, [_c('LineItem', {
+    attrs: {
+      "model": _vm.invoiceObj,
+      "products": _vm.products,
+      "itemNum": 0,
+      "header": 'Line Item One',
+      "forValLi": 'li_one',
+      "forValQty": 'qty_one',
+      "forValUnit": 'unit_one',
+      "forValExt": 'extended_one'
+    }
+  })], 1), _vm._v(" "), (_vm.ln[1].line) ? _c('div', {
+    attrs: {
+      "id": "line_item_two"
+    }
+  }, [_c('LineItem', {
+    attrs: {
+      "model": _vm.invoiceObj,
+      "products": _vm.products,
+      "itemNum": 1,
+      "header": 'Line Item Two',
+      "forValLi": 'li_two',
+      "forValQty": 'qty_two',
+      "forValUnit": 'unit_two',
+      "forValExt": 'extended_two'
+    }
+  })], 1) : _vm._e(), _vm._v(" "), (_vm.ln[2].line) ? _c('div', {
+    attrs: {
+      "id": "line_item_three"
+    }
+  }, [_c('LineItem', {
+    attrs: {
+      "model": _vm.invoiceObj,
+      "products": _vm.products,
+      "itemNum": 2,
+      "header": 'Line Item Three',
+      "forValLi": 'li_three',
+      "forValQty": 'qty_three',
+      "forValUnit": 'unit_three',
+      "forValExt": 'extended_three'
+    }
+  })], 1) : _vm._e(), _vm._v(" "), (_vm.ln[3].line) ? _c('div', {
+    attrs: {
+      "id": "line_item_four"
+    }
+  }, [_c('LineItem', {
+    attrs: {
+      "model": _vm.invoiceObj,
+      "products": _vm.products,
+      "itemNum": 3,
+      "header": 'Line Item Four',
+      "forValLi": 'li_four',
+      "forValQty": 'qty_four',
+      "forValUnit": 'unit_four',
+      "forValExt": 'extended_four'
+    }
+  })], 1) : _vm._e(), _vm._v(" "), (_vm.ln[4].line) ? _c('div', {
+    attrs: {
+      "id": "line_item_five"
+    }
+  }, [_c('LineItem', {
+    attrs: {
+      "model": _vm.invoiceObj,
+      "products": _vm.products,
+      "itemNum": 4,
+      "header": 'Line Item Five',
+      "forValLi": 'li_five',
+      "forValQty": 'qty_five',
+      "forValUnit": 'unit_five',
+      "forValExt": 'extended_five'
+    }
+  })], 1) : _vm._e(), _vm._v(" "), (_vm.ln[5].line) ? _c('div', {
+    attrs: {
+      "id": "line_item_six"
+    }
+  }, [_c('LineItem', {
+    attrs: {
+      "model": _vm.invoiceObj,
+      "products": _vm.products,
+      "itemNum": 5,
+      "header": 'Line Item Six',
+      "forValLi": 'li_six',
+      "forValQty": 'qty_six',
+      "forValUnit": 'unit_six',
+      "forValExt": 'extended_six'
+    }
+  })], 1) : _vm._e(), _vm._v(" "), (_vm.ln[6].line) ? _c('div', {
+    attrs: {
+      "id": "line_item_seven"
+    }
+  }, [_c('LineItem', {
+    attrs: {
+      "model": _vm.invoiceObj,
+      "products": _vm.products,
+      "itemNum": 6,
+      "header": 'Line Item Seven',
+      "forValLi": 'li_seven',
+      "forValQty": 'qty_seven',
+      "forValUnit": 'unit_seven',
+      "forValExt": 'extended_seven'
+    }
+  })], 1) : _vm._e()]), _vm._v(" "), _c('hr', {
+    staticClass: "dashed"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('NumberFormFee', {
+    attrs: {
+      "dataModel": _vm.invoiceObj.ship_fee,
+      "forVal": 'ship_fee',
+      "inputName": 'Shipping Fee',
+      "inputClass": 'form-control',
+      "update": _vm.updateShip
+    }
+  })], 1), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-md-6"
+  }, [_c('NumberFormFee', {
+    attrs: {
+      "dataModel": _vm.invoiceObj.misc_char,
+      "forVal": 'misc_char',
+      "inputName": 'Misc. Charges',
+      "inputClass": 'form-control',
+      "update": _vm.updateMisc
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "pull-right"
+  }, [_c('h3', [_vm._v("Total: $" + _vm._s(_vm.invoiceObj.total))])]), _vm._v(" "), _c('div', {
+    staticClass: "clearfix"
+  }), _vm._v(" "), _c('TextForm', {
+    attrs: {
+      "dataModel": _vm.invoiceObj.carrier,
+      "inputName": 'Carrier',
+      "forVal": 'carrier',
+      "inputClass": 'form-control',
+      "max": 50,
+      "update": _vm.updateCarrier
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', [_vm._v("Order Complete")]), _vm._v(" "), _c('select', {
+    staticClass: "form-control",
+    domProps: {
+      "value": _vm.invoiceObj.complete
+    },
+    on: {
+      "blur": _vm.updateComplete
+    }
+  }, [_c('option', [_vm._v("Choose An Option")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "1"
+    }
+  }, [_vm._v("Yes")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "0"
+    }
+  }, [_vm._v("No")])])]), _vm._v(" "), _c('TextAreaForm', {
+    attrs: {
+      "dataModel": _vm.invoiceObj.memo,
+      "inputName": 'Memo',
+      "forVal": 'memo',
+      "inputClass": 'form-control',
+      "rows": 3,
+      "max": 255,
+      "update": _vm.updateMemo
+    }
+  }), _vm._v(" "), _c('SubmitBtns', {
+    attrs: {
+      "editMode": _vm.edit,
+      "name": _vm.name = 'Invoice'
+    }
+  })], 1)]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br')], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-d2ec6014", module.exports)
+  }
+}
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(107),
+  /* template */
+  __webpack_require__(108),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-text-li.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] form-text-li.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7cbf2191", Component.options)
+  } else {
+    hotAPI.reload("data-v-7cbf2191", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 107 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        dataModel: String,
+        forVal: String,
+        inputName: String,
+        inputClass: String,
+        max: Number,
+        item: Number
+    },
+    methods: {
+        updateModel: function updateModel(e) {
+            this.$store.commit('updateLineItem', {
+                item: this.item,
+                event: e.target.value
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return (_vm.max) ? _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    class: _vm.inputClass,
+    attrs: {
+      "type": "text",
+      "name": _vm.forVal,
+      "maxlength": _vm.max,
+      "required": ""
+    },
+    domProps: {
+      "value": _vm.dataModel
+    },
+    on: {
+      "keyup": _vm.updateModel
+    }
+  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": _vm.forVal
+    }
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    class: _vm.inputClass,
+    attrs: {
+      "type": "text",
+      "name": _vm.forVal
+    },
+    domProps: {
+      "value": _vm.dataModel
+    },
+    on: {
+      "keyup": _vm.updateModel
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7cbf2191", module.exports)
+  }
+}
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(110),
+  /* template */
+  __webpack_require__(111),
   /* styles */
   null,
   /* scopeId */
@@ -48578,7 +48977,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 97 */
+/* 110 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48639,7 +49038,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 98 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -48713,15 +49112,15 @@ if (false) {
 }
 
 /***/ }),
-/* 99 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(100),
+  __webpack_require__(113),
   /* template */
-  __webpack_require__(101),
+  __webpack_require__(114),
   /* styles */
   null,
   /* scopeId */
@@ -48753,7 +49152,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 100 */
+/* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48787,7 +49186,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 101 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -48817,1433 +49216,119 @@ if (false) {
 }
 
 /***/ }),
-/* 102 */
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(116),
+  /* template */
+  __webpack_require__(117),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/form-number-fee.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] form-number-fee.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-889e3884", Component.options)
+  } else {
+    hotAPI.reload("data-v-889e3884", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 116 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        dataModel: [Number, String],
+        forVal: String,
+        inputName: String,
+        inputClass: String,
+        update: Function
+    },
+    methods: {
+        updateModel: function updateModel(e) {
+            this.update(e);
+        },
+        updateTotal: function updateTotal() {
+            this.$store.dispatch('commitTotal');
+        }
+    }
+});
+
+/***/ }),
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('viewAddBtns', {
-    attrs: {
-      "textOne": 'View Invoices',
-      "textTwo": 'Add An Invoice',
-      "toTable": _vm.switchToTable,
-      "toForm": _vm.switchToForm
-    }
-  }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.table),
-      expression: "table"
-    }]
-  }, [(_vm.list.length > 0) ? _c('div', {
-    staticClass: "table-responsive",
-    attrs: {
-      "id": "product-table"
-    }
-  }, [_c('table', {
-    staticClass: "table table-condensed"
-  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Invoice #")]), _vm._v(" "), _c('th', [_vm._v("Ship Date")]), _vm._v(" "), _c('th', [_vm._v("Customer")]), _vm._v(" "), _c('th', [_vm._v("Extended Price")]), _vm._v(" "), _c('th', [_vm._v("Print Shipper")]), _vm._v(" "), _c('th', [_vm._v("Print Invoice")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(invoice) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(invoice.inv_num))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.date))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.customer.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.total))]), _vm._v(" "), _c('td', [_c('a', {
-      staticClass: "btn btn-default",
-      attrs: {
-        "href": '/pdf/shipper/' + invoice.id
-      }
-    }, [_vm._v("Print Shipper")])]), _vm._v(" "), _c('td', [_c('a', {
-      staticClass: "btn btn-primary",
-      attrs: {
-        "href": '/pdf/invoice/' + invoice.id
-      }
-    }, [_vm._v("Print Invoice")])]), _vm._v(" "), _c('td', [_c('button', {
-      staticClass: "btn btn-warning",
-      on: {
-        "click": function($event) {
-          _vm.showInvoice(invoice.id)
-        }
-      }
-    }, [_vm._v("Edit")])]), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
-      staticClass: "btn btn-danger",
-      on: {
-        "click": function($event) {
-          _vm.deleteInvoice(invoice.id)
-        }
-      }
-    }, [_vm._v("Delete")])]) : _vm._e()])
-  }))])]) : _c('div', [_c('p', {
-    staticClass: "alert alert-info text-center"
-  }, [_vm._v("You currently have no invoices to show.")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.table),
-      expression: "!table"
-    }]
-  }, [_c('h2', {
-    staticClass: "text-center"
-  }, [_vm._v("Invoice Details")]), _vm._v(" "), _c('form', {
-    attrs: {
-      "action": "#"
-    },
-    on: {
-      "submit": function($event) {
-        $event.preventDefault();
-        _vm.edit ? _vm.updateInvoice(_vm.invoice.id) : _vm.createInvoice()
-      }
-    }
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-sm-12 col-md-6"
-  }, [_c('numberForm', {
-    attrs: {
-      "dataModel": _vm.invoiceObj.inv_num,
-      "forVal": 'inv_num',
-      "inputName": 'Invoice #',
-      "inputClass": 'form-control',
-      "max": 11,
-      "update": _vm.updateInvNum
-    }
-  })], 1), _vm._v(" "), _c('div', {
-    staticClass: "col-sm-12 col-md-6"
-  }, [_c('div', {
+  return _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
-      "for": "date"
+      "for": _vm.forVal
     }
-  }, [_vm._v("Date")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "date",
-      "name": "date",
-      "required": ""
-    },
-    domProps: {
-      "value": _vm.invoiceObj.date
-    },
-    on: {
-      "blur": _vm.updateDate
-    }
-  })])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Customer")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.cust_id),
-      expression: "cust_id"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": ""
-    },
-    on: {
-      "blur": function($event) {
-        _vm.setCustomerInfo(_vm.cust_id)
-      },
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.cust_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.customers), function(customer) {
-    return _c('option', [_vm._v(_vm._s(customer.id) + " - " + _vm._s(customer.name))])
-  })], 2)])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-md-6"
-  }, [_c('h4', {
-    staticClass: "cust_top_margin"
-  }, [_c('strong', [_vm._v("Customer:")]), _vm._v(" " + _vm._s(_vm.invoiceObj.customer.name))])])]), _vm._v(" "), _c('textForm', {
-    attrs: {
-      "dataModel": _vm.invoiceObj.po_num,
-      "inputName": 'P.O #',
-      "forVal": 'po_num',
-      "inputClass": 'form-control',
-      "max": 30,
-      "update": _vm.updatePo
-    }
-  }), _vm._v(" "), _c('button', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.btn[0].button),
-      expression: "btn[0].button"
-    }],
-    staticClass: "btn btn-success full-width",
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        _vm.li_btn_show_hide(1, 'show')
-      }
-    }
-  }, [_vm._v("Add A Second Line Item")]), _vm._v(" "), _c('lnBtns', {
-    attrs: {
-      "numOne": 2,
-      "btnNum": _vm.btn[1].button,
-      "liShowHide": _vm.li_btn_show_hide,
-      "disabled": false
-    }
-  }), _vm._v(" "), _c('lnBtns', {
-    attrs: {
-      "numOne": 3,
-      "btnNum": _vm.btn[2].button,
-      "liShowHide": _vm.li_btn_show_hide,
-      "disabled": false
-    }
-  }), _vm._v(" "), _c('lnBtns', {
-    attrs: {
-      "numOne": 4,
-      "btnNum": _vm.btn[3].button,
-      "liShowHide": _vm.li_btn_show_hide,
-      "disabled": false
-    }
-  }), _vm._v(" "), _c('lnBtns', {
-    attrs: {
-      "numOne": 5,
-      "btnNum": _vm.btn[4].button,
-      "liShowHide": _vm.li_btn_show_hide,
-      "disabled": false
-    }
-  }), _vm._v(" "), _c('lnBtns', {
-    attrs: {
-      "numOne": 6,
-      "btnNum": _vm.btn[5].button,
-      "liShowHide": _vm.li_btn_show_hide,
-      "disabled": false
-    }
-  }), _vm._v(" "), _c('lnBtns', {
-    attrs: {
-      "numOne": 7,
-      "btnNum": _vm.btn[6].button,
-      "liShowHide": _vm.li_btn_show_hide,
-      "disabled": true
-    }
-  }), _vm._v(" "), _c('hr', {
-    staticClass: "dashed"
-  }), _vm._v(" "), _c('div', {
-    ref: "ln_container",
-    staticClass: "overflow-scroll padding radius"
-  }, [_c('div', {
-    attrs: {
-      "id": "line_item_one"
-    }
-  }, [_c('h4', {
-    staticClass: "text-center background padding radius"
-  }, [_vm._v("Line Item One")]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('textFormLineItem', {
-    attrs: {
-      "dataModel": _vm.invoiceObj.line_items[0].item,
-      "forVal": 'li_one',
-      "inputName": 'Line Item',
-      "inputClass": 'form-control',
-      "max": 15,
-      "item": 0
-    }
-  })], 1), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('selectForm', {
-    attrs: {
-      "dataModel": _vm.invoiceObj.line_items[0].product,
-      "inputName": 'Product',
-      "inputClass": 'form-control',
-      "list": _vm.products,
-      "item": 0
-    }
-  })], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('numberFormLineItem', {
-    attrs: {
-      "dataModel": _vm.invoiceObj.line_items[0].qty,
-      "forVal": 'qty_one',
-      "inputName": 'Qty',
-      "inputClass": 'form-control',
-      "max": 11,
-      "item": 0,
-      "set": 0
-    }
-  })], 1), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('numberFormLineItem', {
-    attrs: {
-      "dataModel": _vm.invoiceObj.line_items[0].unit,
-      "forVal": 'unit_one',
-      "inputName": 'Unit Price',
-      "inputClass": 'form-control',
-      "max": 6,
-      "item": 0,
-      "set": 1
-    }
-  })], 1), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "extended_one"
-    }
-  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
+  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
+    class: _vm.inputClass,
     attrs: {
       "number": "",
       "type": "number",
-      "name": "extended_one",
-      "min": "0",
-      "step": "0.01",
-      "maxlength": "8",
-      "readonly": ""
-    },
-    domProps: {
-      "value": _vm.invoiceObj.line_items[0].extended
-    }
-  })])]), _vm._v(" "), _c('br')]), _vm._v(" "), (_vm.ln[1].line) ? _c('div', {
-    attrs: {
-      "id": "line_item_two"
-    }
-  }, [_c('h4', {
-    staticClass: "text-center background padding radius"
-  }, [_vm._v("Line Item Two")]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "li_two"
-    }
-  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[1].item),
-      expression: "invoice.line_items[1].item"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "li_two",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[1].item)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[1].item = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[1].product),
-      expression: "invoice.line_items[1].product"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "required": ""
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.invoice.line_items[1].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products), function(product) {
-    return _c('option', [_vm._v(_vm._s(product.name))])
-  })], 2)])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "qty_two"
-    }
-  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[1].qty),
-      expression: "invoice.line_items[1].qty"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "qty_two",
-      "min": "0",
-      "step": "1",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[1].qty)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(1)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[1].qty = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "unit_two"
-    }
-  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[1].unit),
-      expression: "invoice.line_items[1].unit"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "unit_two",
-      "min": "0",
-      "step": "0.01",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[1].unit)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(1)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[1].unit = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "extended_two"
-    }
-  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[1].extended),
-      expression: "invoice.line_items[1].extended"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "extended_two",
-      "min": "0",
-      "step": "0.01",
-      "readonly": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[1].extended)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[1].extended = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln[2].line) ? _c('div', {
-    attrs: {
-      "id": "line_item_three"
-    }
-  }, [_c('h4', {
-    staticClass: "text-center background padding radius"
-  }, [_vm._v("Line Item Three")]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "li_three"
-    }
-  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[2].item),
-      expression: "invoice.line_items[2].item"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "li_three",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[2].item)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[2].item = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[2].product),
-      expression: "invoice.line_items[2].product"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "required": ""
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.invoice.line_items[2].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products), function(product) {
-    return _c('option', [_vm._v(_vm._s(product.name))])
-  })], 2)])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "qty_three"
-    }
-  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[2].qty),
-      expression: "invoice.line_items[2].qty"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "qty_three",
-      "min": "0",
-      "step": "1",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[2].qty)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(2)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[2].qty = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "unit_three"
-    }
-  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[2].unit),
-      expression: "invoice.line_items[2].unit"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "unit_three",
-      "min": "0",
-      "step": "0.01",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[2].unit)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(2)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[2].unit = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "extended_three"
-    }
-  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[2].extended),
-      expression: "invoice.line_items[2].extended"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "extended_three",
-      "min": "0",
-      "step": "0.01",
-      "readonly": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[2].extended)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[2].extended = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln[3].line) ? _c('div', {
-    attrs: {
-      "id": "line_item_four"
-    }
-  }, [_c('h4', {
-    staticClass: "text-center background padding radius"
-  }, [_vm._v("Line Item Four")]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "li_four"
-    }
-  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[3].item),
-      expression: "invoice.line_items[3].item"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "li_four",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[3].item)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[3].item = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[3].product),
-      expression: "invoice.line_items[3].product"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "required": ""
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.invoice.line_items[3].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products), function(product) {
-    return _c('option', [_vm._v(_vm._s(product.name))])
-  })], 2)])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "qty_four"
-    }
-  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[3].qty),
-      expression: "invoice.line_items[3].qty"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "qty_four",
-      "min": "0",
-      "step": "1",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[3].qty)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(3)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[3].qty = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "unit_four"
-    }
-  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[3].unit),
-      expression: "invoice.line_items[3].unit"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "unit_four",
-      "min": "0",
-      "step": "0.01",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[3].unit)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(3)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[3].unit = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "extended_four"
-    }
-  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[3].extended),
-      expression: "invoice.line_items[3].extended"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "extended_four",
-      "min": "0",
-      "step": "0.01",
-      "readonly": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[3].extended)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[3].extended = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln[4].line) ? _c('div', {
-    attrs: {
-      "id": "line_item_five"
-    }
-  }, [_c('h4', {
-    staticClass: "text-center background padding radius"
-  }, [_vm._v("Line Item Five")]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "li_five"
-    }
-  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[4].item),
-      expression: "invoice.line_items[4].item"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "li_five",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[4].item)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[4].item = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[4].product),
-      expression: "invoice.line_items[4].product"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "required": ""
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.invoice.line_items[4].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products), function(product) {
-    return _c('option', [_vm._v(_vm._s(product.name))])
-  })], 2)])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "qty_three"
-    }
-  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[4].qty),
-      expression: "invoice.line_items[4].qty"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "qty_five",
-      "min": "0",
-      "step": "1",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[4].qty)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(4)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[4].qty = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "unit_five"
-    }
-  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[4].unit),
-      expression: "invoice.line_items[4].unit"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "unit_five",
-      "min": "0",
-      "step": "0.01",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[4].unit)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(4)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[4].unit = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "extended_five"
-    }
-  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[4].extended),
-      expression: "invoice.line_items[4].extended"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "extended_five",
-      "min": "0",
-      "step": "0.01",
-      "readonly": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[4].extended)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[4].extended = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln[5].line) ? _c('div', {
-    attrs: {
-      "id": "line_item_six"
-    }
-  }, [_c('h4', {
-    staticClass: "text-center background padding radius"
-  }, [_vm._v("Line Item Six")]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "li_six"
-    }
-  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[5].item),
-      expression: "invoice.line_items[5].item"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "li_six",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[5].item)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[5].item = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[5].product),
-      expression: "invoice.line_items[5].product"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "required": ""
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.invoice.line_items[5].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products), function(product) {
-    return _c('option', [_vm._v(_vm._s(product.name))])
-  })], 2)])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "qty_six"
-    }
-  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[5].qty),
-      expression: "invoice.line_items[5].qty"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "qty_six",
-      "min": "0",
-      "step": "1",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[5].qty)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(5)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[5].qty = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "unit_six"
-    }
-  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[5].unit),
-      expression: "invoice.line_items[5].unit"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "unit_six",
-      "min": "0",
-      "step": "0.01",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[5].unit)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(5)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[5].unit = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "extended_six"
-    }
-  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[5].extended),
-      expression: "invoice.line_items[5].extended"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "extended_six",
-      "min": "0",
-      "step": "0.01",
-      "readonly": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[5].extended)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[5].extended = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('br')]) : _vm._e(), _vm._v(" "), (_vm.ln[6].line) ? _c('div', {
-    attrs: {
-      "id": "line_item_seven"
-    }
-  }, [_c('h4', {
-    staticClass: "text-center background padding radius"
-  }, [_vm._v("Line Item Seven")]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "li_seven"
-    }
-  }, [_vm._v("Line Item")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[6].item),
-      expression: "invoice.line_items[6].item"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "li_seven",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[6].item)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[6].item = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Product")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[6].product),
-      expression: "invoice.line_items[6].product"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "required": ""
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.invoice.line_items[6].product = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', [_vm._v("Choose An Item")]), _vm._v(" "), _vm._l((_vm.products), function(product) {
-    return _c('option', [_vm._v(_vm._s(product.name))])
-  })], 2)])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "qty_seven"
-    }
-  }, [_vm._v("Qty")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[6].qty),
-      expression: "invoice.line_items[6].qty"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "qty_seven",
-      "min": "0",
-      "step": "1",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[6].qty)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(6)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[6].qty = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "unit_seven"
-    }
-  }, [_vm._v("Unit Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[6].unit),
-      expression: "invoice.line_items[6].unit"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "unit_seven",
-      "min": "0",
-      "step": "0.01",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[6].unit)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setExtended(6)
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[6].unit = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4 col-md-4"
-  }, [_c('label', {
-    attrs: {
-      "for": "extended_seven"
-    }
-  }, [_vm._v("Ext Price")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.line_items[6].extended),
-      expression: "invoice.line_items[6].extended"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "extended_seven",
-      "min": "0",
-      "step": "0.01",
-      "readonly": ""
-    },
-    domProps: {
-      "value": (_vm.invoice.line_items[6].extended)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.line_items[6].extended = $event.target.value
-      }
-    }
-  })])]), _vm._v(" "), _c('br')]) : _vm._e()]), _vm._v(" "), _c('hr', {
-    staticClass: "dashed"
-  }), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-xs-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "ship_fee"
-    }
-  }, [_vm._v("Shipping Fee")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.ship_fee),
-      expression: "invoice.ship_fee"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "ship_fee",
+      "name": _vm.forVal,
       "min": "0",
       "step": "0.01"
     },
     domProps: {
-      "value": (_vm.invoice.ship_fee)
+      "value": _vm.dataModel
     },
     on: {
-      "keyup": function($event) {
-        _vm.setTotal()
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.ship_fee = $event.target.value
-      }
+      "keyup": _vm.updateModel,
+      "blur": _vm.updateTotal
     }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-md-6"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "misc_char"
-    }
-  }, [_vm._v("Misc. Charges")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.misc_char),
-      expression: "invoice.misc_char"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": "misc_char",
-      "min": "0",
-      "step": "0.01"
-    },
-    domProps: {
-      "value": (_vm.invoice.misc_char)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.setTotal()
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.invoice.misc_char = $event.target.value
-      }
-    }
-  })])])]), _vm._v(" "), _c('div', {
-    staticClass: "pull-right"
-  }, [_c('h3', [_vm._v("Total: $" + _vm._s(_vm.invoice.total))])]), _vm._v(" "), _c('div', {
-    staticClass: "clearfix"
-  }), _vm._v(" "), _c('textForm', {
-    attrs: {
-      "dataModel": _vm.invoiceObj.carrier,
-      "inputName": 'Carrier',
-      "forVal": 'carrier',
-      "inputClass": 'form-control',
-      "max": 50,
-      "update": _vm.updateCarrier
-    }
-  }), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', [_vm._v("Order Complete")]), _vm._v(" "), _c('select', {
-    staticClass: "form-control",
-    domProps: {
-      "value": _vm.invoiceObj.complete
-    },
-    on: {
-      "blur": _vm.updateComplete
-    }
-  }, [_c('option', [_vm._v("Choose An Option")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "1"
-    }
-  }, [_vm._v("Yes")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "0"
-    }
-  }, [_vm._v("No")])])]), _vm._v(" "), _c('textAreaForm', {
-    attrs: {
-      "dataModel": _vm.invoiceObj.memo,
-      "inputName": 'Memo',
-      "forVal": 'memo',
-      "inputClass": 'form-control',
-      "rows": 3,
-      "max": 255,
-      "update": _vm.updateMemo
-    }
-  }), _vm._v(" "), _c('submitBtns', {
-    attrs: {
-      "editMode": _vm.edit,
-      "name": _vm.name = 'Invoice'
-    }
-  })], 1)]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br')], 1)
+  })])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-d2ec6014", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-889e3884", module.exports)
   }
 }
-
-/***/ }),
-/* 103 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

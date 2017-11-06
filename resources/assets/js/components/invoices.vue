@@ -1,11 +1,11 @@
 <template>
     <div>
-        <viewAddBtns 
+        <ViewAddBtns 
             :textOne="'View Invoices'" 
             :textTwo="'Add An Invoice'"
             :toTable="switchToTable" 
             :toForm="switchToForm"
-        ></viewAddBtns>
+        ></ViewAddBtns>
         <hr>
         <!-- Start of Invoice Table -->
         <div v-show="table">
@@ -52,14 +52,14 @@
 
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <numberForm
+                        <NumberForm
                             :dataModel="invoiceObj.inv_num" 
                             :forVal="'inv_num'" 
                             :inputName="'Invoice #'" 
                             :inputClass="'form-control'" 
                             :max="11" 
                             :update="updateInvNum"
-                        ></numberForm>
+                        ></NumberForm>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
@@ -84,319 +84,97 @@
                     </div>
                 </div>
 
-                <textForm 
+                <TextForm 
                     :dataModel="invoiceObj.po_num" 
                     :inputName="'P.O #'" 
                     :forVal="'po_num'" 
                     :inputClass="'form-control'" 
                     :max="30" 
                     :update="updatePo"
-                ></textForm>
+                ></TextForm>
 
                 <!-- Add and Removing Line Item Buttons -->
                 <button class="btn btn-success full-width" @click="li_btn_show_hide(1, 'show')" type="button" v-show="btn[0].button">Add A Second Line Item</button>
-                <lnBtns :numOne="2" :btnNum="btn[1].button" :liShowHide="li_btn_show_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="3" :btnNum="btn[2].button" :liShowHide="li_btn_show_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="4" :btnNum="btn[3].button" :liShowHide="li_btn_show_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="5" :btnNum="btn[4].button" :liShowHide="li_btn_show_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="6" :btnNum="btn[5].button" :liShowHide="li_btn_show_hide" :disabled="false"></lnBtns>
-                <lnBtns :numOne="7" :btnNum="btn[6].button" :liShowHide="li_btn_show_hide" :disabled="true"></lnBtns>
+                <LnBtns :numOne="2" :btnNum="btn[1].button" :liShowHide="li_btn_show_hide" :disabled="false"></LnBtns>
+                <LnBtns :numOne="3" :btnNum="btn[2].button" :liShowHide="li_btn_show_hide" :disabled="false"></LnBtns>
+                <LnBtns :numOne="4" :btnNum="btn[3].button" :liShowHide="li_btn_show_hide" :disabled="false"></LnBtns>
+                <LnBtns :numOne="5" :btnNum="btn[4].button" :liShowHide="li_btn_show_hide" :disabled="false"></LnBtns>
+                <LnBtns :numOne="6" :btnNum="btn[5].button" :liShowHide="li_btn_show_hide" :disabled="false"></LnBtns>
+                <LnBtns :numOne="7" :btnNum="btn[6].button" :liShowHide="li_btn_show_hide" :disabled="true"></LnBtns>
                 <!-- End of Adding and Removing Line Item Buttons -->
 
                 <hr class="dashed">
 
                 <!-- ============================================ Line Items ============================================ -->
                 <div ref="ln_container" class="overflow-scroll padding radius">
+                    <!-- =============== Line Item One ================= -->
                     <div id="line_item_one">
-                        <!-- ============== Line Item One ============== -->
-                        <h4 class="text-center background padding radius">Line Item One</h4>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <textFormLineItem
-                                    :dataModel="invoiceObj.line_items[0].item" 
-                                    :forVal="'li_one'"
-                                    :inputName="'Line Item'" 
-                                    :inputClass="'form-control'" 
-                                    :max="15" 
-                                    :item="0" 
-                                ></textFormLineItem>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <selectForm
-                                    :dataModel="invoiceObj.line_items[0].product"  
-                                    :inputName="'Product'" 
-                                    :inputClass="'form-control'" 
-                                    :list="products" 
-                                    :item="0"
-                                ></selectForm>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <numberFormLineItem
-                                :dataModel="invoiceObj.line_items[0].qty" 
-                                :forVal="'qty_one'" 
-                                :inputName="'Qty'" 
-                                :inputClass="'form-control'" 
-                                :max="11"
-                                :item="0"  
-                                :set="0" 
-                                ></numberFormLineItem>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <numberFormLineItem
-                                :dataModel="invoiceObj.line_items[0].unit" 
-                                :forVal="'unit_one'" 
-                                :inputName="'Unit Price'" 
-                                :inputClass="'form-control'" 
-                                :max="6"
-                                :item="0"  
-                                :set="1" 
-                                ></numberFormLineItem>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="extended_one">Ext Price</label>
-                                <input :value="invoiceObj.line_items[0].extended" number type="number" name="extended_one" min="0" step="0.01" class="form-control"  maxlength="8" readonly>
-                            </div>
-                        </div>
-                        <br />
-                        <!-- ============== End of Line Item One ============== -->
+                        <LineItem
+                            :model="invoiceObj" :products="products" :itemNum="0" :header="'Line Item One'"
+                            :forValLi="'li_one'" :forValQty="'qty_one'" 
+                            :forValUnit="'unit_one'" :forValExt="'extended_one'" 
+                        ></LineItem>
                     </div>
 
                     <div id="line_item_two" v-if="ln[1].line">
                         <!-- ============== Line Item Two ============== -->
-                        <h4 class="text-center background padding radius">Line Item Two</h4>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="li_two">Line Item</label>
-                                    <input v-model="invoice.line_items[1].item" type="text" name="li_two" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label>Product</label>
-                                    <select v-model="invoice.line_items[1].product" class="form-control" required>
-                                        <option>Choose An Item</option>
-                                        <option v-for="product in products">{{ product.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="qty_two">Qty</label>
-                                <input v-model="invoice.line_items[1].qty" number @keyup="setExtended(1)" type="number" name="qty_two" min="0" step="1" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="unit_two">Unit Price</label>
-                                <input v-model="invoice.line_items[1].unit" number @keyup="setExtended(1)" type="number" name="unit_two" min="0" step="0.01" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="extended_two">Ext Price</label>
-                                <input v-model="invoice.line_items[1].extended" number type="number" name="extended_two" min="0" step="0.01" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <br />
+                        <LineItem
+                            :model="invoiceObj" :products="products" :itemNum="1" :header="'Line Item Two'"
+                            :forValLi="'li_two'" :forValQty="'qty_two'" 
+                            :forValUnit="'unit_two'" :forValExt="'extended_two'" 
+                        ></LineItem>
+                    </div>
                         <!-- ============== End of Line Item Two ============== -->
-                    </div>
 
-                    <div id="line_item_three" v-if="ln[2].line">
                         <!-- ============== Line Item Three ============== -->
-                        <h4 class="text-center background padding radius">Line Item Three</h4>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="li_three">Line Item</label>
-                                    <input v-model="invoice.line_items[2].item" type="text" name="li_three" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label>Product</label>
-                                    <select v-model="invoice.line_items[2].product" class="form-control" required>
-                                        <option>Choose An Item</option>
-                                        <option v-for="product in products">{{ product.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="qty_three">Qty</label>
-                                <input v-model="invoice.line_items[2].qty" number @keyup="setExtended(2)" type="number" name="qty_three" min="0" step="1" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="unit_three">Unit Price</label>
-                                <input v-model="invoice.line_items[2].unit" number @keyup="setExtended(2)" type="number" name="unit_three" min="0" step="0.01" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="extended_three">Ext Price</label>
-                                <input v-model="invoice.line_items[2].extended" number type="number" name="extended_three" min="0" step="0.01" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <br />
+                    <div id="line_item_three" v-if="ln[2].line">
+                        <LineItem
+                            :model="invoiceObj" :products="products" :itemNum="2" :header="'Line Item Three'"
+                            :forValLi="'li_three'" :forValQty="'qty_three'" 
+                            :forValUnit="'unit_three'" :forValExt="'extended_three'" 
+                        ></LineItem>
+                    </div>
                         <!-- ============== End of Line Item Three ============== -->
-                    </div>
 
-                    <div id="line_item_four" v-if="ln[3].line">
                         <!-- ============== Line Item Four ============== -->
-                        <h4 class="text-center background padding radius">Line Item Four</h4>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="li_four">Line Item</label>
-                                    <input v-model="invoice.line_items[3].item" type="text" name="li_four" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label>Product</label>
-                                    <select v-model="invoice.line_items[3].product" class="form-control" required>
-                                        <option>Choose An Item</option>
-                                        <option v-for="product in products">{{ product.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="qty_four">Qty</label>
-                                <input v-model="invoice.line_items[3].qty" number @keyup="setExtended(3)" type="number" name="qty_four" min="0" step="1" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="unit_four">Unit Price</label>
-                                <input v-model="invoice.line_items[3].unit" number @keyup="setExtended(3)" type="number" name="unit_four" min="0" step="0.01" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="extended_four">Ext Price</label>
-                                <input v-model="invoice.line_items[3].extended" number type="number" name="extended_four" min="0" step="0.01" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <br />
+                    <div id="line_item_four" v-if="ln[3].line">
+                        <LineItem
+                            :model="invoiceObj" :products="products" :itemNum="3" :header="'Line Item Four'"
+                            :forValLi="'li_four'" :forValQty="'qty_four'" 
+                            :forValUnit="'unit_four'" :forValExt="'extended_four'" 
+                        ></LineItem>
+                    </div>
                         <!-- ============== End of Line Item Four ============== -->
-                    </div>
 
-                    <div id="line_item_five" v-if="ln[4].line">
                         <!-- ============== Line Item five ============== -->
-                        <h4 class="text-center background padding radius">Line Item Five</h4>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="li_five">Line Item</label>
-                                    <input v-model="invoice.line_items[4].item" type="text" name="li_five" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label>Product</label>
-                                    <select v-model="invoice.line_items[4].product" class="form-control" required>
-                                        <option>Choose An Item</option>
-                                        <option v-for="product in products">{{ product.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="qty_three">Qty</label>
-                                <input v-model="invoice.line_items[4].qty" number @keyup="setExtended(4)" type="number" name="qty_five" min="0" step="1" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="unit_five">Unit Price</label>
-                                <input v-model="invoice.line_items[4].unit" number @keyup="setExtended(4)" type="number" name="unit_five" min="0" step="0.01" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="extended_five">Ext Price</label>
-                                <input v-model="invoice.line_items[4].extended" number type="number" name="extended_five" min="0" step="0.01" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <br />
+                    <div id="line_item_five" v-if="ln[4].line">
+                        <LineItem
+                            :model="invoiceObj" :products="products" :itemNum="4" :header="'Line Item Five'"
+                            :forValLi="'li_five'" :forValQty="'qty_five'" 
+                            :forValUnit="'unit_five'" :forValExt="'extended_five'" 
+                        ></LineItem>
+                    </div>
                         <!-- ============== End of Line Item Five ============== -->
-                    </div>
 
-                    <div id="line_item_six" v-if="ln[5].line">
                         <!-- ============== Line Item Six ============== -->
-                        <h4 class="text-center background padding radius">Line Item Six</h4>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="li_six">Line Item</label>
-                                    <input v-model="invoice.line_items[5].item" type="text" name="li_six" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label>Product</label>
-                                    <select v-model="invoice.line_items[5].product" class="form-control" required>
-                                        <option>Choose An Item</option>
-                                        <option v-for="product in products">{{ product.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="qty_six">Qty</label>
-                                <input v-model="invoice.line_items[5].qty" number @keyup="setExtended(5)" type="number" name="qty_six" min="0" step="1" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="unit_six">Unit Price</label>
-                                <input v-model="invoice.line_items[5].unit" number @keyup="setExtended(5)" type="number" name="unit_six" min="0" step="0.01" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="extended_six">Ext Price</label>
-                                <input v-model="invoice.line_items[5].extended" number type="number" name="extended_six" min="0" step="0.01" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <br />
+                    <div id="line_item_six" v-if="ln[5].line">
+                        <LineItem
+                            :model="invoiceObj" :products="products" :itemNum="5" :header="'Line Item Six'"
+                            :forValLi="'li_six'" :forValQty="'qty_six'" 
+                            :forValUnit="'unit_six'" :forValExt="'extended_six'" 
+                        ></LineItem>
+                    </div>
                         <!-- ============== End of Line Item Six ============== -->
-                    </div>
 
-                    <div id="line_item_seven" v-if="ln[6].line">
                         <!-- ============== Line Item Seven ============== -->
-                        <h4 class="text-center background padding radius">Line Item Seven</h4>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="li_seven">Line Item</label>
-                                    <input v-model="invoice.line_items[6].item" type="text" name="li_seven" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
-                                <div class="form-group">
-                                    <label>Product</label>
-                                    <select v-model="invoice.line_items[6].product" class="form-control" required>
-                                        <option>Choose An Item</option>
-                                        <option v-for="product in products">{{ product.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="qty_seven">Qty</label>
-                                <input v-model="invoice.line_items[6].qty" number @keyup="setExtended(6)" type="number" name="qty_seven" min="0" step="1" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="unit_seven">Unit Price</label>
-                                <input v-model="invoice.line_items[6].unit" number @keyup="setExtended(6)" type="number" name="unit_seven" min="0" step="0.01" class="form-control" required>
-                            </div>
-                            <div class="col-xs-12 col-sm-4 col-md-4">
-                                <label for="extended_seven">Ext Price</label>
-                                <input v-model="invoice.line_items[6].extended" number type="number" name="extended_seven" min="0" step="0.01" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <br />
-                        <!-- ============== End of Line Item Seven ============== -->
+                    <div id="line_item_seven" v-if="ln[6].line">
+                        <LineItem
+                            :model="invoiceObj" :products="products" :itemNum="6" :header="'Line Item Seven'"
+                            :forValLi="'li_seven'" :forValQty="'qty_seven'" 
+                            :forValUnit="'unit_seven'" :forValExt="'extended_seven'" 
+                        ></LineItem>
                     </div>
+                        <!-- ============== End of Line Item Seven ============== -->
                 </div>
                 <!-- ========================================= End of Line Items ======================================= -->
 
@@ -404,33 +182,39 @@
 
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
-                        <div class="form-group">
-                            <label for="ship_fee">Shipping Fee</label>
-                            <input v-model="invoice.ship_fee" number type="number" @keyup="setTotal()" name="ship_fee" min="0" step="0.01" class="form-control">
-                        </div>
+                        <NumberFormFee
+                            :dataModel="invoiceObj.ship_fee" 
+                            :forVal="'ship_fee'" 
+                            :inputName="'Shipping Fee'" 
+                            :inputClass="'form-control'"
+                            :update="updateShip"
+                        ></NumberFormFee>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                        <div class="form-group">
-                            <label for="misc_char">Misc. Charges</label>
-                            <input v-model="invoice.misc_char" number type="number" @keyup="setTotal()" name="misc_char" min="0" step="0.01" class="form-control">
-                        </div>
+                        <NumberFormFee
+                            :dataModel="invoiceObj.misc_char" 
+                            :forVal="'misc_char'" 
+                            :inputName="'Misc. Charges'" 
+                            :inputClass="'form-control'"
+                            :update="updateMisc"
+                        ></NumberFormFee>
                     </div>
                 </div>
 
                 <div class="pull-right">
-                    <h3>Total: ${{ invoice.total }}</h3>
+                    <h3>Total: ${{ invoiceObj.total }}</h3>
                 </div>
 
                 <div class="clearfix"></div>
 
-                <textForm 
+                <TextForm 
                     :dataModel="invoiceObj.carrier" 
                     :inputName="'Carrier'" 
                     :forVal="'carrier'" 
                     :inputClass="'form-control'" 
                     :max="50" 
                     :update="updateCarrier" 
-                ></textForm>
+                ></TextForm>
 
                 <div class="form-group">
                     <label>Order Complete</label>
@@ -441,7 +225,7 @@
                     </select>
                 </div>
 
-                <textAreaForm 
+                <TextAreaForm 
                     :dataModel="invoiceObj.memo" 
                     :inputName="'Memo'" 
                     :forVal="'memo'" 
@@ -449,9 +233,9 @@
                     :rows="3" 
                     :max="255" 
                     :update="updateMemo"
-                ></textAreaForm>
+                ></TextAreaForm>
 
-                <submitBtns :editMode="edit" :name="name='Invoice'"></submitBtns>
+                <SubmitBtns :editMode="edit" :name="name='Invoice'"></SubmitBtns>
             </form>
         </div>
         <!-- End of Invoice Form -->
@@ -466,11 +250,10 @@
     import LnBtns from '../components/partials/ln-btns.vue';
     import SubmitBtns from '../components/partials/submit-btn.vue';
     import TextForm from '../components/partials/form-text.vue';
-    import TextFormLineItem from '../components/partials/form-text-li.vue';
     import TextAreaForm from '../components/partials/form-textarea.vue';
     import NumberForm from '../components/partials/form-number.vue';
-    import NumberFormLineItem from '../components/partials/form-number-li.vue';
-    import SelectForm from '../components/partials/form-select-li.vue';
+    import NumberFormFee from '../components/partials/form-number-fee.vue';
+    import LineItem from '../components/partials/line-item.vue';
     // Export
     export default {
         data() {
@@ -511,62 +294,6 @@
                 */
                 ln: [{line: true}, {line: false}, {line: false}, {line: false}, {line: false}, {line: false}, {line: false}], // array of 7 objects
                 btn: [{button: true}, {button: false}, {button: false}, {button: false}, {button: false}, {button: false}, {button: false}], // array of 7 objects
-                /*
-                * THE INVOICE MODEL:
-                *
-                * The invoice model is an object conaining the following properties:
-                * 1.) inv_num - Invoice Number | Type: Number
-                * 2.) data - Shipping Date | Type: Date
-                * 3.) customer - Customer Snap Shot | Type: Object | Description: Meant for saving a snap shot of the customer this invoice is 
-                *                made for as json. This is so because the invoice model has no relationship with the customer model. The reason for this
-                *                is so that the customer data per invoice is preserved which allows the user to change customer information with
-                *                out corrupting the information that was truthy at the time of the making of an invoice. This method was prefered 
-                *                over saving multiple versions of a customer model and then setting them to a value like 'edited' which makes for
-                *                more requests being sent to the server for version checking. Even though this method takes up more storage over the
-                *                long run, it allows the app to run more efficiently when internet connections are slow. This object goes thorugh parsing
-                *                in the getInvoices() method.
-                * 4.) po_num - Purchase Order Number | Type: String
-                * 5.) line_items - List of line items | Type: Array of Objects | Description: The list of line items is an array of seven objects stored as 
-                *                as json in one column. This array goes through parsing in the getInvoices() method. Each obeject has three numeric properties
-                *                that get passed through the setExtended() method which is triggered on every keyup event on the 'Qty' and 'Unit Price' inputs. 
-                *                This method sets the value of each 'extended' price property in order to be passed through the setTotal() method which sets 
-                *                the value of the 'invoice.total' property.
-                * 6.) ship_fee - Shipping Fees | Type: Number
-                * 7.) total - Total Price of all Line Items Extended Prices | Type: Number
-                * 8.) memo - Alternate information for the invoice | Type: String
-                */
-                invoice: {
-                    inv_num: 0,
-                    date: '',
-                    customer: {
-                        id: '',
-                        name: '',
-                        shipto: '',
-                        billto: '',
-                        buyer: '',
-                        email: '',
-                        phone: '',
-                        country: '',
-                        disclaimer: '',
-                        comments: '',
-                    },
-                    po_num: '',
-                    line_items: [
-                        { item: '', product: '', qty: 0, unit: 0, extended: 0 },
-                        { item: '', product: '', qty: 0, unit: 0, extended: 0 },
-                        { item: '', product: '', qty: 0, unit: 0, extended: 0 },
-                        { item: '', product: '', qty: 0, unit: 0, extended: 0 },
-                        { item: '', product: '', qty: 0, unit: 0, extended: 0 },
-                        { item: '', product: '', qty: 0, unit: 0, extended: 0 },
-                        { item: '', product: '', qty: 0, unit: 0, extended: 0 }
-                    ],
-                    misc_char: 0,
-                    ship_fee: 0,
-                    total: 0,
-                    complete: 0,
-                    carrier: '',
-                    memo: ''
-                }
             }
         },
         mounted() { 
@@ -583,15 +310,14 @@
             this.getProducts();
         },
         components: {
-            viewAddBtns: ViewAddBtns, 
-            lnBtns: LnBtns,
-            submitBtns: SubmitBtns,
-            textForm: TextForm,
-            textFormLineItem: TextFormLineItem,
-            textAreaForm: TextAreaForm,
-            numberForm: NumberForm,
-            numberFormLineItem: NumberFormLineItem,
-            selectForm: SelectForm
+            ViewAddBtns, 
+            LnBtns,
+            SubmitBtns,
+            TextForm,
+            TextAreaForm,
+            NumberForm,
+            NumberFormFee,
+            LineItem
         },
         computed: {
             user() { return this.$store.getters.getUser; },
@@ -609,8 +335,10 @@
             updateDate(e) { this.$store.commit('updateDate', e.target.value); },
             setCustomerInfo(id) { this.$store.dispatch('commitOneCustomer', id); },
             updatePo(e) { this.$store.commit('updatePo', e.target.value); },
-            updateCarrier(e) { this.$store.commit('updateCarrier', e.target.value); },
+            updateShip(e) { this.$store.commit('updateShipFee', e.target.value); },
+            updateMisc(e) { this.$store.commit('updateMiscChar', e.target.value); },
             updateComplete(e) { this.$store.commit('updateComplete', e.target.value); },
+            updateCarrier(e) { this.$store.commit('updateCarrier', e.target.value); },
             updateMemo(e) { this.$store.commit('updateMemo', e.target.value); },
             switchToTable(){ // prop: toTable | component: <viewAddBtns>
                 this.table = true;
@@ -662,7 +390,7 @@
                         this.btn[num-1].button = actOne; this.btn[num].button = actTwo; this.ln[num].line = actTwo;
                     break;
                     default:
-                        console.log("Sorry!! Something went wrong with this button!");
+                        throw new Error('Sorry, Something went wrong with the line item buttons.');
                     break;
                 }
                 this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;

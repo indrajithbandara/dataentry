@@ -1,5 +1,29 @@
 const state = {
     invoices: [],
+    /*
+    * THE INVOICE MODEL:
+    *
+    * The invoice model is an object conaining the following properties:
+    * 1.) inv_num - Invoice Number | Type: Number
+    * 2.) data - Shipping Date | Type: Date
+    * 3.) customer - Customer Snap Shot | Type: Object | Description: Meant for saving a snap shot of the customer this invoice is 
+    *                made for as json. This is so because the invoice model has no relationship with the customer model. The reason for this
+    *                is so that the customer data per invoice is preserved which allows the user to change customer information with
+    *                out corrupting the information that was truthy at the time of the making of an invoice. This method was prefered 
+    *                over saving multiple versions of a customer model and then setting them to a value like 'edited' which makes for
+    *                more requests being sent to the server for version checking. Even though this method takes up more storage over the
+    *                long run, it allows the app to run more efficiently when internet connections are slow. This object goes thorugh parsing
+    *                in the getInvoices() method.
+    * 4.) po_num - Purchase Order Number | Type: String
+    * 5.) line_items - List of line items | Type: Array of Objects | Description: The list of line items is an array of seven objects stored as 
+    *                as json in one column. This array goes through parsing in the getInvoices() method. Each obeject has three numeric properties
+    *                that get passed through the setExtended() method which is triggered on every keyup event on the 'Qty' and 'Unit Price' inputs. 
+    *                This method sets the value of each 'extended' price property in order to be passed through the setTotal() method which sets 
+    *                the value of the 'invoice.total' property.
+    * 6.) ship_fee - Shipping Fees | Type: Number
+    * 7.) total - Total Price of all Line Items Extended Prices | Type: Number
+    * 8.) memo - Alternate information for the invoice | Type: String
+    */
     invoice: {
         inv_num: 0,
         date: '',
@@ -133,13 +157,10 @@ const actions = {
     }
     */
     commitMath: ( { commit }, payload ) => {
-        console.log(payload);
         if(payload.set === 0){
             commit('updateQty', {item: payload.item, event: payload.event});
-            console.log("qty commited");
         } else if(payload.set === 1){
             commit('updateUnit', {item: payload.item, event: payload.event});
-            console.log("unit commited");
         }
             let extended = state.invoice.line_items[payload.item].qty * 
                            state.invoice.line_items[payload.item].unit;

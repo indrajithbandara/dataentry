@@ -103,6 +103,7 @@ const mutations = {
     updateExtended: (state, payload) => {
         state.invoice.line_items[payload.item].extended = payload.ext;
     },
+    // End of line item mutations
     updateShipFee: (state, payload) => {
         state.invoice.ship_fee = payload;  
     },
@@ -111,7 +112,32 @@ const mutations = {
     },
     updateTotal: (state, payload) => {
         state.invoice.total = payload;  
-    }
+    },
+    resetState: (state) => {
+        for(var key in state.invoice){
+            if(key == 'inv_num' || key == 'ship_fee' || key == 'misc_char' || key == 'total'){
+                state.invoice[key] = 0;
+            }else if(key == 'customer'){
+                for(var k in state.invoice.customer){
+                    state.invoice.customer[k] = '';
+                }
+            }else if(key == 'line_items'){
+                for(var i = 0; i < 7; i++){
+                    for(var key in state.invoice.line_items[i]){
+                        if(key == 'item' || key == 'product'){
+                            state.invoice.line_items[i][key] = '';
+                        }else{
+                            state.invoice.line_items[i][key] = 0;
+                        }
+                    }
+                }  
+            }else if(key == 'complete'){
+                state.invoice[key] = 0;
+            }else {
+                state.invoice[key] = '';
+            }
+        }
+    } // end of resetState
 };
 
 const actions = {
@@ -178,6 +204,21 @@ const actions = {
         }
         let totalToFloat = total();
         commit('updateTotal', totalToFloat.toFixed(2));
+    },
+    createNewInvoice: ({ commit }) => {
+        let params = Object.assign({}, state.invoice);
+        axios({
+            method: 'post',
+            url: 'api/invoices/store',
+            data: params,
+            validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then((response) => {
+            commit('resetState');
+        }).catch((error) => {
+            console.log(error.message);
+        }); 
     }
 }
 

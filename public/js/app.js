@@ -42371,8 +42371,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     mutations: __WEBPACK_IMPORTED_MODULE_7__mutations__,
     actions: __WEBPACK_IMPORTED_MODULE_8__actions__,
     modules: {
-        invoices: __WEBPACK_IMPORTED_MODULE_2__modules_invoices__["a" /* default */],
         users: __WEBPACK_IMPORTED_MODULE_3__modules_users__["a" /* default */],
+        invoices: __WEBPACK_IMPORTED_MODULE_2__modules_invoices__["a" /* default */],
         products: __WEBPACK_IMPORTED_MODULE_4__modules_products__["a" /* default */],
         customers: __WEBPACK_IMPORTED_MODULE_5__modules_customers__["a" /* default */]
     }
@@ -43427,6 +43427,7 @@ var mutations = {
     updateExtended: function updateExtended(state, payload) {
         state.invoice.line_items[payload.item].extended = payload.ext;
     },
+    // End of line item mutations
     updateShipFee: function updateShipFee(state, payload) {
         state.invoice.ship_fee = payload;
     },
@@ -43435,7 +43436,32 @@ var mutations = {
     },
     updateTotal: function updateTotal(state, payload) {
         state.invoice.total = payload;
-    }
+    },
+    resetState: function resetState(state) {
+        for (var key in state.invoice) {
+            if (key == 'inv_num' || key == 'ship_fee' || key == 'misc_char' || key == 'total') {
+                state.invoice[key] = 0;
+            } else if (key == 'customer') {
+                for (var k in state.invoice.customer) {
+                    state.invoice.customer[k] = '';
+                }
+            } else if (key == 'line_items') {
+                for (var i = 0; i < 7; i++) {
+                    for (var key in state.invoice.line_items[i]) {
+                        if (key == 'item' || key == 'product') {
+                            state.invoice.line_items[i][key] = '';
+                        } else {
+                            state.invoice.line_items[i][key] = 0;
+                        }
+                    }
+                }
+            } else if (key == 'complete') {
+                state.invoice[key] = 0;
+            } else {
+                state.invoice[key] = '';
+            }
+        }
+    } // end of resetState
 };
 
 var actions = {
@@ -43508,6 +43534,23 @@ var actions = {
         };
         var totalToFloat = total();
         commit('updateTotal', totalToFloat.toFixed(2));
+    },
+    createNewInvoice: function createNewInvoice(_ref5) {
+        var commit = _ref5.commit;
+
+        var params = Object.assign({}, state.invoice);
+        axios({
+            method: 'post',
+            url: 'api/invoices/store',
+            data: params,
+            validateStatus: function validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then(function (response) {
+            commit('resetState');
+        }).catch(function (error) {
+            console.log(error.message);
+        });
     }
 };
 
@@ -47457,20 +47500,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         createInvoice: function createInvoice() {
             // post request to add an invoice
-            var self = this;
-            var params = Object.assign({}, self.invoice);
-            axios({
-                method: 'post',
-                url: 'api/invoices/store',
-                data: params,
-                validateStatus: function validateStatus(status) {
-                    return status >= 200 && status < 300;
-                }
-            }).then(function (response) {
-                self.resetValues();
-            }).catch(function (error) {
-                console.log(error.message);
-            });
+            this.$store.dispatch('createNewInvoice');
+            this.resetValues();
         },
         updateInvoice: function updateInvoice(id) {
             // patch request to update an invoice
@@ -47521,23 +47552,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         resetValues: function resetValues() {
             // After form is submitted, values are reset to either 0 or empty string
-            for (var key in this.invoice) {
-                if (key == 'inv_num' || key == 'ship_fee' || key == 'misc_char' || key == 'total') {
-                    this.invoice[key] = 0;
-                } else if (key == 'customer') {
-                    for (var k in this.invoice.customer) {
-                        this.invoice.customer[k] = '';
-                    }
-                } else if (key == 'line_items') {
-                    for (var i = 0; i < 7; i++) {
-                        this.resetLineItem(i);
-                    }
-                } else if (key == 'complete') {
-                    this.invoice[key] = false;
-                } else {
-                    this.invoice[key] = '';
-                }
-            }
             for (var i = 0; i < this.ln.length; i++) {
                 for (var b in this.ln[i]) {
                     if (i == 0) {
@@ -47552,15 +47566,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.edit = false;
             this.getInvoices();
             this.table = true;
-        },
-        resetLineItem: function resetLineItem(num) {
-            for (var key in this.invoice.line_items[num]) {
-                if (key == 'item' || key == 'product') {
-                    this.invoice.line_items[num][key] = '';
-                } else {
-                    this.invoice.line_items[num][key] = 0;
-                }
-            }
         }
     }
 });

@@ -458,20 +458,8 @@
                 }
             },
             createInvoice(){ // post request to add an invoice
-                let self = this;
-                let params = Object.assign({}, self.invoice);
-                axios({
-                    method: 'post',
-                    url: 'api/invoices/store',
-                    data: params,
-                    validateStatus(status) {
-                        return status >= 200 && status < 300;
-                    }
-                }).then((response) => {
-                    self.resetValues();
-                }).catch((error) => {
-                    console.log(error.message);
-                });
+                this.$store.dispatch('createNewInvoice');
+                this.resetValues();
             },
             updateInvoice(id){ // patch request to update an invoice
                 let self = this;
@@ -519,23 +507,6 @@
                 }
             },
             resetValues(){ // After form is submitted, values are reset to either 0 or empty string
-                for(var key in this.invoice){
-                    if(key == 'inv_num' || key == 'ship_fee' || key == 'misc_char' || key == 'total'){
-                        this.invoice[key] = 0;
-                    }else if(key == 'customer'){
-                        for(var k in this.invoice.customer){
-                            this.invoice.customer[k] = '';
-                        }
-                    }else if(key == 'line_items'){
-                        for(var i = 0; i < 7; i++){
-                            this.resetLineItem(i);
-                        }  
-                    }else if(key == 'complete'){
-                        this.invoice[key] = false;
-                    }else {
-                        this.invoice[key] = '';
-                    }
-                }
                 for(var i = 0; i < this.ln.length; i++){
                     for(var b in this.ln[i]){
                         if(i == 0){
@@ -550,15 +521,6 @@
                 this.edit = false;
                 this.getInvoices();
                 this.table = true;
-            },
-            resetLineItem(num){
-                for(var key in this.invoice.line_items[num]){
-                    if(key == 'item' || key == 'product'){
-                        this.invoice.line_items[num][key] = '';
-                    }else{
-                        this.invoice.line_items[num][key] = 0;
-                    }
-                }
             }
         }
     }

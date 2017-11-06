@@ -21,8 +21,8 @@ export const store = new Vuex.Store({
     mutations,
     actions,
     modules: {
-        invoices,
         users,
+        invoices,
         products,
         customers
     }

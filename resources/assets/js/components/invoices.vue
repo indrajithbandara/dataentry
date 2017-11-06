@@ -407,17 +407,17 @@
                 <div class="clearfix"></div>
 
                 <textForm 
-                    :dataModel="invoice.carrier" 
+                    :dataModel="invoiceObj.carrier" 
                     :inputName="'Carrier'" 
                     :forVal="'carrier'" 
                     :inputClass="'form-control'" 
                     :max="50" 
-                    @setModel="invoice.carrier = $event" 
+                    :update="updateCarrier" 
                 ></textForm>
 
                 <div class="form-group">
                     <label>Order Complete</label>
-                    <select v-model="invoice.complete" class="form-control">
+                    <select :value="invoiceObj.complete" @blur="updateComplete" class="form-control">
                         <option>Choose An Option</option>
                         <option value="1">Yes</option>
                         <option value="0">No</option>
@@ -425,13 +425,13 @@
                 </div>
 
                 <textAreaForm 
-                    :dataModel="invoice.memo" 
+                    :dataModel="invoiceObj.memo" 
                     :inputName="'Memo'" 
                     :forVal="'memo'" 
                     :inputClass="'form-control'" 
                     :rows="3" 
                     :max="255" 
-                    @setModel="invoice.memo = $event" 
+                    :update="updateMemo"
                 ></textAreaForm>
 
                 <submitBtns :editMode="edit" :name="name='Invoice'"></submitBtns>
@@ -560,7 +560,6 @@
             this.getInvoices();
             this.getCustomers();
             this.getProducts();
-            console.log(this.invoiceObj);
         },
         components: {
             viewAddBtns: ViewAddBtns, 
@@ -578,11 +577,15 @@
             invoiceObj() { return this.$store.state.invoices.invoice; }
         },
         methods: {
-            updateInvNum (e) { this.$store.commit('updateInvNum', e.target.value); },
-            updateDate (e) { this.$store.commit('updateDate', e.target.value); },
-            /*
-            *===== COMPONENT METHODS =====
-            */
+            getUser() { this.$store.dispatch('commitPermission'); },
+            getCustomers(){ this.$store.dispatch('commitCustomers'); },
+            getProducts(){ this.$store.dispatch('commitProducts'); },
+            getInvoices(){ this.$store.dispatch('commitInvoices'); },
+            updateInvNum(e) { this.$store.commit('updateInvNum', e.target.value); },
+            updateDate(e) { this.$store.commit('updateDate', e.target.value); },
+            updateCarrier(e) { this.$store.commit('updateCarrier', e.target.value); },
+            updateComplete(e) { this.$store.commit('updateComplete', e.target.value); },
+            updateMemo(e) { this.$store.commit('updateMemo', e.target.value); },
             switchToTable(){ // prop: toTable | component: <viewAddBtns>
                 this.table = true;
             },
@@ -642,13 +645,6 @@
                     this.setTotal();
                 }
             },
-            /*
-            *===== GETTER METHODS =====
-            */
-            getUser() { this.$store.dispatch('commitPermission'); },
-            getCustomers(){ this.$store.dispatch('commitCustomers'); },
-            getProducts(){ this.$store.dispatch('commitProducts'); },
-            getInvoices(){ this.$store.dispatch('commitInvoices'); },
             getOneCustomer(cust){ // get a customer snap shot to store with current invoice model
                 let id = parseInt(cust[0]);
                 let self = this;
@@ -666,9 +662,6 @@
                     console.log(error.message);
                 });
             },
-            /*
-            *===== SETTER METHODS =====
-            */
             setTotal(){ // Adds up extended values, misc_char and ship_fee values to be stored in the invoice total
                 var total = () => {
                     var t = 0;
@@ -727,9 +720,6 @@
                     }
                 }
             },
-            /*
-            *===== C.R.U.D METHODS =====
-            */
             createInvoice(){ // post request to add an invoice
                 let self = this;
                 let params = Object.assign({}, self.invoice);
@@ -791,9 +781,6 @@
                     return;
                 }
             },
-            /*
-            *===== RESET METHODS =====
-            */
             resetValues(){ // After form is submitted, values are reset to either 0 or empty string
                 for(var key in this.invoice){
                     if(key == 'inv_num' || key == 'ship_fee' || key == 'misc_char' || key == 'total'){

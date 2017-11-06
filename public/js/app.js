@@ -43367,11 +43367,19 @@ var mutations = {
         state.invoices = payload;
     },
     updateInvNum: function updateInvNum(state, payload) {
-        payload = parseInt(payload);
-        state.invoice.inv_num = payload;
+        state.invoice.inv_num = parseInt(payload);
     },
     updateDate: function updateDate(state, payload) {
         state.invoice.date = payload;
+    },
+    updateCarrier: function updateCarrier(state, payload) {
+        state.invoice.carrier = payload;
+    },
+    updateMemo: function updateMemo(state, payload) {
+        state.invoice.memo = payload;
+    },
+    updateComplete: function updateComplete(state, payload) {
+        state.invoice.complete = parseInt(payload);
     }
 };
 
@@ -47389,7 +47397,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getInvoices();
         this.getCustomers();
         this.getProducts();
-        console.log(this.invoiceObj);
     },
 
     components: {
@@ -47418,16 +47425,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        getUser: function getUser() {
+            this.$store.dispatch('commitPermission');
+        },
+        getCustomers: function getCustomers() {
+            this.$store.dispatch('commitCustomers');
+        },
+        getProducts: function getProducts() {
+            this.$store.dispatch('commitProducts');
+        },
+        getInvoices: function getInvoices() {
+            this.$store.dispatch('commitInvoices');
+        },
         updateInvNum: function updateInvNum(e) {
             this.$store.commit('updateInvNum', e.target.value);
         },
         updateDate: function updateDate(e) {
             this.$store.commit('updateDate', e.target.value);
         },
-
-        /*
-        *===== COMPONENT METHODS =====
-        */
+        updateCarrier: function updateCarrier(e) {
+            this.$store.commit('updateCarrier', e.target.value);
+        },
+        updateComplete: function updateComplete(e) {
+            this.$store.commit('updateComplete', e.target.value);
+        },
+        updateMemo: function updateMemo(e) {
+            this.$store.commit('updateMemo', e.target.value);
+        },
         switchToTable: function switchToTable() {
             // prop: toTable | component: <viewAddBtns>
             this.table = true;
@@ -47490,22 +47514,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.setTotal();
             }
         },
-
-        /*
-        *===== GETTER METHODS =====
-        */
-        getUser: function getUser() {
-            this.$store.dispatch('commitPermission');
-        },
-        getCustomers: function getCustomers() {
-            this.$store.dispatch('commitCustomers');
-        },
-        getProducts: function getProducts() {
-            this.$store.dispatch('commitProducts');
-        },
-        getInvoices: function getInvoices() {
-            this.$store.dispatch('commitInvoices');
-        },
         getOneCustomer: function getOneCustomer(cust) {
             // get a customer snap shot to store with current invoice model
             var id = parseInt(cust[0]);
@@ -47524,10 +47532,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error.message);
             });
         },
-
-        /*
-        *===== SETTER METHODS =====
-        */
         setTotal: function setTotal() {
             var _this = this;
 
@@ -47592,10 +47596,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }
         },
-
-        /*
-        *===== C.R.U.D METHODS =====
-        */
         createInvoice: function createInvoice() {
             // post request to add an invoice
             var self = this;
@@ -47660,10 +47660,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return;
             }
         },
-
-        /*
-        *===== RESET METHODS =====
-        */
         resetValues: function resetValues() {
             // After form is submitted, values are reset to either 0 or empty string
             for (var key in this.invoice) {
@@ -47929,10 +47925,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -47940,21 +47932,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         forVal: String,
         inputName: String,
         inputClass: String,
-        max: Number
+        max: Number,
+        update: Function
     },
-    data: function data() {
-        return {
-            model: ''
-        };
-    },
-
     methods: {
-        updateModel: function updateModel() {
-            this.$emit('setModel', this.model);
-            this.model = '';
-        },
-        setInnerModel: function setInnerModel() {
-            this.model = this.dataModel;
+        updateModel: function updateModel(e) {
+            this.update(e);
         }
     }
 });
@@ -47971,12 +47954,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": _vm.forVal
     }
   }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.dataModel),
-      expression: "dataModel"
-    }],
     class: _vm.inputClass,
     attrs: {
       "type": "text",
@@ -47984,18 +47961,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "maxlength": _vm.max
     },
     domProps: {
-      "value": (_vm.dataModel)
+      "value": _vm.dataModel
     },
     on: {
-      "keyup": _vm.setInnerModel,
-      "focus": _vm.setInnerModel,
-      "blur": _vm.updateModel,
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.dataModel = $event.target.value
-      }
+      "keyup": _vm.updateModel
     }
-  }), _vm._v(" "), (_vm.model.length == _vm.max) ? _c('p', {
+  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
     staticClass: "alert alert-warning"
   }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
     staticClass: "form-group"
@@ -48004,28 +47975,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": _vm.forVal
     }
   }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.dataModel),
-      expression: "dataModel"
-    }],
     class: _vm.inputClass,
     attrs: {
       "type": "text",
       "name": _vm.forVal
     },
     domProps: {
-      "value": (_vm.dataModel)
+      "value": _vm.dataModel
     },
     on: {
-      "keyup": _vm.setInnerModel,
-      "focus": _vm.setInnerModel,
-      "blur": _vm.updateModel,
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.dataModel = $event.target.value
-      }
+      "keyup": _vm.updateModel
     }
   })])
 },staticRenderFns: []}
@@ -48109,10 +48068,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -48121,21 +48076,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         inputName: String,
         inputClass: String,
         max: Number,
-        rows: Number
+        rows: Number,
+        update: Function
     },
-    data: function data() {
-        return {
-            model: ''
-        };
-    },
-
     methods: {
-        updateModel: function updateModel() {
-            this.$emit('setModel', this.model);
-            this.model = '';
-        },
-        setInnerModel: function setInnerModel() {
-            this.model = this.dataModel;
+        updateModel: function updateModel(e) {
+            this.update(e);
         }
     }
 });
@@ -48152,12 +48098,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": _vm.forVal
     }
   }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.dataModel),
-      expression: "dataModel"
-    }],
     class: _vm.inputClass,
     attrs: {
       "type": "text",
@@ -48166,18 +48106,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "maxlength": _vm.max
     },
     domProps: {
-      "value": (_vm.dataModel)
+      "value": _vm.dataModel
     },
     on: {
-      "keyup": _vm.setInnerModel,
-      "focus": _vm.setInnerModel,
-      "blur": _vm.updateModel,
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.dataModel = $event.target.value
-      }
+      "keyup": _vm.updateModel
     }
-  }), _vm._v(" "), (_vm.model.length == _vm.max) ? _c('p', {
+  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
     staticClass: "alert alert-warning"
   }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
     staticClass: "form-group"
@@ -48186,12 +48120,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": _vm.forVal
     }
   }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.dataModel),
-      expression: "dataModel"
-    }],
     class: _vm.inputClass,
     attrs: {
       "type": "text",
@@ -48199,16 +48127,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "row": _vm.rows
     },
     domProps: {
-      "value": (_vm.dataModel)
+      "value": _vm.dataModel
     },
     on: {
-      "keyup": _vm.setInnerModel,
-      "focus": _vm.setInnerModel,
-      "blur": _vm.updateModel,
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.dataModel = $event.target.value
-      }
+      "keyup": _vm.updateModel
     }
   })])
 },staticRenderFns: []}
@@ -48290,10 +48212,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -48302,21 +48220,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         inputName: String,
         inputClass: String,
         max: Number,
-        rows: Number
+        rows: Number,
+        update: Function
     },
-    data: function data() {
-        return {
-            model: 0
-        };
-    },
-
     methods: {
-        updateModel: function updateModel() {
-            this.$emit('setModel', this.model);
-            this.model = 0;
-        },
-        setInnerModel: function setInnerModel() {
-            this.model = this.dataModel;
+        updateModel: function updateModel(e) {
+            this.update(e);
         }
     }
 });
@@ -48333,12 +48242,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": _vm.forVal
     }
   }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.dataModel),
-      expression: "dataModel"
-    }],
     class: _vm.inputClass,
     attrs: {
       "number": "",
@@ -48348,18 +48251,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "maxlength": _vm.max
     },
     domProps: {
-      "value": (_vm.dataModel)
+      "value": _vm.dataModel
     },
     on: {
-      "keyup": _vm.setInnerModel,
-      "focus": _vm.setInnerModel,
-      "blur": _vm.updateModel,
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.dataModel = $event.target.value
-      }
+      "keyup": _vm.updateModel
     }
-  }), _vm._v(" "), (_vm.model.length == _vm.max) ? _c('p', {
+  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
     staticClass: "alert alert-warning"
   }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
     staticClass: "form-group"
@@ -48385,9 +48282,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.dataModel)
     },
     on: {
-      "keyup": _vm.setInnerModel,
-      "focus": _vm.setInnerModel,
-      "blur": _vm.updateModel,
+      "keyup": _vm.updateModel,
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.dataModel = $event.target.value
@@ -49898,37 +49793,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "clearfix"
   }), _vm._v(" "), _c('textForm', {
     attrs: {
-      "dataModel": _vm.invoice.carrier,
+      "dataModel": _vm.invoiceObj.carrier,
       "inputName": 'Carrier',
       "forVal": 'carrier',
       "inputClass": 'form-control',
-      "max": 50
-    },
-    on: {
-      "setModel": function($event) {
-        _vm.invoice.carrier = $event
-      }
+      "max": 50,
+      "update": _vm.updateCarrier
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', [_vm._v("Order Complete")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.invoice.complete),
-      expression: "invoice.complete"
-    }],
     staticClass: "form-control",
+    domProps: {
+      "value": _vm.invoiceObj.complete
+    },
     on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.invoice.complete = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
+      "blur": _vm.updateComplete
     }
   }, [_c('option', [_vm._v("Choose An Option")]), _vm._v(" "), _c('option', {
     attrs: {
@@ -49940,17 +49820,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("No")])])]), _vm._v(" "), _c('textAreaForm', {
     attrs: {
-      "dataModel": _vm.invoice.memo,
+      "dataModel": _vm.invoiceObj.memo,
       "inputName": 'Memo',
       "forVal": 'memo',
       "inputClass": 'form-control',
       "rows": 3,
-      "max": 255
-    },
-    on: {
-      "setModel": function($event) {
-        _vm.invoice.memo = $event
-      }
+      "max": 255,
+      "update": _vm.updateMemo
     }
   }), _vm._v(" "), _c('submitBtns', {
     attrs: {

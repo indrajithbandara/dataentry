@@ -2,27 +2,23 @@
     <div class="form-group" v-if="max">
         <label :for="forVal">{{ inputName }}</label>
         <textarea 
-            v-model="dataModel" 
+            :value="dataModel" 
             type="text" 
             :name="forVal" 
-            @keyup="setInnerModel" 
-            @focus="setInnerModel" 
-            @blur="updateModel" 
+            @keyup="updateModel" 
             :row="rows" 
             :class="inputClass" 
             :maxlength="max"
             ></textarea>
-        <p class="alert alert-warning" v-if="model.length == max">{{ max }} character limit reached!</p>
+        <p class="alert alert-warning" v-if="dataModel.length == max">{{ max }} character limit reached!</p>
     </div>
     <div class="form-group" v-else>
         <label :for="forVal">{{ inputName }}</label>
         <textarea 
-            v-model="dataModel" 
+            :value="dataModel" 
             type="text" 
             :name="forVal" 
-            @keyup="setInnerModel" 
-            @focus="setInnerModel" 
-            @blur="updateModel" 
+            @keyup="updateModel" 
             :row="rows" 
             :class="inputClass"
             ></textarea>
@@ -36,20 +32,12 @@
         inputName: String,
         inputClass: String,
         max: Number,
-        rows: Number
-        },
-        data() {
-            return {
-                model: ''
-            }
+        rows: Number,
+        update: Function
         },
         methods: {
-            updateModel() {
-                this.$emit('setModel', this.model);
-                this.model = '';
-            },
-            setInnerModel() {
-                this.model = this.dataModel;
+            updateModel(e) {
+                this.update(e);
             }
         }
     }

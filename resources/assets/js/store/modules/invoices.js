@@ -35,9 +35,7 @@ const state = {
 };
 
 const getters = {
-    getInvoices: (state) => {
-        return state.invoices;
-    }
+    getInvoices: state => state.invoices,
 };
 
 const mutations = {
@@ -45,11 +43,19 @@ const mutations = {
         state.invoices = payload;
     },
     updateInvNum: (state, payload) => {
-        payload = parseInt(payload);
-        state.invoice.inv_num = payload;
+        state.invoice.inv_num = parseInt(payload);
     },
     updateDate: (state, payload) => {
         state.invoice.date = payload;
+    },
+    updateCarrier: (state, payload) => {
+        state.invoice.carrier = payload;
+    },
+    updateMemo: (state, payload) => {
+        state.invoice.memo = payload;
+    },
+    updateComplete: (state, payload) => {
+        state.invoice.complete = parseInt(payload);
     }
 };
 

@@ -82,12 +82,12 @@
                 </div>
 
                 <textForm 
-                    :dataModel="invoice.po_num" 
+                    :dataModel="invoiceObj.po_num" 
                     :inputName="'P.O #'" 
                     :forVal="'po_num'" 
                     :inputClass="'form-control'" 
                     :max="30" 
-                    @setModel="invoice.po_num = $event" 
+                    :update="updatePo"
                 ></textForm>
 
                 <!-- Add and Removing Line Item Buttons -->
@@ -583,6 +583,7 @@
             getInvoices(){ this.$store.dispatch('commitInvoices'); },
             updateInvNum(e) { this.$store.commit('updateInvNum', e.target.value); },
             updateDate(e) { this.$store.commit('updateDate', e.target.value); },
+            updatePo(e) { this.$store.commit('updatePo', e.target.value); },
             updateCarrier(e) { this.$store.commit('updateCarrier', e.target.value); },
             updateComplete(e) { this.$store.commit('updateComplete', e.target.value); },
             updateMemo(e) { this.$store.commit('updateMemo', e.target.value); },

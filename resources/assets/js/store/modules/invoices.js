@@ -48,6 +48,9 @@ const mutations = {
     updateDate: (state, payload) => {
         state.invoice.date = payload;
     },
+    updatePo: (state, payload) => {
+        state.invoice.po_num = payload;
+    },
     updateCarrier: (state, payload) => {
         state.invoice.carrier = payload;
     },

@@ -43372,6 +43372,9 @@ var mutations = {
     updateDate: function updateDate(state, payload) {
         state.invoice.date = payload;
     },
+    updatePo: function updatePo(state, payload) {
+        state.invoice.po_num = payload;
+    },
     updateCarrier: function updateCarrier(state, payload) {
         state.invoice.carrier = payload;
     },
@@ -47443,6 +47446,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateDate: function updateDate(e) {
             this.$store.commit('updateDate', e.target.value);
         },
+        updatePo: function updatePo(e) {
+            this.$store.commit('updatePo', e.target.value);
+        },
         updateCarrier: function updateCarrier(e) {
             this.$store.commit('updateCarrier', e.target.value);
         },
@@ -48458,16 +48464,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "cust_top_margin"
   }, [_c('strong', [_vm._v("Customer:")]), _vm._v(" " + _vm._s(_vm.invoice.customer.name))])])]), _vm._v(" "), _c('textForm', {
     attrs: {
-      "dataModel": _vm.invoice.po_num,
+      "dataModel": _vm.invoiceObj.po_num,
       "inputName": 'P.O #',
       "forVal": 'po_num',
       "inputClass": 'form-control',
-      "max": 30
-    },
-    on: {
-      "setModel": function($event) {
-        _vm.invoice.po_num = $event
-      }
+      "max": 30,
+      "update": _vm.updatePo
     }
   }), _vm._v(" "), _c('button', {
     directives: [{

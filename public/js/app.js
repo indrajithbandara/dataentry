@@ -47239,6 +47239,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 // Imports
 
@@ -47434,27 +47435,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.setTotal();
             }
         },
-        setTotal: function setTotal() {
-            var _this = this;
-
-            // Adds up extended values, misc_char and ship_fee values to be stored in the invoice total
-            var total = function total() {
-                var t = 0;
-                for (var i = 0; i < 7; i++) {
-                    t += _this.invoice.line_items[i].extended;
-                }
-                t += parseFloat(_this.invoice.ship_fee);
-                t += parseFloat(_this.invoice.misc_char);
-                return t;
-            };
-            var totalToFloat = total();
-            this.invoice.total = totalToFloat.toFixed(2);
-        },
-        setExtended: function setExtended(num) {
-            // Adds up the 'qty' and the 'unit' values to set the 'extended' property for this line item
-            this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit;
-            this.setTotal();
-        },
         setInvoiceData: function setInvoiceData(response) {
             // sets the invoice data to the invoice model for updating
             for (var key in response.data) {
@@ -47563,8 +47543,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             }
+            this.cust_id = '';
             this.edit = false;
-            this.getInvoices();
+            this.$store.dispatch('commitInvoices');
             this.table = true;
         }
     }
@@ -48939,7 +48920,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.table),
       expression: "table"
     }]
-  }, [(_vm.list.length > 0) ? _c('div', {
+  }, [_c('button', {
+    staticClass: "btn btn-default btn-sm full-width",
+    on: {
+      "click": _vm.getInvoices
+    }
+  }, [_vm._v("Refresh")]), _vm._v(" "), (_vm.list.length > 0) ? _c('div', {
     staticClass: "table-responsive",
     attrs: {
       "id": "product-table"

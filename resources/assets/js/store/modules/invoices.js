@@ -59,7 +59,7 @@ const state = {
 };
 
 const getters = {
-    getInvoices: state => state.invoices,
+    getInvoices: state => state.invoices
 };
 
 const mutations = {

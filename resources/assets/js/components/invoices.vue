@@ -9,6 +9,7 @@
         <hr>
         <!-- Start of Invoice Table -->
         <div v-show="table">
+        <button class="btn btn-default btn-sm full-width" @click="getInvoices">Refresh</button>
             <!-- Invoices Table -->
             <div id="product-table" v-if="list.length > 0" class="table-responsive">
                 <table class="table table-condensed">
@@ -399,23 +400,6 @@
                     this.setTotal();
                 }
             },
-            setTotal(){ // Adds up extended values, misc_char and ship_fee values to be stored in the invoice total
-                var total = () => {
-                    var t = 0;
-                    for(var i = 0; i < 7; i++){
-                        t += this.invoice.line_items[i].extended;
-                    }
-                    t += parseFloat(this.invoice.ship_fee);
-                    t += parseFloat(this.invoice.misc_char);
-                    return t;
-                }
-                var totalToFloat = total();
-                this.invoice.total = totalToFloat.toFixed(2);
-            },
-            setExtended(num){ // Adds up the 'qty' and the 'unit' values to set the 'extended' property for this line item
-                this.invoice.line_items[num].extended = this.invoice.line_items[num].qty * this.invoice.line_items[num].unit; 
-                this.setTotal();
-            },
             setInvoiceData(response){ // sets the invoice data to the invoice model for updating
                 for(var key in response.data){
                     if(key === 'customer'){
@@ -518,8 +502,9 @@
                         }
                     }
                 }
+                this.cust_id = '';
                 this.edit = false;
-                this.getInvoices();
+                this.$store.dispatch('commitInvoices');
                 this.table = true;
             }
         }

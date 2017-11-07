@@ -48,7 +48,7 @@
         <!-- Add An Invoice Form -->
         <div v-show="!table">
             <h2 class="text-center">Invoice Details</h2>
-            <form action="#" @submit.prevent="edit ? updateInvoice(invoice.id) : createInvoice()">
+            <form action="#" @submit.prevent="edit ? updateInvoice(invoiceObj.id) : createInvoice()">
 
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
@@ -320,6 +320,7 @@
             LineItem
         },
         computed: {
+            // GETTERS
             user() { return this.$store.getters.getUser; },
             products() { return this.$store.getters.getProducts; },
             customers() { return this.$store.getters.getCustomers; },
@@ -327,19 +328,22 @@
             invoiceObj() { return this.$store.state.invoices.invoice; }
         },
         methods: {
-            getUser() { this.$store.dispatch('commitPermission'); },
-            getCustomers(){ this.$store.dispatch('commitCustomers'); },
-            getProducts(){ this.$store.dispatch('commitProducts'); },
-            getInvoices(){ this.$store.dispatch('commitInvoices'); },
+            // MUTATIONS
             updateInvNum(e) { this.$store.commit('updateInvNum', e.target.value); },
             updateDate(e) { this.$store.commit('updateDate', e.target.value); },
-            setCustomerInfo(id) { this.$store.dispatch('commitOneCustomer', id); },
             updatePo(e) { this.$store.commit('updatePo', e.target.value); },
             updateShip(e) { this.$store.commit('updateShipFee', e.target.value); },
             updateMisc(e) { this.$store.commit('updateMiscChar', e.target.value); },
             updateComplete(e) { this.$store.commit('updateComplete', e.target.value); },
             updateCarrier(e) { this.$store.commit('updateCarrier', e.target.value); },
             updateMemo(e) { this.$store.commit('updateMemo', e.target.value); },
+            // ACTIONS
+            getUser() { this.$store.dispatch('commitPermission'); },
+            getCustomers(){ this.$store.dispatch('commitCustomers'); },
+            getProducts(){ this.$store.dispatch('commitProducts'); },
+            getInvoices(){ this.$store.dispatch('commitInvoices'); },
+            setCustomerInfo(id) { this.$store.dispatch('commitOneCustomer', id); },
+            // METHODS
             switchToTable(){ // prop: toTable | component: <viewAddBtns>
                 this.table = true;
             },
@@ -430,19 +434,12 @@
                 });
             },
             updateInvoice(id){ // patch request to update an invoice
-                let self = this;
-                let params = Object.assign({}, self.invoice);
-                axios({
-                    method: 'patch',
-                    url: 'api/invoices/' + id,
-                    data: params,
-                    validateStatus(status) {
-                        return status >= 200 && status < 300;
-                    }
-                }).then(() => {
-                    self.resetValues();
-                }).catch((error) => {
-                    console.log(error.message);
+                this.$store.dispatch('updateInvoice', id)
+                .then(() => {
+                    this.resetValues();
+                })
+                .catch((error) => {
+                    throw new Error('Something went wrong with the dispatch for updateInvoice');
                 });
             },
             showInvoice(id){ // get request to show an invoice for editing
@@ -456,18 +453,14 @@
                     throw new Error('Something went wrong with the dispatch for showInvoice');
                 });
             },
-            deleteInvoice(id){ // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
-                if(confirm('Are you sure you want to delete this invoice?')){
-                    let self = this;
-                    axios.delete('api/invoices/' + id)
-                    .then((response) => {
-                        self.getInvoices();
-                    }).catch((error) => {
-                        console.log(error.message);
-                    });
-                }else{
-                    return;
-                }
+            deleteInvoice(id){
+                this.$store.dispatch('deleteInvoice', id)
+                .then(() => {
+                    this.$store.dispatch('commitInvoices');
+                })
+                .catch((error) => {
+                    throw new Error('Something went wrong with the dispatch for deleteInvoice');
+                })
             },
             resetValues(){ // After form is submitted, values are reset to either 0 or empty string
                 for(var i = 0; i < this.ln.length; i++){

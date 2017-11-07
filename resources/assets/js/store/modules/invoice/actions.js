@@ -127,3 +127,39 @@ export const showInvoice = ( { commit }, payload ) => { // get request to show a
         });
     });
 };
+
+export const updateInvoice = (context, payload) => { // patch request to update an invoice
+    return new Promise((resolve, reject) => {
+        let params = Object.assign({}, context.state.invoice);
+        axios({
+            method: 'patch',
+            url: 'api/invoices/' + payload,
+            data: params,
+            validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then(() => {
+            context.commit('resetState');
+            resolve();
+        }).catch((error) => {
+            throw new Error('updateInvoice failed! ' + error);
+            reject();
+        });
+    });
+};
+
+export const deleteInvoice = (context, payload) => { // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
+    return new Promise((resolve, reject) => {
+        if(confirm('Are you sure you want to delete this invoice?')){
+            axios.delete('api/invoices/' + payload)
+            .then(() => {
+                resolve();
+            }).catch((error) => {
+                throw new Error('deleteInvoice failed! ' + error);
+                reject();
+            });
+        }else{
+            return;
+        }
+    });
+};

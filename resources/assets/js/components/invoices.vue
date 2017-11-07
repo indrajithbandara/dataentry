@@ -422,7 +422,12 @@
             },
             createInvoice(){ // post request to add an invoice
                 this.$store.dispatch('createNewInvoice')
-                .then(() => { this.resetValues(); });
+                .then(() => { 
+                    this.resetValues(); 
+                })
+                .catch((error) => {
+                    throw new Error('Something went wrong with the dispatch for createNewInvoice');
+                });
             },
             updateInvoice(id){ // patch request to update an invoice
                 let self = this;
@@ -446,6 +451,9 @@
                     this.setLineItems();
                     this.table = false;
                     this.edit = true;
+                })
+                .catch((error) => {
+                    throw new Error('Something went wrong with the dispatch for showInvoice');
                 });
             },
             deleteInvoice(id){ // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.

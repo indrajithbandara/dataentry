@@ -2,7 +2,7 @@ require('./../bootstrap');
 import Vue from 'vue';
 import Vuex from 'vuex';
 // Modules
-import invoices from './modules/invoices';
+import invoices from './modules/invoice/invoices';
 import users from './modules/users';
 import products from './modules/products';
 import customers from './modules/customers';

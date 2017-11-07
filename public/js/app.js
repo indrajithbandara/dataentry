@@ -43525,7 +43525,6 @@ var setInvoiceData = function setInvoiceData(state, payload) {
             state.invoice[key] = payload.data[key];
         }
     }
-    console.log("3. Invoice Data has been Set");
 };
 
 /***/ }),
@@ -43628,37 +43627,48 @@ var commitTotal = function commitTotal(context) {
 
 
 // Responsible for createing a new invoice and then committing 
-// the resetState mutations function. 
+// the resetState mutations function. Promise Added due to component 
+// methods needing execution after promise is finished.
 var createNewInvoice = function createNewInvoice(context) {
-    var params = Object.assign({}, context.state.invoice);
-    axios({
-        method: 'post',
-        url: 'api/invoices/store',
-        data: params,
-        validateStatus: function validateStatus(status) {
-            return status >= 200 && status < 300;
-        }
-    }).then(function (response) {
-        context.commit('resetState');
-    }).catch(function (error) {
-        throw new Error('createNewInvoice action failed!' + error);
+    return new Promise(function (resolve, reject) {
+        var params = Object.assign({}, context.state.invoice);
+        axios({
+            method: 'post',
+            url: 'api/invoices/store',
+            data: params,
+            validateStatus: function validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then(function (response) {
+            context.commit('resetState');
+            resolve();
+        }).catch(function (error) {
+            throw new Error('createNewInvoice action failed!' + error);
+            reject();
+        });
     });
 }; // End of createNewInvoice
 
+// responsible for pull invoice info to be edited
+// Promise Added due to component methods needing execution 
+// after promise is finished.
 var showInvoice = function showInvoice(_ref3, payload) {
     var commit = _ref3.commit;
     // get request to show an invoice for editing
-    axios({
-        method: 'get',
-        url: 'api/invoices/' + payload,
-        validateStatus: function validateStatus(status) {
-            return status >= 200 && status < 300;
-        }
-    }).then(function (response) {
-        console.log('2. showInvoice data recieved.');
-        commit('setInvoiceData', response);
-    }).catch(function (error) {
-        console.log(error.message);
+    return new Promise(function (resolve, reject) {
+        axios({
+            method: 'get',
+            url: 'api/invoices/' + payload,
+            validateStatus: function validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then(function (response) {
+            commit('setInvoiceData', response);
+            resolve();
+        }).catch(function (error) {
+            throw new Error('show invoice action failed!' + error);
+            reject();
+        });
     });
 };
 
@@ -47340,7 +47350,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 // Imports
 
@@ -47543,7 +47552,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         * for that line item is set to true as well. The first button is set to false by default and will be shown if there is only one line item to show.
         */
         setLineItems: function setLineItems() {
-            console.log('4. Set Line items started');
             this.btn[0].button = false;
             for (var i = 0; i < 7; i++) {
                 for (var key in this.invoiceObj.line_items[i]) {
@@ -47558,12 +47566,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             }
-            console.log('5. Set Line items Finished.');
         },
         createInvoice: function createInvoice() {
+            var _this = this;
+
             // post request to add an invoice
-            this.$store.dispatch('createNewInvoice');
-            this.resetValues();
+            this.$store.dispatch('createNewInvoice').then(function () {
+                _this.resetValues();
+            });
         },
         updateInvoice: function updateInvoice(id) {
             // patch request to update an invoice
@@ -47583,14 +47593,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         showInvoice: function showInvoice(id) {
+            var _this2 = this;
+
             // get request to show an invoice for editing
-            this.$store.dispatch('showInvoice', id);
-            console.log('1. Show invoice dispatched');
-            this.setLineItems();
-            console.log('6. setLineItems function finished.');
-            this.table = false;
-            this.edit = true;
-            console.log('7. table set to false and edit set to true.');
+            this.$store.dispatch('showInvoice', id).then(function () {
+                _this2.setLineItems();
+                _this2.table = false;
+                _this2.edit = true;
+            });
         },
         deleteInvoice: function deleteInvoice(id) {
             // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
@@ -47619,8 +47629,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }
             this.cust_id = '';
-            this.edit = false;
             this.$store.dispatch('commitInvoices');
+            this.edit = false;
             this.table = true;
         }
     }
@@ -48995,12 +49005,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.table),
       expression: "table"
     }]
-  }, [_c('button', {
-    staticClass: "btn btn-default btn-sm full-width",
-    on: {
-      "click": _vm.getInvoices
-    }
-  }, [_vm._v("Refresh")]), _vm._v(" "), (_vm.list.length > 0) ? _c('div', {
+  }, [(_vm.list.length > 0) ? _c('div', {
     staticClass: "table-responsive",
     attrs: {
       "id": "product-table"

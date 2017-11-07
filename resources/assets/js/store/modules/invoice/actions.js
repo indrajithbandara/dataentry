@@ -85,34 +85,45 @@ export const commitTotal = context => {
 
 
 // Responsible for createing a new invoice and then committing 
-// the resetState mutations function. 
+// the resetState mutations function. Promise Added due to component 
+// methods needing execution after promise is finished.
 export const createNewInvoice = context => {
-    let params = Object.assign({}, context.state.invoice);
-    axios({
-        method: 'post',
-        url: 'api/invoices/store',
-        data: params,
-        validateStatus(status) {
-            return status >= 200 && status < 300;
-        }
-    }).then((response) => {
-        context.commit('resetState');
-    }).catch((error) => {
-        throw new Error('createNewInvoice action failed!' + error);
-    }); 
+    return new Promise((resolve, reject) => {
+        let params = Object.assign({}, context.state.invoice);
+        axios({
+            method: 'post',
+            url: 'api/invoices/store',
+            data: params,
+            validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then((response) => {
+            context.commit('resetState');
+            resolve();
+        }).catch((error) => {
+            throw new Error('createNewInvoice action failed!' + error);
+            reject();
+        }); 
+    });
 }; // End of createNewInvoice
 
+// responsible for pull invoice info to be edited
+// Promise Added due to component methods needing execution 
+// after promise is finished.
 export const showInvoice = ( { commit }, payload ) => { // get request to show an invoice for editing
-    axios({
-        method: 'get',
-        url: 'api/invoices/' + payload,
-        validateStatus(status) {
-            return status >= 200 && status < 300;
-        }
-    }).then((response) => {
-        console.log('2. showInvoice data recieved.')
-        commit('setInvoiceData', response);
-    }).catch((error) => {
-        console.log(error.message);
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'get',
+            url: 'api/invoices/' + payload,
+            validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then((response) => {
+            commit('setInvoiceData', response);
+            resolve();
+        }).catch((error) => {
+            throw new Error('show invoice action failed!' + error);
+            reject();
+        });
     });
 };

@@ -9,7 +9,6 @@
         <hr>
         <!-- Start of Invoice Table -->
         <div v-show="table">
-        <button class="btn btn-default btn-sm full-width" @click="getInvoices">Refresh</button>
             <!-- Invoices Table -->
             <div id="product-table" v-if="list.length > 0" class="table-responsive">
                 <table class="table table-condensed">
@@ -406,7 +405,6 @@
             * for that line item is set to true as well. The first button is set to false by default and will be shown if there is only one line item to show.
             */
             setLineItems(){
-                console.log('4. Set Line items started');
                 this.btn[0].button = false;
                 for(var i = 0; i < 7; i++){
                     for(var key in this.invoiceObj.line_items[i]){
@@ -421,11 +419,10 @@
                         }
                     }
                 }
-                console.log('5. Set Line items Finished.');
             },
             createInvoice(){ // post request to add an invoice
-                this.$store.dispatch('createNewInvoice');
-                this.resetValues();
+                this.$store.dispatch('createNewInvoice')
+                .then(() => { this.resetValues(); });
             },
             updateInvoice(id){ // patch request to update an invoice
                 let self = this;
@@ -444,13 +441,12 @@
                 });
             },
             showInvoice(id){ // get request to show an invoice for editing
-                this.$store.dispatch('showInvoice', id);
-                console.log('1. Show invoice dispatched');
-                this.setLineItems();
-                console.log('6. setLineItems function finished.');
-                this.table = false;
-                this.edit = true;
-                console.log('7. table set to false and edit set to true.');
+                this.$store.dispatch('showInvoice', id)
+                .then(() => {
+                    this.setLineItems();
+                    this.table = false;
+                    this.edit = true;
+                });
             },
             deleteInvoice(id){ // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
                 if(confirm('Are you sure you want to delete this invoice?')){
@@ -478,8 +474,8 @@
                     }
                 }
                 this.cust_id = '';
-                this.edit = false;
                 this.$store.dispatch('commitInvoices');
+                this.edit = false;
                 this.table = true;
             }
         }

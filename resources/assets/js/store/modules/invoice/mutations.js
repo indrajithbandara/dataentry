@@ -99,5 +99,4 @@ export const setInvoiceData = (state, payload) => { // sets the invoice data to 
             state.invoice[key] = payload.data[key];
         }
     }
-    console.log("3. Invoice Data has been Set");
 };

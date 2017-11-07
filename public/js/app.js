@@ -42341,7 +42341,7 @@ module.exports = function spread(callback) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_invoice_invoices__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_invoice_invoices__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_users__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_products__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_customers__ = __webpack_require__(50);
@@ -43324,7 +43324,68 @@ var index_esm = {
 
 
 /***/ }),
-/* 44 */,
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(47);
+// Tasks
+
+
+
+var state = {
+    // Array for storing invoice collections
+    invoices: [],
+    /*
+    * THE INVOICE STATE:
+    * 1.) inv_num - Invoice Number | Type: Number
+    * 2.) date - Shipping Date | Type: Date
+    * 3.) customer - Customer Snap Shot | Type: Object 
+    * 4.) po_num - Purchase Order Number | Type: String
+    * 5.) line_items - List of line items | Type: Array of Objects 
+    * 6.) misc_char - Miscellaneous Charges | Type: Number
+    * 7.) ship_fee - Shipping Fees | Type: Number
+    * 8.) total - Total Price of all Line Items Extended Prices | Type: Number
+    * 9.) complete - Order is complete | Type: Boolean
+    * 10.) carrier - Shipping Carrier Name | Type: String
+    * 9.) memo - Alternate information for the invoice | Type: String
+    */
+    invoice: {
+        inv_num: 0,
+        date: '',
+        customer: {
+            id: '',
+            name: '',
+            shipto: '',
+            billto: '',
+            buyer: '',
+            email: '',
+            phone: '',
+            country: '',
+            disclaimer: '',
+            comments: ''
+        },
+        po_num: '',
+        line_items: [{ item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }],
+        misc_char: 0,
+        ship_fee: 0,
+        total: 0,
+        complete: 0,
+        carrier: '',
+        memo: ''
+    }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    state: state,
+    getters: __WEBPACK_IMPORTED_MODULE_0__getters__,
+    mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__,
+    actions: __WEBPACK_IMPORTED_MODULE_2__actions__
+});
+
+/***/ }),
 /* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -43358,6 +43419,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateMiscChar", function() { return updateMiscChar; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateTotal", function() { return updateTotal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetState", function() { return resetState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetLineItem", function() { return resetLineItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setInvoiceData", function() { return setInvoiceData; });
+var _this = this;
+
 var setInvoices = function setInvoices(state, payload) {
     state.invoices = payload;
 };
@@ -43420,13 +43485,7 @@ var resetState = function resetState(state) {
             }
         } else if (key == 'line_items') {
             for (var i = 0; i < 7; i++) {
-                for (var key in state.invoice.line_items[i]) {
-                    if (key == 'item' || key == 'product') {
-                        state.invoice.line_items[i][key] = '';
-                    } else {
-                        state.invoice.line_items[i][key] = 0;
-                    }
-                }
+                _this.resetLineItem(state, i);
             }
         } else if (key == 'complete') {
             state.invoice[key] = 0;
@@ -43435,6 +43494,39 @@ var resetState = function resetState(state) {
         }
     }
 }; // End of resetState
+
+// responsible for resetting line items individually or in a loop.
+var resetLineItem = function resetLineItem(state, payload) {
+    for (var key in state.invoice.line_items[payload]) {
+        if (key == 'item' || key == 'product') {
+            state.invoice.line_items[payload][key] = '';
+        } else {
+            state.invoice.line_items[payload][key] = 0;
+        }
+    }
+};
+
+var setInvoiceData = function setInvoiceData(state, payload) {
+    // sets the invoice data to the invoice model for updating
+    for (var key in payload.data) {
+        if (key === 'customer') {
+            var cust = JSON.parse(payload.data[key]);
+            for (var k in state.invoice.customer) {
+                state.invoice.customer[k] = cust[k];
+            }
+        } else if (key === 'line_items') {
+            var line = JSON.parse(payload.data[key]);
+            for (var i = 0; i < line.length; i++) {
+                for (var l in line[i]) {
+                    state.invoice.line_items[i][l] = line[i][l];
+                }
+            }
+        } else {
+            state.invoice[key] = payload.data[key];
+        }
+    }
+    console.log("3. Invoice Data has been Set");
+};
 
 /***/ }),
 /* 47 */
@@ -43447,6 +43539,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "commitMath", function() { return commitMath; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "commitTotal", function() { return commitTotal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNewInvoice", function() { return createNewInvoice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showInvoice", function() { return showInvoice; });
 // This function is responsible for retrieving invoice 
 // data and parsing the parts that need json parsing.
 // These parts specificlly are the customer information
@@ -43505,45 +43598,39 @@ payload = {
 }
 Action responsible for adding up the extended prices of each line item
 */
-var commitMath = function commitMath(_ref3, payload) {
-    var commit = _ref3.commit;
-
+var commitMath = function commitMath(context, payload) {
     if (payload.set === 0) {
-        commit('updateQty', { item: payload.item, event: payload.event });
+        context.commit('updateQty', { item: payload.item, event: payload.event });
     } else if (payload.set === 1) {
-        commit('updateUnit', { item: payload.item, event: payload.event });
+        context.commit('updateUnit', { item: payload.item, event: payload.event });
     } else {
         throw new Error('Unexpected:' + payload.set + '. Expecting 0 or 1 for commitMath action.');
     }
-    var extended = state.invoice.line_items[payload.item].qty * state.invoice.line_items[payload.item].unit;
-    commit('updateExtended', { item: payload.item, ext: extended });
+    var extended = context.state.invoice.line_items[payload.item].qty * context.state.invoice.line_items[payload.item].unit;
+    context.commit('updateExtended', { item: payload.item, ext: extended });
 }; // End of commitMath
 
 // Action responible for adding up all the extended prices, the shipping
 // fee and the misc charges. 
-var commitTotal = function commitTotal(_ref4) {
-    var commit = _ref4.commit;
-
+var commitTotal = function commitTotal(context) {
     var total = function total() {
         var t = 0;
         for (var i = 0; i < 7; i++) {
-            t += state.invoice.line_items[i].extended;
+            t += context.state.invoice.line_items[i].extended;
         }
-        t += parseFloat(state.invoice.ship_fee);
-        t += parseFloat(state.invoice.misc_char);
+        t += parseFloat(context.state.invoice.ship_fee);
+        t += parseFloat(context.state.invoice.misc_char);
         return t;
     };
     var totalToFloat = total();
-    commit('updateTotal', totalToFloat.toFixed(2));
+    context.commit('updateTotal', totalToFloat.toFixed(2));
 }; // End of commitTotal
 
 
 // Responsible for createing a new invoice and then committing 
 // the resetState mutations function. 
-var createNewInvoice = function createNewInvoice(_ref5) {
-    var commit = _ref5.commit;
-
-    var params = Object.assign({}, state.invoice);
+var createNewInvoice = function createNewInvoice(context) {
+    var params = Object.assign({}, context.state.invoice);
     axios({
         method: 'post',
         url: 'api/invoices/store',
@@ -43552,11 +43639,28 @@ var createNewInvoice = function createNewInvoice(_ref5) {
             return status >= 200 && status < 300;
         }
     }).then(function (response) {
-        commit('resetState');
+        context.commit('resetState');
     }).catch(function (error) {
         throw new Error('createNewInvoice action failed!' + error);
     });
 }; // End of createNewInvoice
+
+var showInvoice = function showInvoice(_ref3, payload) {
+    var commit = _ref3.commit;
+    // get request to show an invoice for editing
+    axios({
+        method: 'get',
+        url: 'api/invoices/' + payload,
+        validateStatus: function validateStatus(status) {
+            return status >= 200 && status < 300;
+        }
+    }).then(function (response) {
+        console.log('2. showInvoice data recieved.');
+        commit('setInvoiceData', response);
+    }).catch(function (error) {
+        console.log(error.message);
+    });
+};
 
 /***/ }),
 /* 48 */
@@ -47428,30 +47532,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
             if (action === 'hide') {
-                this.resetLineItem(num);
-                this.setTotal();
+                this.$store.commit('resetLineItem', num);
+                this.$store.dispatch('commitTotal');
             }
-        },
-        setInvoiceData: function setInvoiceData(response) {
-            // sets the invoice data to the invoice model for updating
-            for (var key in response.data) {
-                if (key === 'customer') {
-                    var cust = JSON.parse(response.data[key]);
-                    for (var k in this.invoice.customer) {
-                        this.invoice.customer[k] = cust[k];
-                    }
-                } else if (key === 'line_items') {
-                    var line = JSON.parse(response.data[key]);
-                    for (var i = 0; i < line.length; i++) {
-                        for (var l in line[i]) {
-                            this.invoice.line_items[i][l] = line[i][l];
-                        }
-                    }
-                } else {
-                    this.invoice[key] = response.data[key];
-                }
-            }
-            this.setLineItems();
         },
 
         /*
@@ -47460,10 +47543,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         * for that line item is set to true as well. The first button is set to false by default and will be shown if there is only one line item to show.
         */
         setLineItems: function setLineItems() {
+            console.log('4. Set Line items started');
             this.btn[0].button = false;
-            for (var i = 0; i < this.invoice.line_items.length; i++) {
-                for (var key in this.invoice.line_items[i]) {
-                    if (this.invoice.line_items[i][key] == null) {
+            for (var i = 0; i < 7; i++) {
+                for (var key in this.invoiceObj.line_items[i]) {
+                    if (this.invoiceObj.line_items[i][key] === null) {
                         this.btn[i - 1].button = true;
                         return;
                     } else if (i === 6) {
@@ -47474,6 +47558,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             }
+            console.log('5. Set Line items Finished.');
         },
         createInvoice: function createInvoice() {
             // post request to add an invoice
@@ -47499,20 +47584,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         showInvoice: function showInvoice(id) {
             // get request to show an invoice for editing
-            var self = this;
-            axios({
-                method: 'get',
-                url: 'api/invoices/' + id,
-                validateStatus: function validateStatus(status) {
-                    return status >= 200 && status < 300;
-                }
-            }).then(function (response) {
-                self.table = false;
-                self.setInvoiceData(response);
-            }).catch(function (error) {
-                console.log(error.message);
-            });
-            self.edit = true;
+            this.$store.dispatch('showInvoice', id);
+            console.log('1. Show invoice dispatched');
+            this.setLineItems();
+            console.log('6. setLineItems function finished.');
+            this.table = false;
+            this.edit = true;
+            console.log('7. table set to false and edit set to true.');
         },
         deleteInvoice: function deleteInvoice(id) {
             // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
@@ -49309,76 +49387,6 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(47);
-// Tasks
-
-
-
-var state = {
-    // Array for storing invoice collections
-    invoices: [],
-    /*
-    * THE INVOICE STATE:
-    * 1.) inv_num - Invoice Number | Type: Number
-    * 2.) date - Shipping Date | Type: Date
-    * 3.) customer - Customer Snap Shot | Type: Object 
-    * 4.) po_num - Purchase Order Number | Type: String
-    * 5.) line_items - List of line items | Type: Array of Objects 
-    * 6.) misc_char - Miscellaneous Charges | Type: Number
-    * 7.) ship_fee - Shipping Fees | Type: Number
-    * 8.) total - Total Price of all Line Items Extended Prices | Type: Number
-    * 9.) complete - Order is complete | Type: Boolean
-    * 10.) carrier - Shipping Carrier Name | Type: String
-    * 9.) memo - Alternate information for the invoice | Type: String
-    */
-    invoice: {
-        inv_num: 0,
-        date: '',
-        customer: {
-            id: '',
-            name: '',
-            shipto: '',
-            billto: '',
-            buyer: '',
-            email: '',
-            phone: '',
-            country: '',
-            disclaimer: '',
-            comments: ''
-        },
-        po_num: '',
-        line_items: [{ item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }, { item: '', product: '', qty: 0, unit: 0, extended: 0 }],
-        misc_char: 0,
-        ship_fee: 0,
-        total: 0,
-        complete: 0,
-        carrier: '',
-        memo: ''
-    }
-};
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    state: state,
-    getters: __WEBPACK_IMPORTED_MODULE_0__getters__,
-    mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__,
-    actions: __WEBPACK_IMPORTED_MODULE_2__actions__
-});
 
 /***/ })
 /******/ ]);

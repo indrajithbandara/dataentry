@@ -54,40 +54,40 @@ payload = {
 }
 Action responsible for adding up the extended prices of each line item
 */
-export const commitMath = ( { commit }, payload ) => {
+export const commitMath = (context, payload) => {
     if(payload.set === 0){
-        commit('updateQty', {item: payload.item, event: payload.event});
+        context.commit('updateQty', {item: payload.item, event: payload.event});
     } else if(payload.set === 1){
-        commit('updateUnit', {item: payload.item, event: payload.event});
+        context.commit('updateUnit', {item: payload.item, event: payload.event});
     } else {
         throw new Error('Unexpected:' + payload.set + '. Expecting 0 or 1 for commitMath action.');
     }
-    let extended = state.invoice.line_items[payload.item].qty * 
-                   state.invoice.line_items[payload.item].unit;
-    commit('updateExtended', {item: payload.item, ext: extended});
+    let extended = context.state.invoice.line_items[payload.item].qty * 
+                   context.state.invoice.line_items[payload.item].unit;
+    context.commit('updateExtended', {item: payload.item, ext: extended});
 }; // End of commitMath
 
 // Action responible for adding up all the extended prices, the shipping
 // fee and the misc charges. 
-export const commitTotal = ({ commit }) => {
+export const commitTotal = context => {
     let total = () => {
         let t = 0;
         for(let i = 0; i < 7; i++){
-            t += state.invoice.line_items[i].extended;
+            t += context.state.invoice.line_items[i].extended;
         }
-        t += parseFloat(state.invoice.ship_fee);
-        t += parseFloat(state.invoice.misc_char);
+        t += parseFloat(context.state.invoice.ship_fee);
+        t += parseFloat(context.state.invoice.misc_char);
         return t;
     }
     let totalToFloat = total();
-    commit('updateTotal', totalToFloat.toFixed(2));
+    context.commit('updateTotal', totalToFloat.toFixed(2));
 }; // End of commitTotal
 
 
 // Responsible for createing a new invoice and then committing 
 // the resetState mutations function. 
-export const createNewInvoice = ({ commit }) => {
-    let params = Object.assign({}, state.invoice);
+export const createNewInvoice = context => {
+    let params = Object.assign({}, context.state.invoice);
     axios({
         method: 'post',
         url: 'api/invoices/store',
@@ -96,8 +96,23 @@ export const createNewInvoice = ({ commit }) => {
             return status >= 200 && status < 300;
         }
     }).then((response) => {
-        commit('resetState');
+        context.commit('resetState');
     }).catch((error) => {
         throw new Error('createNewInvoice action failed!' + error);
     }); 
 }; // End of createNewInvoice
+
+export const showInvoice = ( { commit }, payload ) => { // get request to show an invoice for editing
+    axios({
+        method: 'get',
+        url: 'api/invoices/' + payload,
+        validateStatus(status) {
+            return status >= 200 && status < 300;
+        }
+    }).then((response) => {
+        console.log('2. showInvoice data recieved.')
+        commit('setInvoiceData', response);
+    }).catch((error) => {
+        console.log(error.message);
+    });
+};

@@ -396,29 +396,9 @@
                 }
                 this.$refs.ln_container.scrollTop = this.$refs.ln_container.scrollHeight;
                 if(action === 'hide'){
-                    this.resetLineItem(num);
-                    this.setTotal();
+                    this.$store.commit('resetLineItem', num);
+                    this.$store.dispatch('commitTotal');
                 }
-            },
-            setInvoiceData(response){ // sets the invoice data to the invoice model for updating
-                for(var key in response.data){
-                    if(key === 'customer'){
-                        var cust = JSON.parse(response.data[key]);
-                        for(var k in this.invoice.customer){
-                            this.invoice.customer[k] = cust[k];
-                        }
-                    } else if (key === 'line_items'){
-                        var line = JSON.parse(response.data[key]);
-                        for(var i = 0; i < line.length; i++){
-                            for(var l in line[i]){
-                                this.invoice.line_items[i][l] = line[i][l];
-                            }
-                        }
-                    } else {
-                        this.invoice[key] = response.data[key];
-                    }
-                }
-                this.setLineItems();
             },
             /*
             * This method is used when an invoice is shown for updating. After the model has been updated by the 'setInvoiceData' method, this method
@@ -426,10 +406,11 @@
             * for that line item is set to true as well. The first button is set to false by default and will be shown if there is only one line item to show.
             */
             setLineItems(){
+                console.log('4. Set Line items started');
                 this.btn[0].button = false;
-                for(var i = 0; i < this.invoice.line_items.length; i++){
-                    for(var key in this.invoice.line_items[i]){
-                        if(this.invoice.line_items[i][key] == null){
+                for(var i = 0; i < 7; i++){
+                    for(var key in this.invoiceObj.line_items[i]){
+                        if(this.invoiceObj.line_items[i][key] === null){
                             this.btn[i-1].button = true;
                             return;
                         } else if(i === 6){
@@ -440,6 +421,7 @@
                         }
                     }
                 }
+                console.log('5. Set Line items Finished.');
             },
             createInvoice(){ // post request to add an invoice
                 this.$store.dispatch('createNewInvoice');
@@ -462,20 +444,13 @@
                 });
             },
             showInvoice(id){ // get request to show an invoice for editing
-                let self = this;
-                axios({
-                    method: 'get',
-                    url: 'api/invoices/' + id,
-                    validateStatus(status) {
-                        return status >= 200 && status < 300;
-                    }
-                }).then((response) => {
-                    self.table = false;
-                    self.setInvoiceData(response);
-                }).catch((error) => {
-                    console.log(error.message);
-                });
-                self.edit = true;
+                this.$store.dispatch('showInvoice', id);
+                console.log('1. Show invoice dispatched');
+                this.setLineItems();
+                console.log('6. setLineItems function finished.');
+                this.table = false;
+                this.edit = true;
+                console.log('7. table set to false and edit set to true.');
             },
             deleteInvoice(id){ // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
                 if(confirm('Are you sure you want to delete this invoice?')){

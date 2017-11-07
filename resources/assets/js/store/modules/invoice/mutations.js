@@ -60,13 +60,7 @@ export const resetState = (state) => {
             }
         }else if(key == 'line_items'){
             for(var i = 0; i < 7; i++){
-                for(var key in state.invoice.line_items[i]){
-                    if(key == 'item' || key == 'product'){
-                        state.invoice.line_items[i][key] = '';
-                    }else{
-                        state.invoice.line_items[i][key] = 0;
-                    }
-                }
+                this.resetLineItem(state, i);
             }  
         }else if(key == 'complete'){
             state.invoice[key] = 0;
@@ -75,3 +69,35 @@ export const resetState = (state) => {
         }
     }
 }; // End of resetState
+
+// responsible for resetting line items individually or in a loop.
+export const resetLineItem = (state, payload) => {
+    for(var key in state.invoice.line_items[payload]){
+        if(key == 'item' || key == 'product'){
+            state.invoice.line_items[payload][key] = '';
+        }else{
+            state.invoice.line_items[payload][key] = 0;
+        }
+    }
+};
+
+export const setInvoiceData = (state, payload) => { // sets the invoice data to the invoice model for updating
+    for(var key in payload.data){
+        if(key === 'customer'){
+            var cust = JSON.parse(payload.data[key]);
+            for(var k in state.invoice.customer){
+                state.invoice.customer[k] = cust[k];
+            }
+        } else if (key === 'line_items'){
+            var line = JSON.parse(payload.data[key]);
+            for(var i = 0; i < line.length; i++){
+                for(var l in line[i]){
+                    state.invoice.line_items[i][l] = line[i][l];
+                }
+            }
+        } else {
+            state.invoice[key] = payload.data[key];
+        }
+    }
+    console.log("3. Invoice Data has been Set");
+};

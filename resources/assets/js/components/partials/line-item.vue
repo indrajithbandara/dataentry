@@ -8,7 +8,6 @@
                     :forVal="forValLi"
                     :inputName="'Line Item'" 
                     :inputClass="'form-control'" 
-                    :max="15" 
                     :item="itemNum" 
                 ></textFormLineItem>
             </div>
@@ -30,7 +29,6 @@
                 :forVal="forValQty" 
                 :inputName="'Qty'" 
                 :inputClass="'form-control'" 
-                :max="11"
                 :item="itemNum" 
                 :set="0" 
                 ></numberFormLineItem>
@@ -41,7 +39,6 @@
                 :forVal="forValUnit" 
                 :inputName="'Unit Price'" 
                 :inputClass="'form-control'" 
-                :max="6"
                 :item="itemNum" 
                 :set="1" 
                 ></numberFormLineItem>
@@ -54,7 +51,6 @@
                     :name="forValExt" 
                     min="0" step="0.01" 
                     class="form-control"  
-                    maxlength="8" 
                     readonly>
             </div>
         </div>

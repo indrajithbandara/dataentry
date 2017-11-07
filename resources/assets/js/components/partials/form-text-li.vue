@@ -1,17 +1,5 @@
 <template>
-    <div class="form-group" v-if="max">
-        <label :for="forVal">{{ inputName }}</label>
-        <input 
-            :value="dataModel" 
-            type="text" 
-            :name="forVal" 
-            @keyup="updateModel" 
-            :class="inputClass" 
-            :maxlength="max"
-            required>
-        <p class="alert alert-warning" v-if="dataModel.length == max">{{ max }} character limit reached!</p>
-    </div>
-    <div class="form-group" v-else>
+    <div class="form-group">
         <label :for="forVal">{{ inputName }}</label>
         <input 
             :value="dataModel" 
@@ -28,7 +16,6 @@
             forVal: String,
             inputName: String,
             inputClass: String,
-            max: Number,
             item: Number
         },
         methods: {

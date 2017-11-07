@@ -43539,6 +43539,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "commitTotal", function() { return commitTotal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNewInvoice", function() { return createNewInvoice; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showInvoice", function() { return showInvoice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateInvoice", function() { return updateInvoice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteInvoice", function() { return deleteInvoice; });
 // This function is responsible for retrieving invoice 
 // data and parsing the parts that need json parsing.
 // These parts specificlly are the customer information
@@ -43669,6 +43671,43 @@ var showInvoice = function showInvoice(_ref3, payload) {
             throw new Error('show invoice action failed!' + error);
             reject();
         });
+    });
+};
+
+var updateInvoice = function updateInvoice(context, payload) {
+    // patch request to update an invoice
+    return new Promise(function (resolve, reject) {
+        var params = Object.assign({}, context.state.invoice);
+        axios({
+            method: 'patch',
+            url: 'api/invoices/' + payload,
+            data: params,
+            validateStatus: function validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then(function () {
+            context.commit('resetState');
+            resolve();
+        }).catch(function (error) {
+            throw new Error('updateInvoice failed! ' + error);
+            reject();
+        });
+    });
+};
+
+var deleteInvoice = function deleteInvoice(context, payload) {
+    // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
+    return new Promise(function (resolve, reject) {
+        if (confirm('Are you sure you want to delete this invoice?')) {
+            axios.delete('api/invoices/' + payload).then(function () {
+                resolve();
+            }).catch(function (error) {
+                throw new Error('deleteInvoice failed! ' + error);
+                reject();
+            });
+        } else {
+            return;
+        }
     });
 };
 
@@ -47427,6 +47466,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         LineItem: __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue___default.a
     },
     computed: {
+        // GETTERS
         user: function user() {
             return this.$store.getters.getUser;
         },
@@ -47444,26 +47484,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        getUser: function getUser() {
-            this.$store.dispatch('commitPermission');
-        },
-        getCustomers: function getCustomers() {
-            this.$store.dispatch('commitCustomers');
-        },
-        getProducts: function getProducts() {
-            this.$store.dispatch('commitProducts');
-        },
-        getInvoices: function getInvoices() {
-            this.$store.dispatch('commitInvoices');
-        },
+        // MUTATIONS
         updateInvNum: function updateInvNum(e) {
             this.$store.commit('updateInvNum', e.target.value);
         },
         updateDate: function updateDate(e) {
             this.$store.commit('updateDate', e.target.value);
-        },
-        setCustomerInfo: function setCustomerInfo(id) {
-            this.$store.dispatch('commitOneCustomer', id);
         },
         updatePo: function updatePo(e) {
             this.$store.commit('updatePo', e.target.value);
@@ -47483,6 +47509,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateMemo: function updateMemo(e) {
             this.$store.commit('updateMemo', e.target.value);
         },
+
+        // ACTIONS
+        getUser: function getUser() {
+            this.$store.dispatch('commitPermission');
+        },
+        getCustomers: function getCustomers() {
+            this.$store.dispatch('commitCustomers');
+        },
+        getProducts: function getProducts() {
+            this.$store.dispatch('commitProducts');
+        },
+        getInvoices: function getInvoices() {
+            this.$store.dispatch('commitInvoices');
+        },
+        setCustomerInfo: function setCustomerInfo(id) {
+            this.$store.dispatch('commitOneCustomer', id);
+        },
+
+        // METHODS
         switchToTable: function switchToTable() {
             // prop: toTable | component: <viewAddBtns>
             this.table = true;
@@ -47573,47 +47618,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // post request to add an invoice
             this.$store.dispatch('createNewInvoice').then(function () {
                 _this.resetValues();
+            }).catch(function (error) {
+                throw new Error('Something went wrong with the dispatch for createNewInvoice');
             });
         },
         updateInvoice: function updateInvoice(id) {
+            var _this2 = this;
+
             // patch request to update an invoice
-            var self = this;
-            var params = Object.assign({}, self.invoice);
-            axios({
-                method: 'patch',
-                url: 'api/invoices/' + id,
-                data: params,
-                validateStatus: function validateStatus(status) {
-                    return status >= 200 && status < 300;
-                }
-            }).then(function () {
-                self.resetValues();
+            this.$store.dispatch('updateInvoice', id).then(function () {
+                _this2.resetValues();
             }).catch(function (error) {
-                console.log(error.message);
+                throw new Error('Something went wrong with the dispatch for updateInvoice');
             });
         },
         showInvoice: function showInvoice(id) {
-            var _this2 = this;
+            var _this3 = this;
 
             // get request to show an invoice for editing
             this.$store.dispatch('showInvoice', id).then(function () {
-                _this2.setLineItems();
-                _this2.table = false;
-                _this2.edit = true;
+                _this3.setLineItems();
+                _this3.table = false;
+                _this3.edit = true;
+            }).catch(function (error) {
+                throw new Error('Something went wrong with the dispatch for showInvoice');
             });
         },
         deleteInvoice: function deleteInvoice(id) {
-            // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
-            if (confirm('Are you sure you want to delete this invoice?')) {
-                var self = this;
-                axios.delete('api/invoices/' + id).then(function (response) {
-                    self.getInvoices();
-                }).catch(function (error) {
-                    console.log(error.message);
-                });
-            } else {
-                return;
-            }
+            var _this4 = this;
+
+            this.$store.dispatch('deleteInvoice', id).then(function () {
+                _this4.$store.dispatch('commitInvoices');
+            }).catch(function (error) {
+                throw new Error('Something went wrong with the dispatch for deleteInvoice');
+            });
         },
         resetValues: function resetValues() {
             // After form is submitted, values are reset to either 0 or empty string
@@ -48191,12 +48229,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": _vm.forVal
     }
   }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.dataModel),
-      expression: "dataModel"
-    }],
     class: _vm.inputClass,
     attrs: {
       "number": "",
@@ -48204,14 +48236,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": _vm.forVal
     },
     domProps: {
-      "value": (_vm.dataModel)
+      "value": _vm.dataModel
     },
     on: {
-      "keyup": _vm.updateModel,
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.dataModel = $event.target.value
-      }
+      "keyup": _vm.updateModel
     }
   })])
 },staticRenderFns: []}
@@ -48449,10 +48477,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 // imports
 
@@ -48534,18 +48558,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -48553,7 +48565,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         forVal: String,
         inputName: String,
         inputClass: String,
-        max: Number,
         item: Number
     },
     methods: {
@@ -48571,29 +48582,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return (_vm.max) ? _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": _vm.forVal
-    }
-  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    class: _vm.inputClass,
-    attrs: {
-      "type": "text",
-      "name": _vm.forVal,
-      "maxlength": _vm.max,
-      "required": ""
-    },
-    domProps: {
-      "value": _vm.dataModel
-    },
-    on: {
-      "keyup": _vm.updateModel
-    }
-  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
+  return _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -48682,21 +48671,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -48704,7 +48678,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         forVal: String,
         inputName: String,
         inputClass: String,
-        max: Number,
         item: Number, // array index for line item
         set: Number // 0 or 1
     },
@@ -48727,7 +48700,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return (_vm.max) ? _c('div', {
+  return _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -48740,8 +48713,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "number",
       "name": _vm.forVal,
       "min": "0",
-      "step": "1",
-      "maxlength": _vm.max,
+      "step": "0.01",
       "required": ""
     },
     domProps: {
@@ -48750,41 +48722,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "keyup": _vm.updateModel,
       "blur": _vm.updateTotal
-    }
-  }), _vm._v(" "), (_vm.dataModel.length == _vm.max) ? _c('p', {
-    staticClass: "alert alert-warning"
-  }, [_vm._v(_vm._s(_vm.max) + " character limit reached!")]) : _vm._e()]) : _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": _vm.forVal
-    }
-  }, [_vm._v(_vm._s(_vm.inputName))]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.dataModel),
-      expression: "dataModel"
-    }],
-    class: _vm.inputClass,
-    attrs: {
-      "number": "",
-      "type": "number",
-      "name": _vm.forVal,
-      "min": "0",
-      "step": "1",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.dataModel)
-    },
-    on: {
-      "keyup": _vm.updateModel,
-      "blur": _vm.updateTotal,
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.dataModel = $event.target.value
-      }
     }
   })])
 },staticRenderFns: []}
@@ -48917,7 +48854,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "forVal": _vm.forValLi,
       "inputName": 'Line Item',
       "inputClass": 'form-control',
-      "max": 15,
       "item": _vm.itemNum
     }
   })], 1), _vm._v(" "), _c('div', {
@@ -48940,7 +48876,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "forVal": _vm.forValQty,
       "inputName": 'Qty',
       "inputClass": 'form-control',
-      "max": 11,
       "item": _vm.itemNum,
       "set": 0
     }
@@ -48952,7 +48887,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "forVal": _vm.forValUnit,
       "inputName": 'Unit Price',
       "inputClass": 'form-control',
-      "max": 6,
       "item": _vm.itemNum,
       "set": 1
     }
@@ -48970,7 +48904,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": _vm.forValExt,
       "min": "0",
       "step": "0.01",
-      "maxlength": "8",
       "readonly": ""
     },
     domProps: {
@@ -49056,7 +48989,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "submit": function($event) {
         $event.preventDefault();
-        _vm.edit ? _vm.updateInvoice(_vm.invoice.id) : _vm.createInvoice()
+        _vm.edit ? _vm.updateInvoice(_vm.invoiceObj.id) : _vm.createInvoice()
       }
     }
   }, [_c('div', {

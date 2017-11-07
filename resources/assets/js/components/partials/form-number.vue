@@ -13,7 +13,7 @@
     <div class="form-group" v-else>
         <label :for="forVal">{{ inputName }}</label>
         <input 
-            v-model="dataModel" 
+            :value="dataModel" 
             number type="number" 
             :name="forVal" 
             @keyup="updateModel" 

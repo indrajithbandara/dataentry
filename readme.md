@@ -31,12 +31,19 @@
 ~ composer install
 ~ npm install
 ```
-5. Run these commands to generate the nessesary keys
+5. Migrate the database files.
+```bash
+~ php artisan migrate
+```
+6. Run these commands to generate the nessesary keys
 ```bash
 ~ php artisan key:generate
 ~ php artisan passport:keys
 ```
-6. Serve up the application.
+7. Serve up the application.
 ```bash
 ~ php artisan serve
 ```
+
+Once you have successfully opened the home page on the local host server. Go to /register and make an account. 
+This should log you into the application. 

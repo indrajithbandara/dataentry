@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class InvoicesController extends Controller
@@ -26,7 +27,7 @@ class InvoicesController extends Controller
      */
     public function getInvoices()
     {
-        return Invoice::all();
+        return Invoice::all()->sortByDesc('date')->values();
     }
 
     /**
@@ -129,6 +130,36 @@ class InvoicesController extends Controller
     {
         // $this->authorize('delete', $id);
         return Invoice::destroy($id);
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+    */
+    public function betweenDates(Request $request){
+        $start = $request->input(['start']);
+        $end = $request->input(['end']);
+        $invoices = DB::table('invoices')
+                    ->whereBetween('date', 
+                        [
+                            $start,
+                            $end
+                        ]
+                    )->get();
+        return $invoices;
+    }
+
+        /**
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+    */
+    public function byInvoiceNum(Request $request){
+        $searchResult = DB::table('invoices')
+                            ->where('inv_num', $request->input(['inv_num_search']))
+                            ->get();
+        return $searchResult;
     }
 }
 

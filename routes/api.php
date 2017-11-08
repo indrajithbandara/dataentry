@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     //====================== Invoices Api ====================== //
     Route::get('invoices', 'InvoicesController@getInvoices'); // Get all Invoices
     Route::get('invoices/{id}', 'InvoicesController@getOne'); // Get One Invoice for Editing
+    Route::get('invoices/report', 'InvoicesController@betweenDates'); // Get the invoices between two given dates
+    Route::get('invoices/search', 'InvoicesController@byInvoiceNum'); // searches for an invoice by inv_num
     Route::post('invoices/store', 'InvoicesController@addInvoice'); // Add A Single Invoice
     Route::patch('invoices/{id}', 'InvoicesController@updateInvoice'); // Update a Single Invoice
     Route::delete('invoices/{id}', 'InvoicesController@deleteInvoice'); // Delete a Single Invoice

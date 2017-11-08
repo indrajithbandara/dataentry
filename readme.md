@@ -3,21 +3,44 @@
 <p>The project is currently in session, It's main purpose is manage product, invoice and shipping information.</p>
 
 ## Current Features
-<ol>
-    <li>Users Interface</li>
-    <li>Customers Interface</li>
-    <li>Products Interface</li>
-</ol>
+1. Users Interface
+2. Customers Interface
+3. Products Interface
+
 
 ## Features In Progress
-<ol>
-    <li>Invoiceing Interface</li>
-    <li>Company / Settings Interface</li>
-</ol>
+1. Invoiceing Interface
+2. Company / Settings Interface
 
 ## Features To Come
-<ol>
-    <li>Traveler Interface</li>
-    <li>Product Department Chart</li>
-    <li>Inventory Interface</li>
-</ol>
+1. Traveler Interface
+2. Product Department Chart
+3. Inventory Interface
+
+## General SetUp
+1. Rename the .env.example file to .env.
+2. Fill in the following in the .env file.
+   - DB_DATABASE=
+   - DB_USERNAME=
+   - DB_PASSWORD=
+3. Create a database with the name you put for the DB_DATABASE config
+4. Run these commands to install all the needed packages.
+```
+
+~ composer install
+~ npm install
+
+```
+5. Run these commands to generate the nessesary keys
+```
+
+~ php artisan key:generate
+~ php artisan passport:keys
+
+```
+6. Serve up the application.
+```
+
+~ php artisan serve
+
+```

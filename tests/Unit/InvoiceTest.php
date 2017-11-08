@@ -13,8 +13,9 @@ class InvoiceTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function dataReport()
     {
-        $this->assertTrue(true);
+        $response = $this->get('api/invoices/report');
+        $response->assertStatus(200);
     }
 }

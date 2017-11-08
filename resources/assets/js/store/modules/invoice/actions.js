@@ -163,3 +163,27 @@ export const deleteInvoice = (context, payload) => { // delete request to delete
         }
     });
 };
+
+export const dateRangeSearch = ({ commit }) => {
+    return new Promise((resolve, reject) => {
+        axios.get('api/invoices/report')
+        .then((response) => {
+            var newData = () => {
+                var data = response.data;
+                for(var i = 0; i < data.length; i++){
+                    for(var key in data[i]){
+                        if(key === 'customer'){
+                            data[i].customer = JSON.parse(data[i].customer);
+                        } else if (key === 'line_items') {
+                            data[i].line_items = JSON.parse(data[i].line_items);
+                        }
+                    }
+                }
+                return data;
+            }
+            commit('setInvoices', newData());
+        }).catch((error) => {
+            throw new Error('commitInvoices action failed!!! ' + error);
+        });
+    });
+};

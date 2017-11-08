@@ -239,8 +239,29 @@
             </form>
         </div>
         <!-- End of Invoice Form -->
-        <br />
-        <br />
+        <hr class="dashed">
+        <div>
+            <h2 class="text-center">Search</h2>
+            <form action="#" @submit.prevent="dateRangeSearch()">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="form-group">
+                            <label for="start">Start Date</label>
+                            <input type="date" name="start" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="form-group">
+                            <label for="end">End Date</label>
+                            <input type="date" name="end" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <button class="btn btn-primary full-width btn-margin" type="submit" name="dateSearchBtn">Get Report</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -344,6 +365,15 @@
             getInvoices(){ this.$store.dispatch('commitInvoices'); },
             setCustomerInfo(id) { this.$store.dispatch('commitOneCustomer', id); },
             // METHODS
+            dateRangeSearch() {
+                this.$store.dispatch('dateRangeSearch')
+                .then(() => {
+                    this.getInvoices();
+                })
+                .catch((error) => {
+                    throw new Error("Something went wrong with the date search." + error);
+                });
+            },
             switchToTable(){ // prop: toTable | component: <viewAddBtns>
                 this.table = true;
             },
@@ -456,7 +486,7 @@
             deleteInvoice(id){
                 this.$store.dispatch('deleteInvoice', id)
                 .then(() => {
-                    this.$store.dispatch('commitInvoices');
+                    this.getInvoices();
                 })
                 .catch((error) => {
                     throw new Error('Something went wrong with the dispatch for deleteInvoice');
@@ -485,5 +515,8 @@
 <style scoped>
     .cust_top_margin {
         margin-top: 32px;
+    }
+    .btn-margin {
+        margin-top: 27px;
     }
 </style>

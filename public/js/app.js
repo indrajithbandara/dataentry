@@ -43541,6 +43541,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showInvoice", function() { return showInvoice; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateInvoice", function() { return updateInvoice; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteInvoice", function() { return deleteInvoice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dateRangeSearch", function() { return dateRangeSearch; });
 // This function is responsible for retrieving invoice 
 // data and parsing the parts that need json parsing.
 // These parts specificlly are the customer information
@@ -43708,6 +43709,31 @@ var deleteInvoice = function deleteInvoice(context, payload) {
         } else {
             return;
         }
+    });
+};
+
+var dateRangeSearch = function dateRangeSearch(_ref4) {
+    var commit = _ref4.commit;
+
+    return new Promise(function (resolve, reject) {
+        axios.get('api/invoices/report').then(function (response) {
+            var newData = function newData() {
+                var data = response.data;
+                for (var i = 0; i < data.length; i++) {
+                    for (var key in data[i]) {
+                        if (key === 'customer') {
+                            data[i].customer = JSON.parse(data[i].customer);
+                        } else if (key === 'line_items') {
+                            data[i].line_items = JSON.parse(data[i].line_items);
+                        }
+                    }
+                }
+                return data;
+            };
+            commit('setInvoices', newData());
+        }).catch(function (error) {
+            throw new Error('commitInvoices action failed!!! ' + error);
+        });
     });
 };
 
@@ -47116,7 +47142,7 @@ exports = module.exports = __webpack_require__(4)(undefined);
 
 
 // module
-exports.push([module.i, "\n.cust_top_margin[data-v-d2ec6014] {\n    margin-top: 32px;\n}\n", ""]);
+exports.push([module.i, "\n.cust_top_margin[data-v-d2ec6014] {\n    margin-top: 32px;\n}\n.btn-margin[data-v-d2ec6014] {\n    margin-top: 27px;\n}\n", ""]);
 
 // exports
 
@@ -47143,6 +47169,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_fee_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_fee_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -47528,6 +47575,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         // METHODS
+        dateRangeSearch: function dateRangeSearch() {
+            var _this = this;
+
+            this.$store.dispatch('dateRangeSearch').then(function () {
+                _this.getInvoices();
+            }).catch(function (error) {
+                throw new Error("Something went wrong with the date search." + error);
+            });
+        },
         switchToTable: function switchToTable() {
             // prop: toTable | component: <viewAddBtns>
             this.table = true;
@@ -47613,42 +47669,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         createInvoice: function createInvoice() {
-            var _this = this;
+            var _this2 = this;
 
             // post request to add an invoice
             this.$store.dispatch('createNewInvoice').then(function () {
-                _this.resetValues();
+                _this2.resetValues();
             }).catch(function (error) {
                 throw new Error('Something went wrong with the dispatch for createNewInvoice');
             });
         },
         updateInvoice: function updateInvoice(id) {
-            var _this2 = this;
+            var _this3 = this;
 
             // patch request to update an invoice
             this.$store.dispatch('updateInvoice', id).then(function () {
-                _this2.resetValues();
+                _this3.resetValues();
             }).catch(function (error) {
                 throw new Error('Something went wrong with the dispatch for updateInvoice');
             });
         },
         showInvoice: function showInvoice(id) {
-            var _this3 = this;
+            var _this4 = this;
 
             // get request to show an invoice for editing
             this.$store.dispatch('showInvoice', id).then(function () {
-                _this3.setLineItems();
-                _this3.table = false;
-                _this3.edit = true;
+                _this4.setLineItems();
+                _this4.table = false;
+                _this4.edit = true;
             }).catch(function (error) {
                 throw new Error('Something went wrong with the dispatch for showInvoice');
             });
         },
         deleteInvoice: function deleteInvoice(id) {
-            var _this4 = this;
+            var _this5 = this;
 
             this.$store.dispatch('deleteInvoice', id).then(function () {
-                _this4.$store.dispatch('commitInvoices');
+                _this5.getInvoices();
             }).catch(function (error) {
                 throw new Error('Something went wrong with the dispatch for deleteInvoice');
             });
@@ -49310,8 +49366,62 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "editMode": _vm.edit,
       "name": _vm.name = 'Invoice'
     }
-  })], 1)]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br')], 1)
-},staticRenderFns: []}
+  })], 1)]), _vm._v(" "), _c('hr', {
+    staticClass: "dashed"
+  }), _vm._v(" "), _c('div', [_c('h2', {
+    staticClass: "text-center"
+  }, [_vm._v("Search")]), _vm._v(" "), _c('form', {
+    attrs: {
+      "action": "#"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.dateRangeSearch()
+      }
+    }
+  }, [_vm._m(0)])])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "start"
+    }
+  }, [_vm._v("Start Date")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "type": "date",
+      "name": "start"
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "end"
+    }
+  }, [_vm._v("End Date")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "type": "date",
+      "name": "end"
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-12 col-sm-4"
+  }, [_c('button', {
+    staticClass: "btn btn-primary full-width btn-margin",
+    attrs: {
+      "type": "submit",
+      "name": "dateSearchBtn"
+    }
+  }, [_vm._v("Get Report")])])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

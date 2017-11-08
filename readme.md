@@ -20,27 +20,23 @@
 ## General SetUp
 1. Rename the .env.example file to .env.
 2. Fill in the following in the .env file.
-   - DB_DATABASE=
-   - DB_USERNAME=
-   - DB_PASSWORD=
+```
+   DB_DATABASE=dbname
+   DB_USERNAME=root
+   DB_PASSWORD=
+```
 3. Create a database with the name you put for the DB_DATABASE config
 4. Run these commands to install all the needed packages.
-```
-
+```bash
 ~ composer install
 ~ npm install
-
 ```
 5. Run these commands to generate the nessesary keys
-```
-
+```bash
 ~ php artisan key:generate
 ~ php artisan passport:keys
-
 ```
 6. Serve up the application.
-```
-
+```bash
 ~ php artisan serve
-
 ```

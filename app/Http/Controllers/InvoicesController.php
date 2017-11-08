@@ -139,13 +139,12 @@ class InvoicesController extends Controller
     */
     public function betweenDates(Request $request)
     {
-        var_dump($request);
-        // $start = $request->input(['start']);
-        // $end = $request->input(['end']);
-        // $invoices = DB::table('invoices')
-        //             ->whereBetween('date', [$start, $end])
-        //             ->get();
-        // return $invoices;
+        $start = $request->input(['start']);
+        $end = $request->input(['end']);
+        $invoices = DB::table('invoices')
+                    ->whereBetween('date', [$start, $end])
+                    ->get();
+        return $invoices;
     }
 
     /**

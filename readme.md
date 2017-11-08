@@ -45,5 +45,5 @@
 ~ php artisan serve
 ```
 
-Once you have successfully opened the home page on the local host server. Go to /register and make an account. 
+Once you have successfully opened the home page on the local host server, go to /register and make an account. 
 This should log you into the application. 

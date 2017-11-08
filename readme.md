@@ -16,6 +16,7 @@
 1. Traveler Interface
 2. Product Department Chart
 3. Inventory Interface
+4. Dashboard
 
 ## General SetUp
 1. Rename the .env.example file to .env.

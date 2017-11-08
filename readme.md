@@ -45,6 +45,10 @@
 ```bash
 ~ php artisan serve
 ```
+8. If you are making changes to any of the javascript files, run
+```bash
+~ npm run watch
+```
 
 Once you have successfully opened the home page on the local host server, go to /register and make an account. 
 This should log you into the application. 

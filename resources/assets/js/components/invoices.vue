@@ -7,6 +7,20 @@
             :toForm="switchToForm"
         ></ViewAddBtns>
         <hr>
+        <form action="#" @submit.prevent="searchInv()">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8">
+                    <div class="form-group">
+                        <input type="search" name="search" class="form-control" placeholder="Search...">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                        <button class="btn btn-default full-width">Search</button>
+                    </div>
+                </div>
+            </div>
+        </form>
         <!-- Start of Invoice Table -->
         <div v-show="table">
             <!-- Invoices Table -->
@@ -240,28 +254,26 @@
         </div>
         <!-- End of Invoice Form -->
         <hr class="dashed">
-        <div>
-            <h2 class="text-center">Search</h2>
-            <form action="#" @submit.prevent="dateRangeSearch()">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-4">
-                        <div class="form-group">
-                            <label for="start">Start Date</label>
-                            <input type="date" name="start" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <div class="form-group">
-                            <label for="end">End Date</label>
-                            <input type="date" name="end" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <button class="btn btn-primary full-width btn-margin" type="submit" name="dateSearchBtn">Get Report</button>
+        <h2 class="text-center">Report</h2>
+        <form action="#" @submit.prevent="dateRangeSearch()" class="space-below">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                        <label for="start">Start Date</label>
+                        <input type="date" name="start" class="form-control">
                     </div>
                 </div>
-            </form>
-        </div>
+                <div class="col-xs-12 col-sm-4">
+                    <div class="form-group">
+                        <label for="end">End Date</label>
+                        <input type="date" name="end" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <button class="btn btn-primary full-width btn-margin" type="submit" name="dateSearchBtn">Get Report</button>
+                </div>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -518,5 +530,8 @@
     }
     .btn-margin {
         margin-top: 27px;
+    }
+    .space-below {
+        margin-bottom: 50px;
     }
 </style>

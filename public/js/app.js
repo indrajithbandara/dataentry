@@ -49571,12 +49571,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.end = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c('a', {
+  })])]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), (_vm.search) ? _c('a', {
     staticClass: "btn btn-primary wide",
     attrs: {
       "href": 'pdf/report/invoice'
     }
-  }, [_vm._v("Print Report")])]) : _vm._e()], 1)
+  }, [_vm._v("Print Report")]) : _vm._e()]) : _vm._e()], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-xs-12 col-sm-4"

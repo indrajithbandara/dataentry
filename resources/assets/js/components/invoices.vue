@@ -278,7 +278,7 @@
                     </div>
                 </div>
             </form>
-            <a :href="'pdf/report/invoice'" class="btn btn-primary wide">Print Report</a>
+            <a v-if="search" :href="'pdf/report/invoice'" class="btn btn-primary wide">Print Report</a>
         </div>
     </div>
 </template>

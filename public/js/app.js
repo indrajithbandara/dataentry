@@ -43542,6 +43542,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateInvoice", function() { return updateInvoice; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteInvoice", function() { return deleteInvoice; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dateRangeSearch", function() { return dateRangeSearch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchInv", function() { return searchInv; });
 // This function is responsible for retrieving invoice 
 // data and parsing the parts that need json parsing.
 // These parts specificlly are the customer information
@@ -43712,11 +43713,17 @@ var deleteInvoice = function deleteInvoice(context, payload) {
     });
 };
 
-var dateRangeSearch = function dateRangeSearch(_ref4) {
+var dateRangeSearch = function dateRangeSearch(_ref4, payload) {
     var commit = _ref4.commit;
 
     return new Promise(function (resolve, reject) {
-        axios.get('api/invoices/report').then(function (response) {
+        axios({
+            method: 'get',
+            url: 'api/invoices/report/' + payload.start + '/' + payload.end,
+            validateStatus: function validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then(function (response) {
             var newData = function newData() {
                 var data = response.data;
                 for (var i = 0; i < data.length; i++) {
@@ -43733,6 +43740,37 @@ var dateRangeSearch = function dateRangeSearch(_ref4) {
             commit('setInvoices', newData());
         }).catch(function (error) {
             throw new Error('commitInvoices action failed!!! ' + error);
+        });
+    });
+};
+
+var searchInv = function searchInv(_ref5, payload) {
+    var commit = _ref5.commit;
+
+    return new Promise(function (resolve, reject) {
+        axios({
+            method: 'get',
+            url: 'api/invoices/search/' + payload,
+            validateStatus: function validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then(function (response) {
+            var newData = function newData() {
+                var data = response.data;
+                for (var i = 0; i < data.length; i++) {
+                    for (var key in data[i]) {
+                        if (key === 'customer') {
+                            data[i].customer = JSON.parse(data[i].customer);
+                        } else if (key === 'line_items') {
+                            data[i].line_items = JSON.parse(data[i].line_items);
+                        }
+                    }
+                }
+                return data;
+            };
+            commit('setInvoices', newData());
+        }).catch(function (error) {
+            throw new Error('searchInv failed!' + error);
         });
     });
 };
@@ -47142,7 +47180,7 @@ exports = module.exports = __webpack_require__(4)(undefined);
 
 
 // module
-exports.push([module.i, "\n.cust_top_margin[data-v-d2ec6014] {\n    margin-top: 32px;\n}\n.btn-margin[data-v-d2ec6014] {\n    margin-top: 27px;\n}\n.space-below[data-v-d2ec6014] {\n    margin-bottom: 50px;\n}\n", ""]);
+exports.push([module.i, "\n.cust_top_margin[data-v-d2ec6014] {\n    margin-top: 32px;\n}\n.btn-margin[data-v-d2ec6014] {\n    margin-top: 27px;\n}\n.space-below[data-v-d2ec6014] {\n    margin-bottom: 20px;\n}\n.wide[data-v-d2ec6014] {\n    width: 100%;\n}\n", ""]);
 
 // exports
 
@@ -47448,6 +47486,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -47463,6 +47507,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             cust_id: '',
+            search_inv: '',
+            start: '',
+            end: '',
             /*
             * EDIT MODE:
             * if edit = false, the invoice form is hidden and the invoice table is displayed.
@@ -47471,6 +47518,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             * Methods Involved: showInvoice() | resetValues()
             */
             edit: false,
+            search: false,
             /*
             * INVOICE TABLE AND ADDING AN INVOICE:
             *
@@ -47587,14 +47635,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         // METHODS
-        dateRangeSearch: function dateRangeSearch() {
+        searchInv: function searchInv(term) {
             var _this = this;
 
-            this.$store.dispatch('dateRangeSearch').then(function () {
+            this.search = true;
+            this.start = '';
+            this.end = '';
+            this.$store.dispatch('searchInv', term).then(function () {
                 _this.getInvoices();
+            }).catch(function (error) {
+                throw new Error("Something went wrong when searching for your invoice." + error);
+            });
+        },
+        dateRangeSearch: function dateRangeSearch(start, end) {
+            var _this2 = this;
+
+            this.search = true;
+            this.search_inv = '';
+            this.$store.dispatch('dateRangeSearch', { start: start, end: end }).then(function () {
+                _this2.getInvoices();
             }).catch(function (error) {
                 throw new Error("Something went wrong with the date search." + error);
             });
+        },
+        cancelSearch: function cancelSearch() {
+            this.search_inv = '';
+            this.start = '';
+            this.end = '';
+            this.search = false;
+            this.getInvoices();
         },
         switchToTable: function switchToTable() {
             // prop: toTable | component: <viewAddBtns>
@@ -47681,42 +47750,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         createInvoice: function createInvoice() {
-            var _this2 = this;
+            var _this3 = this;
 
             // post request to add an invoice
             this.$store.dispatch('createNewInvoice').then(function () {
-                _this2.resetValues();
+                _this3.resetValues();
             }).catch(function (error) {
                 throw new Error('Something went wrong with the dispatch for createNewInvoice');
             });
         },
         updateInvoice: function updateInvoice(id) {
-            var _this3 = this;
+            var _this4 = this;
 
             // patch request to update an invoice
             this.$store.dispatch('updateInvoice', id).then(function () {
-                _this3.resetValues();
+                _this4.resetValues();
             }).catch(function (error) {
                 throw new Error('Something went wrong with the dispatch for updateInvoice');
             });
         },
         showInvoice: function showInvoice(id) {
-            var _this4 = this;
+            var _this5 = this;
 
             // get request to show an invoice for editing
             this.$store.dispatch('showInvoice', id).then(function () {
-                _this4.setLineItems();
-                _this4.table = false;
-                _this4.edit = true;
+                _this5.setLineItems();
+                _this5.table = false;
+                _this5.edit = true;
             }).catch(function (error) {
                 throw new Error('Something went wrong with the dispatch for showInvoice');
             });
         },
         deleteInvoice: function deleteInvoice(id) {
-            var _this5 = this;
+            var _this6 = this;
 
             this.$store.dispatch('deleteInvoice', id).then(function () {
-                _this5.getInvoices();
+                _this6.getInvoices();
             }).catch(function (error) {
                 throw new Error('Something went wrong with the dispatch for deleteInvoice');
             });
@@ -48999,17 +49068,56 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "toTable": _vm.switchToTable,
       "toForm": _vm.switchToForm
     }
-  }), _vm._v(" "), _c('hr'), _vm._v(" "), _c('form', {
+  }), _vm._v(" "), _c('hr'), _vm._v(" "), (!_vm.edit && _vm.table) ? _c('div', [_c('form', {
     attrs: {
       "action": "#"
     },
     on: {
       "submit": function($event) {
         $event.preventDefault();
-        _vm.searchInv()
+        _vm.searchInv(_vm.search_inv)
       }
     }
-  }, [_vm._m(0)]), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-sm-8"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.search_inv),
+      expression: "search_inv"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "search",
+      "placeholder": "Invoice #"
+    },
+    domProps: {
+      "value": (_vm.search_inv)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.search_inv = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('button', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.search),
+      expression: "search"
+    }],
+    staticClass: "btn btn-danger full-width btn-sm",
+    on: {
+      "click": _vm.cancelSearch
+    }
+  }, [_vm._v("Cancel Search")])]) : _vm._e(), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -49067,7 +49175,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "submit": function($event) {
         $event.preventDefault();
-        _vm.edit ? _vm.updateInvoice(_vm.invoiceObj.id) : _vm.createInvoice()
+        _vm.edit ? _vm.updateInvoice(_vm.invoiceObj.id) : _vm.createInvoice
       }
     }
   }, [_c('div', {
@@ -49388,7 +49496,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "editMode": _vm.edit,
       "name": _vm.name = 'Invoice'
     }
-  })], 1)]), _vm._v(" "), _c('hr', {
+  })], 1)]), _vm._v(" "), (!_vm.edit && _vm.table) ? _c('div', [_c('hr', {
     staticClass: "dashed"
   }), _vm._v(" "), _c('h2', {
     staticClass: "text-center"
@@ -49400,33 +49508,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "submit": function($event) {
         $event.preventDefault();
-        _vm.dateRangeSearch()
+        _vm.dateRangeSearch(_vm.start, _vm.end)
       }
     }
-  }, [_vm._m(1)])], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-8"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "search",
-      "name": "search",
-      "placeholder": "Search..."
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-12 col-sm-4"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('button', {
-    staticClass: "btn btn-default full-width"
-  }, [_vm._v("Search")])])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-12 col-sm-4"
@@ -49437,10 +49522,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": "start"
     }
   }, [_vm._v("Start Date")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.start),
+      expression: "start"
+    }],
     staticClass: "form-control",
     attrs: {
       "type": "date",
       "name": "start"
+    },
+    domProps: {
+      "value": (_vm.start)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.start = $event.target.value
+      }
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-4"
@@ -49451,12 +49551,42 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": "end"
     }
   }, [_vm._v("End Date")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.end),
+      expression: "end"
+    }],
     staticClass: "form-control",
     attrs: {
       "type": "date",
       "name": "end"
+    },
+    domProps: {
+      "value": (_vm.end)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.end = $event.target.value
+      }
     }
-  })])]), _vm._v(" "), _c('div', {
+  })])]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-primary wide",
+    attrs: {
+      "href": 'pdf/report/invoice'
+    }
+  }, [_vm._v("Print Report")])]) : _vm._e()], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-xs-12 col-sm-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('button', {
+    staticClass: "btn btn-default full-width"
+  }, [_vm._v("Search")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "col-xs-12 col-sm-4"
   }, [_c('button', {
     staticClass: "btn btn-primary full-width btn-margin",
@@ -49464,7 +49594,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "submit",
       "name": "dateSearchBtn"
     }
-  }, [_vm._v("Get Report")])])])
+  }, [_vm._v("Get Report")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

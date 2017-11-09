@@ -137,10 +137,8 @@ class InvoicesController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
     */
-    public function betweenDates(Request $request)
+    public function betweenDates($start, $end)
     {
-        $start = $request->input(['start']);
-        $end = $request->input(['end']);
         $invoices = DB::table('invoices')
                     ->whereBetween('date', [$start, $end])
                     ->get();
@@ -152,10 +150,10 @@ class InvoicesController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
     */
-    public function byInvoiceNum(Request $request)
+    public function byInvoiceNum($term)
     {
         $searchResult = DB::table('invoices')
-                            ->where('inv_num', $request->input(['inv_num_search']))
+                            ->where('inv_num', $term)
                             ->get();
         return $searchResult;
     }

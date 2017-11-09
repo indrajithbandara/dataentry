@@ -7,20 +7,23 @@
             :toForm="switchToForm"
         ></ViewAddBtns>
         <hr>
-        <form action="#" @submit.prevent="searchInv()">
-            <div class="row">
-                <div class="col-xs-12 col-sm-8">
-                    <div class="form-group">
-                        <input type="search" name="search" class="form-control" placeholder="Search...">
+        <div v-if="!edit && table">
+            <form action="#" @submit.prevent="searchInv(search_inv)">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="form-group">
+                            <input v-model="search_inv" type="text" name="search" class="form-control" placeholder="Invoice #">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="form-group">
+                            <button class="btn btn-default full-width">Search</button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-4">
-                    <div class="form-group">
-                        <button class="btn btn-default full-width">Search</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+            <button @click="cancelSearch" v-show="search" class="btn btn-danger full-width btn-sm">Cancel Search</button>
+        </div>
         <!-- Start of Invoice Table -->
         <div v-show="table">
             <!-- Invoices Table -->
@@ -62,7 +65,7 @@
         <!-- Add An Invoice Form -->
         <div v-show="!table">
             <h2 class="text-center">Invoice Details</h2>
-            <form action="#" @submit.prevent="edit ? updateInvoice(invoiceObj.id) : createInvoice()">
+            <form action="#" @submit.prevent="edit ? updateInvoice(invoiceObj.id) : createInvoice">
 
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
@@ -253,27 +256,30 @@
             </form>
         </div>
         <!-- End of Invoice Form -->
-        <hr class="dashed">
-        <h2 class="text-center">Report</h2>
-        <form action="#" @submit.prevent="dateRangeSearch()" class="space-below">
-            <div class="row">
-                <div class="col-xs-12 col-sm-4">
-                    <div class="form-group">
-                        <label for="start">Start Date</label>
-                        <input type="date" name="start" class="form-control">
+        <div v-if="!edit && table">
+            <hr class="dashed">
+            <h2 class="text-center">Report</h2>
+            <form action="#" @submit.prevent="dateRangeSearch(start,end)" class="space-below">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="form-group">
+                            <label for="start">Start Date</label>
+                            <input v-model="start" type="date" name="start" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="form-group">
+                            <label for="end">End Date</label>
+                            <input v-model="end" type="date" name="end" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <button class="btn btn-primary full-width btn-margin" type="submit" name="dateSearchBtn">Get Report</button>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-4">
-                    <div class="form-group">
-                        <label for="end">End Date</label>
-                        <input type="date" name="end" class="form-control">
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-4">
-                    <button class="btn btn-primary full-width btn-margin" type="submit" name="dateSearchBtn">Get Report</button>
-                </div>
-            </div>
-        </form>
+            </form>
+            <a :href="'pdf/report/invoice'" class="btn btn-primary wide">Print Report</a>
+        </div>
     </div>
 </template>
 
@@ -292,6 +298,9 @@
         data() {
             return {
                 cust_id: '',
+                search_inv: '',
+                start: '',
+                end: '',
                 /*
                 * EDIT MODE:
                 * if edit = false, the invoice form is hidden and the invoice table is displayed.
@@ -300,6 +309,7 @@
                 * Methods Involved: showInvoice() | resetValues()
                 */
                 edit: false, 
+                search: false,
                 /*
                 * INVOICE TABLE AND ADDING AN INVOICE:
                 *
@@ -377,14 +387,35 @@
             getInvoices(){ this.$store.dispatch('commitInvoices'); },
             setCustomerInfo(id) { this.$store.dispatch('commitOneCustomer', id); },
             // METHODS
-            dateRangeSearch() {
-                this.$store.dispatch('dateRangeSearch')
+            searchInv(term) {
+                this.search = true;
+                this.start = '';
+                this.end = '';
+                this.$store.dispatch('searchInv', term)
+                .then(() => {
+                    this.getInvoices();
+                })
+                .catch((error) => {
+                    throw new Error("Something went wrong when searching for your invoice." + error);
+                });
+            },
+            dateRangeSearch(start, end) {
+                this.search = true;
+                this.search_inv = '';
+                this.$store.dispatch('dateRangeSearch', {start, end})
                 .then(() => {
                     this.getInvoices();
                 })
                 .catch((error) => {
                     throw new Error("Something went wrong with the date search." + error);
                 });
+            },
+            cancelSearch(){
+                this.search_inv = '';
+                this.start = '';
+                this.end = '';
+                this.search = false;
+                this.getInvoices();
             },
             switchToTable(){ // prop: toTable | component: <viewAddBtns>
                 this.table = true;
@@ -532,6 +563,9 @@
         margin-top: 27px;
     }
     .space-below {
-        margin-bottom: 50px;
+        margin-bottom: 20px;
+    }
+    .wide {
+        width: 100%;
     }
 </style>

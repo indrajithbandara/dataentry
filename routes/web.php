@@ -25,17 +25,11 @@ Auth::routes();
 
 // Route Group passed through web and auth middleware for the main page. 
 Route::group(['middleware' => ['web', 'auth']], function(){
-
     Route::get('/invoices', 'PagesController@invoices');
     Route::get('/users', 'PagesController@users');
     Route::get('/customers', 'PagesController@customers');
     Route::get('/products', 'PagesController@products');
     Route::get('/pdf/invoice/{id}', 'PDFController@invoice');
     Route::get('/pdf/shipper/{id}', 'PDFController@shipper');
-    
-    // Routes to be determined
-    // Route::get('/purchaseorders', 'PagesController@vuePage');
-    // Route::get('/routers', 'PagesController@vuePage');
-    // Route::get('/inventory', 'PagesController@vuePage');
-
+    Route::get('/pdf/report/invoice', 'PDFController@invoiceReport');
 });

@@ -164,9 +164,15 @@ export const deleteInvoice = (context, payload) => { // delete request to delete
     });
 };
 
-export const dateRangeSearch = ({ commit }) => {
+export const dateRangeSearch = ({ commit }, payload) => {
     return new Promise((resolve, reject) => {
-        axios.get('api/invoices/report')
+        axios({
+            method: 'get',
+            url: 'api/invoices/report/' + payload.start + '/' + payload.end,
+            validateStatus(status) {
+                return status >= 200 && status < 300;
+            }  
+        })
         .then((response) => {
             var newData = () => {
                 var data = response.data;
@@ -187,3 +193,32 @@ export const dateRangeSearch = ({ commit }) => {
         });
     });
 };
+
+export const searchInv = ({ commit }, payload) => {
+    return new Promise((resolve, reject) => {
+        axios({
+            method: 'get',
+            url: 'api/invoices/search/' + payload,
+            validateStatus(status) {
+                return status >= 200 && status < 300;
+            }
+        }).then((response) => {
+            var newData = () => {
+                var data = response.data;
+                for(var i = 0; i < data.length; i++){
+                    for(var key in data[i]){
+                        if(key === 'customer'){
+                            data[i].customer = JSON.parse(data[i].customer);
+                        } else if (key === 'line_items') {
+                            data[i].line_items = JSON.parse(data[i].line_items);
+                        }
+                    }
+                }
+                return data;
+            }
+            commit('setInvoices', newData());
+        }).catch((error) => {
+            throw new Error('searchInv failed!' + error);
+        });
+    });
+}

@@ -46065,14 +46065,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.toTable
     }
-  }, [_vm._v(_vm._s(_vm.textOne))])]), _vm._v(" "), _c('div', {
+  }, [_c('i', {
+    staticClass: "fa fa-table",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("  " + _vm._s(_vm.textOne))])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6"
   }, [_c('button', {
     staticClass: "btn btn-success btn-lg full-width",
     on: {
       "click": _vm.toForm
     }
-  }, [_vm._v(_vm._s(_vm.textTwo))])])])
+  }, [_c('i', {
+    staticClass: "fa fa-plus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("  " + _vm._s(_vm.textTwo))])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -47519,6 +47529,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             */
             edit: false,
             search: false,
+            report: false,
             /*
             * INVOICE TABLE AND ADDING AN INVOICE:
             *
@@ -47651,6 +47662,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             this.search = true;
+            this.report = true;
             this.search_inv = '';
             this.$store.dispatch('dateRangeSearch', { start: start, end: end }).then(function () {
                 _this2.getInvoices();
@@ -47663,6 +47675,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.start = '';
             this.end = '';
             this.search = false;
+            this.report = false;
             this.getInvoices();
         },
         switchToTable: function switchToTable() {
@@ -47916,7 +47929,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button",
       "disabled": ""
     }
-  }, [_vm._v("Line Items Limit Reached")])]) : _c('div', {
+  }, [_c('i', {
+    staticClass: "fa fa-ban",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Line Items Limit Reached")])]) : _c('div', {
     staticClass: "col-xs-12 col-sm-6 col-md-6"
   }, [_c('button', {
     directives: [{
@@ -47934,7 +47952,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.liShowHide(_vm.numOne, 'show')
       }
     }
-  }, [_vm._v(_vm._s(_vm.changeText()))])]), _vm._v(" "), _c('div', {
+  }, [_c('i', {
+    staticClass: "fa fa-plus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" " + _vm._s(_vm.changeText()))])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-12 col-sm-6 col-md-6"
   }, [_c('button', {
     directives: [{
@@ -47952,7 +47975,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.liShowHide(_vm.numOne - 1, 'hide')
       }
     }
-  }, [_vm._v("Remove A Line Item")])])])
+  }, [_c('i', {
+    staticClass: "fa fa-minus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Remove A Line Item")])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -49081,7 +49109,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
-    staticClass: "col-xs-12 col-sm-8"
+    staticClass: "col-xs-8 col-sm-8"
   }, [_c('div', {
     staticClass: "form-group"
   }, [_c('input', {
@@ -49117,7 +49145,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.cancelSearch
     }
-  }, [_vm._v("Cancel Search")])]) : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_c('i', {
+    staticClass: "fa fa-ban",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Cancel Search")])]) : _vm._e(), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -49137,26 +49170,46 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "href": '/pdf/shipper/' + invoice.id
       }
-    }, [_vm._v("Print Shipper")])]), _vm._v(" "), _c('td', [_c('a', {
+    }, [_c('i', {
+      staticClass: "fa fa-print",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Shipper")])]), _vm._v(" "), _c('td', [_c('a', {
       staticClass: "btn btn-primary",
       attrs: {
         "href": '/pdf/invoice/' + invoice.id
       }
-    }, [_vm._v("Print Invoice")])]), _vm._v(" "), _c('td', [_c('button', {
+    }, [_c('i', {
+      staticClass: "fa fa-print",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Invoice")])]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-warning",
       on: {
         "click": function($event) {
           _vm.showInvoice(invoice.id)
         }
       }
-    }, [_vm._v("Edit")])]), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
+    }, [_c('i', {
+      staticClass: "fa fa-pencil",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Edit")])]), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
       staticClass: "btn btn-danger",
       on: {
         "click": function($event) {
           _vm.deleteInvoice(invoice.id)
         }
       }
-    }, [_vm._v("Delete")])]) : _vm._e()])
+    }, [_c('i', {
+      staticClass: "fa fa-trash",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Delete")])]) : _vm._e()])
   }))])]) : _c('div', [_c('p', {
     staticClass: "alert alert-info text-center"
   }, [_vm._v("You currently have no invoices to show.")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
@@ -49274,7 +49327,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.li_btn_show_hide(1, 'show')
       }
     }
-  }, [_vm._v("Add A Second Line Item")]), _vm._v(" "), _c('LnBtns', {
+  }, [_c('i', {
+    staticClass: "fa fa-plus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Add A Second Line Item")]), _vm._v(" "), _c('LnBtns', {
     attrs: {
       "numOne": 2,
       "btnNum": _vm.btn[1].button,
@@ -49571,30 +49629,51 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.end = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), (_vm.search) ? _c('a', {
+  })])]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c('a', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.report),
+      expression: "report"
+    }],
     staticClass: "btn btn-primary wide",
     attrs: {
-      "href": 'pdf/report/invoice'
+      "href": 'pdf/report/invoice/' + _vm.start + '/' + _vm.end
     }
-  }, [_vm._v("Print Report")]) : _vm._e()]) : _vm._e()], 1)
+  }, [_c('i', {
+    staticClass: "fa fa-print",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Print Report")])]) : _vm._e()], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "col-xs-12 col-sm-4"
+    staticClass: "col-xs-4 col-sm-4"
   }, [_c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     staticClass: "btn btn-default full-width"
-  }, [_vm._v("Search")])])])
+  }, [_c('i', {
+    staticClass: "fa fa-search",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("  Search")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-xs-12 col-sm-4"
   }, [_c('button', {
-    staticClass: "btn btn-primary full-width btn-margin",
+    staticClass: "btn btn-default full-width btn-margin",
     attrs: {
       "type": "submit",
       "name": "dateSearchBtn"
     }
-  }, [_vm._v("Get Report")])])
+  }, [_c('i', {
+    staticClass: "fa fa-file-text",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Get Report")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

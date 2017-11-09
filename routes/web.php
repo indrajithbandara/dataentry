@@ -31,5 +31,5 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     Route::get('/products', 'PagesController@products');
     Route::get('/pdf/invoice/{id}', 'PDFController@invoice');
     Route::get('/pdf/shipper/{id}', 'PDFController@shipper');
-    Route::get('/pdf/report/invoice', 'PDFController@invoiceReport');
+    Route::get('/pdf/report/invoice/{start}/{end}', 'PDFController@invoiceReport');
 });

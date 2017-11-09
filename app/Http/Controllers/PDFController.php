@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Invoice;
 use App\Company;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Vsmoraes\Pdf\Pdf;
 
@@ -179,6 +180,44 @@ class PDFController extends Controller
         * generation. 
         */
         $html = view('pdfs.shipper')->with('invoice', $newInvoice);
+        return $this->pdf
+            ->load($html)
+            ->show();
+    }
+
+    public function invoiceReport($start, $end) 
+    {
+        $report = DB::table('invoices')
+                    ->select('inv_num', 'date', 'customer', 'total')
+                    ->whereBetween('date', [$start, $end])
+                    ->get()
+                    ->toArray();
+        $newReport = [];
+        for($i = 0; $i < count($report); $i++){
+            $inner = [];
+            foreach($report[$i] as $k => $v){
+                if($k === 'customer'){
+                    $newVal = json_decode(json_decode($v, true));
+                    $array = json_decode(json_encode($newVal), true);
+                    array_push($inner, $array['name']);
+                } else if ($k === 'date'){
+                    $dateArr = explode('-', $v);
+                    $newDate = $dateArr[1].'-'.$dateArr[2].'-'.$dateArr[0];
+                    array_push($inner, $newDate);
+                }else{
+                    array_push($inner, $v);
+                }
+            }
+            array_push($newReport, $inner);
+        }
+
+        $total = 0;
+        for($i = 0; $i < count($newReport); $i++){
+            $total += $newReport[$i][3];
+        }
+        array_push($newReport, floatval($total));
+
+        $html = view('pdfs.invoicereport')->with('report', $newReport);
         return $this->pdf
             ->load($html)
             ->show();

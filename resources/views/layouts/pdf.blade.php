@@ -20,9 +20,11 @@
     .padding-5 { padding: 5px; }
     .padding-15 { padding: 15px; }
     .padding-50 { padding: 50px; }
+    .padding-50-lr { padding: 10px 50px; }
     .padding-20-sides { padding-left: 20px; padding-right: 20px; }
     .padding-25-sides { padding-left: 25px; padding-right: 25px; }
     .padding-46-sides { padding-left: 46px; padding-right: 46px; }
+    .less-margin-tb { margin: 5px 0; }
     .margin-bottom-20 { margin-bottom: 20px; }
     .margin-little { margin: 5px; }
     .margin-none { margin: 0; }
@@ -31,6 +33,7 @@
     .height-150 { max-height: 150px; }
     .small-width { width: 10%; }
     .qtr-width { width: 25%; }
+    .less-qtr-width { width: 24%; }
     .half-width { width: 50%; }
     .full-width { width: 100%; }
     .under-half { width: 40%; }

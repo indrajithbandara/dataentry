@@ -10,19 +10,19 @@
         <div v-if="!edit && table">
             <form action="#" @submit.prevent="searchInv(search_inv)">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-8">
+                    <div class="col-xs-8 col-sm-8">
                         <div class="form-group">
                             <input v-model="search_inv" type="text" name="search" class="form-control" placeholder="Invoice #">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="col-xs-4 col-sm-4">
                         <div class="form-group">
-                            <button class="btn btn-default full-width">Search</button>
+                            <button class="btn btn-default full-width"><i class="fa fa-search" aria-hidden="true"></i>  Search</button>
                         </div>
                     </div>
                 </div>
             </form>
-            <button @click="cancelSearch" v-show="search" class="btn btn-danger full-width btn-sm">Cancel Search</button>
+            <button @click="cancelSearch" v-show="search" class="btn btn-danger full-width btn-sm"><i class="fa fa-ban" aria-hidden="true"></i> Cancel Search</button>
         </div>
         <!-- Start of Invoice Table -->
         <div v-show="table">
@@ -47,10 +47,10 @@
                             <td>{{ invoice.date }}</td>
                             <td>{{ invoice.customer.name }}</td>
                             <td>{{ invoice.total }}</td>
-                            <td><a :href="'/pdf/shipper/' + invoice.id" class="btn btn-default">Print Shipper</a></td>
-                            <td><a :href="'/pdf/invoice/' + invoice.id" class="btn btn-primary">Print Invoice</a></td>
-                            <td><button @click="showInvoice(invoice.id)" class="btn btn-warning">Edit</button></td>
-                            <td v-if="user == 1"><button @click="deleteInvoice(invoice.id)" class="btn btn-danger">Delete</button></td>
+                            <td><a :href="'/pdf/shipper/' + invoice.id" class="btn btn-default"><i class="fa fa-print" aria-hidden="true"></i> Shipper</a></td>
+                            <td><a :href="'/pdf/invoice/' + invoice.id" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Invoice</a></td>
+                            <td><button @click="showInvoice(invoice.id)" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
+                            <td v-if="user == 1"><button @click="deleteInvoice(invoice.id)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -111,7 +111,7 @@
                 ></TextForm>
 
                 <!-- Add and Removing Line Item Buttons -->
-                <button class="btn btn-success full-width" @click="li_btn_show_hide(1, 'show')" type="button" v-show="btn[0].button">Add A Second Line Item</button>
+                <button class="btn btn-success full-width" @click="li_btn_show_hide(1, 'show')" type="button" v-show="btn[0].button"><i class="fa fa-plus" aria-hidden="true"></i> Add A Second Line Item</button>
                 <LnBtns :numOne="2" :btnNum="btn[1].button" :liShowHide="li_btn_show_hide" :disabled="false"></LnBtns>
                 <LnBtns :numOne="3" :btnNum="btn[2].button" :liShowHide="li_btn_show_hide" :disabled="false"></LnBtns>
                 <LnBtns :numOne="4" :btnNum="btn[3].button" :liShowHide="li_btn_show_hide" :disabled="false"></LnBtns>
@@ -274,11 +274,11 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                        <button class="btn btn-primary full-width btn-margin" type="submit" name="dateSearchBtn">Get Report</button>
+                        <button class="btn btn-default full-width btn-margin" type="submit" name="dateSearchBtn"><i class="fa fa-file-text" aria-hidden="true"></i> Get Report</button>
                     </div>
                 </div>
             </form>
-            <a v-if="search" :href="'pdf/report/invoice'" class="btn btn-primary wide">Print Report</a>
+            <a v-show="report" :href="'pdf/report/invoice/'+start+'/'+end" class="btn btn-primary wide"><i class="fa fa-print" aria-hidden="true"></i> Print Report</a>
         </div>
     </div>
 </template>
@@ -310,6 +310,7 @@
                 */
                 edit: false, 
                 search: false,
+                report: false,
                 /*
                 * INVOICE TABLE AND ADDING AN INVOICE:
                 *
@@ -401,6 +402,7 @@
             },
             dateRangeSearch(start, end) {
                 this.search = true;
+                this.report = true;
                 this.search_inv = '';
                 this.$store.dispatch('dateRangeSearch', {start, end})
                 .then(() => {
@@ -415,6 +417,7 @@
                 this.start = '';
                 this.end = '';
                 this.search = false;
+                this.report = false;
                 this.getInvoices();
             },
             switchToTable(){ // prop: toTable | component: <viewAddBtns>

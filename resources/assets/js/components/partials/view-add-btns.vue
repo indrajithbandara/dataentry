@@ -1,7 +1,7 @@
 <template>
     <div class="row"> 
-        <div class="col-xs-6 col-sm-6 col-md-6"><button @click="toTable" class="btn btn-primary btn-lg full-width">{{ textOne }}</button></div>
-        <div class="col-xs-6 col-sm-6 col-md-6"><button @click="toForm" class="btn btn-success btn-lg full-width">{{ textTwo }}</button></div>
+        <div class="col-xs-6 col-sm-6 col-md-6"><button @click="toTable" class="btn btn-primary btn-lg full-width"><i class="fa fa-table" aria-hidden="true"></i>  {{ textOne }}</button></div>
+        <div class="col-xs-6 col-sm-6 col-md-6"><button @click="toForm" class="btn btn-success btn-lg full-width"><i class="fa fa-plus" aria-hidden="true"></i>  {{ textTwo }}</button></div>
     </div>
 </template>
 <script>

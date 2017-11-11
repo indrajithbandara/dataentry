@@ -65,7 +65,7 @@
         <!-- Add An Invoice Form -->
         <div v-show="!table">
             <h2 class="text-center">Invoice Details</h2>
-            <form action="#" @submit.prevent="edit ? updateInvoice(invoiceObj.id) : createInvoice">
+            <form action="#" @submit.prevent="edit ? updateInvoice(invoiceObj.id) : createInvoice()">
 
                 <div class="row">
                     <div class="col-sm-12 col-md-6">

@@ -49228,7 +49228,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "submit": function($event) {
         $event.preventDefault();
-        _vm.edit ? _vm.updateInvoice(_vm.invoiceObj.id) : _vm.createInvoice
+        _vm.edit ? _vm.updateInvoice(_vm.invoiceObj.id) : _vm.createInvoice()
       }
     }
   }, [_c('div', {

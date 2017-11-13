@@ -58,7 +58,7 @@ class PDFController extends Controller
                 */
                 foreach($d_decoded as $k => $v){
                     if($k === 'shipto' || $k === 'billto'){
-                        $addressArr = explode('#', $v);
+                        $addressArr = explode("\n", $v);
                         array_push($newInvoice, $addressArr);
                     }
                 }
@@ -88,7 +88,7 @@ class PDFController extends Controller
         */
         foreach($company['original'] as $key => $value){
             if($key === 'address'){
-                $addArr = explode('#', $value);
+                $addArr = explode("\n", $value);
                 array_push($newInvoice, $addArr);
             }else{
                 array_push($newInvoice, $value);
@@ -146,7 +146,7 @@ class PDFController extends Controller
                 */
                 foreach($d_decoded as $k => $v){
                     if($k === 'shipto' || $k === 'billto'){
-                        $addressArr = explode('#', $v);
+                        $addressArr = explode("\n", $v);
                         array_push($newInvoice, $addressArr);
                     }
                 }
@@ -169,7 +169,7 @@ class PDFController extends Controller
         */
         foreach($company['original'] as $key => $value){
             if($key === 'address'){
-                $addArr = explode('#', $value);
+                $addArr = explode("\n", $value);
                 array_push($newInvoice, $addArr);
             }else{
                 array_push($newInvoice, $value);

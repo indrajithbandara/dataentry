@@ -45737,8 +45737,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 // Imports
 
@@ -46398,9 +46396,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexBilltoWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexBilltoWarning))]) : _vm._e(), _vm._v(" "), (_vm.customer.billto.length > 0) ? _c('p', {
-    staticClass: "alert alert-info"
-  }, [_vm._v("Add '#' at the end of every line when you want the next line to be placed in a new line on the invoice and shipper. Add '##' at the end of a line if you want an empty line below it.")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexBilltoWarning))]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "col-sm-12 col-md-6"
   }, [_c('div', {
     staticClass: "form-group"
@@ -46439,9 +46435,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "alert alert-warning"
   }, [_vm._v("255 character limit reached!")]) : _vm._e(), _vm._v(" "), (_vm.regexShiptoWarning) ? _c('p', {
     staticClass: "alert alert-danger"
-  }, [_vm._v(_vm._s(_vm.regexShiptoWarning))]) : _vm._e(), _vm._v(" "), (_vm.customer.shipto.length > 0) ? _c('p', {
-    staticClass: "alert alert-info"
-  }, [_vm._v("Add '#' at the end of every line when you want the next line to be placed in a new line on the invoice and shipper. Add '##' at the end of a line if you want an empty line below it.")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.regexShiptoWarning))]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-sm-12 col-md-6"

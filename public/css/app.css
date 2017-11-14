@@ -8689,6 +8689,14 @@ button.full-width {
   border: 1px solid #aaa;
 }
 
+.mid-font {
+  font-size: 20px;
+}
+
+.lg-font {
+  font-size: 42px;
+}
+
 #product-table {
   max-height: 565px;
   overflow: scroll;

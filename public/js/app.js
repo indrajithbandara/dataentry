@@ -615,88 +615,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26)))
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
+/* 4 */,
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -44594,7 +44513,7 @@ if(false) {
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(undefined);
+exports = module.exports = __webpack_require__(122)(undefined);
 // imports
 
 
@@ -44728,7 +44647,7 @@ if(false) {
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(undefined);
+exports = module.exports = __webpack_require__(122)(undefined);
 // imports
 
 
@@ -45737,6 +45656,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 // Imports
 
@@ -45747,6 +45668,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
             table: true, // If true, the customers table is showing. If false, the customers form is showing.
+            read: false,
             customer: { // Customer model and it's values
                 name: '',
                 email: '',
@@ -45868,6 +45790,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error.message);
             });
             self.edit = true;
+        },
+        viewCustomer: function viewCustomer(id) {
+            var self = this;
+            axios({
+                method: 'get',
+                url: 'api/customers/' + id,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function (response) {
+                self.read = true;
+                self.customer.id = response.data.id;
+                self.customer.name = response.data.name;
+                self.customer.email = response.data.email;
+                self.customer.phone = response.data.phone;
+                self.customer.buyer = response.data.buyer;
+                self.customer.shipto = response.data.shipto;
+                self.customer.billto = response.data.billto;
+                self.customer.country = response.data.country;
+                self.customer.disclaimer = response.data.disclaimer;
+                self.customer.comments = response.data.comments;
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+        },
+        closeView: function closeView() {
+            this.resetValues();
+            this.read = false;
         },
         deleteCustomer: function deleteCustomer(id) {
             // deletes a specific customer, only the Super Admin can make this request as the button is only visable for that user.
@@ -46116,24 +46066,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('table', {
     staticClass: "table table-condensed"
-  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Phone")]), _vm._v(" "), _c('th', [_vm._v("Buyer")]), _vm._v(" "), _c('th', [_vm._v("ShipTo")]), _vm._v(" "), _c('th', [_vm._v("BillTo")]), _vm._v(" "), _c('th', [_vm._v("Country")]), _vm._v(" "), _c('th', [_vm._v("Disclaimer")]), _vm._v(" "), _c('th', [_vm._v("Comments")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(customer) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(customer.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.phone))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.buyer))]), _vm._v(" "), (customer.shipto.length > 10) ? _c('td', {
-      attrs: {
-        "title": customer.shipto
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Phone")]), _vm._v(" "), _c('th', [_vm._v("Buyer")]), _vm._v(" "), _c('th', [_vm._v("Country")]), _vm._v(" "), _c('th', [_vm._v("View")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(customer) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(customer.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.phone))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.buyer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.country))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-default",
+      on: {
+        "click": function($event) {
+          _vm.viewCustomer(customer.id)
+        }
       }
-    }, [_vm._v(_vm._s(customer.shipto.substring(0, 10) + '...'))]) : _c('td', [_vm._v(_vm._s(customer.shipto))]), _vm._v(" "), (customer.billto.length > 10) ? _c('td', {
-      attrs: {
-        "title": customer.billto
-      }
-    }, [_vm._v(_vm._s(customer.billto.substring(0, 10) + '...'))]) : _c('td', [_vm._v(_vm._s(customer.billto))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.country))]), _vm._v(" "), (customer.disclaimer.length > 10) ? _c('td', {
-      attrs: {
-        "title": customer.disclaimer
-      }
-    }, [_vm._v(_vm._s(customer.disclaimer.substring(0, 10) + '...'))]) : _c('td', [_vm._v(_vm._s(customer.disclaimer))]), _vm._v(" "), (customer.comments.length > 10) ? _c('td', {
-      attrs: {
-        "title": customer.comments
-      }
-    }, [_vm._v(_vm._s(customer.comments.substring(0, 10) + '...'))]) : _c('td', [_vm._v(_vm._s(customer.comments))]), _vm._v(" "), _c('td', [_c('button', {
+    }, [_vm._v("View")])]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-warning",
       on: {
         "click": function($event) {
@@ -46150,7 +46091,40 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("Delete")])]) : _vm._e()])
   }))])]) : _c('div', [_c('p', {
     staticClass: "alert alert-info text-center"
-  }, [_vm._v("You currently have no customers to show.")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+  }, [_vm._v("You currently have no customers to show.")])])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.read),
+      expression: "read"
+    }],
+    staticClass: "well"
+  }, [_c('h2', {
+    staticClass: "lg-font"
+  }, [_vm._v(_vm._s(_vm.customer.name))]), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Email: ")]), _c('span', [_vm._v(_vm._s(_vm.customer.email))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Phone: ")]), _c('span', [_vm._v(_vm._s(_vm.customer.phone))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Buyer: ")]), _c('span', [_vm._v(_vm._s(_vm.customer.buyer))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Ship To Address: ")]), _c('span', [_vm._v(_vm._s(_vm.customer.shipto))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Bill To Address: ")]), _c('span', [_vm._v(_vm._s(_vm.customer.billto))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Country: ")]), _c('span', [_vm._v(_vm._s(_vm.customer.country))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Disclaimer: ")]), _c('span', [_vm._v(_vm._s(_vm.customer.disclaimer))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Comments: ")]), _c('span', [_vm._v(_vm._s(_vm.customer.comments))]), _c('br'), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger full-width",
+    on: {
+      "click": function($event) {
+        _vm.closeView()
+      }
+    }
+  }, [_vm._v("Close Viewing")])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -46663,6 +46637,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -46672,6 +46656,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             edit: false,
+            read: false,
             product: {
                 id: '',
                 name: '',
@@ -46786,14 +46771,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             this.edit = true;
         },
-        deleteProduct: function deleteProduct(id) {
+        viewProduct: function viewProduct(id) {
             var _this4 = this;
+
+            axios({
+                method: 'get',
+                url: 'api/products/' + id,
+                validateStatus: function validateStatus(status) {
+                    return status >= 200 && status < 300;
+                }
+            }).then(function (response) {
+                for (var key in _this4.product) {
+                    for (var k in response.data) {
+                        if (key === k) {
+                            _this4.product[key] = response.data[k];
+                        }
+                    }
+                }
+            }).catch(function (error) {
+                _this4.errorHandeler(error);
+            });
+            this.read = true;
+        },
+        closeView: function closeView() {
+            this.resetValues();
+            this.read = false;
+        },
+        deleteProduct: function deleteProduct(id) {
+            var _this5 = this;
 
             if (confirm('Are you sure you want to delete this product?')) {
                 axios.delete('api/products/' + id).then(function (response) {
-                    _this4.getProducts();
+                    _this5.getProducts();
                 }).catch(function (error) {
-                    _this4.errorHandeler(error);
+                    _this5.errorHandeler(error);
                 });
             } else {
                 return;
@@ -46885,12 +46896,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('table', {
     staticClass: "table table-condensed"
-  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Description")]), _vm._v(" "), _c('th', [_vm._v("Material")]), _vm._v(" "), _c('th', [_vm._v("Revision")]), _vm._v(" "), _c('th', [_vm._v("Rev Date")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(product) {
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Description")]), _vm._v(" "), _c('th', [_vm._v("Material")]), _vm._v(" "), _c('th', [_vm._v("Revision")]), _vm._v(" "), _c('th', [_vm._v("Rev Date")]), _vm._v(" "), _c('th', [_vm._v("View")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(product) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(product.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(product.description))]), _vm._v(" "), (product.material.length > 10) ? _c('td', {
       attrs: {
         "title": product.material
       }
     }, [_vm._v(_vm._s(product.material.substring(0, 10) + '...'))]) : _c('td', [_vm._v(_vm._s(product.material))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(product.rev))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(product.rev_date))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-default",
+      on: {
+        "click": function($event) {
+          _vm.viewProduct(product.id)
+        }
+      }
+    }, [_vm._v("View")])]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-warning",
       on: {
         "click": function($event) {
@@ -46907,11 +46925,43 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("Delete")])]) : _vm._e()])
   }))])]) : _c('div', [_c('p', {
     staticClass: "alert alert-info text-center"
-  }, [_vm._v("You currently have no products to show.")])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('errorMessage', {
+  }, [_vm._v("You currently have no products to show.")])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.read),
+      expression: "read"
+    }],
+    staticClass: "well"
+  }, [_c('h2', {
+    staticClass: "lg-font"
+  }, [_vm._v(_vm._s(_vm.product.name))]), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Description: ")]), _c('span', [_vm._v(_vm._s(_vm.product.description))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Material: ")]), _c('span', [_vm._v(_vm._s(_vm.product.material))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Revision: ")]), _c('span', [_vm._v(_vm._s(_vm.product.rev))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Revision Date: ")]), _c('span', [_vm._v(_vm._s(_vm.product.rev_date))]), _c('br'), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger full-width",
+    on: {
+      "click": function($event) {
+        _vm.closeView()
+      }
+    }
+  }, [_vm._v("Close Viewing")])]), _vm._v(" "), _c('errorMessage', {
     attrs: {
       "errorMes": _vm.errorMessage
     }
-  }), _vm._v(" "), _c('div', [_c('h2', {
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.read),
+      expression: "!read"
+    }]
+  }, [_c('h2', {
     staticClass: "text-center"
   }, [_vm._v("Add Product")]), _vm._v(" "), _c('form', {
     attrs: {
@@ -47179,7 +47229,7 @@ if(false) {
 /* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(undefined);
+exports = module.exports = __webpack_require__(122)(undefined);
 // imports
 
 
@@ -49682,6 +49732,97 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
 
 /***/ })
 /******/ ]);

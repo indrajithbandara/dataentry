@@ -17,11 +17,8 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Buyer</th>
-                            <th>ShipTo</th>
-                            <th>BillTo</th>
                             <th>Country</th>
-                            <th>Disclaimer</th>
-                            <th>Comments</th>
+                            <th>View</th>
                             <th>Edit</th>
                             <th v-if="user == 1">Delete</th>
                         </tr>
@@ -32,15 +29,8 @@
                             <td>{{ customer.email }}</td>
                             <td>{{ customer.phone }}</td>
                             <td>{{ customer.buyer }}</td>
-                            <td v-if="customer.shipto.length > 10" v-bind:title="customer.shipto">{{ customer.shipto.substring(0, 10) + '...' }}</td>
-                            <td v-else>{{ customer.shipto }}</td>
-                            <td v-if="customer.billto.length > 10" v-bind:title="customer.billto">{{ customer.billto.substring(0, 10) + '...' }}</td>
-                            <td v-else>{{ customer.billto }}</td>
                             <td>{{ customer.country }}</td>
-                            <td v-if="customer.disclaimer.length > 10" v-bind:title="customer.disclaimer">{{ customer.disclaimer.substring(0, 10) + '...' }}</td>
-                            <td v-else>{{ customer.disclaimer }}</td>
-                            <td v-if="customer.comments.length > 10" v-bind:title="customer.comments">{{ customer.comments.substring(0, 10) + '...' }}</td>
-                            <td v-else>{{ customer.comments }}</td>
+                            <td><button @click="viewCustomer(customer.id)" class="btn btn-default">View</button></td>
                             <td><button @click="showCustomer(customer.id)" class="btn btn-warning">Edit</button></td>
                             <td v-if="user == 1"><button @click="deleteCustomer(customer.id)" class="btn btn-danger">Delete</button></td>
                         </tr>
@@ -51,6 +41,18 @@
                 <p class="alert alert-info text-center">You currently have no customers to show.</p>
             </div>
             <!-- end of customer table -->
+        </div>
+        <div v-show="read" class="well">
+            <h2 class="lg-font">{{ customer.name }}</h2>
+            <strong class="mid-font">Email: </strong><span>{{ customer.email }}</span><br>
+            <strong class="mid-font">Phone: </strong><span>{{ customer.phone }}</span><br>
+            <strong class="mid-font">Buyer: </strong><span>{{ customer.buyer }}</span><br>
+            <strong class="mid-font">Ship To Address: </strong><span>{{ customer.shipto }}</span><br>
+            <strong class="mid-font">Bill To Address: </strong><span>{{ customer.billto }}</span><br>
+            <strong class="mid-font">Country: </strong><span>{{ customer.country }}</span><br>
+            <strong class="mid-font">Disclaimer: </strong><span>{{ customer.disclaimer }}</span><br>
+            <strong class="mid-font">Comments: </strong><span>{{ customer.comments }}</span><br>
+            <button class="btn btn-danger full-width" @click="closeView()">Close Viewing</button>
         </div>
         <hr>
         <!-- Add customer Form -->
@@ -158,6 +160,7 @@
             return {
                 edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
                 table: true, // If true, the customers table is showing. If false, the customers form is showing.
+                read: false,
                 customer: { // Customer model and it's values
                     name: '',
                     email: '',
@@ -271,6 +274,34 @@
                     console.log(error.message);
                 });
                 self.edit = true;
+            },
+            viewCustomer(id){
+                let self = this;
+                axios({
+                    method: 'get',
+                    url: 'api/customers/' + id,
+                    validateStatus(status) {
+                        return status >= 200 && status < 300;
+                    }
+                }).then((response) => {
+                    self.read = true;
+                    self.customer.id = response.data.id;
+                    self.customer.name = response.data.name;
+                    self.customer.email = response.data.email;
+                    self.customer.phone = response.data.phone;
+                    self.customer.buyer = response.data.buyer;
+                    self.customer.shipto = response.data.shipto;
+                    self.customer.billto = response.data.billto;
+                    self.customer.country = response.data.country;
+                    self.customer.disclaimer = response.data.disclaimer;
+                    self.customer.comments = response.data.comments;
+                }).catch((error) => {
+                    console.log(error.message);
+                });
+            },
+            closeView(){
+                this.resetValues();
+                this.read = false;
             },
             deleteCustomer(id){ // deletes a specific customer, only the Super Admin can make this request as the button is only visable for that user.
                 if(confirm('Are you sure you want to delete this customer?')){

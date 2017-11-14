@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Customer;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +27,10 @@ class CustomersController extends Controller
      */
     public function getCustomers()
     {
-        return Customer::all();
+        $customers = DB::table('customers')
+                    ->select('id','name', 'email', 'phone', 'buyer', 'country')
+                    ->get();
+        return $customers;
     }
 
     /**

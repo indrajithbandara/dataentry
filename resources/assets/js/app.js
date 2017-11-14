@@ -1,6 +1,7 @@
 require('./bootstrap');
 window.Vue = require('vue');
 
+// Vuex Store
 import { store } from './store/store'
 
 // Parents Components
@@ -10,12 +11,9 @@ Vue.component('users', require('./components/users.vue'));
 Vue.component('customers', require('./components/customers.vue'));
 Vue.component('products', require('./components/products.vue'));
 Vue.component('invoices', require('./components/invoices.vue'));
-// Vue.component('purchaseorders', require('./components/purchaseorders.vue'));
-// Vue.component('routers', require('./components/routers.vue'));
-// Vue.component('inventory', require('./components/inventory.vue'));
 
 
-// Parent Vue Instances
+// Parent vue instances when element is present
 if (document.getElementById('dashboard-app')) {
     const dashboardApp = new Vue({ el: '#dashboard-app', store: store });
 } else if (document.getElementById('settings-app')) {
@@ -29,13 +27,3 @@ if (document.getElementById('dashboard-app')) {
 } else if (document.getElementById('invoice-app')) {
     const invApp = new Vue({ el: '#invoice-app', store: store });
 }
-// else if (document.getElementById('purchaseorders-app')) {
-//     const purchApp = new Vue({ el: '#purchaseorders-app' });
-// }
-// else if (document.getElementById('routers-app')) {
-//     const routApp = new Vue({ el: '#routers-app' });
-// }
-// else if (document.getElementById('inventory-app')) {
-//     const invApp = new Vue({ el: '#inventory-app' });
-// }
-

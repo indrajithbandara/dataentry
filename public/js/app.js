@@ -11467,6 +11467,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __webpack_require__(6);
 window.Vue = __webpack_require__(13);
 
+// Vuex Store
 
 
 // Parents Components
@@ -11476,12 +11477,8 @@ Vue.component('users', __webpack_require__(69));
 Vue.component('customers', __webpack_require__(72));
 Vue.component('products', __webpack_require__(77));
 Vue.component('invoices', __webpack_require__(80));
-// Vue.component('purchaseorders', require('./components/purchaseorders.vue'));
-// Vue.component('routers', require('./components/routers.vue'));
-// Vue.component('inventory', require('./components/inventory.vue'));
 
-
-// Parent Vue Instances
+// Parent vue instances when element is present
 if (document.getElementById('dashboard-app')) {
     var dashboardApp = new Vue({ el: '#dashboard-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
 } else if (document.getElementById('settings-app')) {
@@ -11495,15 +11492,6 @@ if (document.getElementById('dashboard-app')) {
 } else if (document.getElementById('invoice-app')) {
     var invApp = new Vue({ el: '#invoice-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
 }
-// else if (document.getElementById('purchaseorders-app')) {
-//     const purchApp = new Vue({ el: '#purchaseorders-app' });
-// }
-// else if (document.getElementById('routers-app')) {
-//     const routApp = new Vue({ el: '#routers-app' });
-// }
-// else if (document.getElementById('inventory-app')) {
-//     const invApp = new Vue({ el: '#inventory-app' });
-// }
 
 /***/ }),
 /* 18 */

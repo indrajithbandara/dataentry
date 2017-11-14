@@ -10,6 +10,7 @@
                         <th>Material</th>
                         <th>Revision</th>
                         <th>Rev Date</th>
+                        <th>View</th>
                         <th>Edit</th>
                         <th v-if="user == 1">Delete</th>
                     </tr>
@@ -22,6 +23,7 @@
                         <td v-else>{{ product.material }}</td>
                         <td>{{ product.rev }}</td>
                         <td>{{ product.rev_date }}</td>
+                        <td><button @click="viewProduct(product.id)" class="btn btn-default">View</button></td>
                         <td><button @click="showProduct(product.id)" class="btn btn-warning">Edit</button></td>
                         <td v-if="user == 1"><button @click="deleteProduct(product.id)" class="btn btn-danger">Delete</button></td>
                     </tr>
@@ -33,9 +35,17 @@
         </div>
         <!-- end of products table -->
         <hr>
+        <div v-show="read" class="well">
+            <h2 class="lg-font">{{ product.name }}</h2>
+            <strong class="mid-font">Description: </strong><span>{{ product.description }}</span><br>
+            <strong class="mid-font">Material: </strong><span>{{ product.material }}</span><br>
+            <strong class="mid-font">Revision: </strong><span>{{ product.rev }}</span><br>
+            <strong class="mid-font">Revision Date: </strong><span>{{ product.rev_date }}</span><br>
+            <button class="btn btn-danger full-width" @click="closeView()">Close Viewing</button>
+        </div>
         <errorMessage :errorMes="errorMessage"></errorMessage>
         <!-- Add product Form -->
-        <div>
+        <div v-show="!read">
             <h2 class="text-center">Add Product</h2>
             <form action="#" @submit.prevent="edit ? updateProduct(product.id) : createProduct()">
             <p class="alert alert-danger" v-if="regWarning">{{ regWarning }}</p>
@@ -92,6 +102,7 @@
         data() {
             return {
                 edit: false,
+                read: false,
                 product: {
                     id: '',
                     name: '',
@@ -186,6 +197,30 @@
                     this.errorHandeler(error);
                 });
                 this.edit = true;
+            },
+            viewProduct(id) {
+                axios({
+                    method: 'get',
+                    url: 'api/products/' + id,
+                    validateStatus(status) {
+                        return status >= 200 && status < 300;
+                    }
+                }).then((response) => {
+                    for(var key in this.product){
+                        for(var k in response.data){
+                            if(key === k){
+                                this.product[key] = response.data[k];
+                            }
+                        }
+                    }
+                }).catch((error) => {
+                    this.errorHandeler(error);
+                });
+                this.read = true;
+            },
+            closeView() {
+                this.resetValues();
+                this.read = false;
             },
             deleteProduct(id){
                 if(confirm('Are you sure you want to delete this product?')){

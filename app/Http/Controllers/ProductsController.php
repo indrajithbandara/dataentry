@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Product;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +27,10 @@ class ProductsController extends Controller
      */
     public function getProducts() 
     {
-        return Product::all();
+        $products = DB::table('products')
+                    ->select('id','name', 'description', 'material', 'rev', 'rev_date')
+                    ->get();
+        return $products;
     }
 
     /**

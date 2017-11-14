@@ -19,7 +19,7 @@
                             <th>Buyer</th>
                             <th>Country</th>
                             <th>View</th>
-                            <th>Edit</th>
+                            <th v-if="user == 1 || user == 2">Edit</th>
                             <th v-if="user == 1">Delete</th>
                         </tr>
                     </thead>
@@ -31,7 +31,7 @@
                             <td>{{ customer.buyer }}</td>
                             <td>{{ customer.country }}</td>
                             <td><button @click="viewCustomer(customer.id)" class="btn btn-default">View</button></td>
-                            <td><button @click="showCustomer(customer.id)" class="btn btn-warning">Edit</button></td>
+                            <td v-if="user == 1 || user == 2"><button @click="showCustomer(customer.id)" class="btn btn-warning">Edit</button></td>
                             <td v-if="user == 1"><button @click="deleteCustomer(customer.id)" class="btn btn-danger">Delete</button></td>
                         </tr>
                     </tbody>

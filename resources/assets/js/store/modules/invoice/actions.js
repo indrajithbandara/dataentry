@@ -11,9 +11,7 @@ export const commitInvoices = ({ commit }) => {
             for(var i = 0; i < data.length; i++){
                 for(var key in data[i]){
                     if(key === 'customer'){
-                        data[i].customer = JSON.parse(data[i].customer);
-                    } else if (key === 'line_items') {
-                        data[i].line_items = JSON.parse(data[i].line_items);
+                        data[i].customer = JSON.parse(JSON.parse(data[i].customer));
                     }
                 }
             }
@@ -179,9 +177,7 @@ export const dateRangeSearch = ({ commit }, payload) => {
                 for(var i = 0; i < data.length; i++){
                     for(var key in data[i]){
                         if(key === 'customer'){
-                            data[i].customer = JSON.parse(data[i].customer);
-                        } else if (key === 'line_items') {
-                            data[i].line_items = JSON.parse(data[i].line_items);
+                            data[i].customer = JSON.parse(JSON.parse(data[i].customer));
                         }
                     }
                 }
@@ -208,9 +204,7 @@ export const searchInv = ({ commit }, payload) => {
                 for(var i = 0; i < data.length; i++){
                     for(var key in data[i]){
                         if(key === 'customer'){
-                            data[i].customer = JSON.parse(data[i].customer);
-                        } else if (key === 'line_items') {
-                            data[i].line_items = JSON.parse(data[i].line_items);
+                            data[i].customer = JSON.parse(JSON.parse(data[i].customer));
                         }
                     }
                 }

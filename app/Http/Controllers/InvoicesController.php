@@ -27,7 +27,20 @@ class InvoicesController extends Controller
      */
     public function getInvoices()
     {
-        return Invoice::all()->sortByDesc('date')->values();
+        $invoices = DB::table('invoices')
+                            ->select('id','inv_num', 'date', 'customer', 'total')
+                            ->orderBy('date', 'desc')
+                            ->get();
+        $newArr = [];
+        foreach($invoices as $key => $value){
+            if($key === 'customer'){
+                 $d_decoded = json_decode($value, true);
+                 array_push($newArr, $d_decoded);
+            }else {
+                array_push($newArr, $value);
+            }
+        }
+        return $newArr;
     }
 
     /**
@@ -140,9 +153,19 @@ class InvoicesController extends Controller
     public function betweenDates($start, $end)
     {
         $invoices = DB::table('invoices')
+                    ->select('id','inv_num', 'date', 'customer', 'total')
                     ->whereBetween('date', [$start, $end])
                     ->get();
-        return $invoices;
+        $newArr = [];
+        foreach($invoices as $key => $value){
+            if($key === 'customer'){
+                 $d_decoded = json_decode($value, true);
+                 array_push($newArr, $d_decoded);
+            }else {
+                array_push($newArr, $value);
+            }
+        }
+        return $newArr;
     }
 
     /**
@@ -153,9 +176,19 @@ class InvoicesController extends Controller
     public function byInvoiceNum($term)
     {
         $searchResult = DB::table('invoices')
+                            ->select('id','inv_num', 'date', 'customer', 'total')
                             ->where('inv_num', $term)
                             ->get();
-        return $searchResult;
+        $newArr = [];
+        foreach($searchResult as $key => $value){
+            if($key === 'customer'){
+                 $d_decoded = json_decode($value, true);
+                 array_push($newArr, $d_decoded);
+            }else {
+                array_push($newArr, $value);
+            }
+        }
+        return $newArr;
     }
 }
 

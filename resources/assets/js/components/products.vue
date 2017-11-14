@@ -11,7 +11,7 @@
                         <th>Revision</th>
                         <th>Rev Date</th>
                         <th>View</th>
-                        <th>Edit</th>
+                        <th v-if="user == 1 || user == 2 || user == 3">Edit</th>
                         <th v-if="user == 1">Delete</th>
                     </tr>
                 </thead>
@@ -24,7 +24,7 @@
                         <td>{{ product.rev }}</td>
                         <td>{{ product.rev_date }}</td>
                         <td><button @click="viewProduct(product.id)" class="btn btn-default">View</button></td>
-                        <td><button @click="showProduct(product.id)" class="btn btn-warning">Edit</button></td>
+                        <td v-if="user == 1 || user == 2 || user == 3"><button @click="showProduct(product.id)" class="btn btn-warning">Edit</button></td>
                         <td v-if="user == 1"><button @click="deleteProduct(product.id)" class="btn btn-danger">Delete</button></td>
                     </tr>
                 </tbody>

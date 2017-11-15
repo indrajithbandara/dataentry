@@ -34,6 +34,15 @@ class CustomersController extends Controller
     }
 
     /**
+    * Get the Number of Customers
+    */
+    public function count()
+    {
+        $count = Customer::all();
+        return $count->count();
+    }
+
+    /**
      * Display a single of Customers.
      *
      * @param  $id

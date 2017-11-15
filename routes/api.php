@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //====================== Customers Api ====================== //
     Route::get('customers', 'CustomersController@getCustomers'); // Get all Customers
+    Route::get('customers/count', 'CustomersController@count'); // Get count of customers
     Route::get('customers/{id}', 'CustomersController@getCustomer'); // Get One Customer for Editing
     Route::post('customers/store', 'CustomersController@addCustomer'); // Add A Single Custer
     Route::patch('customers/{id}', 'CustomersController@updateCustomer'); // Update a Single Customer
@@ -32,6 +33,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     //====================== Invoices Api ====================== //
     Route::get('invoices', 'InvoicesController@getInvoices'); // Get all Invoices
+    Route::get('invoices/count', 'InvoicesController@count'); // Get count of invoices
     Route::get('invoices/{id}', 'InvoicesController@getOne'); // Get One Invoice for Editing
     Route::get('invoices/report/{start}/{end}', 'InvoicesController@betweenDates'); // Get the invoices between two given dates
     Route::get('invoices/search/{term}', 'InvoicesController@byInvoiceNum'); // searches for an invoice by inv_num

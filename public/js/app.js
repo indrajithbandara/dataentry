@@ -960,21 +960,6 @@ if (token) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-
-// import Echo from 'laravel-echo'
-
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
-
 /***/ }),
 /* 7 */
 /***/ (function(module, exports) {
@@ -44061,13 +44046,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        this.invoiceCount();
+        this.customerCount();
+    },
     data: function data() {
         return {
-            // key: value pairs
+            inv_count: Number,
+            cust_count: Number
         };
     },
 
-    methods: {}
+    methods: {
+        invoiceCount: function invoiceCount() {
+            var _this = this;
+
+            axios.get('api/invoices/count').then(function (response) {
+                _this.inv_count = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        customerCount: function customerCount() {
+            var _this2 = this;
+
+            axios.get('api/customers/count').then(function (response) {
+                _this2.cust_count = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -44075,11 +44084,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
     staticClass: "row"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-3 col-md-6"
   }, [_c('div', {
+    staticClass: "panel panel-success"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-9 text-right"
+  }, [_c('div', {
+    staticClass: "huge"
+  }, [_vm._v(_vm._s(_vm.inv_count))]), _vm._v(" "), _c('div', [_vm._v("Invoices")])])])]), _vm._v(" "), _vm._m(2)])]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-3 col-md-6"
+  }, [_c('div', {
+    staticClass: "panel panel-danger"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_vm._m(4), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-9 text-right"
+  }, [_c('div', {
+    staticClass: "huge"
+  }, [_vm._v(_vm._s(_vm.cust_count))]), _vm._v(" "), _c('div', [_vm._v("Customers")])])])]), _vm._v(" "), _vm._m(5)])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "col-lg-3 col-md-6"
   }, [_c('div', {
     staticClass: "panel panel-info"
@@ -44095,7 +44128,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-xs-9 text-right"
   }, [_c('div', {
     staticClass: "huge"
-  }, [_vm._v("26")]), _vm._v(" "), _c('div', [_vm._v("Open PO's")])])])]), _vm._v(" "), _c('a', {
+  }, [_vm._v("0")]), _vm._v(" "), _c('div', [_vm._v("Open PO's")])])])]), _vm._v(" "), _c('a', {
     attrs: {
       "href": "#"
     }
@@ -44109,23 +44142,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-arrow-circle-right"
   })]), _vm._v(" "), _c('div', {
     staticClass: "clearfix"
-  })])])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-lg-3 col-md-6"
-  }, [_c('div', {
-    staticClass: "panel panel-success"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
+  })])])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "col-xs-3"
   }, [_c('i', {
     staticClass: "fa fa-money fa-5x"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-9 text-right"
-  }, [_c('div', {
-    staticClass: "huge"
-  }, [_vm._v("13")]), _vm._v(" "), _c('div', [_vm._v("Invoices")])])])]), _vm._v(" "), _c('a', {
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
     attrs: {
       "href": "#"
     }
@@ -44139,7 +44164,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-arrow-circle-right"
   })]), _vm._v(" "), _c('div', {
     staticClass: "clearfix"
-  })])])])]), _vm._v(" "), _c('div', {
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "col-lg-3 col-md-6"
   }, [_c('div', {
     staticClass: "panel panel-warning"
@@ -44155,7 +44182,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-xs-9 text-right"
   }, [_c('div', {
     staticClass: "huge"
-  }, [_vm._v("124")]), _vm._v(" "), _c('div', [_vm._v("Open Routers")])])])]), _vm._v(" "), _c('a', {
+  }, [_vm._v("0")]), _vm._v(" "), _c('div', [_vm._v("Open Routers")])])])]), _vm._v(" "), _c('a', {
     attrs: {
       "href": "#"
     }
@@ -44169,23 +44196,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-arrow-circle-right"
   })]), _vm._v(" "), _c('div', {
     staticClass: "clearfix"
-  })])])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-lg-3 col-md-6"
-  }, [_c('div', {
-    staticClass: "panel panel-danger"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
+  })])])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "col-xs-3"
   }, [_c('i', {
     staticClass: "fa fa-users fa-5x"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-9 text-right"
-  }, [_c('div', {
-    staticClass: "huge"
-  }, [_vm._v("35")]), _vm._v(" "), _c('div', [_vm._v("Customers")])])])]), _vm._v(" "), _c('a', {
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
     attrs: {
       "href": "#"
     }
@@ -44199,7 +44218,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-arrow-circle-right"
   })]), _vm._v(" "), _c('div', {
     staticClass: "clearfix"
-  })])])])])])])
+  })])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

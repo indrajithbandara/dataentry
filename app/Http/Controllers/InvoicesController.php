@@ -21,6 +21,16 @@ class InvoicesController extends Controller
     }
 
     /**
+    * Get the Number of Invoices 
+    */
+    public function count()
+    {
+        $count = Invoice::all();
+        return $count->count();
+    }
+
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

@@ -9,7 +9,7 @@
                                 <i class="fa fa-file-text-o fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">26</div>
+                                <div class="huge">0</div>
                                 <div>Open PO's</div>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                                 <i class="fa fa-money fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">13</div>
+                                <div class="huge">{{ inv_count }}</div>
                                 <div>Invoices</div>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                                 <i class="fa fa-arrows fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">124</div>
+                                <div class="huge">0</div>
                                 <div>Open Routers</div>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                                 <i class="fa fa-users fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">35</div>
+                                <div class="huge">{{ cust_count }}</div>
                                 <div>Customers</div>
                             </div>
                         </div>
@@ -97,13 +97,35 @@
 
 <script>
     export default {
+        mounted(){
+            this.invoiceCount();
+            this.customerCount();
+        },
         data() {
             return {
-                // key: value pairs
+                inv_count: Number,
+                cust_count: Number
             }
         },
         methods: {
-
+            invoiceCount(){
+                axios.get('api/invoices/count')
+                .then((response)=>{
+                    this.inv_count = response.data;
+                })
+                .catch((error)=>{
+                    console.log(error);
+                });
+            },
+            customerCount(){
+                axios.get('api/customers/count')
+                .then((response)=>{
+                    this.cust_count = response.data;
+                })
+                .catch((error)=>{
+                    console.log(error);
+                });
+            }
         }
     }
 </script>

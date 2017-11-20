@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- User Table -->
-        <div id="product-table" v-if="list.length > 1" class="table-responsive">
+        <div id="users-table" v-if="list.length > 1" class="table-responsive">
             <table class="table table-condensed">
                 <thead>
                     <tr>
@@ -28,6 +28,8 @@
         </div>
         <!-- end of users table -->
         <hr>
+        <ErrorMessage :errorMes="errorMessage"></ErrorMessage>
+        <SuccessMessage :successMes="successMessage"></SuccessMessage>
         <!-- Add User Form -->
         <div>
             <h2 class="text-center">Add User</h2>
@@ -64,6 +66,8 @@
 <script>
     // Imports
     import SubmitBtns from '../components/partials/submit-btn.vue';
+    import ErrorMessage from '../components/partials/error-message.vue';
+    import SuccessMessage from '../components/partials/success-message.vue';
     export default {
         data() {
             return {
@@ -73,7 +77,9 @@
                     name: '',
                     email: '',
                     permission: ''
-                }
+                },
+                errorMessage: '',
+                successMessage: ''
             }
         },
         mounted() {
@@ -81,95 +87,126 @@
             this.getUsers();
         },
         components: {
-            submitBtns: SubmitBtns
+            SubmitBtns,
+            ErrorMessage,
+            SuccessMessage
         },
         computed: {
-            user() {
-                return this.$store.getters.getUser;
+            user() { 
+                return this.$store.getters.getUser; 
             },
-            list() {
-                return this.$store.getters.getUsers;
+            list() { 
+                return this.$store.getters.getUsers; 
             }
         },
         methods: {
-            getUser(){ this.$store.dispatch('commitPermission'); },
-            getUsers(){ this.$store.dispatch('commitUsers'); },
+            getUser(){ 
+                this.$store.dispatch('commitPermission'); 
+            },
+            getUsers(){ 
+                this.$store.dispatch('commitUsers'); 
+            },
             createUser(){
-                let self = this;
-                let params = Object.assign({}, self.users);
                 axios({
                     method: 'post',
                     url: 'api/users/store',
-                    data: params,
+                    data: this.users,
                     validateStatus(status){
                         return status >= 200 && status < 300;
                     }
                 }).then(() => {
-                    self.users.name = '';
-                    self.users.email = '';
-                    self.users.password = '';
-                    self.users.permission = '';
-                    self.edit = false;
-                    self.getUsers();
-                }).catch((error) => {
-                    console.log(error.message);
+                    this.reset();
+                    this.successMessage = "User has successfully been created!";
+                    setTimeout(()=>{
+                        this.successMessage = '';
+                    }, 5000);
+                }).catch( error => {
+                    this.errorMessage = "Sorry! Something went wrong when adding your user!";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("Create User Failed! " + error.message);
                 });
             },
             updateUser(id){
-                let self = this;
-                let params = Object.assign({}, self.users);
                 axios({
                     method: 'patch',
                     url: 'api/users/' + id,
-                    data: params,
+                    data: this.users,
                     validateStatus(status) {
                         return status >= 200 && status < 300;
                     }
                 }).then(() => {
-                    self.users.name = '',
-                    self.users.email = '',
-                    self.users.permission = '',
-                    self.edit = false;
-                    self.getUsers();
-                }).catch((error) => {
-                    console.log(error.message);
+                    this.reset();
+                    this.successMessage = "User has successfully been updated!";
+                    setTimeout(()=>{
+                        this.successMessage = '';
+                    }, 5000);
+                }).catch( error => {
+                    this.errorMessage = "Sorry! Something went wrong when updating you user!";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("Update User Failed! " + error.message);
                 });
             },
             showUser(id){
-                let self = this;
                 axios({
                     method: 'get',
                     url: 'api/users/' + id,
                     validateStatus(status) {
                         return status >= 200 && status < 300;
                     }
-                }).then((response) => {
-                    self.users.id = response.data.id;
-                    self.users.name = response.data.name;
-                    self.users.email = response.data.email;
-                    self.users.permission = response.data.permission;
-                }).catch((error) => {
-                    console.log(error.message);
+                }).then( response => {
+                    for (var key in this.users){
+                        this.users[key] = response.data[key];
+                    }
+                }).catch( error => {
+                    this.errorMessage = "Sorry! Something went wrong when retrieving your user!";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("Show User Failed! " + error.message);
                 });
-                self.edit = true;
+                this.edit = true;
             },
             deleteUser(id){
                 if(id == 1){
                     alert('Sorry!! You are not allowed to delete the admin user.');
                 }else{
                     if(confirm('Are you sure you want to delete this user?')){
-                        let self = this;
                         axios.delete('api/users/' + id)
                         .then((response) => {
-                            self.getUsers();
-                        }).catch((error) => {
-                            console.log(error.message);
+                            this.getUsers();
+                            this.successMessage = "User has successfully been deleted!";
+                            setTimeout(()=>{
+                                this.successMessage = '';
+                            }, 5000);
+                        }).catch( error => {
+                            this.errorMessage = "Sorry! Something went wrong when updating you user!";
+                            setTimeout(()=>{
+                                this.errorMessage = '';
+                            }, 10000);
+                            throw new Error("Delete User Failed! " + error.message);
                         });
                     }else{
                         return;
                     }
                 }
+            },
+            reset(){
+                for(var key in this.users){
+                    this.users[key] = '';
+                }
+                this.edit = false;
+                this.getUsers();
             }
         }
     }
 </script>
+<style scoped>
+    #users-table { 
+        max-height: 565px; 
+        overflow: scroll; 
+    }
+</style>

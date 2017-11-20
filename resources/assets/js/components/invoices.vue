@@ -27,7 +27,7 @@
         <!-- Start of Invoice Table -->
         <div v-show="table">
             <!-- Invoices Table -->
-            <div id="product-table" v-if="list.length > 0" class="table-responsive">
+            <div id="invoices-table" v-if="list.length > 0" class="table-responsive">
                 <table class="table table-condensed">
                     <thead>
                         <tr>
@@ -559,6 +559,10 @@
     }
 </script>
 <style scoped>
+    #invoices-table { 
+        max-height: 565px; 
+        overflow: scroll; 
+    }
     .cust_top_margin {
         margin-top: 32px;
     }

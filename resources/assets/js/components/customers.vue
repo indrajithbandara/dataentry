@@ -1,15 +1,19 @@
 <template>
     <div>
-        <viewAddBtns 
+        <ViewAddBtns 
             :textOne="'View Customers'"
             :textTwo="'Add A Customer'"
             :toTable="switchToTable"
             :toForm="switchToForm">    
-        </viewAddBtns>
+        </ViewAddBtns>
         <hr>
+        <!-- Messages -->
+        <ErrorMessage :errorMes="errorMessage"></ErrorMessage>
+        <SuccessMessage :successMes="successMessage"></SuccessMessage>
+        <!-- End of Messages -->
         <div v-show="table">
             <!-- Customers Table -->
-            <div id="product-table" v-if="list.length > 0" class="table-responsive">
+            <div id="customer-table" v-if="list.length > 0" class="table-responsive">
                 <table class="table table-condensed">
                     <thead>
                         <tr>
@@ -40,8 +44,8 @@
             <div v-else> 
                 <p class="alert alert-info text-center">You currently have no customers to show.</p>
             </div>
-            <!-- end of customer table -->
         </div>
+        <!-- end of customer table -->
         <div v-show="read" class="well">
             <h2 class="lg-font">{{ customer.name }}</h2>
             <strong class="mid-font">Email: </strong><span>{{ customer.email }}</span><br>
@@ -139,9 +143,10 @@
                             <p class="alert alert-warning" v-if="customer.comments.length == 255">255 character limit reached!</p>
                             <p class="alert alert-danger" v-if="regexComWarning">{{ regexComWarning }}</p>
                         </div>
-                    </div>                
+                    </div>
                 </div>
-                <submitBtns :editMode="edit" :name="name='Customer'"></submitBtns>
+                <ErrorMessage :errorMes="errorMessage"></ErrorMessage>
+                <SubmitBtns :editMode="edit" :name="name='Customer'"></SubmitBtns>
             </form>
         </div>
         <br />
@@ -154,6 +159,8 @@
     // Imports
     import ViewAddBtns from '../components/partials/view-add-btns.vue';
     import SubmitBtns from '../components/partials/submit-btn.vue';
+    import ErrorMessage from '../components/partials/error-message.vue';
+    import SuccessMessage from '../components/partials/success-message.vue';
     // Export
     export default {
         data() {
@@ -162,6 +169,7 @@
                 table: true, // If true, the customers table is showing. If false, the customers form is showing.
                 read: false,
                 customer: { // Customer model and it's values
+                    id: '',
                     name: '',
                     email: '',
                     phone: '',
@@ -172,6 +180,9 @@
                     disclaimer: '',
                     comments: ''
                 },
+                // property for error messages
+                errorMessage: '',
+                successMessage: '',
                 // List of warning properties that have value added by there corrisponding regex[name]Check methods below.
                 regexNameWarning: '', 
                 regexBuyerWarning: '',
@@ -189,8 +200,10 @@
             this.getCustomers();
         },
         components: {
-            viewAddBtns: ViewAddBtns,
-            submitBtns: SubmitBtns
+            ViewAddBtns,
+            SubmitBtns,
+            ErrorMessage,
+            SuccessMessage
         },
         computed: {
             user() {
@@ -216,105 +229,117 @@
             getCustomers(){ // ajax call to get all the customers
                 this.$store.dispatch('commitCustomers');
             },
+            // ===== C.R.U.D methods =====
             createCustomer(){ // post request to add a customer
                 this.valueCheck();
-                let self = this;
-                let params = Object.assign({}, self.customer);
                 axios({
                     method: 'post',
                     url: 'api/customers/store',
-                    data: params,
+                    data: this.customer,
                     validateStatus(status) {
                         return status >= 200 && status < 300;
                     }
                 }).then(() => {
-                    self.resetValues();
+                    this.resetValues();
+                    this.successMessage = "Customer has successfully been created!";
+                    setTimeout(()=>{
+                        this.successMessage = '';
+                    }, 5000);
                 }).catch((error) => {
-                    console.log(error.message);
+                    this.errorMessage = "Sorry! Something went wrong when adding your customer!";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("Create Customer Failed! " + error.message);
                 });
             },
             updateCustomer(id){ // patch request to update a customer
                 this.valueCheck();
-                let self = this;
-                let params = Object.assign({}, self.customer);
                 axios({
                     method: 'patch',
                     url: 'api/customers/' + id,
-                    data: params,
+                    data: this.customer,
                     validateStatus(status) {
                         return status >= 200 && status < 300;
                     }
                 }).then(() => {
-                    self.resetValues();
-                }).catch((error) => {
-                    console.log(error.message);
+                    this.resetValues();
+                    this.successMessage = "Customer has successfully been updated!";
+                    setTimeout(()=>{
+                        this.successMessage = '';
+                    }, 5000);
+                }).catch( error => {
+                    this.errorMessage = "Sorry! Something went wrong when updating your customer!";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("Update Customer Failed! " + error.message);
                 });
             },
             showCustomer(id){ // grad a specific customer to be edited.
-                let self = this;
                 axios({
                     method: 'get',
                     url: 'api/customers/' + id,
                     validateStatus(status) {
                         return status >= 200 && status < 300;
                     }
-                }).then((response) => {
-                    self.table = false;
-                    self.customer.id = response.data.id;
-                    self.customer.name = response.data.name;
-                    self.customer.email = response.data.email;
-                    self.customer.phone = response.data.phone;
-                    self.customer.buyer = response.data.buyer;
-                    self.customer.shipto = response.data.shipto;
-                    self.customer.billto = response.data.billto;
-                    self.customer.country = response.data.country;
-                    self.customer.disclaimer = response.data.disclaimer;
-                    self.customer.comments = response.data.comments;
-                }).catch((error) => {
-                    console.log(error.message);
+                }).then( response => {
+                    this.table = false;
+                    for (var key in this.customer){
+                        this.customer[key] = response.data[key];
+                    }
+                }).catch( error => {
+                    this.errorMessage = "Sorry! Something went wrong when retrieving your customer!";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("Show Customer Failed! " + error.message);
                 });
-                self.edit = true;
+                this.edit = true;
             },
             viewCustomer(id){
-                let self = this;
                 axios({
                     method: 'get',
                     url: 'api/customers/' + id,
                     validateStatus(status) {
                         return status >= 200 && status < 300;
                     }
-                }).then((response) => {
-                    self.read = true;
-                    self.customer.id = response.data.id;
-                    self.customer.name = response.data.name;
-                    self.customer.email = response.data.email;
-                    self.customer.phone = response.data.phone;
-                    self.customer.buyer = response.data.buyer;
-                    self.customer.shipto = response.data.shipto;
-                    self.customer.billto = response.data.billto;
-                    self.customer.country = response.data.country;
-                    self.customer.disclaimer = response.data.disclaimer;
-                    self.customer.comments = response.data.comments;
-                }).catch((error) => {
-                    console.log(error.message);
+                }).then( response => {
+                    this.read = true;
+                    for (var key in this.customer){
+                        this.customer[key] = response.data[key];
+                    }
+                }).catch( error => {
+                    this.errorMessage = "Sorry! Something went wrong when viewing your customer!";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("View Customer Failed! " + error.message);
                 });
-            },
-            closeView(){
-                this.resetValues();
-                this.read = false;
             },
             deleteCustomer(id){ // deletes a specific customer, only the Super Admin can make this request as the button is only visable for that user.
                 if(confirm('Are you sure you want to delete this customer?')){
-                    let self = this;
                     axios.delete('api/customers/' + id)
-                    .then((response) => {
-                        self.getCustomers();
-                    }).catch((error) => {
-                        console.log(error.message);
+                    .then( response => {
+                        this.getCustomers();
+                        this.successMessage = "Customer has successfully been deleted!";
+                        setTimeout(()=>{
+                            this.successMessage = '';
+                        }, 5000);
+                    }).catch( error => {
+                    this.errorMessage = "Sorry! Something went wrong when deleting your customer!";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("Delete Customer Failed! " + error.message);
                     });
                 }else{
                     return;
                 }
+            },
+            closeView(){
+                this.resetValues();
+                this.read = false;
             },
             /*
             * Regex methods for each of the feilds. Tried to tie all of this up into one function but
@@ -322,7 +347,7 @@
             * it's own regex check. 
             *
             * Each regex method has a empty string check because it would throw the error even if the
-            * field was empty, so I added a check for emptiness and it would set the waring to an empty
+            * field was empty, so I added a check for emptiness and it would set the warning to an empty
             * string as well. 
             *
             * In the conditional statment for the pattern test as well, it needed an else statment to get ride
@@ -438,15 +463,9 @@
                 if(!this.customer.comments){this.customer.comments = 'NA';}
             },
             resetValues(){
-                this.customer.name = '';
-                this.customer.email = '';
-                this.customer.phone = '';
-                this.customer.buyer = '';
-                this.customer.shipto = '';
-                this.customer.billto = '';
-                this.customer.country = '';
-                this.customer.disclaimer = '';
-                this.customer.comments = '';
+                for (var key in this.customer){
+                    this.customer[key] = '';
+                }
                 this.edit = false;
                 this.getCustomers();
                 this.table = true;
@@ -454,3 +473,9 @@
         }
     }
 </script>
+<style scoped>
+    #customer-table { 
+        max-height: 565px; 
+        overflow: scroll; 
+    }
+</style>

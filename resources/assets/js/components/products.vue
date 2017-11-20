@@ -43,6 +43,7 @@
             <strong class="mid-font">Revision Date: </strong><span>{{ product.rev_date }}</span><br>
             <button class="btn btn-danger full-width" @click="closeView()">Close Viewing</button>
         </div>
+        <!-- Error Message -->
         <errorMessage :errorMes="errorMessage"></errorMessage>
         <!-- Add product Form -->
         <div v-show="!read">
@@ -86,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                <submitBtns :editMode="edit" :name="name='Product'"></submitBtns>
+                <SubmitBtns :editMode="edit" :name="name='Product'"></SubmitBtns>
             </form>
         </div>
         <!-- End of add product form -->
@@ -121,24 +122,16 @@
             this.getUser();
         },
         components: {
-            submitBtns: SubmitBtns,
-            errorMessage: ErrorMessage
+            SubmitBtns,
+            ErrorMessage
         },
         computed: {
-            user() {
-                return this.$store.getters.getUser;
-            },
-            list() {
-                return this.$store.getters.getProducts;
-            }
+            user() { return this.$store.getters.getUser; },
+            list() { return this.$store.getters.getProducts; }
         },
         methods: {
-            getUser(){
-                this.$store.dispatch('commitPermission');
-            },
-            getProducts(){
-                this.$store.dispatch('commitProducts');
-            },
+            getUser(){ this.$store.dispatch('commitPermission'); },
+            getProducts(){ this.$store.dispatch('commitProducts'); },
             createProduct(){
                 this.noDuplicateNames();
                 this.regexCheck();
@@ -153,10 +146,14 @@
                     validateStatus(status) {
                         return status >= 200 && status < 300;
                     }
-                }).then(() => {
+                }).then(response => {
                     this.resetValues();
-                }).catch((error) => {
-                    this.errorHandeler(error);
+                }).catch(error => {
+                    this.errorMessage = "Sorry! Something went wrong when creating your product.";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("Create Product Failed! " + error.message);
                 });
             },
             updateProduct(id){
@@ -175,7 +172,11 @@
                 }).then(() => {
                     this.resetValues();
                 }).catch((error) => {
-                    this.errorHandeler(error);
+                    this.errorMessage = "Sorry! Something went wrong when updating your product.";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("Update Product Failed! " + error.message);
                 });
             },
             showProduct(id){
@@ -194,7 +195,11 @@
                         }
                     }
                 }).catch((error) => {
-                    this.errorHandeler(error);
+                    this.errorMessage = "Sorry! Something went wrong retrieving your product.";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("Show Product Failed! " + error.message);
                 });
                 this.edit = true;
             },
@@ -214,7 +219,11 @@
                         }
                     }
                 }).catch((error) => {
-                    this.errorHandeler(error);
+                    this.errorMessage = "Sorry! Something went wrong when retrieving your product.";
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, 10000);
+                    throw new Error("View Product Failed! " + error.message);
                 });
                 this.read = true;
             },
@@ -228,7 +237,11 @@
                     .then((response) => {
                         this.getProducts();
                     }).catch((error) => {
-                        this.errorHandeler(error);
+                        this.errorMessage = "Sorry! Something went wrong when deleting your product.";
+                        setTimeout(()=>{
+                            this.errorMessage = '';
+                        }, 10000);
+                        throw new Error("Delete Product Failed! " + error.message);
                     });
                 }else{
                     return;
@@ -250,9 +263,11 @@
                     return pattern.test(val) === false;
                 });
                 if(newArr.length > 0){
-                    this.regWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. However, '--' is not allowed. Current values rejected: "; 
+                    this.regWarning = `Unapproved characters detected! 
+                    List of approved characters: a-z, A-Z, 0-9, highens, commas and periods. 
+                    However, '--' is not allowed. Current values rejected: `; 
                     for(var i = 0; i < newArr.length; i++){
-                        this.regWarning += "'"+newArr[i]+"'    ";
+                        this.regWarning += "'"+newArr[i]+"'";
                     }
                     throw new Error("Unapproved characters rejected by the client.");
                 } else {
@@ -276,34 +291,9 @@
                     var x = arrayItem;
                     if(self.product.name == x.name){
                         alert('This product name has already been taken. Please choose a different one to avoid duplicate information.');
-                        throw new Error("This product name already exisits. Server rejects duplicate values.");
+                        throw new Error("This product name already exists. Server rejects duplicate values.");
                     }
                 });
-            },
-            errorHandeler(error){
-                if(error.response){
-                    //Errors with messages
-                    if(error.response.status === 401){
-                        this.errorMessage = "Sorry! You are not authorized. " + error.response.status + ": " + error.response.statusText;
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": authorization needed."); 
-                    } else if(error.response.status === 403){
-                        this.errorMessage = "Sorry! You are not permitted to make this action. " + error.response.status + ": " + error.response.statusText;
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": permission needed to make this action."); 
-                    } else if(error.response.status === 404){
-                        this.errorMessage = "Sorry! Something went wrong. " + error.response.status + ": " + error.response.statusText;
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": url endpoint not found.");
-                    } else if(error.response.status === 422){
-                        this.errorMessage = "Unapproved input values rejected by the server. " + error.response.status + ": " + error.response.statusText;
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": Unprocessable Entities Detected.");     
-                    } else if(error.response.status === 500){
-                        this.errorMessage = "Sorry! Something went wrong on the server. " + error.response.status + ": " + error.response.statusText;
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": something went wrong on the server.");
-                    } else {
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')');
-                    }
-                } else if(error.message){
-                    throw new Error('Error: ', error.message);
-                }
             }
         }
     }

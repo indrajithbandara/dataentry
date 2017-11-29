@@ -31,7 +31,7 @@
             @endif
             <div class="content">
                 <div class="title m-b-md">
-                    K&amp;S Enterprises
+                    Dataentry System
                 </div>
             </div>
         </div>

@@ -23,6 +23,20 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        if(User::SuperAdminExists() > 0){
+            return redirect('login');
+        }else{
+            return view('auth.register');
+        }
+    }
+
+    /**
      * Where to redirect users after registration.
      *
      * @var string

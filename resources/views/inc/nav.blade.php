@@ -1,6 +1,4 @@
-<?php 
-use App\User;
-?>
+<?php use App\User; ?>
         <!-- Navigation -->
         <nav class="navbar navbar-inverse main-color navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->

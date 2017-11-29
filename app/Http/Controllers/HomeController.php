@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,8 +22,26 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function dashboard()
     {
-        return view('home');
+        if( User::isEmployee() ) {
+            return abort('401');
+        }else{
+            return view('dashboard');
+        }
+    }
+
+    /**
+     * Show the settings page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function settings()
+    {
+        if( User::isSuperAdmin() ) {
+            return view('settings');
+        }else{
+            return abort('401');
+        }
     }
 }

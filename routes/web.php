@@ -1,14 +1,7 @@
 <?php
 
-use App\User;
-
 // Route for loading the front guest page
 Route::get('/', function () { return view('welcome'); });
-
-// Route for loading the dashboard page
-Route::get('/home', 'HomeController@index')->name('home');
-// Route for loading the settings page
-Route::get('/settings', 'HomeController@index')->name('settings');
 
 // Authentications shortcut for default routes.
 Auth::routes();
@@ -25,6 +18,8 @@ Auth::routes();
 
 // Route Group passed through web and auth middleware for the main page. 
 Route::group(['middleware' => ['web', 'auth']], function(){
+    Route::get('/home', 'HomeController@dashboard')->name('home');
+    Route::get('/settings', 'HomeController@settings')->name('settings');
     Route::get('/invoices', 'PagesController@invoices');
     Route::get('/users', 'PagesController@users');
     Route::get('/customers', 'PagesController@customers');

@@ -25,6 +25,9 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
         Product::class => ProductPolicy::class,
+        Invoice::class => InvoicePolicy::class,
+        Customer::class => CustomerPolicy::class,
+        User::class => UserPolicy::class
     ];
 
     /**
@@ -40,5 +43,8 @@ class AuthServiceProvider extends ServiceProvider
 
         // Api Gates
         Gate::define('delete', 'App\Policies\ProductPolicy@delete');
+        Gate::define('delete', 'App\Policies\InvoicePolicy@delete');
+        Gate::define('delete', 'App\Policies\CustomerPolicy@delete');
+        Gate::define('delete', 'App\Policies\UserPolicy@delete');
     }
 }

@@ -18,4 +18,14 @@ class InvoicePolicy
     {
         //
     }
+
+    /**
+    * Only level on users can delete Invoices
+    *
+    * @return void
+    */
+    public function delete($user)
+    {
+        return $user->permission == 1 ? true : false ;
+    }
 }

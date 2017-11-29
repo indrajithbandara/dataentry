@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\User;
-use App\Product;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProductPolicy
@@ -20,7 +19,11 @@ class ProductPolicy
         //
     }
 
-    // Only Admin level one has permission to delete products
+    /**
+    * Only level on users can delete Products
+    *
+    * @return void
+    */
     public function delete($user)
     {
         return $user->permission == 1 ? true : false ;

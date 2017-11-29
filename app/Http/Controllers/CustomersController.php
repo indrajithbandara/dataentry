@@ -126,7 +126,7 @@ class CustomersController extends Controller
      */
     public function deleteCustomer($id)
     {
-        // $this->authorize('delete', $id);
+        $this->authorize('delete', $id);
         return Customer::destroy($id);
     }
 }

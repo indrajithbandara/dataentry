@@ -67,6 +67,7 @@ class UsersController extends Controller
     // Delete User
     public function deleteUser($id)
     {
+        $this->authorize('delete', $id);
         return User::destroy($id);
     }
 }

@@ -151,7 +151,7 @@ class InvoicesController extends Controller
      */
     public function deleteInvoice($id)
     {
-        // $this->authorize('delete', $id);
+        $this->authorize('delete', $id);
         return Invoice::destroy($id);
     }
 

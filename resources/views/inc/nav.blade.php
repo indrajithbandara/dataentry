@@ -63,12 +63,6 @@
 
                         </ul>
                     </li>
-{{--                     <li>
-                        <a href="{{ url('purchaseorders') }}"><i class="fa fa-fw fa-credit-card"></i> Purchase Orders</a>
-                    </li>
-                    <li>
-                        <a href="{{ url('routers') }}"><i class="fa fa-fw fa-arrows"></i> Routers</a>
-                    </li> --}}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

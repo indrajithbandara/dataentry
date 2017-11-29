@@ -1,24 +1,22 @@
 <h1 align="center">Data Entry System</h1>
 <h3 align="center">A data entry system for companies with product driven warehouses.</h3>
-<p>The project is currently in session, It's main purpose is manage product, invoice and shipping information.</p>
+The project is currently in session, It's main purpose is manage product, invoice and shipping information.
 
-## Current Features
-1. Users Interface
-2. Customers Interface
-3. Products Interface
-
-
-## Features In Progress
+### Current Features
+1. Dashboard
+2. Users Interface
+3. Customers Interface
+4. Products Interface
 1. Invoiceing Interface
 2. Company / Settings Interface
 
-## Features To Come
+### Features To Come
 1. Traveler Interface
 2. Product Department Chart
 3. Inventory Interface
-4. Dashboard
+4. Purchase Orders Interface
 
-## General SetUp
+### General SetUp
 1. Rename the .env.example file to .env.
 2. Fill in the following in the .env file.
 ```

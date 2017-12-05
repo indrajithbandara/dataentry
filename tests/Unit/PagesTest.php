@@ -9,12 +9,35 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class PagesTest extends TestCase
 {
     /**
-     * A basic test example.
+    * Test the home page
+    *
+    * @return void
+    */
+    public function testRoot()
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Test the dashboard Page
      *
      * @return void
      */
-    public function testExample()
+    public function testDashboard()
     {
-        $this->assertTrue(true);
+        $response = $this->get('/home');
+        $response->assertRedirect('/login');
+    }
+
+    /**
+    * Session and http test for the settings page
+    *
+    * @return void
+    */
+    public function testSettings()
+    {
+        $response = $this->get('/settings');
+        $response->assertRedirect('/login');
     }
 }

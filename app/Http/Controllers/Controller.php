@@ -10,4 +10,14 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+    * Double Decode Decoded JSON Data For PDF Class
+    *
+    * @param $val  Double Encoded String
+    * @return Double Decoded String
+    */
+    public function doubleDecode($val){
+        return json_decode(json_decode($val, true));
+    }
 }

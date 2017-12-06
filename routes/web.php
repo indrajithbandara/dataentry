@@ -18,7 +18,7 @@ Auth::routes();
 
 // Route Group passed through web and auth middleware for the main page. 
 Route::group(['middleware' => ['web', 'auth']], function(){
-    Route::get('/home', 'HomeController@dashboard')->name('home');
+    Route::get('/dashboard', 'HomeController@dashboard')->name('home');
     Route::get('/settings', 'HomeController@settings')->name('settings');
     Route::get('/invoices', 'PagesController@invoices');
     Route::get('/users', 'PagesController@users');

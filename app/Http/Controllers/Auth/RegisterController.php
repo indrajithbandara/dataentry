@@ -23,13 +23,14 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
-     * Show the application registration form.
+     * Show the application registration form only if a Super Admin
+     * user is not present in the database.
      *
      * @return \Illuminate\Http\Response
      */
     public function showRegistrationForm()
     {
-        if(User::SuperAdminExists() > 0){
+        if(User::FirstSuperAdminExists() > 0){
             return redirect('login');
         }else{
             return view('auth.register');
@@ -41,7 +42,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.

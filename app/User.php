@@ -73,15 +73,14 @@ class User extends Authenticatable
     /**
     * This function checks to see if there is at least one users in the database.
     * The first user of the application should be the Super Admin User. All other
-    * users can be added in the backend by the Super Admin User. The method is used
-    * on the vendor/laravel/framework/src/illuminate/Foundation/Auth/RegisterUsers.php 
-    * page in the 'showRegistrationForm()' method. There it checks if the count of users
+    * users can be added in the backend by the Super Admin User. It checks if the count of users
     * in the database is higher than one. If so, then it will redirect all http requests
-    * to the register route to the login route. 
+    * from the register route to the login route. This is to restrict other users from signing up
+    * for the app without permission from the super admin user.
     *
     * @return integer
     */
-    public static function SuperAdminExists()
+    public static function FirstSuperAdminExists()
     {
         return User::where('id', 1)->count();
     }

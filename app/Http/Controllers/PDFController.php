@@ -10,18 +10,27 @@ use Vsmoraes\Pdf\Pdf;
 
 class PDFController extends Controller
 {
+    /**
+    * @var PDF Object
+    */
     private $pdf;
 
+    /**
+    * Set pdf variable
+    * 
+    * @param $pdf  PDF Object
+    * @return void
+    */
     public function __construct(PDF $pdf)
     {
         $this->pdf = $pdf;
     }
 
-    /*
+    /**
     * PDF INVOICES
     *
-    * params: $id of the invoice
-    *
+    * @param $id of the invoice
+    * @return pdf
     */
     public function invoice($id)
     {
@@ -48,7 +57,7 @@ class PDFController extends Controller
             * results of the decoding would return an object.
             */
             if($key === 'customer' || $key === 'line_items'){
-                $d_decoded = json_decode(json_decode($value, true));
+                $d_decoded = $this->doubleDecode($value);
                 /*
                 * Both the 'customers' and 'line_items' are looped over but the one that matters most is the 'shipto' and 'billto' keys.
                 * This is so they can be converted to an array by exploding the string evertime the '#' symbol is detected. This is 
@@ -105,11 +114,11 @@ class PDFController extends Controller
     }
 
 
-    /*
+    /**
     * PDF SHIPPER
     *
-    * params: $id of the invoice
-    *
+    * @param $id of the invoice
+    * @return pdf
     */
     public function shipper($id)
     {
@@ -136,7 +145,7 @@ class PDFController extends Controller
             * results of the decoding would return an object.
             */
             if($key === 'customer' || $key === 'line_items'){
-                $d_decoded = json_decode(json_decode($value, true));
+                $d_decoded = $this->doubleDecode($value);
                 /*
                 * Both the 'customers' and 'line_items' are looped over but the one that matters most is the 'shipto' and 'billto' keys.
                 * This is so they can be converted to an array by exploding the string evertime the '#' symbol is detected. This is 
@@ -185,6 +194,12 @@ class PDFController extends Controller
             ->show();
     }
 
+    /**
+    *
+    * @param $start  Start date of the report
+    * @param $end  End date of the report
+    * @return pdf
+    */
     public function invoiceReport($start, $end) 
     {
         $report = DB::table('invoices')
@@ -197,8 +212,8 @@ class PDFController extends Controller
             $inner = [];
             foreach($report[$i] as $k => $v){
                 if($k === 'customer'){
-                    $newVal = json_decode(json_decode($v, true));
-                    $array = json_decode(json_encode($newVal), true);
+                    $newVal = $this->doubleDecode($v);
+                    $array = $this->doubleDecode($newVal);
                     array_push($inner, $array['name']);
                 } else if ($k === 'date'){
                     $dateArr = explode('-', $v);

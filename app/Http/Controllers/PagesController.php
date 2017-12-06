@@ -60,6 +60,11 @@ class PagesController extends Controller
         }
     }
 
+    /**
+    * Load the products page to level 1-3 users
+    *
+    * @return view
+    */
     public function products()
     {
         if( User::isSuperAdmin() || User::isAdmin() || User::isManager() ) {
@@ -68,6 +73,4 @@ class PagesController extends Controller
             return abort('401');
         }
     }
-
-
 }

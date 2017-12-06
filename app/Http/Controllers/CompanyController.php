@@ -18,8 +18,10 @@ class CompanyController extends Controller
         return Company::findOrFail($id);
     }
 
-    /*
+    /**
     * Get the one company for displaying
+    *
+    * @return mixed
     */
     public function getName(){
         return Company::where('id', 1)->get();

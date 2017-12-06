@@ -9,28 +9,42 @@ use App\Http\Controllers\Controller;
 class UsersController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    * Create a new controller instance.
+    *
+    * @return void
+    */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    // Get All Users
+    /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function getUsers()
     {
         return User::all();
     }
 
-    // Get One User
+    /**
+    * Display the specified resource.
+    *
+    * @param  \App\User  $id
+    * @return \Illuminate\Http\Response
+    */
     public function getUser($id)
     {
         return User::findOrFail($id);
     }
 
-    // Add a User
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function addUser(Request $request)
     {
         $this->validate($request, [
@@ -48,7 +62,13 @@ class UsersController extends Controller
         ]);
     }
 
-    // Update User
+    /**
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\User  $id
+    * @return \Illuminate\Http\Response
+    */
     public function updateUser(Request $request, $id)
     {
         $this->validate($request, [
@@ -64,7 +84,12 @@ class UsersController extends Controller
         ]);
     }
 
-    // Delete User
+    /**
+    * Remove the specified resource from storage.
+    *
+    * @param  \App\User  $id
+    * @return \Illuminate\Http\Response
+    */
     public function deleteUser($id)
     {
         $this->authorize('delete', $id);

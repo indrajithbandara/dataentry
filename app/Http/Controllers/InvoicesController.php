@@ -11,10 +11,10 @@ use App\Http\Controllers\Controller;
 class InvoicesController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    * Create a new controller instance.
+    *
+    * @return void
+    */
     public function __construct()
     {
         $this->middleware('auth');
@@ -22,6 +22,8 @@ class InvoicesController extends Controller
 
     /**
     * Get the Number of Invoices 
+    *
+    * @return mixed
     */
     public function count()
     {
@@ -31,10 +33,10 @@ class InvoicesController extends Controller
 
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function getInvoices()
     {
         $invoices = DB::table('invoices')
@@ -54,22 +56,22 @@ class InvoicesController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Invoice  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  \App\Invoice  $id
+    * @return \Illuminate\Http\Response
+    */
     public function getOne($id)
     {
         return Invoice::findOrFail($id);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function addInvoice(Request $request)
     {
         // Validate the Request
@@ -104,12 +106,12 @@ class InvoicesController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Invoice  $invoice
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Invoice  $invoice
+    * @return \Illuminate\Http\Response
+    */
     public function updateInvoice(Request $request, $id)
     {
         // Validate the Request
@@ -144,11 +146,11 @@ class InvoicesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Invoice  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  \App\Invoice  $id
+    * @return \Illuminate\Http\Response
+    */
     public function deleteInvoice($id)
     {
         $this->authorize('delete', $id);
@@ -156,9 +158,10 @@ class InvoicesController extends Controller
     }
 
     /**
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
+    * Get invoice report data between two dates
+    *
+    * @param Request $request
+    * @return \Illuminate\Http\Response
     */
     public function betweenDates($start, $end)
     {
@@ -179,9 +182,10 @@ class InvoicesController extends Controller
     }
 
     /**
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
+    * Seach for an invoice by it's invoice number
+    *
+    * @param Request $request
+    * @return \Illuminate\Http\Response
     */
     public function byInvoiceNum($term)
     {

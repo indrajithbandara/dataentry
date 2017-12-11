@@ -11,7 +11,7 @@
                     <h2>{{ companyName }}</h2>
                 </div>
                 <div class="col-sm-12 col-md-4">
-                    <button class="btn btn-primary margin-top-20" v-show="!edit" @click="toEdit()">Update</button>
+                    <button class="btn btn-primary btn-sm full-width margin-top-20" v-show="!edit" @click="toEdit()"><i class="fa fa-pencil" aria-hidden="true"></i> Update</button>
                 </div>
             </div>
         </div>

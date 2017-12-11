@@ -167,7 +167,7 @@ module.exports = function normalizeComponent (
 "use strict";
 
 
-var bind = __webpack_require__(9);
+var bind = __webpack_require__(10);
 var isBuffer = __webpack_require__(25);
 
 /*global toString:true*/
@@ -865,6 +865,50 @@ module.exports = Component.exports
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(74)
+}
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(76),
+  /* template */
+  __webpack_require__(77),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  "data-v-38d3a160",
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/success-message.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] success-message.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-38d3a160", Component.options)
+  } else {
+    hotAPI.reload("data-v-38d3a160", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
@@ -885,10 +929,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(10);
+    adapter = __webpack_require__(11);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(10);
+    adapter = __webpack_require__(11);
   }
   return adapter;
 }
@@ -962,7 +1006,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -1005,7 +1049,7 @@ if (token) {
 }
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 var g;
@@ -1032,7 +1076,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1050,7 +1094,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1061,7 +1105,7 @@ var settle = __webpack_require__(29);
 var buildURL = __webpack_require__(31);
 var parseHeaders = __webpack_require__(32);
 var isURLSameOrigin = __webpack_require__(33);
-var createError = __webpack_require__(11);
+var createError = __webpack_require__(12);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(34);
 
 module.exports = function xhrAdapter(config) {
@@ -1237,7 +1281,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1262,7 +1306,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1274,7 +1318,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1300,7 +1344,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11392,51 +11436,7 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(74)
-}
-var Component = __webpack_require__(0)(
-  /* script */
-  __webpack_require__(76),
-  /* template */
-  __webpack_require__(77),
-  /* styles */
-  injectStyle,
-  /* scopeId */
-  "data-v-38d3a160",
-  /* moduleIdentifier (server only) */
-  null
-)
-Component.options.__file = "/Users/levigonzales/code/dataentry/resources/assets/js/components/partials/success-message.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] success-message.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-38d3a160", Component.options)
-  } else {
-    hotAPI.reload("data-v-38d3a160", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
 /* 16 */
@@ -11493,8 +11493,8 @@ module.exports = __webpack_require__(121);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_store__ = __webpack_require__(43);
-__webpack_require__(7);
-window.Vue = __webpack_require__(14);
+__webpack_require__(8);
+window.Vue = __webpack_require__(15);
 
 // Vuex Store
 
@@ -28612,7 +28612,7 @@ if (document.getElementById('dashboard-app')) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(20)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(20)(module)))
 
 /***/ }),
 /* 20 */
@@ -41299,9 +41299,9 @@ module.exports = __webpack_require__(24);
 
 
 var utils = __webpack_require__(1);
-var bind = __webpack_require__(9);
+var bind = __webpack_require__(10);
 var Axios = __webpack_require__(26);
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 
 /**
  * Create an instance of Axios
@@ -41334,9 +41334,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(13);
+axios.Cancel = __webpack_require__(14);
 axios.CancelToken = __webpack_require__(41);
-axios.isCancel = __webpack_require__(12);
+axios.isCancel = __webpack_require__(13);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -41384,7 +41384,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 var utils = __webpack_require__(1);
 var InterceptorManager = __webpack_require__(36);
 var dispatchRequest = __webpack_require__(37);
@@ -41686,7 +41686,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(11);
+var createError = __webpack_require__(12);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -42105,8 +42105,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(1);
 var transformData = __webpack_require__(38);
-var isCancel = __webpack_require__(12);
-var defaults = __webpack_require__(6);
+var isCancel = __webpack_require__(13);
+var defaults = __webpack_require__(7);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -42258,7 +42258,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(13);
+var Cancel = __webpack_require__(14);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -42355,7 +42355,7 @@ module.exports = function spread(callback) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_invoice_invoices__ = __webpack_require__(45);
@@ -42365,7 +42365,7 @@ module.exports = function spread(callback) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__getters__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__mutations__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__actions__ = __webpack_require__(54);
-__webpack_require__(7);
+__webpack_require__(8);
 
 
 // Modules
@@ -44820,13 +44820,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (!_vm.edit),
       expression: "!edit"
     }],
-    staticClass: "btn btn-primary margin-top-20",
+    staticClass: "btn btn-primary btn-sm full-width margin-top-20",
     on: {
       "click": function($event) {
         _vm.toEdit()
       }
     }
-  }, [_vm._v("Update")])])])]) : _c('div', [_c('p', {
+  }, [_c('i', {
+    staticClass: "fa fa-pencil",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Update")])])])]) : _c('div', [_c('p', {
     staticClass: "alert alert-info text-center"
   }, [_vm._v("You currently have no company information!")])]), _vm._v(" "), _c('errorMessage', {
     attrs: {
@@ -45245,7 +45250,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue__);
 //
 //
@@ -45846,7 +45851,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_partials_submit_btn_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_error_message_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_error_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_error_message_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_partials_success_message_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_partials_success_message_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_partials_success_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_partials_success_message_vue__);
 //
 //
@@ -46951,7 +46956,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue__);
 //
 //
@@ -47689,7 +47694,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_partials_error_message_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_partials_error_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_partials_error_message_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue__);
 //
 //

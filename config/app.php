@@ -182,6 +182,8 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
         // PDF Library
         Vsmoraes\Pdf\PdfServiceProvider::class,
+        // Importing and Exporting CSV and EXCEL files
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -230,7 +232,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'PDF' => 'Vsmoraes\Pdf\PdfFacade'
+        'PDF' => 'Vsmoraes\Pdf\PdfFacade',
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class
     ],
 
 ];

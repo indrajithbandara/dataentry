@@ -44657,7 +44657,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "submit",
       "name": "button"
     }
-  }, [_vm._v("Add " + _vm._s(_vm.name))]), _vm._v(" "), _c('button', {
+  }, [_c('i', {
+    staticClass: "fa fa-plus",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Add " + _vm._s(_vm.name))]), _vm._v(" "), _c('button', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -44669,7 +44674,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "submit",
       "name": "button"
     }
-  }, [_vm._v("Update " + _vm._s(_vm.name))])])
+  }, [_c('i', {
+    staticClass: "fa fa-pencil",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" Update " + _vm._s(_vm.name))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -45358,15 +45368,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function () {
                 _this.reset();
-                _this.successMessage = "User has successfully been created!";
-                setTimeout(function () {
-                    _this.successMessage = '';
-                }, 5000);
+                _this.message("User has successfully been created!", 'success', 5000);
             }).catch(function (error) {
-                _this.errorMessage = "Sorry! Something went wrong when adding your user!";
-                setTimeout(function () {
-                    _this.errorMessage = '';
-                }, 10000);
+                _this.message("Sorry! Something went wrong when adding your user!", 'error', 10000);
                 throw new Error("Create User Failed! " + error.message);
             });
         },
@@ -45382,15 +45386,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function () {
                 _this2.reset();
-                _this2.successMessage = "User has successfully been updated!";
-                setTimeout(function () {
-                    _this2.successMessage = '';
-                }, 5000);
+                _this2.message("User has successfully been updated!", "success", 5000);
             }).catch(function (error) {
-                _this2.errorMessage = "Sorry! Something went wrong when updating you user!";
-                setTimeout(function () {
-                    _this2.errorMessage = '';
-                }, 10000);
+                _this2.message("Sorry! Something went wrong when updating your user!", 'error', 10000);
                 throw new Error("Update User Failed! " + error.message);
             });
         },
@@ -45408,10 +45406,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this3.users[key] = response.data[key];
                 }
             }).catch(function (error) {
-                _this3.errorMessage = "Sorry! Something went wrong when retrieving your user!";
-                setTimeout(function () {
-                    _this3.errorMessage = '';
-                }, 10000);
+                _this3.message("Sorry! Something went wrong when retrieving your user!", "error", 10000);
                 throw new Error("Show User Failed! " + error.message);
             });
             this.edit = true;
@@ -45425,15 +45420,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (confirm('Are you sure you want to delete this user?')) {
                     axios.delete('api/users/' + id).then(function (response) {
                         _this4.getUsers();
-                        _this4.successMessage = "User has successfully been deleted!";
-                        setTimeout(function () {
-                            _this4.successMessage = '';
-                        }, 5000);
+                        _this4.message("User has successfully been deleted!", 'success', 5000);
                     }).catch(function (error) {
-                        _this4.errorMessage = "Sorry! Something went wrong when updating you user!";
-                        setTimeout(function () {
-                            _this4.errorMessage = '';
-                        }, 10000);
+                        _this4.message("Sorry! Something went wrong when updating you user!", 'error', 10000);
                         throw new Error("Delete User Failed! " + error.message);
                     });
                 } else {
@@ -45447,6 +45436,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             this.edit = false;
             this.getUsers();
+        },
+        message: function message(_message) {
+            var _this5 = this;
+
+            var setting = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "success";
+            var timing = arguments[2];
+
+            if (setting == 'success') {
+                this.successMessage = _message;
+                setTimeout(function () {
+                    _this5.successMessage = '';
+                }, timing);
+            } else if (setting == 'error') {
+                this.errorMessage = _message;
+                setTimeout(function () {
+                    _this5.errorMessage = '';
+                }, timing);
+            }
         }
     }
 });
@@ -45569,20 +45576,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "table table-condensed"
   }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Permissions")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(users) {
     return _c('tr', [(users.id != 1) ? _c('td', [_vm._v(_vm._s(users.name))]) : _vm._e(), _vm._v(" "), (users.id != 1) ? _c('td', [_vm._v(_vm._s(users.email))]) : _vm._e(), _vm._v(" "), (users.id != 1) ? _c('td', [_vm._v(_vm._s(users.permission))]) : _vm._e(), _vm._v(" "), (users.id != 1) ? _c('td', [_c('button', {
-      staticClass: "btn btn-warning",
+      staticClass: "btn btn-warning btn-sm",
       on: {
         "click": function($event) {
           _vm.showUser(users.id)
         }
       }
-    }, [_vm._v("Edit")])]) : _vm._e(), _vm._v(" "), (users.id != 1) ? _c('td', [_c('button', {
-      staticClass: "btn btn-danger",
+    }, [_c('i', {
+      staticClass: "fa fa-pencil",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Edit")])]) : _vm._e(), _vm._v(" "), (users.id != 1) ? _c('td', [_c('button', {
+      staticClass: "btn btn-danger btn-sm",
       on: {
         "click": function($event) {
           _vm.deleteUser(users.id)
         }
       }
-    }, [_vm._v("Delete")])]) : _vm._e()])
+    }, [_c('i', {
+      staticClass: "fa fa-trash",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Delete")])]) : _vm._e()])
   }))])]) : _c('div', [_c('p', {
     staticClass: "alert alert-info text-center"
   }, [_vm._v("You currently have no users to show.")])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('ErrorMessage', {
@@ -46431,27 +46448,42 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "table table-condensed"
   }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Phone")]), _vm._v(" "), _c('th', [_vm._v("Buyer")]), _vm._v(" "), _c('th', [_vm._v("Country")]), _vm._v(" "), _c('th', [_vm._v("View")]), _vm._v(" "), (_vm.user == 1 || _vm.user == 2) ? _c('th', [_vm._v("Edit")]) : _vm._e(), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(customer) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(customer.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.phone))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.buyer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(customer.country))]), _vm._v(" "), _c('td', [_c('button', {
-      staticClass: "btn btn-default",
+      staticClass: "btn btn-default btn-sm",
       on: {
         "click": function($event) {
           _vm.viewCustomer(customer.id)
         }
       }
-    }, [_vm._v("View")])]), _vm._v(" "), (_vm.user == 1 || _vm.user == 2) ? _c('td', [_c('button', {
-      staticClass: "btn btn-warning",
+    }, [_c('i', {
+      staticClass: "fa fa-eye",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" View")])]), _vm._v(" "), (_vm.user == 1 || _vm.user == 2) ? _c('td', [_c('button', {
+      staticClass: "btn btn-warning btn-sm",
       on: {
         "click": function($event) {
           _vm.showCustomer(customer.id)
         }
       }
-    }, [_vm._v("Edit")])]) : _vm._e(), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
-      staticClass: "btn btn-danger",
+    }, [_c('i', {
+      staticClass: "fa fa-pencil",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Edit")])]) : _vm._e(), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
+      staticClass: "btn btn-danger btn-sm",
       on: {
         "click": function($event) {
           _vm.deleteCustomer(customer.id)
         }
       }
-    }, [_vm._v("Delete")])]) : _vm._e()])
+    }, [_c('i', {
+      staticClass: "fa fa-trash",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Delete")])]) : _vm._e()])
   }))])]) : _c('div', [_c('p', {
     staticClass: "alert alert-info text-center"
   }, [_vm._v("You currently have no customers to show.")])])]), _vm._v(" "), _c('div', {
@@ -46919,6 +46951,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue__);
+//
 //
 //
 //
@@ -47019,6 +47054,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Imports
 
 
+
 // Export
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47035,7 +47071,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             regWarning: '',
             nameAlert: '',
-            errorMessage: ''
+            errorMessage: '',
+            successMessage: ''
         };
     },
     mounted: function mounted() {
@@ -47045,7 +47082,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     components: {
         SubmitBtns: __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default.a,
-        ErrorMessage: __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue___default.a
+        ErrorMessage: __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue___default.a,
+        SuccessMessage: __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue___default.a
     },
     computed: {
         user: function user() {
@@ -47086,11 +47124,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (response) {
                 _this.resetValues();
+                _this.message("Product has successfully been created!", 'success', 5000);
             }).catch(function (error) {
-                _this.errorMessage = "Sorry! Something went wrong when creating your product.";
-                setTimeout(function () {
-                    _this.errorMessage = '';
-                }, 10000);
+                _this.message("Sorry! Something went wrong when creating your product.", 'error', 10000);
                 throw new Error("Create Product Failed! " + error.message);
             });
         },
@@ -47117,11 +47153,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function () {
                 _this2.resetValues();
+                _this2.message("Product has successfully been updated!", 'success', 5000);
             }).catch(function (error) {
-                _this2.errorMessage = "Sorry! Something went wrong when updating your product.";
-                setTimeout(function () {
-                    _this2.errorMessage = '';
-                }, 10000);
+                _this2.message("Sorry! Something went wrong when updating your product.", 'error', 10000);
                 throw new Error("Update Product Failed! " + error.message);
             });
         },
@@ -47143,10 +47177,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             }).catch(function (error) {
-                _this3.errorMessage = "Sorry! Something went wrong retrieving your product.";
-                setTimeout(function () {
-                    _this3.errorMessage = '';
-                }, 10000);
+                _this3.message("Sorry! Something went wrong retrieving your product.", 'error', 10000);
                 throw new Error("Show Product Failed! " + error.message);
             });
             this.edit = true;
@@ -47169,10 +47200,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             }).catch(function (error) {
-                _this4.errorMessage = "Sorry! Something went wrong when retrieving your product.";
-                setTimeout(function () {
-                    _this4.errorMessage = '';
-                }, 10000);
+                _this4.message("Sorry! Something went wrong when retrieving your product.", 'error', 10000);
                 throw new Error("View Product Failed! " + error.message);
             });
             this.read = true;
@@ -47187,11 +47215,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (confirm('Are you sure you want to delete this product?')) {
                 axios.delete('api/products/' + id).then(function (response) {
                     _this5.getProducts();
+                    _this5.message("Product has successfully been deleted!", 'success', 5000);
                 }).catch(function (error) {
-                    _this5.errorMessage = "Sorry! Something went wrong when deleting your product.";
-                    setTimeout(function () {
-                        _this5.errorMessage = '';
-                    }, 10000);
+                    _this5.message("Sorry! Something went wrong when deleting your product.", 'error', 10000);
                     throw new Error("Delete Product Failed! " + error.message);
                 });
             } else {
@@ -47243,6 +47269,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     throw new Error("This product name already exists. Server rejects duplicate values.");
                 }
             });
+        },
+        message: function message(_message) {
+            var _this6 = this;
+
+            var setting = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "success";
+            var timing = arguments[2];
+
+            if (setting == 'success') {
+                this.successMessage = _message;
+                setTimeout(function () {
+                    _this6.successMessage = '';
+                }, timing);
+            } else if (setting == 'error') {
+                this.errorMessage = _message;
+                setTimeout(function () {
+                    _this6.errorMessage = '';
+                }, timing);
+            }
         }
     }
 });
@@ -47265,27 +47309,42 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "title": product.material
       }
     }, [_vm._v(_vm._s(product.material.substring(0, 10) + '...'))]) : _c('td', [_vm._v(_vm._s(product.material))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(product.rev))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(product.rev_date))]), _vm._v(" "), _c('td', [_c('button', {
-      staticClass: "btn btn-default",
+      staticClass: "btn btn-default btn-sm",
       on: {
         "click": function($event) {
           _vm.viewProduct(product.id)
         }
       }
-    }, [_vm._v("View")])]), _vm._v(" "), (_vm.user == 1 || _vm.user == 2 || _vm.user == 3) ? _c('td', [_c('button', {
-      staticClass: "btn btn-warning",
+    }, [_c('i', {
+      staticClass: "fa fa-eye",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" View")])]), _vm._v(" "), (_vm.user == 1 || _vm.user == 2 || _vm.user == 3) ? _c('td', [_c('button', {
+      staticClass: "btn btn-warning btn-sm",
       on: {
         "click": function($event) {
           _vm.showProduct(product.id)
         }
       }
-    }, [_vm._v("Edit")])]) : _vm._e(), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
-      staticClass: "btn btn-danger",
+    }, [_c('i', {
+      staticClass: "fa fa-pencil",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Edit")])]) : _vm._e(), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
+      staticClass: "btn btn-danger btn-sm",
       on: {
         "click": function($event) {
           _vm.deleteProduct(product.id)
         }
       }
-    }, [_vm._v("Delete")])]) : _vm._e()])
+    }, [_c('i', {
+      staticClass: "fa fa-trash",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Delete")])]) : _vm._e()])
   }))])]) : _c('div', [_c('p', {
     staticClass: "alert alert-info text-center"
   }, [_vm._v("You currently have no products to show.")])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
@@ -47316,6 +47375,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Close Viewing")])]), _vm._v(" "), _c('errorMessage', {
     attrs: {
       "errorMes": _vm.errorMessage
+    }
+  }), _vm._v(" "), _c('SuccessMessage', {
+    attrs: {
+      "successMes": _vm.successMessage
     }
   }), _vm._v(" "), _c('div', {
     directives: [{
@@ -47624,6 +47687,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_fee_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_fee_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_partials_error_message_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_partials_error_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_partials_error_message_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -47919,6 +48026,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
+
 // Export
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47935,8 +48044,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             * Methods Involved: showInvoice() | resetValues()
             */
             edit: false,
+            read: false,
             search: false,
             report: false,
+            errorMessage: '',
+            successMessage: '',
             /*
             * INVOICE TABLE AND ADDING AN INVOICE:
             *
@@ -47988,7 +48100,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         TextAreaForm: __WEBPACK_IMPORTED_MODULE_4__components_partials_form_textarea_vue___default.a,
         NumberForm: __WEBPACK_IMPORTED_MODULE_5__components_partials_form_number_vue___default.a,
         NumberFormFee: __WEBPACK_IMPORTED_MODULE_6__components_partials_form_number_fee_vue___default.a,
-        LineItem: __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue___default.a
+        LineItem: __WEBPACK_IMPORTED_MODULE_7__components_partials_line_item_vue___default.a,
+        ErrorMessage: __WEBPACK_IMPORTED_MODULE_8__components_partials_error_message_vue___default.a,
+        SuccessMessage: __WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue___default.a
     },
     computed: {
         // GETTERS
@@ -48175,7 +48289,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // post request to add an invoice
             this.$store.dispatch('createNewInvoice').then(function () {
                 _this3.resetValues();
+                _this3.message("Invoice successfully created!", 'success', 5000);
             }).catch(function (error) {
+                _this3.message("Sorry! Something went wrong when creating your invoice", 'error', 10000);
                 throw new Error('Something went wrong with the dispatch for createNewInvoice');
             });
         },
@@ -48185,7 +48301,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // patch request to update an invoice
             this.$store.dispatch('updateInvoice', id).then(function () {
                 _this4.resetValues();
+                _this4.message("Invoice successfully updated!", 'success', 5000);
             }).catch(function (error) {
+                _this4.message("Sorry! Something went wrong when updating your invoice!", 'error', 10000);
                 throw new Error('Something went wrong with the dispatch for updateInvoice');
             });
         },
@@ -48198,15 +48316,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this5.table = false;
                 _this5.edit = true;
             }).catch(function (error) {
+                _this5.message("Sorry! Something went wrong when retrieving your invoice!", 'error', 10000);
                 throw new Error('Something went wrong with the dispatch for showInvoice');
             });
         },
-        deleteInvoice: function deleteInvoice(id) {
+        readInvoice: function readInvoice(id) {
             var _this6 = this;
 
-            this.$store.dispatch('deleteInvoice', id).then(function () {
-                _this6.getInvoices();
+            this.$store.dispatch('showInvoice', id).then(function () {
+                _this6.read = true;
             }).catch(function (error) {
+                _this6.message("Sorry! Something went wrong when retrieving your invoice!", 'error', 10000);
+                throw new Error('Something went wrong with the dispatch for showInvoice');
+            });
+        },
+        closeView: function closeView() {
+            this.$store.commit('resetState');
+            this.read = false;
+        },
+        deleteInvoice: function deleteInvoice(id) {
+            var _this7 = this;
+
+            this.$store.dispatch('deleteInvoice', id).then(function () {
+                _this7.getInvoices();
+                _this7.message("Invoice successfully deleted!", 'success', 5000);
+            }).catch(function (error) {
+                _this7.message("Sorry! Something went wrong when deleting your invoice!", 'error', 10000);
                 throw new Error('Something went wrong with the dispatch for deleteInvoice');
             });
         },
@@ -48227,6 +48362,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$store.dispatch('commitInvoices');
             this.edit = false;
             this.table = true;
+        },
+        message: function message(_message) {
+            var _this8 = this;
+
+            var setting = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "success";
+            var timing = arguments[2];
+
+            if (setting == 'success') {
+                this.successMessage = _message;
+                setTimeout(function () {
+                    _this8.successMessage = '';
+                }, timing);
+            } else if (setting == 'error') {
+                this.errorMessage = _message;
+                setTimeout(function () {
+                    _this8.errorMessage = '';
+                }, timing);
+            }
         }
     }
 });
@@ -49557,7 +49710,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v(" Cancel Search")])]) : _vm._e(), _vm._v(" "), _c('div', {
+  }), _vm._v(" Cancel Search")])]) : _vm._e(), _vm._v(" "), _c('errorMessage', {
+    attrs: {
+      "errorMes": _vm.errorMessage
+    }
+  }), _vm._v(" "), _c('SuccessMessage', {
+    attrs: {
+      "successMes": _vm.successMessage
+    }
+  }), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -49571,9 +49732,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('table', {
     staticClass: "table table-condensed"
-  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Invoice #")]), _vm._v(" "), _c('th', [_vm._v("Ship Date")]), _vm._v(" "), _c('th', [_vm._v("Customer")]), _vm._v(" "), _c('th', [_vm._v("Extended Price")]), _vm._v(" "), _c('th', [_vm._v("Print Shipper")]), _vm._v(" "), _c('th', [_vm._v("Print Invoice")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(invoice) {
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("Invoice #")]), _vm._v(" "), _c('th', [_vm._v("Ship Date")]), _vm._v(" "), _c('th', [_vm._v("Customer")]), _vm._v(" "), _c('th', [_vm._v("Extended Price")]), _vm._v(" "), _c('th', [_vm._v("Print Shipper")]), _vm._v(" "), _c('th', [_vm._v("Print Invoice")]), _vm._v(" "), _c('th', [_vm._v("View")]), _vm._v(" "), _c('th', [_vm._v("Edit")]), _vm._v(" "), (_vm.user == 1) ? _c('th', [_vm._v("Delete")]) : _vm._e()])]), _vm._v(" "), _c('tbody', _vm._l((_vm.list), function(invoice) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(invoice.inv_num))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.date))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.customer.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(invoice.total))]), _vm._v(" "), _c('td', [_c('a', {
-      staticClass: "btn btn-default",
+      staticClass: "btn btn-default btn-sm",
       attrs: {
         "href": '/pdf/shipper/' + invoice.id
       }
@@ -49583,7 +49744,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "aria-hidden": "true"
       }
     }), _vm._v(" Shipper")])]), _vm._v(" "), _c('td', [_c('a', {
-      staticClass: "btn btn-primary",
+      staticClass: "btn btn-default btn-sm",
       attrs: {
         "href": '/pdf/invoice/' + invoice.id
       }
@@ -49593,7 +49754,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "aria-hidden": "true"
       }
     }), _vm._v(" Invoice")])]), _vm._v(" "), _c('td', [_c('button', {
-      staticClass: "btn btn-warning",
+      staticClass: "btn btn-primary btn-sm",
+      on: {
+        "click": function($event) {
+          _vm.readInvoice(invoice.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-eye",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" View")])]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-warning btn-sm",
       on: {
         "click": function($event) {
           _vm.showInvoice(invoice.id)
@@ -49605,7 +49778,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "aria-hidden": "true"
       }
     }), _vm._v(" Edit")])]), _vm._v(" "), (_vm.user == 1) ? _c('td', [_c('button', {
-      staticClass: "btn btn-danger",
+      staticClass: "btn btn-danger btn-sm",
       on: {
         "click": function($event) {
           _vm.deleteInvoice(invoice.id)
@@ -49619,7 +49792,40 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v(" Delete")])]) : _vm._e()])
   }))])]) : _c('div', [_c('p', {
     staticClass: "alert alert-info text-center"
-  }, [_vm._v("You currently have no invoices to show.")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+  }, [_vm._v("You currently have no invoices to show.")])])]), _vm._v(" "), _c('hr'), _vm._v(" "), (_vm.read && !_vm.edit && !_vm.search && !_vm.report && _vm.table) ? _c('div', {
+    staticClass: "well"
+  }, [_c('h2', {
+    staticClass: "lg-font"
+  }, [_vm._v("Invoice #: " + _vm._s(_vm.invoiceObj.inv_num))]), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Date: ")]), _c('span', [_vm._v(_vm._s(_vm.invoiceObj.date))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Customer: ")]), _c('span', [_vm._v(_vm._s(_vm.invoiceObj.customer.name))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("PO Number: ")]), _c('span', [_vm._v(_vm._s(_vm.invoiceObj.po_num))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Carrier: ")]), _c('span', [_vm._v(_vm._s(_vm.invoiceObj.carrier))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Status: ")]), _vm._v(" "), (_vm.invoiceObj.complete == 0) ? _c('span', [_vm._v("Incomplete")]) : _c('span', [_vm._v("Complete")]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Memo: ")]), _c('span', [_vm._v(_vm._s(_vm.invoiceObj.memo))]), _c('br'), _vm._v(" "), _c('table', {
+    staticClass: "table table-condensed"
+  }, [_vm._m(1), _vm._v(" "), _vm._l((_vm.invoiceObj.line_items), function(item) {
+    return _c('tbody', [(item.item != null) ? _c('tr', [_c('td', [_vm._v(_vm._s(item.item))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.product))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(item.qty))]), _vm._v(" "), _c('td', [_vm._v("$" + _vm._s(item.unit))]), _vm._v(" "), _c('td', [_vm._v("$" + _vm._s(item.extended))])]) : _vm._e()])
+  })], 2), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Shipping Fee: ")]), _c('span', [_vm._v("$" + _vm._s(_vm.invoiceObj.ship_fee))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Misc. Charges: ")]), _c('span', [_vm._v("$" + _vm._s(_vm.invoiceObj.misc_char))]), _c('br'), _vm._v(" "), _c('strong', {
+    staticClass: "mid-font"
+  }, [_vm._v("Total: ")]), _c('span', [_vm._v("$" + _vm._s(_vm.invoiceObj.total))]), _c('br'), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger full-width",
+    on: {
+      "click": function($event) {
+        _vm.closeView()
+      }
+    }
+  }, [_vm._v("Close Viewing")])]) : _vm._e(), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -50036,7 +50242,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.end = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _c('a', {
+  })])]), _vm._v(" "), _vm._m(2)])]), _vm._v(" "), _c('a', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -50066,6 +50272,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "aria-hidden": "true"
     }
   }), _vm._v("  Search")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Line Item")]), _vm._v(" "), _c('th', [_vm._v("Product")]), _vm._v(" "), _c('th', [_vm._v("Qty")]), _vm._v(" "), _c('th', [_vm._v("Unit Price")]), _vm._v(" "), _c('th', [_vm._v("Ext Price")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-xs-12 col-sm-4"

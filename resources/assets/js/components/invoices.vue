@@ -24,6 +24,9 @@
             </form>
             <button @click="cancelSearch" v-show="search" class="btn btn-danger full-width btn-sm"><i class="fa fa-ban" aria-hidden="true"></i> Cancel Search</button>
         </div>
+        <!-- Error and Success Messages -->
+        <errorMessage :errorMes="errorMessage"></errorMessage>
+        <SuccessMessage :successMes="successMessage"></SuccessMessage>
         <!-- Start of Invoice Table -->
         <div v-show="table">
             <!-- Invoices Table -->
@@ -37,6 +40,7 @@
                             <th>Extended Price</th>
                             <th>Print Shipper</th>
                             <th>Print Invoice</th>
+                            <th>View</th>
                             <th>Edit</th>
                             <th v-if="user == 1">Delete</th>
                         </tr>
@@ -47,10 +51,11 @@
                             <td>{{ invoice.date }}</td>
                             <td>{{ invoice.customer.name }}</td>
                             <td>{{ invoice.total }}</td>
-                            <td><a :href="'/pdf/shipper/' + invoice.id" class="btn btn-default"><i class="fa fa-print" aria-hidden="true"></i> Shipper</a></td>
-                            <td><a :href="'/pdf/invoice/' + invoice.id" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Invoice</a></td>
-                            <td><button @click="showInvoice(invoice.id)" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
-                            <td v-if="user == 1"><button @click="deleteInvoice(invoice.id)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
+                            <td><a :href="'/pdf/shipper/' + invoice.id" class="btn btn-default btn-sm"><i class="fa fa-print" aria-hidden="true"></i> Shipper</a></td>
+                            <td><a :href="'/pdf/invoice/' + invoice.id" class="btn btn-default btn-sm"><i class="fa fa-print" aria-hidden="true"></i> Invoice</a></td>
+                            <td><button @click="readInvoice(invoice.id)" class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></td>
+                            <td><button @click="showInvoice(invoice.id)" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
+                            <td v-if="user == 1"><button @click="deleteInvoice(invoice.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -62,6 +67,41 @@
         </div>
         <!-- End of Invoice Table -->
         <hr>
+        <div v-if="read && !edit && !search && !report && table" class="well">
+            <h2 class="lg-font">Invoice #: {{ invoiceObj.inv_num }}</h2>
+            <strong class="mid-font">Date: </strong><span>{{ invoiceObj.date }}</span><br>
+            <strong class="mid-font">Customer: </strong><span>{{ invoiceObj.customer.name }}</span><br>
+            <strong class="mid-font">PO Number: </strong><span>{{ invoiceObj.po_num }}</span><br>
+            <strong class="mid-font">Carrier: </strong><span>{{ invoiceObj.carrier }}</span><br>
+            <strong class="mid-font">Status: </strong>
+                <span v-if="invoiceObj.complete == 0 ">Incomplete</span>
+                <span v-else>Complete</span><br>
+            <strong class="mid-font">Memo: </strong><span>{{ invoiceObj.memo }}</span><br>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Line Item</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Ext Price</th>
+                    </tr>
+                </thead>
+                <tbody v-for="item in invoiceObj.line_items">
+                    <tr v-if="item.item != null">
+                        <td>{{ item.item }}</td>
+                        <td>{{ item.product }}</td>
+                        <td>{{ item.qty }}</td>
+                        <td>${{ item.unit }}</td>
+                        <td>${{ item.extended }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <strong class="mid-font">Shipping Fee: </strong><span>${{ invoiceObj.ship_fee }}</span><br>
+            <strong class="mid-font">Misc. Charges: </strong><span>${{ invoiceObj.misc_char }}</span><br>
+            <strong class="mid-font">Total: </strong><span>${{ invoiceObj.total }}</span><br>
+            <button class="btn btn-danger full-width" @click="closeView()">Close Viewing</button>
+        </div>
         <!-- Add An Invoice Form -->
         <div v-show="!table">
             <h2 class="text-center">Invoice Details</h2>
@@ -293,6 +333,8 @@
     import NumberForm from '../components/partials/form-number.vue';
     import NumberFormFee from '../components/partials/form-number-fee.vue';
     import LineItem from '../components/partials/line-item.vue';
+    import ErrorMessage from '../components/partials/error-message.vue';
+    import SuccessMessage from '../components/partials/success-message.vue';
     // Export
     export default {
         data() {
@@ -309,8 +351,11 @@
                 * Methods Involved: showInvoice() | resetValues()
                 */
                 edit: false, 
+                read: false,
                 search: false,
                 report: false,
+                errorMessage: '',
+                successMessage: '',
                 /*
                 * INVOICE TABLE AND ADDING AN INVOICE:
                 *
@@ -361,7 +406,9 @@
             TextAreaForm,
             NumberForm,
             NumberFormFee,
-            LineItem
+            LineItem,
+            ErrorMessage,
+            SuccessMessage
         },
         computed: {
             // GETTERS
@@ -504,8 +551,10 @@
                 this.$store.dispatch('createNewInvoice')
                 .then(() => { 
                     this.resetValues(); 
+                    this.message("Invoice successfully created!", 'success', 5000);
                 })
                 .catch((error) => {
+                    this.message("Sorry! Something went wrong when creating your invoice", 'error', 10000);
                     throw new Error('Something went wrong with the dispatch for createNewInvoice');
                 });
             },
@@ -513,8 +562,10 @@
                 this.$store.dispatch('updateInvoice', id)
                 .then(() => {
                     this.resetValues();
+                    this.message("Invoice successfully updated!", 'success', 5000);
                 })
                 .catch((error) => {
+                    this.message("Sorry! Something went wrong when updating your invoice!", 'error', 10000);
                     throw new Error('Something went wrong with the dispatch for updateInvoice');
                 });
             },
@@ -526,15 +577,32 @@
                     this.edit = true;
                 })
                 .catch((error) => {
+                    this.message("Sorry! Something went wrong when retrieving your invoice!", 'error', 10000);
                     throw new Error('Something went wrong with the dispatch for showInvoice');
                 });
+            },
+            readInvoice(id){
+                this.$store.dispatch('showInvoice', id)
+                .then(() => {
+                    this.read = true;
+                })
+                .catch((error) => {
+                    this.message("Sorry! Something went wrong when retrieving your invoice!", 'error', 10000);
+                    throw new Error('Something went wrong with the dispatch for showInvoice');
+                })
+            },
+            closeView(){
+                this.$store.commit('resetState');
+                this.read = false;
             },
             deleteInvoice(id){
                 this.$store.dispatch('deleteInvoice', id)
                 .then(() => {
                     this.getInvoices();
+                    this.message("Invoice successfully deleted!", 'success', 5000);
                 })
                 .catch((error) => {
+                    this.message("Sorry! Something went wrong when deleting your invoice!", 'error', 10000);
                     throw new Error('Something went wrong with the dispatch for deleteInvoice');
                 })
             },
@@ -554,6 +622,19 @@
                 this.$store.dispatch('commitInvoices');
                 this.edit = false;
                 this.table = true;
+            },
+            message(message, setting="success", timing){
+                if(setting == 'success'){
+                    this.successMessage = message;
+                    setTimeout(()=>{
+                        this.successMessage = '';
+                    }, timing);
+                } else if (setting == 'error'){
+                    this.errorMessage = message;
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, timing);
+                }
             }
         }
     }

@@ -17,8 +17,8 @@
                         <td v-if="users.id != 1">{{ users.name }}</td>
                         <td v-if="users.id != 1">{{ users.email }}</td>
                         <td v-if="users.id != 1">{{ users.permission }}</td>
-                        <td v-if="users.id != 1"><button @click="showUser(users.id)" class="btn btn-warning">Edit</button></td>
-                        <td v-if="users.id != 1"><button @click="deleteUser(users.id)" class="btn btn-danger">Delete</button></td>
+                        <td v-if="users.id != 1"><button @click="showUser(users.id)" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
+                        <td v-if="users.id != 1"><button @click="deleteUser(users.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -116,15 +116,9 @@
                     }
                 }).then(() => {
                     this.reset();
-                    this.successMessage = "User has successfully been created!";
-                    setTimeout(()=>{
-                        this.successMessage = '';
-                    }, 5000);
+                    this.message("User has successfully been created!", 'success', 5000);
                 }).catch( error => {
-                    this.errorMessage = "Sorry! Something went wrong when adding your user!";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
+                    this.message("Sorry! Something went wrong when adding your user!", 'error', 10000);
                     throw new Error("Create User Failed! " + error.message);
                 });
             },
@@ -138,15 +132,9 @@
                     }
                 }).then(() => {
                     this.reset();
-                    this.successMessage = "User has successfully been updated!";
-                    setTimeout(()=>{
-                        this.successMessage = '';
-                    }, 5000);
+                    this.message("User has successfully been updated!", "success", 5000);
                 }).catch( error => {
-                    this.errorMessage = "Sorry! Something went wrong when updating you user!";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
+                    this.message("Sorry! Something went wrong when updating your user!", 'error', 10000)
                     throw new Error("Update User Failed! " + error.message);
                 });
             },
@@ -162,10 +150,7 @@
                         this.users[key] = response.data[key];
                     }
                 }).catch( error => {
-                    this.errorMessage = "Sorry! Something went wrong when retrieving your user!";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
+                    this.message("Sorry! Something went wrong when retrieving your user!", "error", 10000);
                     throw new Error("Show User Failed! " + error.message);
                 });
                 this.edit = true;
@@ -178,15 +163,9 @@
                         axios.delete('api/users/' + id)
                         .then((response) => {
                             this.getUsers();
-                            this.successMessage = "User has successfully been deleted!";
-                            setTimeout(()=>{
-                                this.successMessage = '';
-                            }, 5000);
+                            this.message("User has successfully been deleted!", 'success', 5000);
                         }).catch( error => {
-                            this.errorMessage = "Sorry! Something went wrong when updating you user!";
-                            setTimeout(()=>{
-                                this.errorMessage = '';
-                            }, 10000);
+                            this.message("Sorry! Something went wrong when updating you user!", 'error', 10000);
                             throw new Error("Delete User Failed! " + error.message);
                         });
                     }else{
@@ -200,6 +179,19 @@
                 }
                 this.edit = false;
                 this.getUsers();
+            },
+            message(message, setting="success", timing){
+                if(setting == 'success'){
+                    this.successMessage = message;
+                    setTimeout(()=>{
+                        this.successMessage = '';
+                    }, timing);
+                } else if (setting == 'error'){
+                    this.errorMessage = message;
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, timing);
+                }
             }
         }
     }

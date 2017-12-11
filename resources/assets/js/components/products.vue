@@ -23,9 +23,9 @@
                         <td v-else>{{ product.material }}</td>
                         <td>{{ product.rev }}</td>
                         <td>{{ product.rev_date }}</td>
-                        <td><button @click="viewProduct(product.id)" class="btn btn-default">View</button></td>
-                        <td v-if="user == 1 || user == 2 || user == 3"><button @click="showProduct(product.id)" class="btn btn-warning">Edit</button></td>
-                        <td v-if="user == 1"><button @click="deleteProduct(product.id)" class="btn btn-danger">Delete</button></td>
+                        <td><button @click="viewProduct(product.id)" class="btn btn-default btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></td>
+                        <td v-if="user == 1 || user == 2 || user == 3"><button @click="showProduct(product.id)" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
+                        <td v-if="user == 1"><button @click="deleteProduct(product.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -43,8 +43,9 @@
             <strong class="mid-font">Revision Date: </strong><span>{{ product.rev_date }}</span><br>
             <button class="btn btn-danger full-width" @click="closeView()">Close Viewing</button>
         </div>
-        <!-- Error Message -->
+        <!-- Error and Success Messages -->
         <errorMessage :errorMes="errorMessage"></errorMessage>
+        <SuccessMessage :successMes="successMessage"></SuccessMessage>
         <!-- Add product Form -->
         <div v-show="!read">
             <h2 class="text-center">Add Product</h2>
@@ -98,6 +99,7 @@
     // Imports
     import SubmitBtns from '../components/partials/submit-btn.vue';
     import ErrorMessage from '../components/partials/error-message.vue';
+    import SuccessMessage from '../components/partials/success-message.vue';
     // Export
     export default {
         data() {
@@ -114,7 +116,8 @@
                 },
                 regWarning: '',
                 nameAlert: '',
-                errorMessage: ''
+                errorMessage: '',
+                successMessage: ''
             }
         },
         mounted() {
@@ -123,7 +126,8 @@
         },
         components: {
             SubmitBtns,
-            ErrorMessage
+            ErrorMessage,
+            SuccessMessage
         },
         computed: {
             user() { return this.$store.getters.getUser; },
@@ -148,11 +152,9 @@
                     }
                 }).then(response => {
                     this.resetValues();
+                    this.message("Product has successfully been created!", 'success', 5000);
                 }).catch(error => {
-                    this.errorMessage = "Sorry! Something went wrong when creating your product.";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
+                    this.message("Sorry! Something went wrong when creating your product.", 'error', 10000);
                     throw new Error("Create Product Failed! " + error.message);
                 });
             },
@@ -171,11 +173,9 @@
                     }
                 }).then(() => {
                     this.resetValues();
+                    this.message("Product has successfully been updated!", 'success', 5000);
                 }).catch((error) => {
-                    this.errorMessage = "Sorry! Something went wrong when updating your product.";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
+                    this.message("Sorry! Something went wrong when updating your product.", 'error', 10000);
                     throw new Error("Update Product Failed! " + error.message);
                 });
             },
@@ -195,10 +195,7 @@
                         }
                     }
                 }).catch((error) => {
-                    this.errorMessage = "Sorry! Something went wrong retrieving your product.";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
+                    this.message("Sorry! Something went wrong retrieving your product.", 'error', 10000);
                     throw new Error("Show Product Failed! " + error.message);
                 });
                 this.edit = true;
@@ -219,10 +216,7 @@
                         }
                     }
                 }).catch((error) => {
-                    this.errorMessage = "Sorry! Something went wrong when retrieving your product.";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
+                    this.message("Sorry! Something went wrong when retrieving your product.", 'error', 10000);
                     throw new Error("View Product Failed! " + error.message);
                 });
                 this.read = true;
@@ -236,11 +230,9 @@
                     axios.delete('api/products/' + id)
                     .then((response) => {
                         this.getProducts();
+                        this.message("Product has successfully been deleted!", 'success', 5000);
                     }).catch((error) => {
-                        this.errorMessage = "Sorry! Something went wrong when deleting your product.";
-                        setTimeout(()=>{
-                            this.errorMessage = '';
-                        }, 10000);
+                        this.message("Sorry! Something went wrong when deleting your product.", 'error', 10000);
                         throw new Error("Delete Product Failed! " + error.message);
                     });
                 }else{
@@ -294,6 +286,19 @@
                         throw new Error("This product name already exists. Server rejects duplicate values.");
                     }
                 });
+            },
+            message(message, setting="success", timing){
+                if(setting == 'success'){
+                    this.successMessage = message;
+                    setTimeout(()=>{
+                        this.successMessage = '';
+                    }, timing);
+                } else if (setting == 'error'){
+                    this.errorMessage = message;
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, timing);
+                }
             }
         }
     }

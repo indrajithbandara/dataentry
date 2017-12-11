@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Invoice;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -203,6 +204,77 @@ class InvoicesController extends Controller
             }
         }
         return $newArr;
+    }
+
+    /**
+     * import an invoices Excel file in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request)
+    {
+      if($request->file('imported-invoices')){
+                $path = $request->file('imported-invoices')->getRealPath();
+                $data = Excel::load($path, function($reader){})->get();
+          if(!empty($data) && $data->count()){
+            foreach ($data->toArray() as $row){
+              if(!empty($row)){
+                $dataArray[] =
+                [
+                    'id' => $row['id'],
+                    'inv_num' => $row['inv_num'],
+                    'date' => $row['date'],
+                    'customer' => $row['customer'],
+                    'po_num' => $row['po_num'],
+                    'line_items' => $row['line_items'],
+                    'misc_char' => $row['misc_char'],
+                    'ship_fee' => $row['ship_fee'],
+                    'total' => $row['total'],
+                    'complete' => $row['complete'],
+                    'carrier' => $row['carrier'],
+                    'memo' => $row['memo'],
+                    'created_at' => $row['created_at'],
+                    'updated_at' => $row['updated_at']
+                ];
+              }
+          }
+          if(!empty($dataArray)){
+             Invoice::insert($dataArray);
+             return back();
+           }
+         }
+       }
+    }
+
+    /**
+     * Export invoices as an excel file
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exportExcel(){
+      $items = Invoice::all();
+      Excel::create('dataentry-invoices', function($excel) use($items) {
+          $excel->sheet('ExportFile', function($sheet) use($items) {
+              $sheet->fromArray($items);
+          });
+      })->export('xls');
+    }
+
+    /**
+     * Export invoices as an CSV file
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exportCSV(){
+      $items = Invoice::all();
+      Excel::create('dataentry-invoices', function($excel) use($items) {
+          $excel->sheet('ExportFile', function($sheet) use($items) {
+              $sheet->fromArray($items);
+          });
+      })->export('csv');
     }
 }
 

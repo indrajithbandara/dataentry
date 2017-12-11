@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Product;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -104,5 +105,70 @@ class ProductsController extends Controller
     {
         $this->authorize('delete', $id);
         return Product::destroy($id);
+    }
+
+    /**
+     * import a products Excel file in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request)
+    {
+      if($request->file('imported-products')){
+                $path = $request->file('imported-products')->getRealPath();
+                $data = Excel::load($path, function($reader){})->get();
+          if(!empty($data) && $data->count()){
+            foreach ($data->toArray() as $row){
+              if(!empty($row)){
+                $dataArray[] =
+                [
+                    'id' => $row['id'],
+                    'name' => $row['name'],
+                    'description' => $row['description'],
+                    'material' => $row['material'],
+                    'rev' => $row['rev'],
+                    'rev_date' => $row['rev_date'],
+                    'created_at' => $row['created_at'],
+                    'updated_at' => $row['updated_at']
+                ];
+              }
+          }
+          if(!empty($dataArray)){
+             Product::insert($dataArray);
+             return back();
+           }
+         }
+       }
+    }
+
+    /**
+     * Export products as an excel file
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exportExcel(){
+      $items = Product::all();
+      Excel::create('dataentry-products', function($excel) use($items) {
+          $excel->sheet('ExportFile', function($sheet) use($items) {
+              $sheet->fromArray($items);
+          });
+      })->export('xls');
+    }
+
+    /**
+     * Export products as an CSV file
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exportCSV(){
+      $items = Product::all();
+      Excel::create('dataentry-products', function($excel) use($items) {
+          $excel->sheet('ExportFile', function($sheet) use($items) {
+              $sheet->fromArray($items);
+          });
+      })->export('csv');
     }
 }

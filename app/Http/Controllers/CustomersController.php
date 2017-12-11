@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Customer;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -128,5 +129,74 @@ class CustomersController extends Controller
     {
         $this->authorize('delete', $id);
         return Customer::destroy($id);
+    }
+
+    /**
+     * import a customers Excel file in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request)
+    {
+      if($request->file('imported-customers')){
+                $path = $request->file('imported-customers')->getRealPath();
+                $data = Excel::load($path, function($reader){})->get();
+          if(!empty($data) && $data->count()){
+            foreach ($data->toArray() as $row){
+              if(!empty($row)){
+                $dataArray[] =
+                [
+                    'id' => $row['id'],
+                    'name' => $row['name'],
+                    'shipto' => $row['shipto'],
+                    'billto' => $row['billto'],
+                    'buyer' => $row['buyer'],
+                    'email' => $row['email'],
+                    'phone' => $row['phone'],
+                    'country' => $row['country'],
+                    'disclaimer' => $row['disclaimer'],
+                    'comments' => $row['comments'],
+                    'created_at' => $row['created_at'],
+                    'updated_at' => $row['updated_at'],
+                ];
+              }
+          }
+          if(!empty($dataArray)){
+             Customer::insert($dataArray);
+             return back();
+           }
+         }
+       }
+    }
+
+    /**
+     * Export customers as an excel file
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exportExcel(){
+      $items = Customer::all();
+      Excel::create('dataentry-customers', function($excel) use($items) {
+          $excel->sheet('ExportFile', function($sheet) use($items) {
+              $sheet->fromArray($items);
+          });
+      })->export('xls');
+    }
+
+    /**
+     * Export customers as an CSV file
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exportCSV(){
+      $items = Customer::all();
+      Excel::create('dataentry-customers', function($excel) use($items) {
+          $excel->sheet('ExportFile', function($sheet) use($items) {
+              $sheet->fromArray($items);
+          });
+      })->export('csv');
     }
 }

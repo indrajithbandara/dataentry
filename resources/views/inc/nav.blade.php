@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/home') }}">Data Entry</a>
+                <a class="navbar-brand" href="{{ url('/dashboard') }}">Data Entry</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -40,7 +40,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav main-color">
                     <li>
-                        <a href="{{ url('home') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a href="{{ url('/dashboard') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     @if( Auth::user()->permission == 1 || Auth::user()->permission == 2 )
                         <li><a href="{{ url('invoices') }} "><i class="fa fa-fw fa-money"></i> Invoices</a></li>

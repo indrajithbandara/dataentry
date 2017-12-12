@@ -44258,7 +44258,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue__);
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue__);
 //
 //
 //
@@ -44366,6 +44367,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // Imports
 
 
+
 // Export
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -44388,6 +44390,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             regWarning: '',
             errorMessage: '',
+            successMessage: '',
             user: ''
         };
     },
@@ -44398,8 +44401,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     components: {
-        submitBtns: __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default.a,
-        errorMessage: __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue___default.a
+        SubmitBtns: __WEBPACK_IMPORTED_MODULE_0__components_partials_submit_btn_vue___default.a,
+        ErrorMessage: __WEBPACK_IMPORTED_MODULE_1__components_partials_error_message_vue___default.a,
+        SuccessMessage: __WEBPACK_IMPORTED_MODULE_2__components_partials_success_message_vue___default.a
     },
     methods: {
         getUser: function getUser() {
@@ -44430,7 +44434,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.companyName = response.data[0].name;
                 _this2.companyId = response.data[0].id;
             }).catch(function (error) {
-                console.log(error.message);
+                throw new Error("getCompany method failed!", error.message);
+                _this2.message("Sorry! Something went wrong when receiving your company info!", 'error', 10000);
             });
         },
         createCompany: function createCompany() {
@@ -44447,8 +44452,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function () {
                 _this3.resetValues();
+                _this3.message('Company Info Successfully Added!', 'success', 5000);
             }).catch(function (error) {
-                _this3.errorHandeler(error);
+                throw new Error("createCompany method failed!", error.message);
+                _this3.message('Sorry! Something went wrong when adding your company info!', 'error', 10000);
             });
         },
         updateCompany: function updateCompany(id) {
@@ -44465,8 +44472,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function () {
                 _this4.resetValues();
+                _this4.message('Company Info Successfully Updated!', 'success', 5000);
             }).catch(function (error) {
-                _this4.errorHandeler(error);
+                throw new Error("updateCompany method failed!", error.message);
+                _this4.message("Sorry! Something went wrong when updating your company info!", 'error', 10000);
             });
         },
         showCompany: function showCompany(id) {
@@ -44487,7 +44496,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             }).catch(function (error) {
-                _this5.errorHandeler(error);
+                throw new Error("showCompany method faile!", error.message);
+                _this5.message("Sorry! Something went wrong in receiving your company info!", 'error', 10000);
             });
             this.edit = true;
         },
@@ -44517,29 +44527,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.regWarning = '';
             }
         },
-        errorHandeler: function errorHandeler(error) {
-            if (error.response) {
-                //Errors with messages
-                if (error.response.status === 401) {
-                    this.errorMessage = "Sorry! You are not authorized. " + error.response.status + ": " + error.response.statusText;
-                    throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": authorization needed.");
-                } else if (error.response.status === 403) {
-                    this.errorMessage = "Sorry! You are not permitted to make this action. " + error.response.status + ": " + error.response.statusText;
-                    throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": permission needed to make this action.");
-                } else if (error.response.status === 404) {
-                    this.errorMessage = "Sorry! Something went wrong. " + error.response.status + ": " + error.response.statusText;
-                    throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": url endpoint not found.");
-                } else if (error.response.status === 422) {
-                    this.errorMessage = "Unapproved input values rejected by the server. " + error.response.status + ": " + error.response.statusText;
-                    throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": Unprocessable Entities Detected.");
-                } else if (error.response.status === 500) {
-                    this.errorMessage = "Sorry! Something went wrong on the server. " + error.response.status + ": " + error.response.statusText;
-                    throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": something went wrong on the server.");
-                } else {
-                    throw new Error(error.response.status + ' (' + error.response.statusText + ')');
-                }
-            } else if (error.message) {
-                throw new Error('Error: ', error.message);
+        message: function message(_message) {
+            var _this6 = this;
+
+            var setting = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "success";
+            var timing = arguments[2];
+
+            if (setting == 'success') {
+                this.successMessage = _message;
+                setTimeout(function () {
+                    _this6.successMessage = '';
+                }, timing);
+            } else if (setting == 'error') {
+                this.errorMessage = _message;
+                setTimeout(function () {
+                    _this6.errorMessage = '';
+                }, timing);
             }
         }
     }
@@ -44800,7 +44803,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [(!_vm.companyAdded()) ? _c('div', [_c('p', {
     staticClass: "alert alert-success text-center"
-  }, [_vm._v("Add your company info here. "), _c('button', {
+  }, [_vm._v("Please add your company info. "), _c('button', {
     staticClass: "btn btn-success btn-sm",
     on: {
       "click": function($event) {
@@ -44831,11 +44834,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v(" Update")])])])]) : _c('div', [_c('p', {
-    staticClass: "alert alert-info text-center"
-  }, [_vm._v("You currently have no company information!")])]), _vm._v(" "), _c('errorMessage', {
+  }), _vm._v(" Update")])])])]) : _vm._e(), _vm._v(" "), _c('ErrorMessage', {
     attrs: {
       "errorMes": _vm.errorMessage
+    }
+  }), _vm._v(" "), _c('SuccessMessage', {
+    attrs: {
+      "successMes": _vm.successMessage
     }
   }), _vm._v(" "), (_vm.form) ? _c('div', [_c('h2', {
     staticClass: "text-center"
@@ -45141,7 +45146,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.company.po_con.length == 50) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("50 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('submitBtns', {
+  }, [_vm._v("50 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('SubmitBtns', {
     attrs: {
       "editMode": _vm.edit,
       "name": _vm.name = 'Company'
@@ -46105,16 +46110,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function () {
                 _this.resetValues();
-                _this.successMessage = "Customer has successfully been created!";
-                setTimeout(function () {
-                    _this.successMessage = '';
-                }, 5000);
+                _this.message("Customer has successfully been created!", 'success', 5000);
             }).catch(function (error) {
-                _this.errorMessage = "Sorry! Something went wrong when adding your customer!";
-                setTimeout(function () {
-                    _this.errorMessage = '';
-                }, 10000);
                 throw new Error("Create Customer Failed! " + error.message);
+                _this.message("Sorry! Something went wrong when creating your customer!", 'error', 10000);
             });
         },
         updateCustomer: function updateCustomer(id) {
@@ -46131,16 +46130,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function () {
                 _this2.resetValues();
-                _this2.successMessage = "Customer has successfully been updated!";
-                setTimeout(function () {
-                    _this2.successMessage = '';
-                }, 5000);
+                _this2.message("Customer has successfully updated!", 'success', 5000);
             }).catch(function (error) {
-                _this2.errorMessage = "Sorry! Something went wrong when updating your customer!";
-                setTimeout(function () {
-                    _this2.errorMessage = '';
-                }, 10000);
                 throw new Error("Update Customer Failed! " + error.message);
+                _this2.message("Sorry! Something went wrong when updating your customer!", 'error', 10000);
             });
         },
         showCustomer: function showCustomer(id) {
@@ -46159,11 +46152,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this3.customer[key] = response.data[key];
                 }
             }).catch(function (error) {
-                _this3.errorMessage = "Sorry! Something went wrong when retrieving your customer!";
-                setTimeout(function () {
-                    _this3.errorMessage = '';
-                }, 10000);
                 throw new Error("Show Customer Failed! " + error.message);
+                _this3.message("Sorry! Something went wrong when receiving your customer info!", 'error', 10000);
             });
             this.edit = true;
         },
@@ -46182,11 +46172,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this4.customer[key] = response.data[key];
                 }
             }).catch(function (error) {
-                _this4.errorMessage = "Sorry! Something went wrong when viewing your customer!";
-                setTimeout(function () {
-                    _this4.errorMessage = '';
-                }, 10000);
                 throw new Error("View Customer Failed! " + error.message);
+                _this4.message("Sorry! Something went wrong when receiving your customer info!", 'error', 10000);
             });
         },
         deleteCustomer: function deleteCustomer(id) {
@@ -46196,16 +46183,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (confirm('Are you sure you want to delete this customer?')) {
                 axios.delete('api/customers/' + id).then(function (response) {
                     _this5.getCustomers();
-                    _this5.successMessage = "Customer has successfully been deleted!";
-                    setTimeout(function () {
-                        _this5.successMessage = '';
-                    }, 5000);
+                    _this5.message("Customer has been successfully deleted!", 'success', 5000);
                 }).catch(function (error) {
-                    _this5.errorMessage = "Sorry! Something went wrong when deleting your customer!";
-                    setTimeout(function () {
-                        _this5.errorMessage = '';
-                    }, 10000);
                     throw new Error("Delete Customer Failed! " + error.message);
+                    _this5.message("Sorry! Something went wrong when deleting your customer!", 'error', 10000);
                 });
             } else {
                 return;
@@ -46350,6 +46331,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.edit = false;
             this.getCustomers();
             this.table = true;
+        },
+        message: function message(_message) {
+            var _this6 = this;
+
+            var setting = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "success";
+            var timing = arguments[2];
+
+            if (setting == 'success') {
+                this.successMessage = _message;
+                setTimeout(function () {
+                    _this6.successMessage = '';
+                }, timing);
+            } else if (setting == 'error') {
+                this.errorMessage = _message;
+                setTimeout(function () {
+                    _this6.errorMessage = '';
+                }, timing);
+            }
         }
     }
 });
@@ -47270,7 +47269,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.list.forEach(function (arrayItem) {
                 var x = arrayItem;
                 if (self.product.name == x.name) {
-                    alert('This product name has already been taken. Please choose a different one to avoid duplicate information.');
+                    self.message('This product name has already been taken. Please choose a different one to avoid duplicate information.', 'error', 10000);
                     throw new Error("This product name already exists. Server rejects duplicate values.");
                 }
             });

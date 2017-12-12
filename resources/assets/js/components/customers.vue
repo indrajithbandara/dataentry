@@ -241,16 +241,10 @@
                     }
                 }).then(() => {
                     this.resetValues();
-                    this.successMessage = "Customer has successfully been created!";
-                    setTimeout(()=>{
-                        this.successMessage = '';
-                    }, 5000);
+                    this.message("Customer has successfully been created!", 'success', 5000);
                 }).catch((error) => {
-                    this.errorMessage = "Sorry! Something went wrong when adding your customer!";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
                     throw new Error("Create Customer Failed! " + error.message);
+                    this.message("Sorry! Something went wrong when creating your customer!", 'error', 10000);
                 });
             },
             updateCustomer(id){ // patch request to update a customer
@@ -264,16 +258,10 @@
                     }
                 }).then(() => {
                     this.resetValues();
-                    this.successMessage = "Customer has successfully been updated!";
-                    setTimeout(()=>{
-                        this.successMessage = '';
-                    }, 5000);
+                    this.message("Customer has successfully updated!", 'success', 5000);
                 }).catch( error => {
-                    this.errorMessage = "Sorry! Something went wrong when updating your customer!";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
                     throw new Error("Update Customer Failed! " + error.message);
+                    this.message("Sorry! Something went wrong when updating your customer!", 'error', 10000);
                 });
             },
             showCustomer(id){ // grad a specific customer to be edited.
@@ -289,11 +277,8 @@
                         this.customer[key] = response.data[key];
                     }
                 }).catch( error => {
-                    this.errorMessage = "Sorry! Something went wrong when retrieving your customer!";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
                     throw new Error("Show Customer Failed! " + error.message);
+                    this.message("Sorry! Something went wrong when receiving your customer info!", 'error', 10000);
                 });
                 this.edit = true;
             },
@@ -310,11 +295,8 @@
                         this.customer[key] = response.data[key];
                     }
                 }).catch( error => {
-                    this.errorMessage = "Sorry! Something went wrong when viewing your customer!";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
                     throw new Error("View Customer Failed! " + error.message);
+                    this.message("Sorry! Something went wrong when receiving your customer info!", 'error', 10000);
                 });
             },
             deleteCustomer(id){ // deletes a specific customer, only the Super Admin can make this request as the button is only visable for that user.
@@ -322,16 +304,10 @@
                     axios.delete('api/customers/' + id)
                     .then( response => {
                         this.getCustomers();
-                        this.successMessage = "Customer has successfully been deleted!";
-                        setTimeout(()=>{
-                            this.successMessage = '';
-                        }, 5000);
+                        this.message("Customer has been successfully deleted!", 'success', 5000);
                     }).catch( error => {
-                    this.errorMessage = "Sorry! Something went wrong when deleting your customer!";
-                    setTimeout(()=>{
-                        this.errorMessage = '';
-                    }, 10000);
-                    throw new Error("Delete Customer Failed! " + error.message);
+                        throw new Error("Delete Customer Failed! " + error.message);
+                        this.message("Sorry! Something went wrong when deleting your customer!", 'error', 10000);
                     });
                 }else{
                     return;
@@ -469,6 +445,19 @@
                 this.edit = false;
                 this.getCustomers();
                 this.table = true;
+            },
+            message(message, setting="success", timing){
+                if(setting == 'success'){
+                    this.successMessage = message;
+                    setTimeout(()=>{
+                        this.successMessage = '';
+                    }, timing);
+                } else if (setting == 'error'){
+                    this.errorMessage = message;
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, timing);
+                }
             }
         }
     }

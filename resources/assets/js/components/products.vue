@@ -282,7 +282,7 @@
                 self.list.forEach(function(arrayItem){
                     var x = arrayItem;
                     if(self.product.name == x.name){
-                        alert('This product name has already been taken. Please choose a different one to avoid duplicate information.');
+                        self.message('This product name has already been taken. Please choose a different one to avoid duplicate information.', 'error', 10000);
                         throw new Error("This product name already exists. Server rejects duplicate values.");
                     }
                 });

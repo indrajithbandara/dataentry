@@ -2,7 +2,7 @@
     <div>
         <!-- Add your company info box with add button -->
         <div v-if="!companyAdded()">
-            <p class="alert alert-success text-center">Add your company info here. <button class="btn btn-success btn-sm" @click="form = true">Add Company Info</button></p>
+            <p class="alert alert-success text-center">Please add your company info. <button class="btn btn-success btn-sm" @click="form = true">Add Company Info</button></p>
         </div>
         <!-- if company is added: Company Name with edit button -->
         <div v-if="companyAdded()">
@@ -15,11 +15,10 @@
                 </div>
             </div>
         </div>
-        <div v-else>
-            <p class="alert alert-info text-center">You currently have no company information!</p>
-        </div>
-
-        <errorMessage :errorMes="errorMessage"></errorMessage>
+        <!-- Messages -->
+        <ErrorMessage :errorMes="errorMessage"></ErrorMessage>
+        <SuccessMessage :successMes="successMessage"></SuccessMessage>
+        <!-- End of Messages -->
         <!-- Add Company Form -->
         <div v-if="form">
             <h2 class="text-center">Add Company</h2>
@@ -95,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <submitBtns :editMode="edit" :name="name='Company'"></submitBtns>
+                <SubmitBtns :editMode="edit" :name="name='Company'"></SubmitBtns>
             </form>
         </div>
         <!-- End of add product form -->
@@ -106,6 +105,7 @@
     // Imports
     import SubmitBtns from '../components/partials/submit-btn.vue';
     import ErrorMessage from '../components/partials/error-message.vue';
+    import SuccessMessage from '../components/partials/success-message.vue';
     // Export
     export default {
         data() {
@@ -128,6 +128,7 @@
                 },
                 regWarning: '',
                 errorMessage: '',
+                successMessage: '',
                 user: ''
             }
         },
@@ -137,8 +138,9 @@
             this.companyAdded();
         },
         components: {
-            submitBtns: SubmitBtns,
-            errorMessage: ErrorMessage
+            SubmitBtns,
+            ErrorMessage,
+            SuccessMessage
         },
         methods: {
             getUser(){
@@ -167,7 +169,8 @@
                     this.companyName = response.data[0].name;
                     this.companyId = response.data[0].id;
                 }).catch((error) => {
-                    console.log(error.message);
+                    throw new Error("getCompany method failed!", error.message);
+                    this.message("Sorry! Something went wrong when receiving your company info!", 'error', 10000);
                 });
             },
             createCompany(){
@@ -182,8 +185,10 @@
                     }
                 }).then(() => {
                     this.resetValues();
+                    this.message('Company Info Successfully Added!', 'success', 5000);
                 }).catch((error) => {
-                    this.errorHandeler(error);
+                    throw new Error("createCompany method failed!", error.message);
+                    this.message('Sorry! Something went wrong when adding your company info!', 'error' , 10000);
                 });
             },
             updateCompany(id){
@@ -198,8 +203,10 @@
                     }
                 }).then(() => {
                     this.resetValues();
+                    this.message('Company Info Successfully Updated!', 'success', 5000);
                 }).catch((error) => {
-                    this.errorHandeler(error);
+                    throw new Error("updateCompany method failed!", error.message);
+                    this.message("Sorry! Something went wrong when updating your company info!", 'error', 10000);
                 });
             },
             showCompany(id){
@@ -218,7 +225,8 @@
                         }
                     }
                 }).catch((error) => {
-                    this.errorHandeler(error);
+                    throw new Error("showCompany method faile!", error.message);
+                    this.message("Sorry! Something went wrong in receiving your company info!", 'error', 10000);
                 });
                 this.edit = true;
             },
@@ -248,29 +256,17 @@
                     this.regWarning = '';
                 }
             },
-            errorHandeler(error){
-                if(error.response){
-                    //Errors with messages
-                    if(error.response.status === 401){
-                        this.errorMessage = "Sorry! You are not authorized. " + error.response.status + ": " + error.response.statusText;
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": authorization needed."); 
-                    } else if(error.response.status === 403){
-                        this.errorMessage = "Sorry! You are not permitted to make this action. " + error.response.status + ": " + error.response.statusText;
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": permission needed to make this action."); 
-                    } else if(error.response.status === 404){
-                        this.errorMessage = "Sorry! Something went wrong. " + error.response.status + ": " + error.response.statusText;
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": url endpoint not found.");
-                    } else if(error.response.status === 422){
-                        this.errorMessage = "Unapproved input values rejected by the server. " + error.response.status + ": " + error.response.statusText;
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": Unprocessable Entities Detected.");     
-                    } else if(error.response.status === 500){
-                        this.errorMessage = "Sorry! Something went wrong on the server. " + error.response.status + ": " + error.response.statusText;
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')' + ": something went wrong on the server.");
-                    } else {
-                        throw new Error(error.response.status + ' (' + error.response.statusText + ')');
-                    }
-                } else if(error.message){
-                    throw new Error('Error: ', error.message);
+            message(message, setting="success", timing){
+                if(setting == 'success'){
+                    this.successMessage = message;
+                    setTimeout(()=>{
+                        this.successMessage = '';
+                    }, timing);
+                } else if (setting == 'error'){
+                    this.errorMessage = message;
+                    setTimeout(()=>{
+                        this.errorMessage = '';
+                    }, timing);
                 }
             }
         }

@@ -214,6 +214,7 @@ class InvoicesController extends Controller
      */
     public function import(Request $request)
     {
+      DB::table('invoices')->truncate();
       if($request->file('imported-invoices')){
                 $path = $request->file('imported-invoices')->getRealPath();
                 $data = Excel::load($path, function($reader){})->get();
@@ -241,7 +242,7 @@ class InvoicesController extends Controller
           }
           if(!empty($dataArray)){
              Invoice::insert($dataArray);
-             return back();
+             return redirect('settings')->with('invoice-import-status', 'Import was successful!');
            }
          }
        }
@@ -277,4 +278,3 @@ class InvoicesController extends Controller
       })->export('csv');
     }
 }
-

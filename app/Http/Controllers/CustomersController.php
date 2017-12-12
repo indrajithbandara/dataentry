@@ -164,7 +164,7 @@ class CustomersController extends Controller
           }
           if(!empty($dataArray)){
              Customer::insert($dataArray);
-             return back();
+             return redirect('settings')->with('customer-import-status', 'Import was successful!');
            }
          }
        }

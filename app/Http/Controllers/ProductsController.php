@@ -136,7 +136,7 @@ class ProductsController extends Controller
           }
           if(!empty($dataArray)){
              Product::insert($dataArray);
-             return back();
+             return redirect('settings')->with('product-import-status', 'Import was successful!');
            }
          }
        }

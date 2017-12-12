@@ -18,6 +18,11 @@ class Controller extends BaseController
     * @return Double Decoded String
     */
     public function doubleDecode($val){
-        return json_decode(json_decode($val, true));
+        if(gettype($val) == 'string'){
+            return json_decode(json_decode($val, true));
+        } else if (gettype($val) == 'array'){
+            return $val;
+        }
+        return $val;
     }
 }

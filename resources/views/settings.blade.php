@@ -8,6 +8,12 @@
     <!-- Import and Export Customer Section -->
     <h3>Import / Export Customers Data</h3>
     <div class="well">
+        @if (session('customer-import-status'))
+            <div class="full-width alert alert-success alert-dismissable text-center">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ session('customer-import-status') }}
+            </div>
+        @endif
         <div class="row">
             <form action="{{url('customers/import')}}" method="post" enctype="multipart/form-data">
                 {{csrf_field()}}
@@ -37,6 +43,12 @@
     <!-- Import and Export Products Section -->
     <h3>Import / Export Products Data</h3>
     <div class="well">
+        @if (session('product-import-status'))
+            <div class="full-width alert alert-success alert-dismissable text-center">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ session('product-import-status') }}
+            </div>
+        @endif
         <div class="row">
             <form action="{{url('products/import')}}" method="post" enctype="multipart/form-data">
                 {{csrf_field()}}
@@ -66,6 +78,12 @@
     <!-- Import and Export Invoice Section -->
     <h3>Import / Export Invoice Data</h3>
     <div class="well">
+        @if (session('invoice-import-status'))
+            <div class="full-width alert alert-success alert-dismissable text-center">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ session('invoice-import-status') }}
+            </div>
+        @endif
         <div class="row">
             <form action="{{url('invoices/import')}}" method="post" enctype="multipart/form-data">
                 {{csrf_field()}}

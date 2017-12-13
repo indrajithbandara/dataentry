@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     //====================== Company Api ====================== //
     Route::get('company', 'CompanyController@getName'); //Get company info for viewing
     Route::get('company/{id}', 'CompanyController@getOne'); // Get company for editing
+    Route::get('invoice/prefix', 'CompanyController@getInvPrefix'); // Get the invoice prefix number
     Route::post('company/store', 'CompanyController@addCompany'); // Add the company info
     Route::patch('company/{id}', 'CompanyController@updateCompany'); // Update the company info
     // No Delete Functionality. This api is for the company info using the application.

@@ -24,6 +24,11 @@
 
     {{-- Invoices Template --}}
     @if(Request::is('invoices'))
+        @if(session('company-message'))
+            <div class="alert alert-info full-width text-center">
+                {{ session('company-message') }}
+            </div>
+        @endif
         <div id="invoice-app">
             <invoices></invoices>
         </div>

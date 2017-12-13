@@ -37,7 +37,11 @@ class PDFController extends Controller
         // Get Invoice Data by id
         $invoice = Invoice::find($id);
         // Get Company Data
-        $company = Company::find(1);
+        if(Company::find(1)){
+            $company = Company::find(1);
+        }else{
+            return redirect('/invoices')->with('company-message', 'Invoice can not be printed with out company information. Please go to your settings to add your companies information.');
+        }
         /*
         * The data coming from the invoice's tables needs some processing in order for it to be more accessable on the
         * pdf templates. Though php computation is possible on blade templates, this method functions to take the logic
@@ -99,6 +103,8 @@ class PDFController extends Controller
             if($key === 'address'){
                 $addArr = explode("\n", $value);
                 array_push($newInvoice, $addArr);
+            }else if($key === 'inv_prefix'){
+                //
             }else{
                 array_push($newInvoice, $value);
             }
@@ -125,7 +131,11 @@ class PDFController extends Controller
         // Get Invoice Data by id
         $invoice = Invoice::find($id);
         // Get Company Data
-        $company = Company::find(1);
+        if(Company::find(1)){
+            $company = Company::find(1);
+        }else{
+            return redirect('/invoices')->with('company-message', 'Shipper can not be printed with out company information. Please go to your settings to add your companies information.');
+        }
         /*
         * The data coming from the invoice's tables needs some processing in order for it to be more accessable on the
         * pdf templates. Though php computation is possible on blade templates, this method functions to take the logic
@@ -180,6 +190,8 @@ class PDFController extends Controller
             if($key === 'address'){
                 $addArr = explode("\n", $value);
                 array_push($newInvoice, $addArr);
+            }else if($key === 'inv_prefix'){
+                //
             }else{
                 array_push($newInvoice, $value);
             }

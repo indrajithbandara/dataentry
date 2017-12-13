@@ -15,6 +15,7 @@ class Company extends Model
         'invoice_con',
         'shipper_con',
         'router_con',
-        'po_con'
+        'po_con',
+        'inv_prefix'
     ];
 }

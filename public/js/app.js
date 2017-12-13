@@ -868,13 +868,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(74)
+  __webpack_require__(69)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(76),
+  __webpack_require__(71),
   /* template */
-  __webpack_require__(77),
+  __webpack_require__(72),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -11502,7 +11502,7 @@ window.Vue = __webpack_require__(15);
 // Parents Components
 Vue.component('dashboard', __webpack_require__(55));
 Vue.component('settings', __webpack_require__(58));
-Vue.component('users', __webpack_require__(70));
+Vue.component('users', __webpack_require__(74));
 Vue.component('customers', __webpack_require__(79));
 Vue.component('products', __webpack_require__(86));
 Vue.component('invoices', __webpack_require__(89));
@@ -43389,7 +43389,7 @@ var state = {
         misc_char: 0,
         ship_fee: 0,
         total: 0,
-        complete: 0,
+        complete: '',
         carrier: '',
         memo: ''
     }
@@ -43462,7 +43462,7 @@ var updateMemo = function updateMemo(state, payload) {
     state.invoice.memo = payload;
 };
 var updateComplete = function updateComplete(state, payload) {
-    state.invoice.complete = parseInt(payload);
+    state.invoice.complete = payload;
 };
 // Line item Mutations
 var updateLineItem = function updateLineItem(state, payload) {
@@ -43504,8 +43504,6 @@ var resetState = function resetState(state) {
             for (var i = 0; i < 7; i++) {
                 _this.resetLineItem(state, i);
             }
-        } else if (key == 'complete') {
-            state.invoice[key] = 0;
         } else {
             state.invoice[key] = '';
         }
@@ -43527,12 +43525,22 @@ var setInvoiceData = function setInvoiceData(state, payload) {
     // sets the invoice data to the invoice model for updating
     for (var key in payload.data) {
         if (key === 'customer') {
-            var cust = JSON.parse(payload.data[key]);
+            var cust = payload.data[key];
+            if (typeof cust == 'string') {
+                while (typeof cust == 'string') {
+                    var cust = JSON.parse(cust);
+                }
+            }
             for (var k in state.invoice.customer) {
                 state.invoice.customer[k] = cust[k];
             }
         } else if (key === 'line_items') {
-            var line = JSON.parse(payload.data[key]);
+            var line = payload.data[key];
+            if (typeof line == 'string') {
+                while (typeof line == 'string') {
+                    line = JSON.parse(line);
+                }
+            }
             for (var i = 0; i < line.length; i++) {
                 for (var l in line[i]) {
                     state.invoice.line_items[i][l] = line[i][l];
@@ -43560,6 +43568,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteInvoice", function() { return deleteInvoice; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dateRangeSearch", function() { return dateRangeSearch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchInv", function() { return searchInv; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "commitNextInvNum", function() { return commitNextInvNum; });
 // This function is responsible for retrieving invoice 
 // data and parsing the parts that need json parsing.
 // These parts specificlly are the customer information
@@ -43574,7 +43583,9 @@ var commitInvoices = function commitInvoices(_ref) {
             for (var i = 0; i < data.length; i++) {
                 for (var key in data[i]) {
                     if (key === 'customer') {
-                        data[i].customer = JSON.parse(JSON.parse(data[i].customer));
+                        while (typeof data[i].customer == 'string') {
+                            data[i].customer = JSON.parse(data[i].customer);
+                        }
                     }
                 }
             }
@@ -43783,6 +43794,17 @@ var searchInv = function searchInv(_ref5, payload) {
         }).catch(function (error) {
             throw new Error('searchInv failed!' + error);
         });
+    });
+};
+
+var commitNextInvNum = function commitNextInvNum(_ref6) {
+    var commit = _ref6.commit;
+
+    axios.get('api/invoice/prefix').then(function (response) {
+        var data = response.data;
+        commit('updateInvNum', data);
+    }).catch(function (error) {
+        throw new Error('commit next invoice number failed' + error);
     });
 };
 
@@ -44217,7 +44239,7 @@ var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(59),
   /* template */
-  __webpack_require__(69),
+  __webpack_require__(73),
   /* styles */
   null,
   /* scopeId */
@@ -44363,6 +44385,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -44386,7 +44419,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 invoice_con: '',
                 shipper_con: '',
                 router_con: '',
-                po_con: ''
+                po_con: '',
+                inv_prefix: ''
             },
             regWarning: '',
             errorMessage: '',
@@ -44800,6 +44834,110 @@ if (false) {
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(70);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("a7d683a2", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38d3a160\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./success-message.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38d3a160\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./success-message.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\nspan[data-v-38d3a160] {\n    cursor: pointer;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        successMes: String
+    },
+    methods: {
+        hideMes: function hideMes() {
+            this.successMes = '';
+        }
+    }
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return (_vm.successMes) ? _c('div', [_c('p', {
+    staticClass: "alert alert-success text-center"
+  }, [_c('i', {
+    staticClass: "fa fa-thumbs-up",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" \n            " + _vm._s(_vm.successMes) + " \n        "), _c('i', {
+    staticClass: "fa fa-thumbs-up",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "pull-right",
+    on: {
+      "click": function($event) {
+        _vm.hideMes()
+      }
+    }
+  }, [_vm._v("\n            X\n        ")])])]) : _vm._e()
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-38d3a160", module.exports)
+  }
+}
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [(!_vm.companyAdded()) ? _c('div', [_c('p', {
     staticClass: "alert alert-success text-center"
@@ -44857,6 +44995,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [(_vm.regWarning) ? _c('p', {
     staticClass: "alert alert-danger"
   }, [_vm._v(_vm._s(_vm.regWarning))]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -44887,7 +45029,40 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), (_vm.company.name.length == 50) ? _c('p', {
     staticClass: "alert alert-warning"
-  }, [_vm._v("50 character limit reached!")]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_vm._v("50 character limit reached!")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "col-sm-12 col-md-6"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "inv_prefix"
+    }
+  }, [_vm._v("Invoice Prefix Number")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.company.inv_prefix),
+      expression: "company.inv_prefix"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "inv_prefix",
+      "required": "",
+      "maxlength": "15"
+    },
+    domProps: {
+      "value": (_vm.company.inv_prefix)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.company.inv_prefix = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.company.inv_prefix.length == 15) ? _c('p', {
+    staticClass: "alert alert-warning"
+  }, [_vm._v("15 character limit reached!")]) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-sm-12 col-md-6"
@@ -45162,17 +45337,17 @@ if (false) {
 }
 
 /***/ }),
-/* 70 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(71)
+  __webpack_require__(75)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(73),
+  __webpack_require__(77),
   /* template */
   __webpack_require__(78),
   /* styles */
@@ -45206,13 +45381,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 71 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(72);
+var content = __webpack_require__(76);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -45232,7 +45407,7 @@ if(false) {
 }
 
 /***/ }),
-/* 72 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(undefined);
@@ -45246,7 +45421,7 @@ exports.push([module.i, "\n#users-table[data-v-298fd228] { \n    max-height: 565
 
 
 /***/ }),
-/* 73 */
+/* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45467,110 +45642,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     }
 });
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(75);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("a7d683a2", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38d3a160\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./success-message.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38d3a160\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./success-message.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\nspan[data-v-38d3a160] {\n    cursor: pointer;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 76 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        successMes: String
-    },
-    methods: {
-        hideMes: function hideMes() {
-            this.successMes = '';
-        }
-    }
-});
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return (_vm.successMes) ? _c('div', [_c('p', {
-    staticClass: "alert alert-success text-center"
-  }, [_c('i', {
-    staticClass: "fa fa-thumbs-up",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }), _vm._v(" \n            " + _vm._s(_vm.successMes) + " \n        "), _c('i', {
-    staticClass: "fa fa-thumbs-up",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }), _vm._v(" "), _c('span', {
-    staticClass: "pull-right",
-    on: {
-      "click": function($event) {
-        _vm.hideMes()
-      }
-    }
-  }, [_vm._v("\n            X\n        ")])])]) : _vm._e()
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-38d3a160", module.exports)
-  }
-}
 
 /***/ }),
 /* 78 */
@@ -48094,6 +48165,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.getInvoices();
         this.getCustomers();
         this.getProducts();
+        this.getNextInvoiceNumber();
     },
 
     components: {
@@ -48165,6 +48237,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         getInvoices: function getInvoices() {
             this.$store.dispatch('commitInvoices');
+        },
+        getNextInvoiceNumber: function getNextInvoiceNumber() {
+            this.$store.dispatch('commitNextInvNum');
         },
         setCustomerInfo: function setCustomerInfo(id) {
             this.$store.dispatch('commitOneCustomer', id);
@@ -48294,6 +48369,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$store.dispatch('createNewInvoice').then(function () {
                 _this3.resetValues();
                 _this3.message("Invoice successfully created!", 'success', 5000);
+                _this3.getNextInvoiceNumber();
             }).catch(function (error) {
                 _this3.message("Sorry! Something went wrong when creating your invoice", 'error', 10000);
                 throw new Error('Something went wrong with the dispatch for createNewInvoice');
@@ -49810,7 +49886,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "mid-font"
   }, [_vm._v("Carrier: ")]), _c('span', [_vm._v(_vm._s(_vm.invoiceObj.carrier))]), _c('br'), _vm._v(" "), _c('strong', {
     staticClass: "mid-font"
-  }, [_vm._v("Status: ")]), _vm._v(" "), (_vm.invoiceObj.complete == 0) ? _c('span', [_vm._v("Incomplete")]) : _c('span', [_vm._v("Complete")]), _c('br'), _vm._v(" "), _c('strong', {
+  }, [_vm._v("Status: ")]), _vm._v(" "), (_vm.invoiceObj.complete == 'no') ? _c('span', [_vm._v("Incomplete")]) : _c('span', [_vm._v("Complete")]), _c('br'), _vm._v(" "), _c('strong', {
     staticClass: "mid-font"
   }, [_vm._v("Memo: ")]), _c('span', [_vm._v(_vm._s(_vm.invoiceObj.memo))]), _c('br'), _vm._v(" "), _c('table', {
     staticClass: "table table-condensed"
@@ -49858,7 +49934,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "forVal": 'inv_num',
       "inputName": 'Invoice #',
       "inputClass": 'form-control',
-      "max": 11,
+      "max": 30,
       "update": _vm.updateInvNum
     }
   })], 1), _vm._v(" "), _c('div', {
@@ -50150,11 +50226,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('option', [_vm._v("Choose An Option")]), _vm._v(" "), _c('option', {
     attrs: {
-      "value": "1"
+      "value": "yes"
     }
   }, [_vm._v("Yes")]), _vm._v(" "), _c('option', {
     attrs: {
-      "value": "0"
+      "value": "no"
     }
   }, [_vm._v("No")])])]), _vm._v(" "), _c('TextAreaForm', {
     attrs: {

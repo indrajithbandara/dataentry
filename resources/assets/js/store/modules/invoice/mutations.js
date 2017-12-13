@@ -20,7 +20,7 @@ export const updateMemo = (state, payload) => {
     state.invoice.memo = payload;
 };
 export const updateComplete = (state, payload) => {
-    state.invoice.complete = parseInt(payload);
+    state.invoice.complete = payload;
 };
 // Line item Mutations
 export const updateLineItem = (state, payload) => {
@@ -62,8 +62,6 @@ export const resetState = (state) => {
             for(var i = 0; i < 7; i++){
                 this.resetLineItem(state, i);
             }  
-        }else if(key == 'complete'){
-            state.invoice[key] = 0;
         }else {
             state.invoice[key] = '';
         }
@@ -84,12 +82,22 @@ export const resetLineItem = (state, payload) => {
 export const setInvoiceData = (state, payload) => { // sets the invoice data to the invoice model for updating
     for(var key in payload.data){
         if(key === 'customer'){
-            var cust = JSON.parse(payload.data[key]);
+            var cust = payload.data[key];
+            if(typeof cust == 'string'){
+                while(typeof cust == 'string'){
+                    var cust = JSON.parse(cust);
+                }
+            }
             for(var k in state.invoice.customer){
                 state.invoice.customer[k] = cust[k];
             }
         } else if (key === 'line_items'){
-            var line = JSON.parse(payload.data[key]);
+            var line = payload.data[key];
+            if(typeof line == 'string'){
+                while(typeof line == 'string'){
+                    line = JSON.parse(line);
+                }
+            }
             for(var i = 0; i < line.length; i++){
                 for(var l in line[i]){
                     state.invoice.line_items[i][l] = line[i][l];

@@ -74,7 +74,7 @@
             <strong class="mid-font">PO Number: </strong><span>{{ invoiceObj.po_num }}</span><br>
             <strong class="mid-font">Carrier: </strong><span>{{ invoiceObj.carrier }}</span><br>
             <strong class="mid-font">Status: </strong>
-                <span v-if="invoiceObj.complete == 0 ">Incomplete</span>
+                <span v-if="invoiceObj.complete == 'no' ">Incomplete</span>
                 <span v-else>Complete</span><br>
             <strong class="mid-font">Memo: </strong><span>{{ invoiceObj.memo }}</span><br>
             <table class="table table-condensed">
@@ -114,8 +114,8 @@
                             :forVal="'inv_num'" 
                             :inputName="'Invoice #'" 
                             :inputClass="'form-control'" 
-                            :max="11" 
-                            :update="updateInvNum"
+                            :max="30" 
+                            :update="updateInvNum" 
                         ></NumberForm>
                     </div>
                     <div class="col-sm-12 col-md-6">
@@ -277,8 +277,8 @@
                     <label>Order Complete</label>
                     <select :value="invoiceObj.complete" @blur="updateComplete" class="form-control">
                         <option>Choose An Option</option>
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
                     </select>
                 </div>
 
@@ -397,6 +397,7 @@
             this.getInvoices();
             this.getCustomers();
             this.getProducts();
+            this.getNextInvoiceNumber();
         },
         components: {
             ViewAddBtns, 
@@ -433,6 +434,7 @@
             getCustomers(){ this.$store.dispatch('commitCustomers'); },
             getProducts(){ this.$store.dispatch('commitProducts'); },
             getInvoices(){ this.$store.dispatch('commitInvoices'); },
+            getNextInvoiceNumber(){ this.$store.dispatch('commitNextInvNum'); },
             setCustomerInfo(id) { this.$store.dispatch('commitOneCustomer', id); },
             // METHODS
             searchInv(term) {
@@ -552,6 +554,7 @@
                 .then(() => { 
                     this.resetValues(); 
                     this.message("Invoice successfully created!", 'success', 5000);
+                    this.getNextInvoiceNumber();
                 })
                 .catch((error) => {
                     this.message("Sorry! Something went wrong when creating your invoice", 'error', 10000);

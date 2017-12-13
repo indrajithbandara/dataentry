@@ -11,7 +11,9 @@ export const commitInvoices = ({ commit }) => {
             for(var i = 0; i < data.length; i++){
                 for(var key in data[i]){
                     if(key === 'customer'){
-                        data[i].customer = JSON.parse(JSON.parse(data[i].customer));
+                        while( typeof data[i].customer == 'string' ){
+                            data[i].customer = JSON.parse(data[i].customer);
+                        }
                     }
                 }
             }
@@ -214,5 +216,15 @@ export const searchInv = ({ commit }, payload) => {
         }).catch((error) => {
             throw new Error('searchInv failed!' + error);
         });
+    });
+}
+
+export const commitNextInvNum = ({ commit }) => {
+    axios.get('api/invoice/prefix')
+    .then((response) => {
+        let data = response.data;
+        commit('updateInvNum', data);
+    }).catch((error) => {
+        throw new Error('commit next invoice number failed' + error);
     });
 }

@@ -24,10 +24,21 @@
             <h2 class="text-center">Add Company</h2>
             <form action="#" @submit.prevent="edit ? updateCompany(company.id) : createCompany()">
             <p class="alert alert-danger" v-if="regWarning">{{ regWarning }}</p>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input v-model="company.name" type="text" name="name" class="form-control" required maxlength="50">
-                    <p class="alert alert-warning" v-if="company.name.length == 50">50 character limit reached!</p>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input v-model="company.name" type="text" name="name" class="form-control" required maxlength="50">
+                            <p class="alert alert-warning" v-if="company.name.length == 50">50 character limit reached!</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="inv_prefix">Invoice Prefix Number</label>
+                            <input v-model="company.inv_prefix" class="form-control" type="text" name="inv_prefix" required maxlength="15">
+                            <p class="alert alert-warning" v-if="company.inv_prefix.length == 15">15 character limit reached!</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
@@ -124,7 +135,8 @@
                     invoice_con: '',
                     shipper_con: '',
                     router_con: '',
-                    po_con: ''
+                    po_con: '',
+                    inv_prefix: ''
                 },
                 regWarning: '',
                 errorMessage: '',

@@ -47,7 +47,7 @@ const state = {
         misc_char: 0,
         ship_fee: 0,
         total: 0,
-        complete: 0,
+        complete: '',
         carrier: '',
         memo: ''
     }

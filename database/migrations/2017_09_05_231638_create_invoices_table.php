@@ -24,7 +24,7 @@ class CreateInvoicesTable extends Migration
             $table->decimal('misc_char', 7, 2)->nullable();
             $table->decimal('ship_fee', 7, 2)->nullable();
             $table->decimal('total', 7, 2);
-            $table->boolean('complete')->default(false)->nullable();
+            $table->enum('complete', ['yes', 'no'])->nullable();
             $table->string('carrier', 50)->nullable();
             $table->string('memo', 255)->nullable();
             $table->timestamps();

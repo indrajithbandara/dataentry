@@ -24,6 +24,7 @@ class CreateCompaniesTable extends Migration
             $table->string('shipper_con', 50)->nullable();
             $table->string('router_con', 50)->nullable();
             $table->string('po_con', 50)->nullable();
+            $table->string('inv_prefix', 15);
             $table->timestamps();
         });
     }

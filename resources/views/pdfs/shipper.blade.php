@@ -51,11 +51,7 @@
             <div class="inline half-width md-text"><span>{{ $invoice[6] }}</span></div>
             <div></div>
             <div class="inline half-width sm-text"><span>Order Complete<span></div>
-            @if($invoice[11] === 0)
-                <div class="inline half-width md-text"><span>No<span></div>
-            @elseif($invoice[11] === 1)
-                <div class="inline half-width md-text"><span>Yes<span></div>
-            @endif
+            <div class="inline half-width md-text"><span>{{ $invoice[11] }}<span></div>
         </div>
         <div class="light-border qtr-width padding-5 float-left set-height">
             <div class="inline half-width sm-text"><span>Ship Date</span></div>

@@ -47,7 +47,12 @@ class InvoicesController extends Controller
         $newArr = [];
         foreach($invoices as $key => $value){
             if($key === 'customer'){
-                 $d_decoded = json_decode($value, true);
+                $d_decoded;
+                $counter;
+                while(gettype($value) == 'string' && $counter <= 5){
+                     $d_decoded = json_decode($value, true);
+                     $counter++;
+                }
                  array_push($newArr, $d_decoded);
             }else {
                 array_push($newArr, $value);
@@ -85,7 +90,7 @@ class InvoicesController extends Controller
             'misc_char' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'ship_fee' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'total' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            'complete' => 'nullable|boolean',
+            'complete' => 'nullable|string',
             'carrier' => 'nullable|string|max:50',
             'memo' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255'
         ]);
@@ -125,7 +130,7 @@ class InvoicesController extends Controller
             'misc_char' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'ship_fee' => 'nullable|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
             'total' => 'required|regex:/^(?!-)(?!.*--)[0-9\.]+(?<!-)$/i',
-            'complete' => 'nullable|boolean',
+            'complete' => 'nullable|string',
             'carrier' => 'nullable|string|max:50',
             'memo' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i|max:255'
         ]);

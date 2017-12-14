@@ -113,7 +113,30 @@
         <i @click="instruction = true" class="fa fa-question-circle fa-2x pointer" aria-hidden="true"></i>
         <div v-show="instruction" class="well">
             <i @click="instruction = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
-            <h3 class="text-center">Settigns Instructions</h3>
+            <h3 class="text-center">Settings Instructions</h3>
+            <p>Welcome to the settings area of the dataentry system! This is where you will add all of the needed company
+                information that will be used through out your system. This information is also used on your pdf templates
+                as well as your report forms.</p>
+            <h4>Filling out the form</h4>
+            <p>Filling out the form is simple but some of the information that is asked for may not apply to your specific needs.
+            As a summery here are what each field is used for:</p>
+            <ol>
+                <li><strong>Name: </strong> This is where you will put the name of your company as you would want it to appear on invoices, shippers
+                and reports.</li>
+                <li><strong>Invoice Prefix Number: </strong> This number, as it suggests, is placed as a prefix before all of your invoice numbers
+                which are automatically generated for you. Your invoice numbers start with your prefix here and end with 0000. The invoice numbers then
+                increment from there and will continue to increment until you update your prefix number. This is so you can have invoice numbers that are 
+                unique for every year, half a year, quarter of the year or however frequent your invoice numbers need to change. Each time you update your
+                prefix number, the invoice counter will reset to 0000.</li>
+                <li><strong>Address: </strong> </li>
+                <li><strong>Description: </strong></li>
+                <li><strong>Phone: </strong></li>
+                <li><strong>Email: </strong></li>
+                <li><strong>Invoice Document Control Number: </strong></li>
+                <li><strong>Shipper Document Control Number: </strong></li>
+                <li><strong>Router Document Control Number: </strong></li>
+                <li><strong>Purchase Order Document Control Number: </strong></li>
+            </ol>
         </div>
     </div>
 </template>

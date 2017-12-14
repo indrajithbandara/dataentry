@@ -44402,6 +44402,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -45360,8 +45383,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('h3', {
     staticClass: "text-center"
-  }, [_vm._v("Settigns Instructions")])])], 1)
-},staticRenderFns: []}
+  }, [_vm._v("Settings Instructions")]), _vm._v(" "), _c('p', [_vm._v("Welcome to the settings area of the dataentry system! This is where you will add all of the needed company\n            information that will be used through out your system. This information is also used on your pdf templates\n            as well as your report forms.")]), _vm._v(" "), _c('h4', [_vm._v("Filling out the form")]), _vm._v(" "), _c('p', [_vm._v("Filling out the form is simple but some of the information that is asked for may not apply to your specific needs.\n        As a summery here are what each field is used for:")]), _vm._v(" "), _vm._m(0)])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ol', [_c('li', [_c('strong', [_vm._v("Name: ")]), _vm._v(" This is where you will put the name of your company as you would want it to appear on invoices, shippers\n            and reports.")]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Invoice Prefix Number: ")]), _vm._v(" This number, as it suggests, is placed as a prefix before all of your invoice numbers\n            which are automatically generated for you. Your invoice numbers start with your prefix here and end with 0000. The invoice numbers then\n            increment from there and will continue to increment until you update your prefix number. This is so you can have invoice numbers that are \n            unique for every year, half a year, quarter of the year or however frequent your invoice numbers need to change. Each time you update your\n            prefix number, the invoice counter will reset to 0000.")]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Address: ")])]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Description: ")])]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Phone: ")])]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Email: ")])]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Invoice Document Control Number: ")])]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Shipper Document Control Number: ")])]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Router Document Control Number: ")])]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Purchase Order Document Control Number: ")])])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

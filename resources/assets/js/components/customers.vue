@@ -152,6 +152,12 @@
         <br />
         <br />
         <!-- End of add customer form -->
+        <!-- Instruction Area -->
+        <i @click="instruction = true" class="fa fa-question-circle fa-2x pointer" aria-hidden="true"></i>
+        <div v-show="instruction" class="well">
+            <i @click="instruction = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
+            <h3 class="text-center">Customers Instructions</h3>
+        </div>
     </div>
 </template>
 
@@ -168,6 +174,7 @@
                 edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
                 table: true, // If true, the customers table is showing. If false, the customers form is showing.
                 read: false,
+                instruction: false,
                 customer: { // Customer model and it's values
                     id: '',
                     name: '',

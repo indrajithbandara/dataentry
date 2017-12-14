@@ -320,6 +320,12 @@
             </form>
             <a v-show="report" :href="'pdf/report/invoice/'+start+'/'+end" class="btn btn-primary wide"><i class="fa fa-print" aria-hidden="true"></i> Print Report</a>
         </div>
+        <!-- Instruction Area -->
+        <i @click="instruction = true" class="fa fa-question-circle fa-2x pointer" aria-hidden="true"></i>
+        <div v-show="instruction" class="well">
+            <i @click="instruction = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
+            <h3 class="text-center">Invoices Instructions</h3>
+        </div>
     </div>
 </template>
 
@@ -354,6 +360,7 @@
                 read: false,
                 search: false,
                 report: false,
+                instruction: false,
                 errorMessage: '',
                 successMessage: '',
                 /*

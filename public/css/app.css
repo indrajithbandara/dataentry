@@ -8758,6 +8758,10 @@ button.full-width {
   background-color: #B83E77;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 #product-table {
   max-height: 565px;
   overflow: scroll;

@@ -125,6 +125,9 @@ button.full-width { width: 100%; }
         background-color: #B83E77;
     }
 }
+.pointer {
+    cursor: pointer;
+}
 #product-table { max-height: 565px; overflow: scroll; }
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) { div.form-middle-center { width: 100%; } }

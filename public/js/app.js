@@ -44396,6 +44396,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -44407,6 +44413,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             edit: false,
             form: false,
+            instruction: false,
             companyName: '',
             companyId: 0,
             company: {
@@ -45326,7 +45333,34 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "editMode": _vm.edit,
       "name": _vm.name = 'Company'
     }
-  })], 1)]) : _vm._e()], 1)
+  })], 1)]) : _vm._e(), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle fa-2x pointer",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.instruction = true
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.instruction),
+      expression: "instruction"
+    }],
+    staticClass: "well"
+  }, [_c('i', {
+    staticClass: "fa fa-times-circle pull-right fa-2x pointer",
+    on: {
+      "click": function($event) {
+        _vm.instruction = false
+      }
+    }
+  }), _vm._v(" "), _c('h3', {
+    staticClass: "text-center"
+  }, [_vm._v("Settigns Instructions")])])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -45497,6 +45531,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -45506,6 +45588,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             edit: false,
+            instruction: false,
             users: {
                 id: '',
                 name: '',
@@ -45821,8 +45904,45 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "editMode": _vm.edit,
       "name": _vm.name = 'User'
     }
-  })], 1)])], 1)
-},staticRenderFns: []}
+  })], 1)]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle fa-2x pointer",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.instruction = true
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.instruction),
+      expression: "instruction"
+    }],
+    staticClass: "well"
+  }, [_c('i', {
+    staticClass: "fa fa-times-circle pull-right fa-2x pointer",
+    on: {
+      "click": function($event) {
+        _vm.instruction = false
+      }
+    }
+  }), _vm._v(" "), _c('h3', {
+    staticClass: "text-center"
+  }, [_vm._v("Users Instructions")]), _vm._v(" "), _c('p', [_vm._v("Welcome to the users area of the dataentry system. This area is used for adding users that are able to log into the system under their own \n        login. The dataentry system is a permissions based system which allows up to four different levels of user permission.")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h4', [_vm._v("How to fill out the form")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h4', [_vm._v("Level One: Admins and The Super Admin")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('p', [_vm._v("Literally nothing is cut off from you. You have no restrictions unlike all other levels of permission. You can even add other level one (Admin) users to the system.\n        However, what serparates you from other level one users is that your user account can not be deleted whereas other level one users can. In the users table above,\n        you'll notice that your account is not present. This is done on purpose so that other level one users are not able to see your login information.")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h4', [_vm._v("Level Two: Assistants")]), _vm._v(" "), _c('p', [_vm._v("An assistant, level two user is able to see all areas of the system aside from the following:")]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c('p', [_vm._v("The assistant role is meant to aid in the invoicing, system as well as manage customer and product information. Assistants are able to edit just about anything they have\n        access to; however, they are not able to delete anything from the system.")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h4', [_vm._v("Level Three: Managers")]), _vm._v(" "), _c('p', [_vm._v("A manager, level three user is able to see all areas related to production which means the following areas are restricted:")]), _vm._v(" "), _vm._m(4), _vm._v(" "), _c('p', [_vm._v("The managerial role is meant to run the production side of the system.")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('h4', [_vm._v("Level Four: Employees")]), _vm._v(" "), _c('p', [_vm._v("The employee role in this system is only meant to serve one purpose: to update which department a given router is in. All employee users will be directed to one page where\n        they will fill out a form to submit that their router is moving from one department to another. Employees are restricted from all other areas of the system.")])])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_vm._v("Filling out the form is simple. Add the name of the user in the "), _c('strong', [_vm._v("Name")]), _vm._v(" field, the email address the user will be logging in under in the "), _c('strong', [_vm._v("Email")]), _vm._v(" field, a secure password of your \n        choice in the "), _c('strong', [_vm._v("Password")]), _vm._v(" field and the permission level you want the user to have in the "), _c('strong', [_vm._v("Permissions")]), _vm._v(" drop down menu.")])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_vm._v("If you are able to see this page, it is because you are logged in as the "), _c('em', [_vm._v("Super Admin User")]), _vm._v(". The super admin user not only has level one\n        user permissions (which will be explained in a minute), you are also the first user to be entered into the users table in the database which means\n        a few things.")])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ol', [_c('li', [_vm._v("The user registration area is now cut off.")]), _vm._v(" "), _c('li', [_vm._v("You are able to delete anything in the system.")]), _vm._v(" "), _c('li', [_vm._v("You are able to see everything in the system.")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ol', [_c('li', [_vm._v("Settings")]), _vm._v(" "), _c('li', [_vm._v("Users")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ol', [_c('li', [_vm._v("Settings")]), _vm._v(" "), _c('li', [_vm._v("Users")]), _vm._v(" "), _c('li', [_vm._v("Customers")]), _vm._v(" "), _c('li', [_vm._v("Invoices")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -46086,6 +46206,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -46099,6 +46225,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
             table: true, // If true, the customers table is showing. If false, the customers form is showing.
             read: false,
+            instruction: false,
             customer: { // Customer model and it's values
                 id: '',
                 name: '',
@@ -46966,7 +47093,34 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "editMode": _vm.edit,
       "name": _vm.name = 'Customer'
     }
-  })], 1)]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br')], 1)
+  })], 1)]), _vm._v(" "), _c('br'), _vm._v(" "), _c('br'), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle fa-2x pointer",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.instruction = true
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.instruction),
+      expression: "instruction"
+    }],
+    staticClass: "well"
+  }, [_c('i', {
+    staticClass: "fa fa-times-circle pull-right fa-2x pointer",
+    on: {
+      "click": function($event) {
+        _vm.instruction = false
+      }
+    }
+  }), _vm._v(" "), _c('h3', {
+    staticClass: "text-center"
+  }, [_vm._v("Customers Instructions")])])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -47125,6 +47279,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -47136,6 +47315,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             edit: false,
             read: false,
+            instruction: false,
             product: {
                 id: '',
                 name: '',
@@ -47646,8 +47826,39 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "editMode": _vm.edit,
       "name": _vm.name = 'Product'
     }
-  })], 1)])], 1)
-},staticRenderFns: []}
+  })], 1)]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle fa-2x pointer",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.instruction = true
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.instruction),
+      expression: "instruction"
+    }],
+    staticClass: "well"
+  }, [_c('i', {
+    staticClass: "fa fa-times-circle pull-right fa-2x pointer",
+    on: {
+      "click": function($event) {
+        _vm.instruction = false
+      }
+    }
+  }), _vm._v(" "), _c('h3', {
+    staticClass: "text-center"
+  }, [_vm._v("Products Instructions")]), _vm._v(" "), _c('p', [_vm._v("Welcome to the products area of the dataentry system. This is where you will add all of your product information. This information\n        is under the assest area because this information will be made available in multiple areas of the system. There are five major components\n        to a product:")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('p', [_vm._v("Security measures apply to each of these fields which means each field has character restriction. The following characters\n        are allowed in the following fields:")]), _vm._v(" "), _vm._m(1)])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ol', [_c('li', [_c('strong', [_vm._v("Name:")]), _vm._v(" The name of your product.")]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Description:")]), _vm._v(" A brief description of your product.")]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Material:")]), _vm._v(" The material that your product is made out of.")]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Revision:")]), _vm._v(" The revision that your product is currently under.")]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Revision Date:")]), _vm._v(" The starting date of the current product revision.")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ol', [_c('li', [_c('strong', [_vm._v("Name:")]), _vm._v(" Alphanumeric characters as well as single dashes in between alphanumeric characters.")]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Description:")]), _vm._v(" Alphanumeric characters as well as single dashes in between alphanumeric characters.")]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Material:")]), _vm._v(" Alphanumeric characters, commas, periods as well as single dashes in between alphanumeric characters.")]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Revision:")]), _vm._v(" Alphanumeric characters with a max of three characters.")]), _vm._v(" "), _c('li', [_c('strong', [_vm._v("Revision Date:")]), _vm._v(" Forced date value")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -48091,6 +48302,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -48122,6 +48339,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             read: false,
             search: false,
             report: false,
+            instruction: false,
             errorMessage: '',
             successMessage: '',
             /*
@@ -50338,7 +50556,34 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v(" Print Report")])]) : _vm._e()], 1)
+  }), _vm._v(" Print Report")])]) : _vm._e(), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle fa-2x pointer",
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.instruction = true
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.instruction),
+      expression: "instruction"
+    }],
+    staticClass: "well"
+  }, [_c('i', {
+    staticClass: "fa fa-times-circle pull-right fa-2x pointer",
+    on: {
+      "click": function($event) {
+        _vm.instruction = false
+      }
+    }
+  }), _vm._v(" "), _c('h3', {
+    staticClass: "text-center"
+  }, [_vm._v("Invoices Instructions")])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-xs-4 col-sm-4"

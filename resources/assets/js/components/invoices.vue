@@ -303,24 +303,30 @@
             <h2 class="text-center">Report</h2>
             <form action="#" @submit.prevent="dateRangeSearch(start,end)" class="space-below">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="col-xs-12 col-sm-3">
                         <div class="form-group">
                             <label for="start">Start Date</label>
                             <input v-model="start" type="date" name="start" class="form-control">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="col-xs-12 col-sm-3">
                         <div class="form-group">
                             <label for="end">End Date</label>
                             <input v-model="end" type="date" name="end" class="form-control">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="col-xs-12 col-sm-3">
+                        <div class="form-group">
+                            <label for="rep_name">Report Name</label>
+                            <input v-model="rep_name" type="text" name="rep_name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
                         <button class="btn btn-default full-width btn-margin" type="submit" name="dateSearchBtn"><i class="fa fa-file-text" aria-hidden="true"></i> Get Report</button>
                     </div>
                 </div>
             </form>
-            <a v-show="report" :href="'pdf/report/invoice/'+start+'/'+end" class="btn btn-primary wide"><i class="fa fa-print" aria-hidden="true"></i> Print Report</a>
+            <a v-show="report" :href="'pdf/report/invoice/'+start+'/'+end+'/'+rep_name" class="btn btn-primary wide"><i class="fa fa-print" aria-hidden="true"></i> Print Report</a>
         </div>
         <!-- Instruction Area -->
         <i @click="instruction = true" class="fa fa-question-circle fa-2x pointer" aria-hidden="true"></i>
@@ -353,6 +359,7 @@
                 search_inv: '',
                 start: '',
                 end: '',
+                rep_name: '',
                 /*
                 * EDIT MODE:
                 * if edit = false, the invoice form is hidden and the invoice table is displayed.

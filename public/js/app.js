@@ -50903,6 +50903,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -50923,6 +50929,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             search_inv: '',
             start: '',
             end: '',
+            rep_name: '',
             /*
             * EDIT MODE:
             * if edit = false, the invoice form is hidden and the invoice table is displayed.
@@ -53539,7 +53546,7 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-xs-12 col-sm-4" }, [
+                  _c("div", { staticClass: "col-xs-12 col-sm-3" }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "start" } }, [
                         _vm._v("Start Date")
@@ -53569,7 +53576,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-xs-12 col-sm-4" }, [
+                  _c("div", { staticClass: "col-xs-12 col-sm-3" }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "end" } }, [
                         _vm._v("End Date")
@@ -53599,6 +53606,36 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
+                  _c("div", { staticClass: "col-xs-12 col-sm-3" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "rep_name" } }, [
+                        _vm._v("Report Name")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.rep_name,
+                            expression: "rep_name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", name: "rep_name" },
+                        domProps: { value: _vm.rep_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.rep_name = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _vm._m(1)
                 ])
               ]
@@ -53617,7 +53654,13 @@ var render = function() {
                 ],
                 staticClass: "btn btn-primary wide",
                 attrs: {
-                  href: "pdf/report/invoice/" + _vm.start + "/" + _vm.end
+                  href:
+                    "pdf/report/invoice/" +
+                    _vm.start +
+                    "/" +
+                    _vm.end +
+                    "/" +
+                    _vm.rep_name
                 }
               },
               [
@@ -53696,7 +53739,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xs-12 col-sm-4" }, [
+    return _c("div", { staticClass: "col-xs-12 col-sm-3" }, [
       _c(
         "button",
         {

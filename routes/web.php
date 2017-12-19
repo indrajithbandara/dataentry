@@ -23,7 +23,7 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     // PDF Generation Routes
     Route::get('/pdf/invoice/{id}', 'PDFController@invoice');
     Route::get('/pdf/shipper/{id}', 'PDFController@shipper');
-    Route::get('/pdf/report/invoice/{start}/{end}', 'PDFController@invoiceReport');
+    Route::get('/pdf/report/invoice/{start}/{end}/{reportname?}', 'PDFController@invoiceReport');
     // Importing and Exporting Customers Files
     Route::post('customers/import', 'CustomersController@import');
     Route::get('customers/export/excel', 'CustomersController@exportExcel');

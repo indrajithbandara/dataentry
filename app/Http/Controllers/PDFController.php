@@ -113,10 +113,12 @@ class PDFController extends Controller
         * Finally, the view and the newInvoice data is stored in a variable to be passed to the PDF objects instance for pdf
         * generation. 
         */
+        $filename = $newInvoice[1] . '-invoice.pdf';
         $html = view('pdfs.invoice')->with('invoice', $newInvoice);
         return $this->pdf
             ->load($html)
-            ->show();
+            ->filename($filename)
+            ->download();
     }
 
 
@@ -200,10 +202,12 @@ class PDFController extends Controller
         * Finally, the view and the newInvoice data is stored in a variable to be passed to the PDF objects instance for pdf
         * generation. 
         */
+        $filename = $newInvoice[1] . '-shipper.pdf';
         $html = view('pdfs.shipper')->with('invoice', $newInvoice);
         return $this->pdf
             ->load($html)
-            ->show();
+            ->filename($filename)
+            ->download();
     }
 
     /**
@@ -212,7 +216,7 @@ class PDFController extends Controller
     * @param $end  End date of the report
     * @return pdf
     */
-    public function invoiceReport($start, $end) 
+    public function invoiceReport($start, $end, $reportname = "invoice-report.pdf") 
     {
         $report = DB::table('invoices')
                     ->select('inv_num', 'date', 'customer', 'total')
@@ -247,6 +251,7 @@ class PDFController extends Controller
         $html = view('pdfs.invoicereport')->with('report', $newReport);
         return $this->pdf
             ->load($html)
-            ->show();
+            ->filename($reportname)
+            ->download();
     }
 }

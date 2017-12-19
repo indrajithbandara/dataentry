@@ -17,6 +17,7 @@
                 <table class="table table-condensed">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -29,6 +30,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="customer in list">
+                            <td>{{ customer.id }}</td>
                             <td>{{ customer.name }}</td>
                             <td>{{ customer.email }}</td>
                             <td>{{ customer.phone }}</td>
@@ -46,18 +48,20 @@
             </div>
         </div>
         <!-- end of customer table -->
-        <div v-show="read" class="well">
-            <h2 class="lg-font">{{ customer.name }}</h2>
-            <strong class="mid-font">Email: </strong><span>{{ customer.email }}</span><br>
-            <strong class="mid-font">Phone: </strong><span>{{ customer.phone }}</span><br>
-            <strong class="mid-font">Buyer: </strong><span>{{ customer.buyer }}</span><br>
-            <strong class="mid-font">Ship To Address: </strong><span>{{ customer.shipto }}</span><br>
-            <strong class="mid-font">Bill To Address: </strong><span>{{ customer.billto }}</span><br>
-            <strong class="mid-font">Country: </strong><span>{{ customer.country }}</span><br>
-            <strong class="mid-font">Disclaimer: </strong><span>{{ customer.disclaimer }}</span><br>
-            <strong class="mid-font">Comments: </strong><span>{{ customer.comments }}</span><br>
-            <button class="btn btn-danger full-width" @click="closeView()">Close Viewing</button>
-        </div>
+        <transition name="fade">
+            <div v-show="read" class="well">
+                <h2 class="lg-font">{{ customer.name }}</h2>
+                <strong class="mid-font">Email: </strong><span>{{ customer.email }}</span><br>
+                <strong class="mid-font">Phone: </strong><span>{{ customer.phone }}</span><br>
+                <strong class="mid-font">Buyer: </strong><span>{{ customer.buyer }}</span><br>
+                <strong class="mid-font">Ship To Address: </strong><span>{{ customer.shipto }}</span><br>
+                <strong class="mid-font">Bill To Address: </strong><span>{{ customer.billto }}</span><br>
+                <strong class="mid-font">Country: </strong><span>{{ customer.country }}</span><br>
+                <strong class="mid-font">Disclaimer: </strong><span>{{ customer.disclaimer }}</span><br>
+                <strong class="mid-font">Comments: </strong><span>{{ customer.comments }}</span><br>
+                <button class="btn btn-danger full-width" @click="closeView()">Close Viewing</button>
+            </div>
+        </transition>
         <hr>
         <!-- Add customer Form -->
         <div v-show="!table">
@@ -154,10 +158,20 @@
         <!-- End of add customer form -->
         <!-- Instruction Area -->
         <i @click="instruction = true" class="fa fa-question-circle fa-2x pointer" aria-hidden="true"></i>
-        <div v-show="instruction" class="well">
-            <i @click="instruction = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
-            <h3 class="text-center">Customers Instructions</h3>
-        </div>
+        <transition name="fade">
+            <div v-show="instruction" class="well">
+                <i @click="instruction = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
+                <h3 class="text-center">Customers Instructions</h3>
+                <h4>Filling out the form</h4>
+                <p>The customer data is essential as it is used extensively in multiple printables throughout the dataentry system. Here are some instructions on how to fill out this form. This section is the only
+                section that allows for somewhat duplicate information. Sometimes you'll want the same customer name but with different addresses, or different phone numbers. This can get confusing the more duplicate entries you have
+                which is why each customer entry is given an ID number so that they may be uniquely identified when being used in other parts of the system. These ID numbers are not editable and will auto increment on their own 
+                with every entry. Even if you delete all customers, the ID number will continue to auto increment from where it last was.</p>
+                <ol>
+                    <li><strong>Name: </strong>Due to the need of customer having the same name</li>
+                </ol>
+            </div>
+        </transition>
     </div>
 </template>
 

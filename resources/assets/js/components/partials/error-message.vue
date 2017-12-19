@@ -1,14 +1,16 @@
 <template>
-    <div v-if="errorMes">
-        <p class="alert alert-danger text-center">
-            <i class="fa fa-frown-o" aria-hidden="true"></i> 
-                {{ errorMes }} 
-            <i class="fa fa-frown-o" aria-hidden="true"></i>
-            <span class="pull-right" @click="hideMes()">
-                X
-            </span>
-        </p>
-    </div>
+    <transition name="fade">
+        <div v-if="errorMes">
+            <p class="alert alert-danger text-center">
+                <i class="fa fa-frown-o" aria-hidden="true"></i> 
+                    {{ errorMes }} 
+                <i class="fa fa-frown-o" aria-hidden="true"></i>
+                <span class="pull-right" @click="hideMes()">
+                    X
+                </span>
+            </p>
+        </div>
+    </transition>
 </template>
 <script>
     export default {

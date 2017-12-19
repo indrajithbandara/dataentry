@@ -135,3 +135,43 @@ button.full-width { width: 100%; }
 @media only screen and (min-width : 992px) { div.form-middle-center { width:90%; } }
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) { div.form-middle-center { width:50%; } }
+
+/* Vue animations */
+// fade animation
+.fade-enter { opacity: 0; }
+.fade-enter-active { transition: opacity .5s; }
+.fade-leave {}
+.fade-leave-active { transition: opacity .5s; opacity: 0; }
+/* Slide animations*/
+.slide-enter { /* State of the element when animation starts */
+    opacity: 0;
+}
+.slide-enter-active {
+    animation: slide-in 1s ease-out forwards;
+    transition: opacity .5s;
+}
+.slide-leave { /* State of the element when animation starts */
+
+}
+.slide-leave-active {
+    animation: slide-out 1s ease-out forwards;
+    transition: opacity 1s;
+    opacity: 0;
+    position: absolute;
+}
+@keyframes slide-in {
+    from {
+        transform: translateY(20px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+@keyframes slide-out {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(20px);
+    }
+}

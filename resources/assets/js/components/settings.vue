@@ -7,11 +7,14 @@
         <!-- if company is added: Company Name with edit button -->
         <div v-if="companyAdded()">
             <div class="row">
-                <div class="col-sm-12 col-md-8">
+                <div class="col-sm-12 col-md-4">
                     <h2>{{ companyName }}</h2>
                 </div>
                 <div class="col-sm-12 col-md-4">
-                    <button class="btn btn-primary btn-sm full-width margin-top-20" v-show="!edit" @click="toEdit()"><i class="fa fa-pencil" aria-hidden="true"></i> Update</button>
+                    <button class="btn btn-default btn-sm full-width margin-top-20" v-show="!read" @click="toShow()"><i class="fa fa-eye" aria-hidden="true"></i> View</button>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <button class="btn btn-warning btn-sm full-width margin-top-20" v-show="!edit" @click="toEdit()"><i class="fa fa-pencil" aria-hidden="true"></i> Update</button>
                 </div>
             </div>
         </div>
@@ -109,34 +112,98 @@
             </form>
         </div>
         <!-- End of add product form -->
+        <transition name="fade">
+            <div v-show="read" class="well">
+                <h2 class="lg-font">{{ company.name }}</h2>
+                <strong class="mid-font">Address: </strong><span>{{ company.address }}</span><br>
+                <strong class="mid-font">Phone: </strong><span>{{ company.phone }}</span><br>
+                <strong class="mid-font">Email: </strong><span>{{ company.email }}</span><br>
+                <strong class="mid-font">Description: </strong><span>{{ company.disc }}</span><br>
+                <strong class="mid-font">Invoice Prefix Number: </strong><span>{{ company.inv_prefix }}</span><br>
+                <strong class="mid-font">Invoice Document Controle Number: </strong><span>{{ company.invoice_con }}</span><br>
+                <strong class="mid-font">Shipper Document Controle Number: </strong><span>{{ company.shipper_con }}</span><br>
+                <strong class="mid-font">Router Document Controle Number: </strong><span>{{ company.router_con }}</span><br>
+                <strong class="mid-font">Purchase Order Document Controle Number: </strong><span>{{ company.po_con }}</span><br>
+                <button class="btn btn-danger full-width" @click="closeView()">Close Viewing</button>
+            </div>
+        </transition>
+        <hr>
         <!-- Instruction Area -->
         <i @click="instruction = true" class="fa fa-question-circle fa-2x pointer" aria-hidden="true"></i>
-        <div v-show="instruction" class="well">
-            <i @click="instruction = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
-            <h3 class="text-center">Settings Instructions</h3>
-            <p>Welcome to the settings area of the dataentry system! This is where you will add all of the needed company
-                information that will be used through out your system. This information is also used on your pdf templates
-                as well as your report forms.</p>
-            <h4>Filling out the form</h4>
-            <p>Filling out the form is simple but some of the information that is asked for may not apply to your specific needs.
-            As a summery here are what each field is used for:</p>
-            <ol>
-                <li><strong>Name: </strong> This is where you will put the name of your company as you would want it to appear on invoices, shippers
-                and reports.</li>
-                <li><strong>Invoice Prefix Number: </strong> This number, as it suggests, is placed as a prefix before all of your invoice numbers
-                which are automatically generated for you. Your invoice numbers start with your prefix here and end with 0000. The invoice numbers then
-                increment from there and will continue to increment until you update your prefix number. This is so you can have invoice numbers that are 
-                unique for every year, half a year, quarter of the year or however frequent your invoice numbers need to change. Each time you update your
-                prefix number, the invoice counter will reset to 0000.</li>
-                <li><strong>Address: </strong> </li>
-                <li><strong>Description: </strong></li>
-                <li><strong>Phone: </strong></li>
-                <li><strong>Email: </strong></li>
-                <li><strong>Invoice Document Control Number: </strong></li>
-                <li><strong>Shipper Document Control Number: </strong></li>
-                <li><strong>Router Document Control Number: </strong></li>
-                <li><strong>Purchase Order Document Control Number: </strong></li>
-            </ol>
+        <transition name="fade">
+            <div v-show="instruction" class="well">
+                <i @click="instruction = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
+                <h3 class="text-center">Settings Instructions</h3>
+                <p>Welcome to the settings area of the dataentry system! This is where you will add all of the needed company
+                    information that will be used through out your system. This information is also used on your pdf templates
+                    as well as your report forms.</p>
+                <h4>Filling out the form</h4>
+                <p>Filling out the form is simple but some of the information that is asked for may not apply to your specific needs.
+                As a summery here are what each field is used for:</p>
+                <ol>
+                    <li><strong>Name: </strong> This is where you will put the name of your company as you would want it to appear on invoices, shippers
+                    and reports.</li>
+                    <li><strong>Invoice Prefix Number: </strong> This number, as it suggests, is placed as a prefix before all of your invoice numbers
+                    which are automatically generated for you. Your invoice numbers start with your prefix here and end with 0000. The invoice numbers then
+                    increment from there and will continue to increment until you update your prefix number. This is so you can have invoice numbers that are 
+                    unique for every year, half a year, quarter of the year or however frequent your invoice numbers need to change. Each time you update your
+                    prefix number, the invoice counter will reset to 0000.</li>
+                    <li><strong>Address: </strong>This is where you put the address to your company. This address is used on both the shipper and the invoice and 
+                    will appear as you write it here.</li>
+                    <li><strong>Description: </strong>The description of your company goes here and it currently not used on any printable documents as far as the system goes.</li>
+                    <li><strong>Phone: </strong>This is where you place the phone number of the company where you want your customers to reach you at. This number will be placed on 
+                    both the shipper and the invoice.</li>
+                    <li><strong>Email: </strong>This is where you place your company email address which will be placed on both the shipper and the invoice.</li>
+                    <li><strong>Invoice Document Control Number: </strong>The document version controle number for the invoice document.</li>
+                    <li><strong>Shipper Document Control Number: </strong>The document version controle number for the shipper document.</li>
+                    <li><strong>Router Document Control Number: </strong>The document version controle number for the shipper document.</li>
+                    <li><strong>Purchase Order Document Control Number: </strong>The document version controle number for the purchase order document.</li>
+                </ol>
+                <h4>Importing and Exporting</h4>
+                <p>The Import / Export section below is for creating backups of your data in either an excel format or a CSV format, both of which are readable by CSV programs such as 
+                microsoft excel. When you want to create a backup of your data, click either of the export buttons and the file should automaticly download in your browser. When you want to import your data files back into the system, 
+                choose them with the 'choose file' buttons. <strong>Make sure that the file you are importing is a file that belongs to it appropriate section.</strong> If your importing your customer data, make sure 
+                it is imported in the customers section. </p>
+                <h4>Editting Exported Files</h4>
+                <p>If your some reason you desire to edit you exported files. Please abide by these rules so that they may be importable later back into the system. </p>
+                <ol>
+                    <li>Stick to the same format the previous entries are in. As format changes can cause errors when importing back into the database.</li>
+                    <li>Do not change the column names as they are utilized for placing the correct data back into the database.</li>
+                    <li>If styleing is desired, apply minimal styleing as some styling may interrupt the importing process which may cause data lose.</li>
+                    <li>And finally the most important rule is <strong>don't edit the document if you don't have to</strong> as this will allow for the most amount of success when importing back into the database.
+                    These documents are meant to eventually go back into the system which means they should not be tampered with. </li>
+                </ol>
+            </div>
+        </transition>
+        <hr>
+        <div class="well">
+            <h2 class="text-center">Refresh Data</h2>
+            <div class="alert alert-danger text-center">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i> <strong>Caution</strong> <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                <p>These buttons will whipe your data completely! An exported CSV file will be provided just incase this was done in error. Just simply import 
+                the file back into the system using the import area below. To make sure that no accedents are made, the refresh buttons have been hidden
+                until the below math problem has been solved. Type in the correct answer and the refresh buttons will appear.</p>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="security">5 X 23 = </label>
+                    <input v-model="security" type="text" name="security" class="form-control">
+                </div>
+            </div>
+            <br>
+            <transition name="fade">
+                <div class="row" v-if="security == '115'">
+                    <div class="col-sm-12 col-md-4">
+                        <a class="btn btn-danger btn-sm width-full" href="/customers/export/drop">Refresh Customers Data</a>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <a class="btn btn-danger btn-sm width-full" href="/products/export/drop">Refresh Products Data</a>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <a class="btn btn-danger btn-sm width-full" href="/invoices/export/drop">Refresh Invoices Data</a>
+                    </div>
+                </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -152,7 +219,9 @@
             return {
                 edit: false,
                 form: false,
+                read: false,
                 instruction: false,
+                security: '',
                 companyName: '',
                 companyId: 0,
                 company: {
@@ -197,6 +266,14 @@
                 this.form = true;
                 this.edit = true;
                 this.showCompany(this.companyId);
+            },
+            toShow(){
+                this.read = true;
+                this.showCompany(this.companyId);
+            },
+            closeView(){
+                this.read = false;
+                this.resetValues();
             },
             companyAdded(){
                 if(this.companyName !== ''){
@@ -314,3 +391,8 @@
         }
     }
 </script>
+<style scoped>
+    .width-full {
+        width: 100%;
+    }
+</style>

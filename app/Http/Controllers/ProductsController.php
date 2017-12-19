@@ -171,4 +171,21 @@ class ProductsController extends Controller
           });
       })->export('csv');
     }
+
+    /**
+    * Drop data and export to file
+    *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+    */
+    public function dropAndExport()
+    {
+        $items = Product::all();
+        DB::table('products')->truncate();
+        Excel::create('dataentry-products', function($excel) use($items) {
+          $excel->sheet('ExportFile', function($sheet) use($items) {
+              $sheet->fromArray($items);
+          });
+        })->export('csv');
+    }
 }

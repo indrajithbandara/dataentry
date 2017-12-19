@@ -199,4 +199,21 @@ class CustomersController extends Controller
           });
       })->export('csv');
     }
+
+    /**
+    * Drop data and export to file
+    *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+    */
+    public function dropAndExport()
+    {
+        $items = Customer::all();
+        DB::table('customers')->truncate();
+        Excel::create('dataentry-customers', function($excel) use($items) {
+          $excel->sheet('ExportFile', function($sheet) use($items) {
+              $sheet->fromArray($items);
+          });
+        })->export('csv');
+    }
 }

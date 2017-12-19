@@ -33,6 +33,13 @@
             <invoices></invoices>
         </div>
     @endif
+    
+    {{-- Routers Template --}}
+{{--     @if(Request::is('routers'))
+        <div id="routers-app">
+            <routers></routers>
+        </div>
+    @endif --}}
 
     {{-- Purchase Orders Template --}}
 {{--     @if(Request::is('purchaseorders'))
@@ -41,12 +48,6 @@
         </div>
     @endif --}}
 
-    {{-- Routers Template --}}
-{{--     @if(Request::is('routers'))
-        <div id="routers-app">
-            <routers></routers>
-        </div>
-    @endif --}}
 
     {{-- Inventory Template --}}
 {{--     @if(Request::is('inventory'))

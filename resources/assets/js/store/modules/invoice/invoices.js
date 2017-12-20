@@ -5,6 +5,7 @@ import * as actions from './actions';
 const state = {
     // Array for storing invoice collections
     invoices: [],
+    inv_total: 0,
     /*
     * THE INVOICE STATE:
     * 1.) inv_num - Invoice Number | Type: Number

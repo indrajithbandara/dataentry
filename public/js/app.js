@@ -44369,6 +44369,7 @@ var index_esm = {
 var state = {
     // Array for storing invoice collections
     invoices: [],
+    inv_total: 0,
     /*
     * THE INVOICE STATE:
     * 1.) inv_num - Invoice Number | Type: Number
@@ -44423,8 +44424,13 @@ var state = {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInvoices", function() { return getInvoices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInvTotal", function() { return getInvTotal; });
 var getInvoices = function getInvoices(state) {
   return state.invoices;
+};
+
+var getInvTotal = function getInvTotal(state) {
+  return state.inv_total;
 };
 
 /***/ }),
@@ -44434,6 +44440,7 @@ var getInvoices = function getInvoices(state) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setInvoices", function() { return setInvoices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setInvTotal", function() { return setInvTotal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCustomer", function() { return setCustomer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateInvNum", function() { return updateInvNum; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateDate", function() { return updateDate; });
@@ -44456,6 +44463,12 @@ var _this = this;
 
 var setInvoices = function setInvoices(state, payload) {
     state.invoices = payload;
+};
+var setInvTotal = function setInvTotal(state) {
+    for (var i = 0; i < state.invoices.length; i++) {
+        state.inv_total += parseFloat(state.invoices[i].total);
+    }
+    state.inv_total = state.inv_total.toFixed(2);
 };
 var setCustomer = function setCustomer(state, payload) {
     state.invoice.customer = payload;
@@ -44778,8 +44791,9 @@ var dateRangeSearch = function dateRangeSearch(_ref4, payload) {
                 return data;
             };
             commit('setInvoices', newData());
+            commit('setInvTotal');
         }).catch(function (error) {
-            throw new Error('commitInvoices action failed!!! ' + error);
+            throw new Error('date range search action failed!!! ' + error);
         });
     });
 };
@@ -48265,6 +48279,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 // Imports
 
@@ -49451,7 +49466,7 @@ var render = function() {
             _vm._v(" "),
             _c("p", [
               _vm._v(
-                "The customer data is essential as it is used extensively in multiple printables throughout the dataentry system. Here are some instructions on how to fill out this form. This section is the only\n            section that allows for somewhat duplicate information. Sometimes you'll want the same customer name but with different addresses, or different phone numbers. This can get confusing the more duplicate entries you have\n            which is why each customer entry is given an ID number so that they may be uniquely identified when being used in other parts of the system. These ID numbers are not editable and will auto increment on their own \n            with every entry. Even if you delete all customers, the ID number will continue to auto increment from where it last was."
+                "The customer data is essential as it is used extensively in multiple printables throughout the dataentry system. Here are some instructions on how to fill out this form. This section is the only\n            section that allows for somewhat duplicate information. Sometimes you'll want the same customer name but with different addresses, or different phone numbers. This can get confusing the more duplicate entries you have\n            which is why each customer entry is given an ID number so that they may be uniquely identified when being used in other parts of the system. These ID numbers are not editable and will auto increment on their own \n            with every entry. Even if you delete all customers, the ID number will continue to auto increment from where it last was. Also, feel free to edit your customer info without changing the customer information of \n            past invoices as the system will take a snap shot of the customer information at the time it was created. "
               )
             ]),
             _vm._v(" "),
@@ -50973,6 +50988,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -51077,6 +51127,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         list: function list() {
             return this.$store.getters.getInvoices;
+        },
+        invTotal: function invTotal() {
+            return this.$store.getters.getInvTotal;
         },
         invoiceObj: function invoiceObj() {
             return this.$store.state.invoices.invoice;
@@ -52315,6 +52368,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -52349,7 +52403,7 @@ var render = function() {
     _vm._v(" "),
     _c("input", {
       class: _vm.inputClass,
-      attrs: { type: "text", name: _vm.forVal },
+      attrs: { type: "text", name: _vm.forVal, maxlength: "30" },
       domProps: { value: _vm.dataModel },
       on: { keyup: _vm.updateModel }
     })
@@ -53000,7 +53054,15 @@ var render = function() {
                 _c("p", { staticClass: "alert alert-info text-center" }, [
                   _vm._v("You currently have no invoices to show.")
                 ])
+              ]),
+          _vm._v(" "),
+          _vm.report
+            ? _c("h3", { staticClass: "pull-right" }, [
+                _vm._v("Total: $" + _vm._s(_vm.invTotal))
               ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("br")
         ]
       ),
       _vm._v(" "),
@@ -53774,6 +53836,129 @@ var render = function() {
             _vm._v(" "),
             _c("h3", { staticClass: "text-center" }, [
               _vm._v("Invoices Instructions")
+            ]),
+            _vm._v(" "),
+            _c("h4", [_vm._v("Filling out the form")]),
+            _vm._v(" "),
+            _c("ol", [
+              _c("li", [
+                _c("strong", [_vm._v("Invoice #: ")]),
+                _vm._v(
+                  "The invoice number is auto generated with two factors in mind: (1) the company prefix number and (2) the lastest entry in the invoices table. This\n                number will always start with the prefix number as well as '0000' indicating the beginning of a sequence. If the prefix number is changed to something else, the sequence will start\n                back at '0000'. "
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Date: ")]),
+                _vm._v("The date the invoice is being made.")
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Customer: ")]),
+                _vm._v(
+                  "The customer dropdown is dependent on the customers list that you make over in the customers area. This dropdown shows both the ID number and the customer\n                name. When customer has been chosen and the field is left, the cutomer name will appear on the right next to the bold lettered 'Customer:'. This indecates that a customer was selected successfully.\n                All invoices come with a snap shot of the customer data at the time of making the invoice. If the chosen customers data changes on a later date, the information will remain the same with that invoice."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("P.O #: ")]),
+                _vm._v(
+                  "The purhcase order number for this invoice. The field only allows alphanumeric characters as well as single dashes between alphanumeric charcters."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Line Items: ")]),
+                _vm._v(
+                  "The line item section of the form is pretty streight forward. Every invoice must have at least one line item attached to it. If you desire to add another line item, press the 'Add A Line Item' Button.\n                When you've added another line item, you'll notice that another button appears where you can remove the added line item. This button will only remove one line item at a time as well as recalculate the line \n                iten quantities. You are allowed to add up to seven line items for one invoice. When seven line items are on the page, you'll notice that the 'Add A Line Item' button has been disabled. As for the fields in the\n                line item sections, proceed with the following instructions:"
+                )
+              ]),
+              _vm._v(" "),
+              _c("ol", { attrs: { type: "a" } }, [
+                _c("li", [
+                  _c("strong", [_vm._v("Line Item: ")]),
+                  _vm._v(
+                    "The line item number which may contain alphanumeric characters as well as dashes between alphanumeric characters. The max limit is 30 characters."
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("strong", [_vm._v("Product: ")]),
+                  _vm._v(
+                    "This dropdown shows all products that were created in the products area. Simply select one to add to this line item."
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("strong", [_vm._v("Qty: ")]),
+                  _vm._v(
+                    "The quantity of products for this line item. Must be a whole number to calculate properly."
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("strong", [_vm._v("Unit Price: ")]),
+                  _vm._v(
+                    "The unit price per product. Can either be a whole number or a decimal point number."
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("strong", [_vm._v("Ext Price: ")]),
+                  _vm._v(
+                    "This field is not editable as it is used to calculate the total amount for all line items."
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Shipping Fee: ")]),
+                _vm._v(
+                  "Any shipping fees related to this invoice. Can either be a whole number or a decimal point number."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Misc. Charges: ")]),
+                _vm._v(
+                  "Any miscellaneous charges for this invoice. Can either be a whole number or a decimal point number."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Carrier: ")]),
+                _vm._v(
+                  "The name of the carrier that will be shipping this product."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Order Complete: ")]),
+                _vm._v("The in house status of this order.")
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Memo: ")]),
+                _vm._v(
+                  "Any in house information that would be helpful in the process of this invoice."
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("h4", [_vm._v("Search By Invoice Number")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Above the invoices table, you'll notice search form. This form is so you may search all of your invoices for a specific invoice by it's invoice number. The number must be exact or it will not\n            find the correct invoice. Once the invoice has been searched for, you have now entered 'Search Mode'. To cancel out of search mode, simply click the 'cancel search' button."
+              )
+            ]),
+            _vm._v(" "),
+            _c("h4", [_vm._v("Make Invoice Reports")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "The dataentry system allows you to make reports in order to see your sales for a given time period. In the report section, type in the start date and the end date you wish to make a report from. \n            You may also give your report print out a name in the 'Report Name' field. Click 'Get Report' and the invoices table will populate with all the invoices on and in between the given dates. "
+              )
             ])
           ]
         )

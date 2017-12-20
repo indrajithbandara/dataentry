@@ -1,6 +1,12 @@
 export const setInvoices = (state, payload) => {
     state.invoices = payload;
 };
+export const setInvTotal = state => {
+    for(let i = 0; i < state.invoices.length; i++){
+        state.inv_total += parseFloat(state.invoices[i].total);
+    }
+    state.inv_total = state.inv_total.toFixed(2);
+}
 export const setCustomer = (state, payload) => {
     state.invoice.customer = payload;
 };

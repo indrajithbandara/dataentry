@@ -188,8 +188,9 @@ export const dateRangeSearch = ({ commit }, payload) => {
                 return data;
             }
             commit('setInvoices', newData());
+            commit('setInvTotal');
         }).catch((error) => {
-            throw new Error('commitInvoices action failed!!! ' + error);
+            throw new Error('date range search action failed!!! ' + error);
         });
     });
 };

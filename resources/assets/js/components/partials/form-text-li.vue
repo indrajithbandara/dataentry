@@ -6,7 +6,8 @@
             type="text" 
             :name="forVal" 
             @keyup="updateModel" 
-            :class="inputClass">
+            :class="inputClass"
+            maxlength="30">
     </div>
 </template>
 <script>

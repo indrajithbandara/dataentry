@@ -44769,7 +44769,9 @@ var dateRangeSearch = function dateRangeSearch(_ref4, payload) {
                 for (var i = 0; i < data.length; i++) {
                     for (var key in data[i]) {
                         if (key === 'customer') {
-                            data[i].customer = JSON.parse(JSON.parse(data[i].customer));
+                            while (typeof data[i].customer === 'string') {
+                                data[i].customer = JSON.parse(data[i].customer);
+                            }
                         }
                     }
                 }
@@ -44798,7 +44800,9 @@ var searchInv = function searchInv(_ref5, payload) {
                 for (var i = 0; i < data.length; i++) {
                     for (var key in data[i]) {
                         if (key === 'customer') {
-                            data[i].customer = JSON.parse(JSON.parse(data[i].customer));
+                            while (typeof data[i].customer === 'string') {
+                                data[i].customer = JSON.parse(data[i].customer);
+                            }
                         }
                     }
                 }
@@ -48251,6 +48255,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -49444,7 +49458,57 @@ var render = function() {
             _c("ol", [
               _c("li", [
                 _c("strong", [_vm._v("Name: ")]),
-                _vm._v("Due to the need of customer having the same name")
+                _vm._v("The name of the customer.")
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Email: ")]),
+                _vm._v("The contact email of the customer.")
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Phone: ")]),
+                _vm._v("The contact phone number of the customer.")
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Buyer: ")]),
+                _vm._v(
+                  "The name of the one who is making the purchases on behalf of the company."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Country: ")]),
+                _vm._v("The country of which the customer resides.")
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Bill To Address: ")]),
+                _vm._v(
+                  "The address that will be billed. The address will appear on the invoice and the shipper as \n                it appears here."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Ship To Address: ")]),
+                _vm._v(
+                  "The address that the products will be shipping to. The address will appear on the invocie and the shipper\n                as it appears here."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Disclaimer: ")]),
+                _vm._v(
+                  "The disclaimer is a note of information that will appear on the shipper."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("strong", [_vm._v("Comments: ")]),
+                _vm._v(
+                  "The comments that will need to follow this invoice through it's life cycle. This information is not printed anywhere in the system."
+                )
               ])
             ])
           ]

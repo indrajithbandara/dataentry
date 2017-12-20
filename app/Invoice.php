@@ -23,4 +23,6 @@ class Invoice extends Model
         'customer' => 'object',
         'line_items' => 'object'
     ];
+
+    public $timestamps = false;
 }

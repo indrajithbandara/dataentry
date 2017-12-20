@@ -24,7 +24,6 @@ class CreateCustomersTable extends Migration
             $table->string('country', 15)->nullable();
             $table->string('disclaimer', 255)->nullable();
             $table->string('comments', 255)->nullable();
-            $table->timestamps();
         });
     }
 

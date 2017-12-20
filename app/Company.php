@@ -18,4 +18,6 @@ class Company extends Model
         'po_con',
         'inv_prefix'
     ];
+
+    public $timestamps = false;
 }

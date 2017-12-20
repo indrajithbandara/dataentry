@@ -17,4 +17,6 @@ class Customer extends Model
         'disclaimer',
         'comments'
     ];
+
+    public $timestamps = false;
 }

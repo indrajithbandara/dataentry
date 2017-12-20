@@ -27,7 +27,6 @@ class CreateInvoicesTable extends Migration
             $table->enum('complete', ['yes', 'no'])->nullable();
             $table->string('carrier', 50)->nullable();
             $table->string('memo', 255)->nullable();
-            $table->timestamps();
         });
     }
 

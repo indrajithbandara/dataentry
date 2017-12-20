@@ -3,18 +3,18 @@
 @section('content')
 <div class="padding-50 font">
     <div>
-        <div class="float-left"><strong>{{ $invoice[18] }}</strong></div>
+        <div class="float-left"><strong>{{ $invoice[16] }}</strong></div>
         <div class="float-right"><strong>Invoice #  </strong><span>{{ $invoice[1] }}</span></div>
         <div class="clear-fix"></div>
     </div>
 
     <div>
         <div class="float-left">
-            @for($i = 0; $i < count($invoice[19]); $i++)
-                <span>{{ $invoice[19][$i] }}</span><br>
+            @for($i = 0; $i < count($invoice[17]); $i++)
+                <span>{{ $invoice[17][$i] }}</span><br>
             @endfor
-            <span>Ph: {{ $invoice[20] }}</span><br>
-            <span>Em: {{ $invoice[21] }}</span><br>
+            <span>Ph: {{ $invoice[18] }}</span><br>
+            <span>Em: {{ $invoice[19] }}</span><br>
         </div>
         <div class="clear-fix"></div>
     </div>
@@ -103,7 +103,7 @@
                 <span>Sub Total</span>
             </div>
             <div class="inline small-width text-right">
-                <span>${{ $invoice[16] }}</span>
+                <span>${{ $invoice[14] }}</span>
             </div>
         </div>
         <div class="full-width margin-bottom-20">
@@ -136,7 +136,7 @@
     <div class="space"></div>
 
     <div class="float-left sm-text">
-        <span>{{ $invoice[23] }}</span>
+        <span>{{ $invoice[21] }}</span>
     </div>
     <div class="clear-fix"></div>
 

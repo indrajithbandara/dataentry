@@ -13,4 +13,6 @@ class Product extends Model
         'rev', 
         'rev_date'
     ];
+
+    public $timestamps = false;
 }

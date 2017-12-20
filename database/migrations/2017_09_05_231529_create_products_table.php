@@ -20,7 +20,6 @@ class CreateProductsTable extends Migration
             $table->string('material', 70)->nullable();
             $table->char('rev', 3)->nullable();
             $table->date('rev_date')->nullable();
-            $table->timestamps();
         });
     }
 

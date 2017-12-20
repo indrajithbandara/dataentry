@@ -166,7 +166,8 @@
                 <p>The customer data is essential as it is used extensively in multiple printables throughout the dataentry system. Here are some instructions on how to fill out this form. This section is the only
                 section that allows for somewhat duplicate information. Sometimes you'll want the same customer name but with different addresses, or different phone numbers. This can get confusing the more duplicate entries you have
                 which is why each customer entry is given an ID number so that they may be uniquely identified when being used in other parts of the system. These ID numbers are not editable and will auto increment on their own 
-                with every entry. Even if you delete all customers, the ID number will continue to auto increment from where it last was.</p>
+                with every entry. Even if you delete all customers, the ID number will continue to auto increment from where it last was. Also, feel free to edit your customer info without changing the customer information of 
+                past invoices as the system will take a snap shot of the customer information at the time it was created. </p>
                 <ol>
                     <li><strong>Name: </strong>The name of the customer.</li>
                     <li><strong>Email: </strong>The contact email of the customer.</li>

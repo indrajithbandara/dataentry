@@ -26,7 +26,7 @@ class PagesTest extends TestCase
      */
     public function testDashboard()
     {
-        $response = $this->get('/home');
+        $response = $this->get('/dashboard');
         $response->assertRedirect('/login');
     }
 

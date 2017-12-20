@@ -129,8 +129,6 @@ class ProductsController extends Controller
                     'material' => $row['material'],
                     'rev' => $row['rev'],
                     'rev_date' => $row['rev_date'],
-                    'created_at' => $row['created_at'],
-                    'updated_at' => $row['updated_at']
                 ];
               }
           }

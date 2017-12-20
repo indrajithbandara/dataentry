@@ -157,8 +157,6 @@ class CustomersController extends Controller
                     'country' => $row['country'],
                     'disclaimer' => $row['disclaimer'],
                     'comments' => $row['comments'],
-                    'created_at' => $row['created_at'],
-                    'updated_at' => $row['updated_at'],
                 ];
               }
           }

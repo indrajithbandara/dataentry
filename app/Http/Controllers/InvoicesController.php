@@ -178,7 +178,7 @@ class InvoicesController extends Controller
         $newArr = [];
         foreach($invoices as $key => $value){
             if($key === 'customer'){
-                 $d_decoded = json_decode($value, true);
+                 $d_decoded = $this->doubleDecode($value);
                  array_push($newArr, $d_decoded);
             }else {
                 array_push($newArr, $value);
@@ -202,7 +202,7 @@ class InvoicesController extends Controller
         $newArr = [];
         foreach($searchResult as $key => $value){
             if($key === 'customer'){
-                 $d_decoded = json_decode($value, true);
+                 $d_decoded = $this->doubleDecode($value);
                  array_push($newArr, $d_decoded);
             }else {
                 array_push($newArr, $value);
@@ -240,8 +240,6 @@ class InvoicesController extends Controller
                     'complete' => $row['complete'],
                     'carrier' => $row['carrier'],
                     'memo' => $row['memo'],
-                    'created_at' => $row['created_at'],
-                    'updated_at' => $row['updated_at']
                 ];
               }
           }

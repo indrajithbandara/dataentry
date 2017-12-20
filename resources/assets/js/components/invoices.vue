@@ -368,7 +368,7 @@
                 find the correct invoice. Once the invoice has been searched for, you have now entered 'Search Mode'. To cancel out of search mode, simply click the 'cancel search' button.</p>
                 <h4>Make Invoice Reports</h4>
                 <p>The dataentry system allows you to make reports in order to see your sales for a given time period. In the report section, type in the start date and the end date you wish to make a report from. 
-                You may also give your report print out a name in the 'Report Name' field. Click 'Get Report' and the invoices table will populate with all the invoices on and in between the given dates. </p>
+                You may also give your report print out a name in the 'Report Name' field. Click 'Get Report' and the invoices table will populate with all the invoices on and in between the given dates.</p>
             </div>
         </transition>
     </div>
@@ -522,6 +522,7 @@
                 this.search = false;
                 this.report = false;
                 this.getInvoices();
+                this.$store.commit('resetTotal');
             },
             switchToTable(){ // prop: toTable | component: <viewAddBtns>
                 this.table = true;

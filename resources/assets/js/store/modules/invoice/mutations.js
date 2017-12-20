@@ -7,6 +7,9 @@ export const setInvTotal = state => {
     }
     state.inv_total = state.inv_total.toFixed(2);
 }
+export const resetTotal = state => {
+    state.inv_total = 0;
+}
 export const setCustomer = (state, payload) => {
     state.invoice.customer = payload;
 };

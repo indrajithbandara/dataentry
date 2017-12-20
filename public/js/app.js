@@ -44441,6 +44441,7 @@ var getInvTotal = function getInvTotal(state) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setInvoices", function() { return setInvoices; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setInvTotal", function() { return setInvTotal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetTotal", function() { return resetTotal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCustomer", function() { return setCustomer; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateInvNum", function() { return updateInvNum; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateDate", function() { return updateDate; });
@@ -44469,6 +44470,9 @@ var setInvTotal = function setInvTotal(state) {
         state.inv_total += parseFloat(state.invoices[i].total);
     }
     state.inv_total = state.inv_total.toFixed(2);
+};
+var resetTotal = function resetTotal(state) {
+    state.inv_total = 0;
 };
 var setCustomer = function setCustomer(state, payload) {
     state.invoice.customer = payload;
@@ -51214,6 +51218,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.search = false;
             this.report = false;
             this.getInvoices();
+            this.$store.commit('resetTotal');
         },
         switchToTable: function switchToTable() {
             // prop: toTable | component: <viewAddBtns>
@@ -53957,7 +53962,7 @@ var render = function() {
             _vm._v(" "),
             _c("p", [
               _vm._v(
-                "The dataentry system allows you to make reports in order to see your sales for a given time period. In the report section, type in the start date and the end date you wish to make a report from. \n            You may also give your report print out a name in the 'Report Name' field. Click 'Get Report' and the invoices table will populate with all the invoices on and in between the given dates. "
+                "The dataentry system allows you to make reports in order to see your sales for a given time period. In the report section, type in the start date and the end date you wish to make a report from. \n            You may also give your report print out a name in the 'Report Name' field. Click 'Get Report' and the invoices table will populate with all the invoices on and in between the given dates."
               )
             ])
           ]

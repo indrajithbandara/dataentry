@@ -12443,36 +12443,12 @@ module.exports = __webpack_require__(125);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_store__ = __webpack_require__(45);
+// Bootstrap JS as set up by Laravel
 __webpack_require__(9);
-window.Vue = __webpack_require__(16);
-
-// Vuex Store
-
-
-// Parents Components
-Vue.component('dashboard', __webpack_require__(57));
-Vue.component('settings', __webpack_require__(60));
-Vue.component('users', __webpack_require__(78));
-Vue.component('customers', __webpack_require__(83));
-Vue.component('products', __webpack_require__(90));
-Vue.component('invoices', __webpack_require__(93));
-
-// Parent vue instances when element is present
-if (document.getElementById('dashboard-app')) {
-    var dashboardApp = new Vue({ el: '#dashboard-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
-} else if (document.getElementById('settings-app')) {
-    var settingsApp = new Vue({ el: '#settings-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
-} else if (document.getElementById('users-app')) {
-    var usersApp = new Vue({ el: '#users-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
-} else if (document.getElementById('customers-app')) {
-    var custApp = new Vue({ el: '#customers-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
-} else if (document.getElementById('products-app')) {
-    var prodApp = new Vue({ el: '#products-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
-} else if (document.getElementById('invoice-app')) {
-    var invApp = new Vue({ el: '#invoice-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
-}
+// navButton jQuery code from bootstrap template
+__webpack_require__(134);
+// Vue js code
+__webpack_require__(135);
 
 /***/ }),
 /* 20 */
@@ -43394,6 +43370,9 @@ __webpack_require__(9);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
+/**
+ * Sets up the vuex global state object
+ */
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     state: {
         permission: 0
@@ -44425,10 +44404,22 @@ var state = {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInvoices", function() { return getInvoices; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInvTotal", function() { return getInvTotal; });
+/**
+ * Get the invoices from the vuex state
+ *
+ * @param state | Vuex state
+ * @return array 
+ */
 var getInvoices = function getInvoices(state) {
   return state.invoices;
 };
 
+/**
+ * Get the invoices total for report mode
+ *
+ * @param state | Vuex state
+ * @return number
+ */
 var getInvTotal = function getInvTotal(state) {
   return state.inv_total;
 };
@@ -44462,67 +44453,226 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setInvoiceData", function() { return setInvoiceData; });
 var _this = this;
 
+/**
+ * Set the invoices array for loading into the list computed property
+ *
+ * @param state | vuex invoices state
+ * @param payload | payload commited from dispatcher
+ * @return void
+ */
 var setInvoices = function setInvoices(state, payload) {
     state.invoices = payload;
 };
+
+/**
+ * Set the invoice report total
+ *
+ * @param state | vuex invoices state
+ * @return void
+ */
 var setInvTotal = function setInvTotal(state) {
     for (var i = 0; i < state.invoices.length; i++) {
         state.inv_total += parseFloat(state.invoices[i].total);
     }
     state.inv_total = state.inv_total.toFixed(2);
 };
+
+/**
+ * Resets the invoice report total back to zero
+ *
+ * @param state | vuex state
+ * @return void
+ */
 var resetTotal = function resetTotal(state) {
     state.inv_total = 0;
 };
+
+/**
+ * Sets the customer snap shot in the invoice state
+ * to be stored with the invoice
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var setCustomer = function setCustomer(state, payload) {
     state.invoice.customer = payload;
 };
+
+/**
+ * Updates the invoice number with the next value
+ * available in the database
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateInvNum = function updateInvNum(state, payload) {
     state.invoice.inv_num = parseInt(payload);
 };
+
+/**
+ * Updates the date state from the date value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateDate = function updateDate(state, payload) {
     state.invoice.date = payload;
 };
+
+/**
+ * Updates the PO state from the PO value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updatePo = function updatePo(state, payload) {
     state.invoice.po_num = payload;
 };
+
+/**
+ * Updates the carrier state from the carrier value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateCarrier = function updateCarrier(state, payload) {
     state.invoice.carrier = payload;
 };
+
+/**
+ * Updates the memo state from the memo value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateMemo = function updateMemo(state, payload) {
     state.invoice.memo = payload;
 };
+
+/**
+ * Updates the completed state from the completed value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateComplete = function updateComplete(state, payload) {
     state.invoice.complete = payload;
 };
-// Line item Mutations
+
+/**
+ * Updates the line item state from the line item value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateLineItem = function updateLineItem(state, payload) {
     state.invoice.line_items[payload.item].item = payload.event;
 };
+
+/**
+ * Updates the product state from the product value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateProduct = function updateProduct(state, payload) {
     state.invoice.line_items[payload.item].product = payload.event;
 };
+
+/**
+ * Updates the qty state from the qty value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateQty = function updateQty(state, payload) {
     state.invoice.line_items[payload.item].qty = payload.event;
 };
+
+/**
+ * Updates the unit price state from the unite price value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateUnit = function updateUnit(state, payload) {
     state.invoice.line_items[payload.item].unit = payload.event;
 };
+
+/**
+ * Updates the extended state from the extended value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateExtended = function updateExtended(state, payload) {
     state.invoice.line_items[payload.item].extended = payload.ext;
 };
-// End of line item mutations
+
+/**
+ * Updates the ship fee state from the ship fee value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateShipFee = function updateShipFee(state, payload) {
     state.invoice.ship_fee = payload;
 };
+
+/**
+ * Updates the misc. char state from the misc. char value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateMiscChar = function updateMiscChar(state, payload) {
     state.invoice.misc_char = payload;
 };
+
+/**
+ * Updates the total state from the total value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var updateTotal = function updateTotal(state, payload) {
     state.invoice.total = payload;
 };
-// responsible for reseting the state after an invoice has been
-// created. 
+
+/**
+ * Reset the invoice state back to original values
+ *
+ * @param state | vuex state
+ * @return void
+ */
 var resetState = function resetState(state) {
     for (var key in state.invoice) {
         if (key == 'inv_num' || key == 'ship_fee' || key == 'misc_char' || key == 'total') {
@@ -44539,9 +44689,15 @@ var resetState = function resetState(state) {
             state.invoice[key] = '';
         }
     }
-}; // End of resetState
+};
 
-// responsible for resetting line items individually or in a loop.
+/**
+ * Responsible for resetting line items individually or in a loop.
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var resetLineItem = function resetLineItem(state, payload) {
     for (var key in state.invoice.line_items[payload]) {
         if (key == 'item' || key == 'product') {
@@ -44552,8 +44708,14 @@ var resetLineItem = function resetLineItem(state, payload) {
     }
 };
 
+/**
+ * Sets the invoice data to the invoice model for updating
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 var setInvoiceData = function setInvoiceData(state, payload) {
-    // sets the invoice data to the invoice model for updating
     for (var key in payload.data) {
         if (key === 'customer') {
             var cust = payload.data[key];
@@ -44600,11 +44762,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dateRangeSearch", function() { return dateRangeSearch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchInv", function() { return searchInv; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "commitNextInvNum", function() { return commitNextInvNum; });
-// This function is responsible for retrieving invoice 
-// data and parsing the parts that need json parsing.
-// These parts specificlly are the customer information
-// and the line item information. This data is commited
-// to the setInvoices mutations function.
+/**
+* This function is responsible for retrieving invoice 
+* data and parsing the parts that need json parsing.
+* These parts specificlly are the customer information
+* and the line item information. This data is commited
+* to the setInvoices mutations function.
+*
+* @param commit | object
+* @return Array
+*/
 var commitInvoices = function commitInvoices(_ref) {
     var commit = _ref.commit;
 
@@ -44626,13 +44793,17 @@ var commitInvoices = function commitInvoices(_ref) {
     }).catch(function (error) {
         throw new Error('commitInvoices action failed!!! ' + error);
     });
-}; // End of commitInvoices
+};
 
-
-// This function is responsible for retrieving the data for
-// the customer that was chosen by the user to be stored
-// with the invoice. This function commits the data to the
-// setCustomer mutations function.
+/**
+* This function is responsible for retrieving the data for
+* the customer that was chosen by the user to be stored
+* with the invoice. This function commits the data to the
+* setCustomer mutations function.
+*
+* @param commit | object
+* @param payload | object
+*/
 var commitOneCustomer = function commitOneCustomer(_ref2, payload) {
     var commit = _ref2.commit;
 
@@ -44647,16 +44818,18 @@ var commitOneCustomer = function commitOneCustomer(_ref2, payload) {
     }).catch(function (error) {
         throw new Error('commitOneCustomer action failed' + error);
     });
-}; // End of commitOneCustomer
+};
 
-
-/*
-payload = {
-    item: type=Number | 0-6 traversing an array,
-    event: input event.target.value,
-    set: type=Number | 0 = qty, 1 = unit
-}
-Action responsible for adding up the extended prices of each line item
+/**
+* Action responsible for adding up the extended prices of each line item
+*
+* @param context | object for commits
+* @param payload = {
+*        item: type=Number | 0-6 traversing an array,
+*        event: input event.target.value,
+*        set: type=Number | 0 = qty, 1 = unit
+*    }
+* @return void
 */
 var commitMath = function commitMath(context, payload) {
     if (payload.set === 0) {
@@ -44668,10 +44841,15 @@ var commitMath = function commitMath(context, payload) {
     }
     var extended = context.state.invoice.line_items[payload.item].qty * context.state.invoice.line_items[payload.item].unit;
     context.commit('updateExtended', { item: payload.item, ext: extended });
-}; // End of commitMath
+};
 
-// Action responible for adding up all the extended prices, the shipping
-// fee and the misc charges. 
+/**
+* Action responible for adding up all the extended prices, the shipping
+* fee and the misc charges. 
+*
+* @param context | object
+* @return void
+*/
 var commitTotal = function commitTotal(context) {
     var total = function total() {
         var t = 0;
@@ -44684,12 +44862,16 @@ var commitTotal = function commitTotal(context) {
     };
     var totalToFloat = total();
     context.commit('updateTotal', totalToFloat.toFixed(2));
-}; // End of commitTotal
+};
 
-
-// Responsible for createing a new invoice and then committing 
-// the resetState mutations function. Promise Added due to component 
-// methods needing execution after promise is finished.
+/**
+* Responsible for createing a new invoice and then committing 
+* the resetState mutations function. Promise Added due to component 
+* methods needing execution after promise is finished.
+*
+* @param context | object
+* @return new Promise
+*/
 var createNewInvoice = function createNewInvoice(context) {
     return new Promise(function (resolve, reject) {
         var params = Object.assign({}, context.state.invoice);
@@ -44708,14 +44890,20 @@ var createNewInvoice = function createNewInvoice(context) {
             reject();
         });
     });
-}; // End of createNewInvoice
+};
 
-// responsible for pull invoice info to be edited
-// Promise Added due to component methods needing execution 
-// after promise is finished.
+/**
+* Responsible for pull invoice info to be edited
+* Promise Added due to component methods needing execution 
+* after promise is finished.
+*
+* @param commit | object
+* @param payload | object
+* @return new Promise
+*/
 var showInvoice = function showInvoice(_ref3, payload) {
     var commit = _ref3.commit;
-    // get request to show an invoice for editing
+
     return new Promise(function (resolve, reject) {
         axios({
             method: 'get',
@@ -44733,8 +44921,14 @@ var showInvoice = function showInvoice(_ref3, payload) {
     });
 };
 
+/**
+ * Update an invoice resource
+ *
+ * @param context | object
+ * @param payload | object
+ * @return new Promise
+ */
 var updateInvoice = function updateInvoice(context, payload) {
-    // patch request to update an invoice
     return new Promise(function (resolve, reject) {
         var params = Object.assign({}, context.state.invoice);
         axios({
@@ -44754,8 +44948,14 @@ var updateInvoice = function updateInvoice(context, payload) {
     });
 };
 
+/**
+ * Delete specific invoice
+ *
+ * @param context | object
+ * @param payload | object
+ * @return new Promise
+ */
 var deleteInvoice = function deleteInvoice(context, payload) {
-    // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
     return new Promise(function (resolve, reject) {
         if (confirm('Are you sure you want to delete this invoice?')) {
             axios.delete('api/invoices/' + payload).then(function () {
@@ -44770,6 +44970,13 @@ var deleteInvoice = function deleteInvoice(context, payload) {
     });
 };
 
+/**
+ * Gets data for an invoice report between two different dates
+ *
+ * @param commit | object
+ * @param payload | object
+ * @return new Promise
+ */
 var dateRangeSearch = function dateRangeSearch(_ref4, payload) {
     var commit = _ref4.commit;
 
@@ -44802,6 +45009,13 @@ var dateRangeSearch = function dateRangeSearch(_ref4, payload) {
     });
 };
 
+/**
+ * Searchs for an invoice by invoice number
+ *
+ * @param commit | object
+ * @param payload | object
+ * @return new Promise
+ */
 var searchInv = function searchInv(_ref5, payload) {
     var commit = _ref5.commit;
 
@@ -44833,6 +45047,12 @@ var searchInv = function searchInv(_ref5, payload) {
     });
 };
 
+/**
+ * Commits the next invoice number in line from the database
+ *
+ * @param commit | object
+ * @return void
+ */
 var commitNextInvNum = function commitNextInvNum(_ref6) {
     var commit = _ref6.commit;
 
@@ -44849,30 +45069,60 @@ var commitNextInvNum = function commitNextInvNum(_ref6) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/**
+ * @const users state | object
+ */
 var state = {
     users: []
 };
 
+/**
+ * @const users getters | object
+ */
 var getters = {
+    /**
+     * Gets the user list
+     *
+     * @param state
+     * @return Array
+     */
     getUsers: function getUsers(state) {
         return state.users;
     }
 };
 
+/**
+ * @const Users Mutations | object
+ */
 var mutations = {
+    /**
+     * Mutations for setting the state with the array of users
+     *
+     * @param state | vuex state
+     * @param payload | payload from dispatcher
+     */
     setUsers: function setUsers(state, payload) {
         state.users = payload;
     }
 };
 
+/**
+ * @const Users Actions | object
+ */
 var actions = {
+    /**
+     * Gets Users data to be commited to mutator
+     *
+     * @param commit | object
+     * @return void
+     */
     commitUsers: function commitUsers(_ref) {
         var commit = _ref.commit;
 
         axios.get('api/users').then(function (response) {
             commit('setUsers', response.data);
         }).catch(function (error) {
-            console.log(error);
+            throw new Error(" commit users faild!!" + error);
         });
     }
 };
@@ -44889,30 +45139,60 @@ var actions = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/**
+ * @const product state | object
+ */
 var state = {
     products: []
 };
 
+/**
+ * @const products getters | object
+ */
 var getters = {
+    /**
+     * Gets the product list
+     *
+     * @param state
+     * @return Array
+     */
     getProducts: function getProducts(state) {
         return state.products;
     }
 };
 
+/**
+ * @const Products Mutations | object
+ */
 var mutations = {
+    /**
+     * Mutations for setting the state with the array of products
+     *
+     * @param state | vuex state
+     * @param payload | payload from dispatcher
+     */
     setProducts: function setProducts(state, payload) {
         state.products = payload;
     }
 };
 
+/**
+ * @const Products Actions | object
+ */
 var actions = {
+    /**
+     * Gets products data to be commited to mutator
+     *
+     * @param commit | object
+     * @return void
+     */
     commitProducts: function commitProducts(_ref) {
         var commit = _ref.commit;
 
         axios.get('api/products').then(function (response) {
             commit('setProducts', response.data);
         }).catch(function (error) {
-            console.log(error);
+            throw new Error("commit products failed!!" + error);
         });
     }
 };
@@ -44929,30 +45209,60 @@ var actions = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/**
+ * @const customers state | object
+ */
 var state = {
     customers: []
 };
 
+/**
+ * @const customers getters | object
+ */
 var getters = {
+    /**
+     * Gets the customer list
+     *
+     * @param state
+     * @return Array
+     */
     getCustomers: function getCustomers(state) {
         return state.customers;
     }
 };
 
+/**
+ * @const Customers Mutations | object
+ */
 var mutations = {
+    /**
+     * Mutations for setting the state with the array of customers
+     *
+     * @param state | vuex state
+     * @param payload | payload from dispatcher
+     */
     setCustomers: function setCustomers(state, payload) {
         state.customers = payload;
     }
 };
 
+/**
+ * @const Customers Actions | object
+ */
 var actions = {
+    /**
+     * Gets customers data to be commited to mutator
+     *
+     * @param commit | object
+     * @return void
+     */
     commitCustomers: function commitCustomers(_ref) {
         var commit = _ref.commit;
 
         axios.get('api/customers').then(function (response) {
             commit('setCustomers', response.data);
         }).catch(function (error) {
-            console.log(error);
+            throw new Error("commit customer failed!!" + error);
         });
     }
 };
@@ -44971,8 +45281,14 @@ var actions = {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUser", function() { return getUser; });
+/**
+ * Get the user permission from the vuex state
+ *
+ * @param state | Vuex state
+ * @return number
+ */
 var getUser = function getUser(state) {
-    return state.permission;
+  return state.permission;
 };
 
 /***/ }),
@@ -44982,8 +45298,15 @@ var getUser = function getUser(state) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setPermission", function() { return setPermission; });
+/**
+ * Set the permission level to the state
+ *
+ * @param state | vuex state
+ * @param payload | object
+ * @return void
+ */
 var setPermission = function setPermission(state, payload) {
-    state.permission = payload;
+  state.permission = payload;
 };
 
 /***/ }),
@@ -44993,13 +45316,19 @@ var setPermission = function setPermission(state, payload) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "commitPermission", function() { return commitPermission; });
+/**
+ * Gets the user permission level in order to restrict certain users
+ *
+ * @param commit | object
+ * @return void
+ */
 var commitPermission = function commitPermission(_ref) {
     var commit = _ref.commit;
 
     axios.get('api/user').then(function (response) {
         commit('setPermission', response.data.permission);
     }).catch(function (error) {
-        console.log(error);
+        throw new Error(" commit permission failed!" + error);
     });
 };
 
@@ -54025,6 +54354,77 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */
+/***/ (function(module, exports) {
+
+// Template js
+$(document).ready(function () {
+
+    function navButton(button, tohide, toshow) {
+        var ele = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+        var text = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+
+        $(button).on('click', function () {
+            if ($(tohide).hasClass('show')) {
+                $(tohide).removeClass('show');
+                $(tohide).addClass('hide');
+                $(ele).text(text);
+            }
+            $(toshow).removeClass('hide');
+            $(toshow).addClass('show');
+        });
+    }
+
+    // Hide the Customer Table & Show the Customer Form
+    navButton('#nav_add', '#table', '#form');
+    // Hide the Customer Form & Show the Customer Table
+    navButton('#nav_view', '#form', '#table');
+});
+
+/***/ }),
+/* 135 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_store__ = __webpack_require__(45);
+window.Vue = __webpack_require__(16);
+
+// Vuex Store
+
+
+// Vue Components
+Vue.component('dashboard', __webpack_require__(57));
+Vue.component('settings', __webpack_require__(60));
+Vue.component('users', __webpack_require__(78));
+Vue.component('customers', __webpack_require__(83));
+Vue.component('products', __webpack_require__(90));
+Vue.component('invoices', __webpack_require__(93));
+
+// Vue instances when element is present
+if (document.getElementById('dashboard-app')) {
+    var dashboardApp = new Vue({ el: '#dashboard-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
+} else if (document.getElementById('settings-app')) {
+    var settingsApp = new Vue({ el: '#settings-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
+} else if (document.getElementById('users-app')) {
+    var usersApp = new Vue({ el: '#users-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
+} else if (document.getElementById('customers-app')) {
+    var custApp = new Vue({ el: '#customers-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
+} else if (document.getElementById('products-app')) {
+    var prodApp = new Vue({ el: '#products-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
+} else if (document.getElementById('invoice-app')) {
+    var invApp = new Vue({ el: '#invoice-app', store: __WEBPACK_IMPORTED_MODULE_0__store_store__["a" /* store */] });
+}
 
 /***/ })
 /******/ ]);

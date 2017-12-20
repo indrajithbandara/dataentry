@@ -1,8 +1,13 @@
-// This function is responsible for retrieving invoice 
-// data and parsing the parts that need json parsing.
-// These parts specificlly are the customer information
-// and the line item information. This data is commited
-// to the setInvoices mutations function.
+ /**
+ * This function is responsible for retrieving invoice 
+ * data and parsing the parts that need json parsing.
+ * These parts specificlly are the customer information
+ * and the line item information. This data is commited
+ * to the setInvoices mutations function.
+ *
+ * @param commit | object
+ * @return Array
+ */
 export const commitInvoices = ({ commit }) => {
     axios.get('api/invoices')
     .then((response) => {
@@ -23,14 +28,18 @@ export const commitInvoices = ({ commit }) => {
     }).catch((error) => {
         throw new Error('commitInvoices action failed!!! ' + error);
     });
-}; // End of commitInvoices
+};
 
 
-
-// This function is responsible for retrieving the data for
-// the customer that was chosen by the user to be stored
-// with the invoice. This function commits the data to the
-// setCustomer mutations function.
+ /**
+ * This function is responsible for retrieving the data for
+ * the customer that was chosen by the user to be stored
+ * with the invoice. This function commits the data to the
+ * setCustomer mutations function.
+ *
+ * @param commit | object
+ * @param payload | object
+ */
 export const commitOneCustomer = ( { commit }, payload ) => {
     axios({
         method: 'get',
@@ -43,17 +52,20 @@ export const commitOneCustomer = ( { commit }, payload ) => {
     }).catch((error) => {
         throw new Error('commitOneCustomer action failed' + error);
     });
-}; // End of commitOneCustomer
+};
 
 
-/*
-payload = {
-    item: type=Number | 0-6 traversing an array,
-    event: input event.target.value,
-    set: type=Number | 0 = qty, 1 = unit
-}
-Action responsible for adding up the extended prices of each line item
-*/
+ /**
+ * Action responsible for adding up the extended prices of each line item
+ *
+ * @param context | object for commits
+ * @param payload = {
+ *        item: type=Number | 0-6 traversing an array,
+ *        event: input event.target.value,
+ *        set: type=Number | 0 = qty, 1 = unit
+ *    }
+ * @return void
+ */
 export const commitMath = (context, payload) => {
     if(payload.set === 0){
         context.commit('updateQty', {item: payload.item, event: payload.event});
@@ -65,10 +77,15 @@ export const commitMath = (context, payload) => {
     let extended = context.state.invoice.line_items[payload.item].qty * 
                    context.state.invoice.line_items[payload.item].unit;
     context.commit('updateExtended', {item: payload.item, ext: extended});
-}; // End of commitMath
+};
 
-// Action responible for adding up all the extended prices, the shipping
-// fee and the misc charges. 
+ /**
+ * Action responible for adding up all the extended prices, the shipping
+ * fee and the misc charges. 
+ *
+ * @param context | object
+ * @return void
+ */
 export const commitTotal = context => {
     let total = () => {
         let t = 0;
@@ -81,12 +98,16 @@ export const commitTotal = context => {
     }
     let totalToFloat = total();
     context.commit('updateTotal', totalToFloat.toFixed(2));
-}; // End of commitTotal
+};
 
-
-// Responsible for createing a new invoice and then committing 
-// the resetState mutations function. Promise Added due to component 
-// methods needing execution after promise is finished.
+ /**
+ * Responsible for createing a new invoice and then committing 
+ * the resetState mutations function. Promise Added due to component 
+ * methods needing execution after promise is finished.
+ *
+ * @param context | object
+ * @return new Promise
+ */
 export const createNewInvoice = context => {
     return new Promise((resolve, reject) => {
         let params = Object.assign({}, context.state.invoice);
@@ -105,12 +126,18 @@ export const createNewInvoice = context => {
             reject();
         }); 
     });
-}; // End of createNewInvoice
+};
 
-// responsible for pull invoice info to be edited
-// Promise Added due to component methods needing execution 
-// after promise is finished.
-export const showInvoice = ( { commit }, payload ) => { // get request to show an invoice for editing
+ /**
+ * Responsible for pull invoice info to be edited
+ * Promise Added due to component methods needing execution 
+ * after promise is finished.
+ *
+ * @param commit | object
+ * @param payload | object
+ * @return new Promise
+ */
+export const showInvoice = ( { commit }, payload ) => {
     return new Promise((resolve, reject) => {
         axios({
             method: 'get',
@@ -128,7 +155,14 @@ export const showInvoice = ( { commit }, payload ) => { // get request to show a
     });
 };
 
-export const updateInvoice = (context, payload) => { // patch request to update an invoice
+/**
+ * Update an invoice resource
+ *
+ * @param context | object
+ * @param payload | object
+ * @return new Promise
+ */
+export const updateInvoice = (context, payload) => {
     return new Promise((resolve, reject) => {
         let params = Object.assign({}, context.state.invoice);
         axios({
@@ -148,7 +182,14 @@ export const updateInvoice = (context, payload) => { // patch request to update 
     });
 };
 
-export const deleteInvoice = (context, payload) => { // delete request to delete an invoice, only permision level 1 users can make this request as the button is only visable for them.
+/**
+ * Delete specific invoice
+ *
+ * @param context | object
+ * @param payload | object
+ * @return new Promise
+ */
+export const deleteInvoice = (context, payload) => {
     return new Promise((resolve, reject) => {
         if(confirm('Are you sure you want to delete this invoice?')){
             axios.delete('api/invoices/' + payload)
@@ -164,6 +205,13 @@ export const deleteInvoice = (context, payload) => { // delete request to delete
     });
 };
 
+/**
+ * Gets data for an invoice report between two different dates
+ *
+ * @param commit | object
+ * @param payload | object
+ * @return new Promise
+ */
 export const dateRangeSearch = ({ commit }, payload) => {
     return new Promise((resolve, reject) => {
         axios({
@@ -195,6 +243,13 @@ export const dateRangeSearch = ({ commit }, payload) => {
     });
 };
 
+/**
+ * Searchs for an invoice by invoice number
+ *
+ * @param commit | object
+ * @param payload | object
+ * @return new Promise
+ */
 export const searchInv = ({ commit }, payload) => {
     return new Promise((resolve, reject) => {
         axios({
@@ -222,8 +277,14 @@ export const searchInv = ({ commit }, payload) => {
             throw new Error('searchInv failed!' + error);
         });
     });
-}
+};
 
+/**
+ * Commits the next invoice number in line from the database
+ *
+ * @param commit | object
+ * @return void
+ */
 export const commitNextInvNum = ({ commit }) => {
     axios.get('api/invoice/prefix')
     .then((response) => {
@@ -232,4 +293,4 @@ export const commitNextInvNum = ({ commit }) => {
     }).catch((error) => {
         throw new Error('commit next invoice number failed' + error);
     });
-}
+};

@@ -13,6 +13,9 @@ import * as actions from './actions';
 
 Vue.use(Vuex);
 
+/**
+ * Sets up the vuex global state object
+ */
 export const store = new Vuex.Store({
     state: {
         permission: 0

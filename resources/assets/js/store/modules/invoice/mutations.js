@@ -1,64 +1,223 @@
+/**
+ * Set the invoices array for loading into the list computed property
+ *
+ * @param state | vuex invoices state
+ * @param payload | payload commited from dispatcher
+ * @return void
+ */
 export const setInvoices = (state, payload) => {
     state.invoices = payload;
 };
+
+/**
+ * Set the invoice report total
+ *
+ * @param state | vuex invoices state
+ * @return void
+ */
 export const setInvTotal = state => {
     for(let i = 0; i < state.invoices.length; i++){
         state.inv_total += parseFloat(state.invoices[i].total);
     }
     state.inv_total = state.inv_total.toFixed(2);
 }
+
+/**
+ * Resets the invoice report total back to zero
+ *
+ * @param state | vuex state
+ * @return void
+ */
 export const resetTotal = state => {
     state.inv_total = 0;
 }
+
+/**
+ * Sets the customer snap shot in the invoice state
+ * to be stored with the invoice
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const setCustomer = (state, payload) => {
     state.invoice.customer = payload;
 };
+
+/**
+ * Updates the invoice number with the next value
+ * available in the database
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateInvNum = (state, payload) => {
     state.invoice.inv_num = parseInt(payload);
 };
+
+/**
+ * Updates the date state from the date value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateDate = (state, payload) => {
     state.invoice.date = payload;
 };
+
+/**
+ * Updates the PO state from the PO value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updatePo = (state, payload) => {
     state.invoice.po_num = payload;
 };
+
+/**
+ * Updates the carrier state from the carrier value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateCarrier = (state, payload) => {
     state.invoice.carrier = payload;
 };
+
+/**
+ * Updates the memo state from the memo value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateMemo = (state, payload) => {
     state.invoice.memo = payload;
 };
+
+/**
+ * Updates the completed state from the completed value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateComplete = (state, payload) => {
     state.invoice.complete = payload;
 };
-// Line item Mutations
+
+/**
+ * Updates the line item state from the line item value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateLineItem = (state, payload) => {
     state.invoice.line_items[payload.item].item = payload.event;
 };
+
+/**
+ * Updates the product state from the product value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateProduct = (state, payload) => {
     state.invoice.line_items[payload.item].product = payload.event;
 };
+
+/**
+ * Updates the qty state from the qty value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateQty = (state, payload) => {
     state.invoice.line_items[payload.item].qty = payload.event;
 };
+
+/**
+ * Updates the unit price state from the unite price value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateUnit = (state, payload) => {
     state.invoice.line_items[payload.item].unit = payload.event;
 };
+
+/**
+ * Updates the extended state from the extended value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateExtended = (state, payload) => {
     state.invoice.line_items[payload.item].extended = payload.ext;
 };
-// End of line item mutations
+
+/**
+ * Updates the ship fee state from the ship fee value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateShipFee = (state, payload) => {
     state.invoice.ship_fee = payload;  
 };
+
+/**
+ * Updates the misc. char state from the misc. char value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateMiscChar = (state, payload) => {
     state.invoice.misc_char = payload;  
 };
+
+/**
+ * Updates the total state from the total value in the 
+ * invoice form
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const updateTotal = (state, payload) => {
     state.invoice.total = payload;  
 };
-// responsible for reseting the state after an invoice has been
-// created. 
+
+/**
+ * Reset the invoice state back to original values
+ *
+ * @param state | vuex state
+ * @return void
+ */
 export const resetState = (state) => {
     for(var key in state.invoice){
         if(key == 'inv_num' || key == 'ship_fee' || key == 'misc_char' || key == 'total'){
@@ -75,9 +234,15 @@ export const resetState = (state) => {
             state.invoice[key] = '';
         }
     }
-}; // End of resetState
+};
 
-// responsible for resetting line items individually or in a loop.
+/**
+ * Responsible for resetting line items individually or in a loop.
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
 export const resetLineItem = (state, payload) => {
     for(var key in state.invoice.line_items[payload]){
         if(key == 'item' || key == 'product'){
@@ -88,7 +253,14 @@ export const resetLineItem = (state, payload) => {
     }
 };
 
-export const setInvoiceData = (state, payload) => { // sets the invoice data to the invoice model for updating
+/**
+ * Sets the invoice data to the invoice model for updating
+ *
+ * @param state | vuex state
+ * @param payload | payload from dispatcher
+ * @return void
+ */
+export const setInvoiceData = (state, payload) => { 
     for(var key in payload.data){
         if(key === 'customer'){
             var cust = payload.data[key];

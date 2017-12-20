@@ -168,7 +168,17 @@
                 which is why each customer entry is given an ID number so that they may be uniquely identified when being used in other parts of the system. These ID numbers are not editable and will auto increment on their own 
                 with every entry. Even if you delete all customers, the ID number will continue to auto increment from where it last was.</p>
                 <ol>
-                    <li><strong>Name: </strong>Due to the need of customer having the same name</li>
+                    <li><strong>Name: </strong>The name of the customer.</li>
+                    <li><strong>Email: </strong>The contact email of the customer.</li>
+                    <li><strong>Phone: </strong>The contact phone number of the customer.</li>
+                    <li><strong>Buyer: </strong>The name of the one who is making the purchases on behalf of the company.</li>
+                    <li><strong>Country: </strong>The country of which the customer resides.</li>
+                    <li><strong>Bill To Address: </strong>The address that will be billed. The address will appear on the invoice and the shipper as 
+                    it appears here.</li>
+                    <li><strong>Ship To Address: </strong>The address that the products will be shipping to. The address will appear on the invocie and the shipper
+                    as it appears here.</li>
+                    <li><strong>Disclaimer: </strong>The disclaimer is a note of information that will appear on the shipper.</li>
+                    <li><strong>Comments: </strong>The comments that will need to follow this invoice through it's life cycle. This information is not printed anywhere in the system.</li>
                 </ol>
             </div>
         </transition>

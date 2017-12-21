@@ -1,117 +1,141 @@
  <template>
     <div>
-        <!-- Add your company info box with add button -->
-        <div v-if="!companyAdded()">
-            <p class="alert alert-success text-center">Please add your company info. <button class="btn btn-success btn-sm" @click="form = true">Add Company Info</button></p>
-        </div>
-        <!-- if company is added: Company Name with edit button -->
-        <div v-if="companyAdded()">
-            <div class="row">
-                <div class="col-sm-12 col-md-4">
-                    <h2>{{ companyName }}</h2>
-                </div>
-                <div class="col-sm-12 col-md-4">
-                    <button class="btn btn-default btn-sm full-width margin-top-20" v-show="!read" @click="toShow()"><i class="fa fa-eye" aria-hidden="true"></i> View</button>
-                </div>
-                <div class="col-sm-12 col-md-4">
-                    <button class="btn btn-warning btn-sm full-width margin-top-20" v-show="!edit" @click="toEdit()"><i class="fa fa-pencil" aria-hidden="true"></i> Update</button>
+        <i @click="instruction_1 = true" class="fa fa-question-circle fa-2x pointer" aria-hidden="true"></i>
+        <transition name="fade">
+            <div v-show="instruction_1" class="well">
+                <i @click="instruction_1 = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
+                <h3 class="text-center">Importing and Exporting Data</h3>
+                <p>The Import / Export section is for creating backups of your data in either an excel format or a CSV format, both of which are readable by CSV programs such as 
+                microsoft excel. When you want to create a backup of your data, click either of the export buttons and the file should automaticly download in your browser. When you want to import your data files back into the system, 
+                choose them with the 'choose file' buttons. <strong>Make sure that the file you are importing is a file that belongs to it's appropriate section.</strong> If your importing your customer data, make sure 
+                it is imported in the customers section. When exporting your data, make sure the exported files actually contain your data before performing any actions that would clear out your
+                database.</p>
+                <h4>Editting Exported Files</h4>
+                <p>If your some reason you desire to edit you exported files. Please abide by these rules so that they may be importable later back into the system. </p>
+                <ol>
+                    <li>Stick to the same format the previous entries are in. As format changes can cause errors when importing back into the database.</li>
+                    <li>Do not change the column names as they are utilized for placing the correct data back into the database.</li>
+                    <li>If styleing is desired, apply minimal styleing as some styling may interrupt the importing process which may cause data lose.</li>
+                    <li>And finally the most important rule is <strong>don't edit the document if you don't have to</strong> as this will allow for the most amount of success when importing back into the database.
+                    These documents are meant to eventually go back into the system which means they should not be tampered with. </li>
+                </ol>
+            </div>
+        </transition>
+        <h2 class="text-center">Company Information</h2>
+        <div class="well">
+            <!-- Add your company info box with add button -->
+            <div v-if="!companyAdded()">
+                <p class="alert alert-success text-center">Please add your company info. <button class="btn btn-success btn-sm" @click="form = true">Add Company Info</button></p>
+            </div>
+            <!-- if company is added: Company Name with edit button -->
+            <div v-if="companyAdded()">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <h2>{{ companyName }}</h2>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <button class="btn btn-default btn-sm full-width margin-top-20" v-show="!read" @click="toShow()"><i class="fa fa-eye" aria-hidden="true"></i> View</button>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <button class="btn btn-warning btn-sm full-width margin-top-20" v-show="!edit" @click="toEdit()"><i class="fa fa-pencil" aria-hidden="true"></i> Update</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Messages -->
-        <ErrorMessage :errorMes="errorMessage"></ErrorMessage>
-        <SuccessMessage :successMes="successMessage"></SuccessMessage>
-        <!-- End of Messages -->
-        <!-- Add Company Form -->
-        <div v-if="form">
-            <h2 class="text-center">Add Company</h2>
-            <form action="#" @submit.prevent="edit ? updateCompany(company.id) : createCompany()">
-            <p class="alert alert-danger" v-if="regWarning">{{ regWarning }}</p>
-                <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input v-model="company.name" type="text" name="name" class="form-control" required maxlength="50">
-                            <p class="alert alert-warning" v-if="company.name.length == 50">50 character limit reached!</p>
+            <!-- Messages -->
+            <ErrorMessage :errorMes="errorMessage"></ErrorMessage>
+            <SuccessMessage :successMes="successMessage"></SuccessMessage>
+            <!-- End of Messages -->
+            <!-- Add Company Form -->
+            <div v-if="form">
+                <h2 class="text-center">Add Company</h2>
+                <form action="#" @submit.prevent="edit ? updateCompany(company.id) : createCompany()">
+                <p class="alert alert-danger" v-if="regWarning">{{ regWarning }}</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input v-model="company.name" type="text" name="name" class="form-control" required maxlength="50">
+                                <p class="alert alert-warning" v-if="company.name.length == 50">50 character limit reached!</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="inv_prefix">Invoice Prefix Number</label>
+                                <input v-model="company.inv_prefix" class="form-control" type="text" name="inv_prefix" required maxlength="15">
+                                <p class="alert alert-warning" v-if="company.inv_prefix.length == 15">15 character limit reached!</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="inv_prefix">Invoice Prefix Number</label>
-                            <input v-model="company.inv_prefix" class="form-control" type="text" name="inv_prefix" required maxlength="15">
-                            <p class="alert alert-warning" v-if="company.inv_prefix.length == 15">15 character limit reached!</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <textarea v-model="company.address" name="address" class="form-control" maxlength="255"></textarea>
+                                <p class="alert alert-warning" v-if="company.address.length == 255">255 character limit reached!</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="desc">Description</label>
+                                <textarea v-model="company.desc" name="desc" class="form-control"></textarea>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <textarea v-model="company.address" name="address" class="form-control" maxlength="255"></textarea>
-                            <p class="alert alert-warning" v-if="company.address.length == 255">255 character limit reached!</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input v-model="company.phone" type="text" name="phone" class="form-control" maxlength="25">
+                                <p class="alert alert-warning" v-if="company.phone.length == 25">25 character limit reached!</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input v-model="company.email" type="email" name="email" class="form-control" maxlength="50">
+                                <p class="alert alert-warning" v-if="company.email.length == 50">50 character limit reached!</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="desc">Description</label>
-                            <textarea v-model="company.desc" name="desc" class="form-control"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input v-model="company.phone" type="text" name="phone" class="form-control" maxlength="25">
-                            <p class="alert alert-warning" v-if="company.phone.length == 25">25 character limit reached!</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input v-model="company.email" type="email" name="email" class="form-control" maxlength="50">
-                            <p class="alert alert-warning" v-if="company.email.length == 50">50 character limit reached!</p>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="invoice_con">Invoice Document Control Number</label>
-                            <input v-model="company.invoice_con" type="text" name="invoice_con" class="form-control" maxlength="50">
-                            <p class="alert alert-warning" v-if="company.invoice_con.length == 50">50 character limit reached!</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="invoice_con">Invoice Document Control Number</label>
+                                <input v-model="company.invoice_con" type="text" name="invoice_con" class="form-control" maxlength="50">
+                                <p class="alert alert-warning" v-if="company.invoice_con.length == 50">50 character limit reached!</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="shipper_con">Shipper Document Control Number</label>
+                                <input v-model="company.shipper_con" type="text" name="shipper_con" class="form-control" maxlength="50">
+                                <p class="alert alert-warning" v-if="company.shipper_con.length == 50">50 character limit reached!</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="shipper_con">Shipper Document Control Number</label>
-                            <input v-model="company.shipper_con" type="text" name="shipper_con" class="form-control" maxlength="50">
-                            <p class="alert alert-warning" v-if="company.shipper_con.length == 50">50 character limit reached!</p>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="router_con">Router Document Control Number</label>
-                            <input v-model="company.router_con" type="text" name="router_con" class="form-control" maxlength="50">
-                            <p class="alert alert-warning" v-if="company.router_con.length == 50">50 character limit reached!</p>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="router_con">Router Document Control Number</label>
+                                <input v-model="company.router_con" type="text" name="router_con" class="form-control" maxlength="50">
+                                <p class="alert alert-warning" v-if="company.router_con.length == 50">50 character limit reached!</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="po_con">Purchase Order Document Control Number</label>
+                                <input v-model="company.po_con" type="text" name="po_con" class="form-control" maxlength="50">
+                                <p class="alert alert-warning" v-if="company.po_con.length == 50">50 character limit reached!</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="po_con">Purchase Order Document Control Number</label>
-                            <input v-model="company.po_con" type="text" name="po_con" class="form-control" maxlength="50">
-                            <p class="alert alert-warning" v-if="company.po_con.length == 50">50 character limit reached!</p>
-                        </div>
-                    </div>
-                </div>
-                <SubmitBtns :editMode="edit" :name="name='Company'"></SubmitBtns>
-            </form>
+                    <SubmitBtns :editMode="edit" :name="name='Company'"></SubmitBtns>
+                </form>
+            </div>
+            <!-- End of add product form -->
         </div>
-        <!-- End of add product form -->
         <transition name="fade">
             <div v-show="read" class="well">
                 <h2 class="lg-font">{{ company.name }}</h2>
@@ -129,11 +153,11 @@
         </transition>
         <hr>
         <!-- Instruction Area -->
-        <i @click="instruction = true" class="fa fa-question-circle fa-2x pointer" aria-hidden="true"></i>
+        <i @click="instruction_2 = true" class="fa fa-question-circle fa-2x pointer" aria-hidden="true"></i>
         <transition name="fade">
-            <div v-show="instruction" class="well">
-                <i @click="instruction = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
-                <h3 class="text-center">Settings Instructions</h3>
+            <div v-show="instruction_2" class="well">
+                <i @click="instruction_2 = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
+                <h3 class="text-center">Company Information Form</h3>
                 <p>Welcome to the settings area of the dataentry system! This is where you will add all of the needed company
                     information that will be used through out your system. This information is also used on your pdf templates
                     as well as your report forms.</p>
@@ -159,25 +183,11 @@
                     <li><strong>Router Document Control Number: </strong>The document version controle number for the shipper document.</li>
                     <li><strong>Purchase Order Document Control Number: </strong>The document version controle number for the purchase order document.</li>
                 </ol>
-                <h4>Importing and Exporting</h4>
-                <p>The Import / Export section below is for creating backups of your data in either an excel format or a CSV format, both of which are readable by CSV programs such as 
-                microsoft excel. When you want to create a backup of your data, click either of the export buttons and the file should automaticly download in your browser. When you want to import your data files back into the system, 
-                choose them with the 'choose file' buttons. <strong>Make sure that the file you are importing is a file that belongs to it appropriate section.</strong> If your importing your customer data, make sure 
-                it is imported in the customers section. </p>
-                <h4>Editting Exported Files</h4>
-                <p>If your some reason you desire to edit you exported files. Please abide by these rules so that they may be importable later back into the system. </p>
-                <ol>
-                    <li>Stick to the same format the previous entries are in. As format changes can cause errors when importing back into the database.</li>
-                    <li>Do not change the column names as they are utilized for placing the correct data back into the database.</li>
-                    <li>If styleing is desired, apply minimal styleing as some styling may interrupt the importing process which may cause data lose.</li>
-                    <li>And finally the most important rule is <strong>don't edit the document if you don't have to</strong> as this will allow for the most amount of success when importing back into the database.
-                    These documents are meant to eventually go back into the system which means they should not be tampered with. </li>
-                </ol>
             </div>
         </transition>
         <hr>
-        <div class="well">
-            <h2 class="text-center">Refresh Data</h2>
+        <div class="alert alert-warning">
+            <h2 class="text-center">Refresh Assets Data</h2>
             <div class="alert alert-danger text-center">
                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i> <strong>Caution</strong> <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                 <p>These buttons will whipe your data completely! An exported CSV file will be provided just incase this was done in error. Just simply import 
@@ -193,18 +203,26 @@
             <br>
             <transition name="fade">
                 <div class="row" v-if="security == '115'">
-                    <div class="col-sm-12 col-md-4">
-                        <a class="btn btn-danger btn-sm width-full" href="/customers/export/drop">Refresh Customers Data</a>
+                    <div class="col-sm-12 col-md-6">
+                        <a class="btn btn-warning btn-sm width-full" href="/customers/export/drop">Refresh Customers Data</a>
                     </div>
-                    <div class="col-sm-12 col-md-4">
-                        <a class="btn btn-danger btn-sm width-full" href="/products/export/drop">Refresh Products Data</a>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <a class="btn btn-danger btn-sm width-full" href="/invoices/export/drop">Refresh Invoices Data</a>
+                    <div class="col-sm-12 col-md-6">
+                        <a class="btn btn-warning btn-sm width-full" href="/products/export/drop">Refresh Products Data</a>
                     </div>
                 </div>
             </transition>
         </div>
+        <i @click="instruction_3 = true" class="fa fa-question-circle fa-2x pointer" aria-hidden="true"></i>
+        <transition name="fade">
+            <div v-show="instruction_3" class="well">
+                <i @click="instruction_3 = false" class="fa fa-times-circle pull-right fa-2x pointer"></i>
+                <h3 class="text-center">Refresh Assets Data</h3>
+                <p>The Refresh data area is primarily for those situations where you want to clear out some of your assets data and get a new start.
+                Once you've clicked any of the buttons to refresh your data, an Excel file will be provided just in case this was done in error. However, It is
+                highly recommended that you first export a copy of your data in the import/export section below first just in case you want to reimport your data 
+                back into your database as exporting data while removing it could have some issues.</p>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -220,7 +238,9 @@
                 edit: false,
                 form: false,
                 read: false,
-                instruction: false,
+                instruction_1: false,
+                instruction_2: false,
+                instruction_3: false,
                 security: '',
                 companyName: '',
                 companyId: 0,

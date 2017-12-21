@@ -71,38 +71,51 @@
         <hr>
         <transition name="fade">
             <div v-if="read && !edit && !search && !report && table" class="well">
-                <h2 class="lg-font">Invoice #: {{ invoiceObj.inv_num }}</h2>
+                <h2 class="lg-font underline">Invoice #: {{ invoiceObj.inv_num }}</h2>
                 <strong class="mid-font">Date: </strong><span>{{ invoiceObj.date }}</span><br>
-                <strong class="mid-font">Customer: </strong><span>{{ invoiceObj.customer.name }}</span><br>
                 <strong class="mid-font">PO Number: </strong><span>{{ invoiceObj.po_num }}</span><br>
                 <strong class="mid-font">Carrier: </strong><span>{{ invoiceObj.carrier }}</span><br>
                 <strong class="mid-font">Status: </strong>
                     <span v-if="invoiceObj.complete == 'no' ">Incomplete</span>
                     <span v-else>Complete</span><br>
                 <strong class="mid-font">Memo: </strong><span>{{ invoiceObj.memo }}</span><br>
-                <table class="table table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Line Item</th>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Unit Price</th>
-                            <th>Ext Price</th>
-                        </tr>
-                    </thead>
-                    <tbody v-for="item in invoiceObj.line_items">
-                        <tr v-if="item.item != null">
-                            <td>{{ item.item }}</td>
-                            <td>{{ item.product }}</td>
-                            <td>{{ item.qty }}</td>
-                            <td>${{ item.unit }}</td>
-                            <td>${{ item.extended }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <strong class="mid-font">Shipping Fee: </strong><span>${{ invoiceObj.ship_fee }}</span><br>
-                <strong class="mid-font">Misc. Charges: </strong><span>${{ invoiceObj.misc_char }}</span><br>
-                <strong class="mid-font">Total: </strong><span>${{ invoiceObj.total }}</span><br>
+                <hr>
+                <strong class="mid-font">Customer: </strong><span>{{ invoiceObj.customer.name }}</span><br>
+                <strong>Buyer: </strong><span>{{ invoiceObj.customer.buyer }}</span><br>
+                <strong>Phone: </strong><span>{{ invoiceObj.customer.phone }}</span><br>
+                <strong>Email: </strong><span>{{ invoiceObj.customer.email }}</span><br>
+                <strong>Country: </strong><span>{{ invoiceObj.customer.country }}</span><br>
+                <strong>Bill To Address: </strong><span>{{ invoiceObj.customer.billto }}</span><br>
+                <strong>Ship To Address: </strong><span>{{ invoiceObj.customer.shipto }}</span><br>
+                <strong>Disclaimer: </strong><span>{{ invoiceObj.customer.disclaimer }}</span><br>
+                <strong>Comments: </strong><span>{{ invoiceObj.customer.comments }}</span><br>
+                <hr>
+                <div class="well">
+                    <h2 class="text-center">Products and Fees</h2>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Line Item</th>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Unit Price</th>
+                                <th>Ext Price</th>
+                            </tr>
+                        </thead>
+                        <tbody v-for="item in invoiceObj.line_items">
+                            <tr v-if="item.item != null">
+                                <td>{{ item.item }}</td>
+                                <td>{{ item.product }}</td>
+                                <td>{{ item.qty }}</td>
+                                <td>${{ item.unit }}</td>
+                                <td>${{ item.extended.toFixed(2) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <strong class="mid-font">Shipping Fee: </strong><span>${{ invoiceObj.ship_fee }}</span><br>
+                    <strong class="mid-font">Misc. Charges: </strong><span>${{ invoiceObj.misc_char }}</span><br>
+                    <strong class="mid-font">Total: </strong><span>${{ invoiceObj.total }}</span><br>
+                </div>
                 <button class="btn btn-danger full-width" @click="closeView()">Close Viewing</button>
             </div>
         </transition>
@@ -621,6 +634,7 @@
                 .then(() => {
                     this.resetValues();
                     this.message("Invoice successfully updated!", 'success', 5000);
+                    this.getNextInvoiceNumber();
                 })
                 .catch((error) => {
                     this.message("Sorry! Something went wrong when updating your invoice!", 'error', 10000);
@@ -652,6 +666,7 @@
             closeView(){
                 this.$store.commit('resetState');
                 this.read = false;
+                this.getNextInvoiceNumber();
             },
             deleteInvoice(id){
                 this.$store.dispatch('deleteInvoice', id)
@@ -713,5 +728,8 @@
     }
     .wide {
         width: 100%;
+    }
+    .underline {
+        text-decoration: underline;
     }
 </style>

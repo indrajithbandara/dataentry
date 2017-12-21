@@ -38,5 +38,4 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     Route::post('invoices/import', 'InvoicesController@import');
     Route::get('invoices/export/excel', 'InvoicesController@exportExcel');
     Route::get('invoices/export/csv', 'InvoicesController@exportCSV');
-    Route::get('invoices/export/drop', 'InvoicesController@dropAndExport');
 });

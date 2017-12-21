@@ -1,10 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-    <div id="settings-app">
-        <settings></settings>
-    </div>
-    <hr>
     <h2 class="text-center">Import / Export</h2>
     <div class="well">
         <!-- Import and Export Customer Section -->
@@ -110,5 +106,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <hr>
+    <div id="settings-app">
+        <settings></settings>
     </div>
 @endsection

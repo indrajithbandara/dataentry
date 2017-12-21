@@ -282,21 +282,4 @@ class InvoicesController extends Controller
           });
       })->export('csv');
     }
-
-    /**
-    * Drop data and export to file
-    *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-    */
-    public function dropAndExport()
-    {
-        $items = Invoice::all();
-        DB::table('invoices')->truncate();
-        Excel::create('dataentry-invoices', function($excel) use($items) {
-          $excel->sheet('ExportFile', function($sheet) use($items) {
-              $sheet->fromArray($items);
-          });
-        })->export('csv');
-    }
 }

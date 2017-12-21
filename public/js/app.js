@@ -46036,6 +46036,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // Imports
 
@@ -46048,7 +46066,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             edit: false,
             form: false,
             read: false,
-            instruction: false,
+            instruction_1: false,
+            instruction_2: false,
+            instruction_3: false,
             security: '',
             companyName: '',
             companyId: 0,
@@ -46616,544 +46636,677 @@ var render = function() {
   return _c(
     "div",
     [
-      !_vm.companyAdded()
-        ? _c("div", [
-            _c("p", { staticClass: "alert alert-success text-center" }, [
-              _vm._v("Please add your company info. "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-success btn-sm",
-                  on: {
-                    click: function($event) {
-                      _vm.form = true
-                    }
-                  }
-                },
-                [_vm._v("Add Company Info")]
-              )
-            ])
-          ])
-        : _vm._e(),
+      _c("i", {
+        staticClass: "fa fa-question-circle fa-2x pointer",
+        attrs: { "aria-hidden": "true" },
+        on: {
+          click: function($event) {
+            _vm.instruction_1 = true
+          }
+        }
+      }),
       _vm._v(" "),
-      _vm.companyAdded()
-        ? _c("div", [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-12 col-md-4" }, [
-                _c("h2", [_vm._v(_vm._s(_vm.companyName))])
+      _c("transition", { attrs: { name: "fade" } }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.instruction_1,
+                expression: "instruction_1"
+              }
+            ],
+            staticClass: "well"
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-times-circle pull-right fa-2x pointer",
+              on: {
+                click: function($event) {
+                  _vm.instruction_1 = false
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("h3", { staticClass: "text-center" }, [
+              _vm._v("Importing and Exporting Data")
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "The Import / Export section is for creating backups of your data in either an excel format or a CSV format, both of which are readable by CSV programs such as \n            microsoft excel. When you want to create a backup of your data, click either of the export buttons and the file should automaticly download in your browser. When you want to import your data files back into the system, \n            choose them with the 'choose file' buttons. "
+              ),
+              _c("strong", [
+                _vm._v(
+                  "Make sure that the file you are importing is a file that belongs to it's appropriate section."
+                )
               ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-12 col-md-4" }, [
-                _c(
-                  "button",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.read,
-                        expression: "!read"
-                      }
-                    ],
-                    staticClass:
-                      "btn btn-default btn-sm full-width margin-top-20",
-                    on: {
-                      click: function($event) {
-                        _vm.toShow()
-                      }
-                    }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-eye",
-                      attrs: { "aria-hidden": "true" }
-                    }),
-                    _vm._v(" View")
-                  ]
+              _vm._v(
+                " If your importing your customer data, make sure \n            it is imported in the customers section. When exporting your data, make sure the exported files actually contain your data before performing any actions that would clear out your\n            database."
+              )
+            ]),
+            _vm._v(" "),
+            _c("h4", [_vm._v("Editting Exported Files")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "If your some reason you desire to edit you exported files. Please abide by these rules so that they may be importable later back into the system. "
+              )
+            ]),
+            _vm._v(" "),
+            _c("ol", [
+              _c("li", [
+                _vm._v(
+                  "Stick to the same format the previous entries are in. As format changes can cause errors when importing back into the database."
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-sm-12 col-md-4" }, [
-                _c(
-                  "button",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.edit,
-                        expression: "!edit"
-                      }
-                    ],
-                    staticClass:
-                      "btn btn-warning btn-sm full-width margin-top-20",
-                    on: {
-                      click: function($event) {
-                        _vm.toEdit()
-                      }
-                    }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-pencil",
-                      attrs: { "aria-hidden": "true" }
-                    }),
-                    _vm._v(" Update")
-                  ]
+              _c("li", [
+                _vm._v(
+                  "Do not change the column names as they are utilized for placing the correct data back into the database."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _vm._v(
+                  "If styleing is desired, apply minimal styleing as some styling may interrupt the importing process which may cause data lose."
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _vm._v("And finally the most important rule is "),
+                _c("strong", [
+                  _vm._v("don't edit the document if you don't have to")
+                ]),
+                _vm._v(
+                  " as this will allow for the most amount of success when importing back into the database.\n                These documents are meant to eventually go back into the system which means they should not be tampered with. "
                 )
               ])
             ])
-          ])
-        : _vm._e(),
+          ]
+        )
+      ]),
       _vm._v(" "),
-      _c("ErrorMessage", { attrs: { errorMes: _vm.errorMessage } }),
+      _c("h2", { staticClass: "text-center" }, [_vm._v("Company Information")]),
       _vm._v(" "),
-      _c("SuccessMessage", { attrs: { successMes: _vm.successMessage } }),
-      _vm._v(" "),
-      _vm.form
-        ? _c("div", [
-            _c("h2", { staticClass: "text-center" }, [_vm._v("Add Company")]),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                attrs: { action: "#" },
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    _vm.edit
-                      ? _vm.updateCompany(_vm.company.id)
-                      : _vm.createCompany()
-                  }
-                }
-              },
-              [
-                _vm.regWarning
-                  ? _c("p", { staticClass: "alert alert-danger" }, [
-                      _vm._v(_vm._s(_vm.regWarning))
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.company.name,
-                            expression: "company.name"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "name",
-                          required: "",
-                          maxlength: "50"
-                        },
-                        domProps: { value: _vm.company.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.company, "name", $event.target.value)
-                          }
+      _c(
+        "div",
+        { staticClass: "well" },
+        [
+          !_vm.companyAdded()
+            ? _c("div", [
+                _c("p", { staticClass: "alert alert-success text-center" }, [
+                  _vm._v("Please add your company info. "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success btn-sm",
+                      on: {
+                        click: function($event) {
+                          _vm.form = true
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.company.name.length == 50
-                        ? _c("p", { staticClass: "alert alert-warning" }, [
-                            _vm._v("50 character limit reached!")
-                          ])
-                        : _vm._e()
-                    ])
+                      }
+                    },
+                    [_vm._v("Add Company Info")]
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.companyAdded()
+            ? _c("div", [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+                    _c("h2", [_vm._v(_vm._s(_vm.companyName))])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "inv_prefix" } }, [
-                        _vm._v("Invoice Prefix Number")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
+                  _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+                    _c(
+                      "button",
+                      {
                         directives: [
                           {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.company.inv_prefix,
-                            expression: "company.inv_prefix"
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.read,
+                            expression: "!read"
                           }
                         ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "inv_prefix",
-                          required: "",
-                          maxlength: "15"
-                        },
-                        domProps: { value: _vm.company.inv_prefix },
+                        staticClass:
+                          "btn btn-default btn-sm full-width margin-top-20",
                         on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.company,
-                              "inv_prefix",
-                              $event.target.value
-                            )
+                          click: function($event) {
+                            _vm.toShow()
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.company.inv_prefix.length == 15
-                        ? _c("p", { staticClass: "alert alert-warning" }, [
-                            _vm._v("15 character limit reached!")
-                          ])
-                        : _vm._e()
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "address" } }, [
-                        _vm._v("Address")
-                      ]),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.company.address,
-                            expression: "company.address"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { name: "address", maxlength: "255" },
-                        domProps: { value: _vm.company.address },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.company,
-                              "address",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.company.address.length == 255
-                        ? _c("p", { staticClass: "alert alert-warning" }, [
-                            _vm._v("255 character limit reached!")
-                          ])
-                        : _vm._e()
-                    ])
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-eye",
+                          attrs: { "aria-hidden": "true" }
+                        }),
+                        _vm._v(" View")
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "desc" } }, [
-                        _vm._v("Description")
-                      ]),
-                      _vm._v(" "),
-                      _c("textarea", {
+                  _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+                    _c(
+                      "button",
+                      {
                         directives: [
                           {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.company.desc,
-                            expression: "company.desc"
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.edit,
+                            expression: "!edit"
                           }
                         ],
-                        staticClass: "form-control",
-                        attrs: { name: "desc" },
-                        domProps: { value: _vm.company.desc },
+                        staticClass:
+                          "btn btn-warning btn-sm full-width margin-top-20",
                         on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.company, "desc", $event.target.value)
+                          click: function($event) {
+                            _vm.toEdit()
                           }
                         }
-                      })
-                    ])
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-pencil",
+                          attrs: { "aria-hidden": "true" }
+                        }),
+                        _vm._v(" Update")
+                      ]
+                    )
                   ])
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("ErrorMessage", { attrs: { errorMes: _vm.errorMessage } }),
+          _vm._v(" "),
+          _c("SuccessMessage", { attrs: { successMes: _vm.successMessage } }),
+          _vm._v(" "),
+          _vm.form
+            ? _c("div", [
+                _c("h2", { staticClass: "text-center" }, [
+                  _vm._v("Add Company")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "phone" } }, [
-                        _vm._v("Phone")
+                _c(
+                  "form",
+                  {
+                    attrs: { action: "#" },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        _vm.edit
+                          ? _vm.updateCompany(_vm.company.id)
+                          : _vm.createCompany()
+                      }
+                    }
+                  },
+                  [
+                    _vm.regWarning
+                      ? _c("p", { staticClass: "alert alert-danger" }, [
+                          _vm._v(_vm._s(_vm.regWarning))
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "name" } }, [
+                            _vm._v("Name")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.name,
+                                expression: "company.name"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "name",
+                              required: "",
+                              maxlength: "50"
+                            },
+                            domProps: { value: _vm.company.name },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "name",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.company.name.length == 50
+                            ? _c("p", { staticClass: "alert alert-warning" }, [
+                                _vm._v("50 character limit reached!")
+                              ])
+                            : _vm._e()
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.company.phone,
-                            expression: "company.phone"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", name: "phone", maxlength: "25" },
-                        domProps: { value: _vm.company.phone },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "inv_prefix" } }, [
+                            _vm._v("Invoice Prefix Number")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.inv_prefix,
+                                expression: "company.inv_prefix"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "inv_prefix",
+                              required: "",
+                              maxlength: "15"
+                            },
+                            domProps: { value: _vm.company.inv_prefix },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "inv_prefix",
+                                  $event.target.value
+                                )
+                              }
                             }
-                            _vm.$set(_vm.company, "phone", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.company.phone.length == 25
-                        ? _c("p", { staticClass: "alert alert-warning" }, [
-                            _vm._v("25 character limit reached!")
-                          ])
-                        : _vm._e()
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "email" } }, [
-                        _vm._v("Email")
+                          }),
+                          _vm._v(" "),
+                          _vm.company.inv_prefix.length == 15
+                            ? _c("p", { staticClass: "alert alert-warning" }, [
+                                _vm._v("15 character limit reached!")
+                              ])
+                            : _vm._e()
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "address" } }, [
+                            _vm._v("Address")
+                          ]),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.address,
+                                expression: "company.address"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "address", maxlength: "255" },
+                            domProps: { value: _vm.company.address },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "address",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.company.address.length == 255
+                            ? _c("p", { staticClass: "alert alert-warning" }, [
+                                _vm._v("255 character limit reached!")
+                              ])
+                            : _vm._e()
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.company.email,
-                            expression: "company.email"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "email",
-                          name: "email",
-                          maxlength: "50"
-                        },
-                        domProps: { value: _vm.company.email },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "desc" } }, [
+                            _vm._v("Description")
+                          ]),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.desc,
+                                expression: "company.desc"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "desc" },
+                            domProps: { value: _vm.company.desc },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "desc",
+                                  $event.target.value
+                                )
+                              }
                             }
-                            _vm.$set(_vm.company, "email", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.company.email.length == 50
-                        ? _c("p", { staticClass: "alert alert-warning" }, [
-                            _vm._v("50 character limit reached!")
-                          ])
-                        : _vm._e()
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "invoice_con" } }, [
-                        _vm._v("Invoice Document Control Number")
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "phone" } }, [
+                            _vm._v("Phone")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.phone,
+                                expression: "company.phone"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "phone",
+                              maxlength: "25"
+                            },
+                            domProps: { value: _vm.company.phone },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "phone",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.company.phone.length == 25
+                            ? _c("p", { staticClass: "alert alert-warning" }, [
+                                _vm._v("25 character limit reached!")
+                              ])
+                            : _vm._e()
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.company.invoice_con,
-                            expression: "company.invoice_con"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "invoice_con",
-                          maxlength: "50"
-                        },
-                        domProps: { value: _vm.company.invoice_con },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "email" } }, [
+                            _vm._v("Email")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.email,
+                                expression: "company.email"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "email",
+                              name: "email",
+                              maxlength: "50"
+                            },
+                            domProps: { value: _vm.company.email },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "email",
+                                  $event.target.value
+                                )
+                              }
                             }
-                            _vm.$set(
-                              _vm.company,
-                              "invoice_con",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.company.invoice_con.length == 50
-                        ? _c("p", { staticClass: "alert alert-warning" }, [
-                            _vm._v("50 character limit reached!")
-                          ])
-                        : _vm._e()
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "shipper_con" } }, [
-                        _vm._v("Shipper Document Control Number")
+                          }),
+                          _vm._v(" "),
+                          _vm.company.email.length == 50
+                            ? _c("p", { staticClass: "alert alert-warning" }, [
+                                _vm._v("50 character limit reached!")
+                              ])
+                            : _vm._e()
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "invoice_con" } }, [
+                            _vm._v("Invoice Document Control Number")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.invoice_con,
+                                expression: "company.invoice_con"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "invoice_con",
+                              maxlength: "50"
+                            },
+                            domProps: { value: _vm.company.invoice_con },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "invoice_con",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.company.invoice_con.length == 50
+                            ? _c("p", { staticClass: "alert alert-warning" }, [
+                                _vm._v("50 character limit reached!")
+                              ])
+                            : _vm._e()
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.company.shipper_con,
-                            expression: "company.shipper_con"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "shipper_con",
-                          maxlength: "50"
-                        },
-                        domProps: { value: _vm.company.shipper_con },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "shipper_con" } }, [
+                            _vm._v("Shipper Document Control Number")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.shipper_con,
+                                expression: "company.shipper_con"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "shipper_con",
+                              maxlength: "50"
+                            },
+                            domProps: { value: _vm.company.shipper_con },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "shipper_con",
+                                  $event.target.value
+                                )
+                              }
                             }
-                            _vm.$set(
-                              _vm.company,
-                              "shipper_con",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.company.shipper_con.length == 50
-                        ? _c("p", { staticClass: "alert alert-warning" }, [
-                            _vm._v("50 character limit reached!")
-                          ])
-                        : _vm._e()
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "router_con" } }, [
-                        _vm._v("Router Document Control Number")
+                          }),
+                          _vm._v(" "),
+                          _vm.company.shipper_con.length == 50
+                            ? _c("p", { staticClass: "alert alert-warning" }, [
+                                _vm._v("50 character limit reached!")
+                              ])
+                            : _vm._e()
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "router_con" } }, [
+                            _vm._v("Router Document Control Number")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.router_con,
+                                expression: "company.router_con"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "router_con",
+                              maxlength: "50"
+                            },
+                            domProps: { value: _vm.company.router_con },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "router_con",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.company.router_con.length == 50
+                            ? _c("p", { staticClass: "alert alert-warning" }, [
+                                _vm._v("50 character limit reached!")
+                              ])
+                            : _vm._e()
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.company.router_con,
-                            expression: "company.router_con"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "router_con",
-                          maxlength: "50"
-                        },
-                        domProps: { value: _vm.company.router_con },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "po_con" } }, [
+                            _vm._v("Purchase Order Document Control Number")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.po_con,
+                                expression: "company.po_con"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "po_con",
+                              maxlength: "50"
+                            },
+                            domProps: { value: _vm.company.po_con },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "po_con",
+                                  $event.target.value
+                                )
+                              }
                             }
-                            _vm.$set(
-                              _vm.company,
-                              "router_con",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.company.router_con.length == 50
-                        ? _c("p", { staticClass: "alert alert-warning" }, [
-                            _vm._v("50 character limit reached!")
-                          ])
-                        : _vm._e()
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "po_con" } }, [
-                        _vm._v("Purchase Order Document Control Number")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.company.po_con,
-                            expression: "company.po_con"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "po_con",
-                          maxlength: "50"
-                        },
-                        domProps: { value: _vm.company.po_con },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.company, "po_con", $event.target.value)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.company.po_con.length == 50
-                        ? _c("p", { staticClass: "alert alert-warning" }, [
-                            _vm._v("50 character limit reached!")
-                          ])
-                        : _vm._e()
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("SubmitBtns", {
-                  attrs: { editMode: _vm.edit, name: (_vm.name = "Company") }
-                })
-              ],
-              1
-            )
-          ])
-        : _vm._e(),
+                          }),
+                          _vm._v(" "),
+                          _vm.company.po_con.length == 50
+                            ? _c("p", { staticClass: "alert alert-warning" }, [
+                                _vm._v("50 character limit reached!")
+                              ])
+                            : _vm._e()
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("SubmitBtns", {
+                      attrs: {
+                        editMode: _vm.edit,
+                        name: (_vm.name = "Company")
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("transition", { attrs: { name: "fade" } }, [
         _c(
@@ -47245,7 +47398,7 @@ var render = function() {
         attrs: { "aria-hidden": "true" },
         on: {
           click: function($event) {
-            _vm.instruction = true
+            _vm.instruction_2 = true
           }
         }
       }),
@@ -47258,8 +47411,8 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.instruction,
-                expression: "instruction"
+                value: _vm.instruction_2,
+                expression: "instruction_2"
               }
             ],
             staticClass: "well"
@@ -47269,13 +47422,13 @@ var render = function() {
               staticClass: "fa fa-times-circle pull-right fa-2x pointer",
               on: {
                 click: function($event) {
-                  _vm.instruction = false
+                  _vm.instruction_2 = false
                 }
               }
             }),
             _vm._v(" "),
             _c("h3", { staticClass: "text-center" }, [
-              _vm._v("Settings Instructions")
+              _vm._v("Company Information Form")
             ]),
             _vm._v(" "),
             _c("p", [
@@ -47364,60 +47517,6 @@ var render = function() {
                   "The document version controle number for the purchase order document."
                 )
               ])
-            ]),
-            _vm._v(" "),
-            _c("h4", [_vm._v("Importing and Exporting")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "The Import / Export section below is for creating backups of your data in either an excel format or a CSV format, both of which are readable by CSV programs such as \n            microsoft excel. When you want to create a backup of your data, click either of the export buttons and the file should automaticly download in your browser. When you want to import your data files back into the system, \n            choose them with the 'choose file' buttons. "
-              ),
-              _c("strong", [
-                _vm._v(
-                  "Make sure that the file you are importing is a file that belongs to it appropriate section."
-                )
-              ]),
-              _vm._v(
-                " If your importing your customer data, make sure \n            it is imported in the customers section. "
-              )
-            ]),
-            _vm._v(" "),
-            _c("h4", [_vm._v("Editting Exported Files")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "If your some reason you desire to edit you exported files. Please abide by these rules so that they may be importable later back into the system. "
-              )
-            ]),
-            _vm._v(" "),
-            _c("ol", [
-              _c("li", [
-                _vm._v(
-                  "Stick to the same format the previous entries are in. As format changes can cause errors when importing back into the database."
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _vm._v(
-                  "Do not change the column names as they are utilized for placing the correct data back into the database."
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _vm._v(
-                  "If styleing is desired, apply minimal styleing as some styling may interrupt the importing process which may cause data lose."
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _vm._v("And finally the most important rule is "),
-                _c("strong", [
-                  _vm._v("don't edit the document if you don't have to")
-                ]),
-                _vm._v(
-                  " as this will allow for the most amount of success when importing back into the database.\n                These documents are meant to eventually go back into the system which means they should not be tampered with. "
-                )
-              ])
             ])
           ]
         )
@@ -47427,9 +47526,11 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "well" },
+        { staticClass: "alert alert-warning" },
         [
-          _c("h2", { staticClass: "text-center" }, [_vm._v("Refresh Data")]),
+          _c("h2", { staticClass: "text-center" }, [
+            _vm._v("Refresh Assets Data")
+          ]),
           _vm._v(" "),
           _vm._m(0),
           _vm._v(" "),
@@ -47468,36 +47569,25 @@ var render = function() {
           _c("transition", { attrs: { name: "fade" } }, [
             _vm.security == "115"
               ? _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
                     _c(
                       "a",
                       {
-                        staticClass: "btn btn-danger btn-sm width-full",
+                        staticClass: "btn btn-warning btn-sm width-full",
                         attrs: { href: "/customers/export/drop" }
                       },
                       [_vm._v("Refresh Customers Data")]
                     )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-12 col-md-4" }, [
+                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
                     _c(
                       "a",
                       {
-                        staticClass: "btn btn-danger btn-sm width-full",
+                        staticClass: "btn btn-warning btn-sm width-full",
                         attrs: { href: "/products/export/drop" }
                       },
                       [_vm._v("Refresh Products Data")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-12 col-md-4" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-danger btn-sm width-full",
-                        attrs: { href: "/invoices/export/drop" }
-                      },
-                      [_vm._v("Refresh Invoices Data")]
                     )
                   ])
                 ])
@@ -47505,7 +47595,54 @@ var render = function() {
           ])
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("i", {
+        staticClass: "fa fa-question-circle fa-2x pointer",
+        attrs: { "aria-hidden": "true" },
+        on: {
+          click: function($event) {
+            _vm.instruction_3 = true
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("transition", { attrs: { name: "fade" } }, [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.instruction_3,
+                expression: "instruction_3"
+              }
+            ],
+            staticClass: "well"
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-times-circle pull-right fa-2x pointer",
+              on: {
+                click: function($event) {
+                  _vm.instruction_3 = false
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("h3", { staticClass: "text-center" }, [
+              _vm._v("Refresh Assets Data")
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "The Refresh data area is primarily for those situations where you want to clear out some of your assets data and get a new start.\n            Once you've clicked any of the buttons to refresh your data, an Excel file will be provided just in case this was done in error. However, It is\n            highly recommended that you first export a copy of your data in the import/export section below first just in case you want to reimport your data \n            back into your database as exporting data while removing it could have some issues."
+              )
+            ])
+          ]
+        )
+      ])
     ],
     1
   )
@@ -51011,7 +51148,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n#invoices-table[data-v-aec93606] { \n    max-height: 565px; \n    overflow: scroll;\n}\n.cust_top_margin[data-v-aec93606] {\n    margin-top: 32px;\n}\n.btn-margin[data-v-aec93606] {\n    margin-top: 27px;\n}\n.space-below[data-v-aec93606] {\n    margin-bottom: 20px;\n}\n.wide[data-v-aec93606] {\n    width: 100%;\n}\n", ""]);
+exports.push([module.i, "\n#invoices-table[data-v-aec93606] { \n    max-height: 565px; \n    overflow: scroll;\n}\n.cust_top_margin[data-v-aec93606] {\n    margin-top: 32px;\n}\n.btn-margin[data-v-aec93606] {\n    margin-top: 27px;\n}\n.space-below[data-v-aec93606] {\n    margin-bottom: 20px;\n}\n.wide[data-v-aec93606] {\n    width: 100%;\n}\n.underline[data-v-aec93606] {\n    text-decoration: underline;\n}\n", ""]);
 
 // exports
 
@@ -51042,6 +51179,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_partials_error_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_partials_error_message_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_partials_success_message_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -51715,6 +51865,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$store.dispatch('updateInvoice', id).then(function () {
                 _this4.resetValues();
                 _this4.message("Invoice successfully updated!", 'success', 5000);
+                _this4.getNextInvoiceNumber();
             }).catch(function (error) {
                 _this4.message("Sorry! Something went wrong when updating your invoice!", 'error', 10000);
                 throw new Error('Something went wrong with the dispatch for updateInvoice');
@@ -51746,6 +51897,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         closeView: function closeView() {
             this.$store.commit('resetState');
             this.read = false;
+            this.getNextInvoiceNumber();
         },
         deleteInvoice: function deleteInvoice(id) {
             var _this7 = this;
@@ -53166,7 +53318,9 @@ var render = function() {
               step: "0.01",
               readonly: ""
             },
-            domProps: { value: _vm.model.line_items[_vm.itemNum].extended }
+            domProps: {
+              value: _vm.model.line_items[_vm.itemNum].extended.toFixed(2)
+            }
           })
         ])
       ]),
@@ -53467,16 +53621,12 @@ var render = function() {
       _c("transition", { attrs: { name: "fade" } }, [
         _vm.read && !_vm.edit && !_vm.search && !_vm.report && _vm.table
           ? _c("div", { staticClass: "well" }, [
-              _c("h2", { staticClass: "lg-font" }, [
+              _c("h2", { staticClass: "lg-font underline" }, [
                 _vm._v("Invoice #: " + _vm._s(_vm.invoiceObj.inv_num))
               ]),
               _vm._v(" "),
               _c("strong", { staticClass: "mid-font" }, [_vm._v("Date: ")]),
               _c("span", [_vm._v(_vm._s(_vm.invoiceObj.date))]),
-              _c("br"),
-              _vm._v(" "),
-              _c("strong", { staticClass: "mid-font" }, [_vm._v("Customer: ")]),
-              _c("span", [_vm._v(_vm._s(_vm.invoiceObj.customer.name))]),
               _c("br"),
               _vm._v(" "),
               _c("strong", { staticClass: "mid-font" }, [
@@ -53500,60 +53650,108 @@ var render = function() {
               _c("span", [_vm._v(_vm._s(_vm.invoiceObj.memo))]),
               _c("br"),
               _vm._v(" "),
-              _c(
-                "table",
-                { staticClass: "table table-condensed" },
-                [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", [_vm._v("Line Item")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Product")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Qty")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Unit Price")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Ext Price")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.invoiceObj.line_items, function(item) {
-                    return _c("tbody", [
-                      item.item != null
-                        ? _c("tr", [
-                            _c("td", [_vm._v(_vm._s(item.item))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.product))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.qty))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("$" + _vm._s(item.unit))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("$" + _vm._s(item.extended))])
-                          ])
-                        : _vm._e()
-                    ])
-                  })
-                ],
-                2
-              ),
+              _c("hr"),
               _vm._v(" "),
-              _c("strong", { staticClass: "mid-font" }, [
-                _vm._v("Shipping Fee: ")
+              _c("strong", { staticClass: "mid-font" }, [_vm._v("Customer: ")]),
+              _c("span", [_vm._v(_vm._s(_vm.invoiceObj.customer.name))]),
+              _c("br"),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Buyer: ")]),
+              _c("span", [_vm._v(_vm._s(_vm.invoiceObj.customer.buyer))]),
+              _c("br"),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Phone: ")]),
+              _c("span", [_vm._v(_vm._s(_vm.invoiceObj.customer.phone))]),
+              _c("br"),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Email: ")]),
+              _c("span", [_vm._v(_vm._s(_vm.invoiceObj.customer.email))]),
+              _c("br"),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Country: ")]),
+              _c("span", [_vm._v(_vm._s(_vm.invoiceObj.customer.country))]),
+              _c("br"),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Bill To Address: ")]),
+              _c("span", [_vm._v(_vm._s(_vm.invoiceObj.customer.billto))]),
+              _c("br"),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Ship To Address: ")]),
+              _c("span", [_vm._v(_vm._s(_vm.invoiceObj.customer.shipto))]),
+              _c("br"),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Disclaimer: ")]),
+              _c("span", [_vm._v(_vm._s(_vm.invoiceObj.customer.disclaimer))]),
+              _c("br"),
+              _vm._v(" "),
+              _c("strong", [_vm._v("Comments: ")]),
+              _c("span", [_vm._v(_vm._s(_vm.invoiceObj.customer.comments))]),
+              _c("br"),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c("div", { staticClass: "well" }, [
+                _c("h2", { staticClass: "text-center" }, [
+                  _vm._v("Products and Fees")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "table",
+                  { staticClass: "table table-condensed" },
+                  [
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", [_vm._v("Line Item")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Product")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Qty")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Unit Price")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Ext Price")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.invoiceObj.line_items, function(item) {
+                      return _c("tbody", [
+                        item.item != null
+                          ? _c("tr", [
+                              _c("td", [_vm._v(_vm._s(item.item))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.product))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.qty))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v("$" + _vm._s(item.unit))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v("$" + _vm._s(item.extended.toFixed(2)))
+                              ])
+                            ])
+                          : _vm._e()
+                      ])
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("strong", { staticClass: "mid-font" }, [
+                  _vm._v("Shipping Fee: ")
+                ]),
+                _c("span", [_vm._v("$" + _vm._s(_vm.invoiceObj.ship_fee))]),
+                _c("br"),
+                _vm._v(" "),
+                _c("strong", { staticClass: "mid-font" }, [
+                  _vm._v("Misc. Charges: ")
+                ]),
+                _c("span", [_vm._v("$" + _vm._s(_vm.invoiceObj.misc_char))]),
+                _c("br"),
+                _vm._v(" "),
+                _c("strong", { staticClass: "mid-font" }, [_vm._v("Total: ")]),
+                _c("span", [_vm._v("$" + _vm._s(_vm.invoiceObj.total))]),
+                _c("br")
               ]),
-              _c("span", [_vm._v("$" + _vm._s(_vm.invoiceObj.ship_fee))]),
-              _c("br"),
-              _vm._v(" "),
-              _c("strong", { staticClass: "mid-font" }, [
-                _vm._v("Misc. Charges: ")
-              ]),
-              _c("span", [_vm._v("$" + _vm._s(_vm.invoiceObj.misc_char))]),
-              _c("br"),
-              _vm._v(" "),
-              _c("strong", { staticClass: "mid-font" }, [_vm._v("Total: ")]),
-              _c("span", [_vm._v("$" + _vm._s(_vm.invoiceObj.total))]),
-              _c("br"),
               _vm._v(" "),
               _c(
                 "button",

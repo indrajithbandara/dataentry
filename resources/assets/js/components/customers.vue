@@ -198,9 +198,10 @@
             return {
                 edit: false, // Hides or shows edit mode which changes the text and functionality of the submit button.
                 table: true, // If true, the customers table is showing. If false, the customers form is showing.
-                read: false,
-                instruction: false,
-                customer: { // Customer model and it's values
+                read: false, // If true, the customer information is showing, if false, customer information is hidden.
+                instruction: false, // If true, instruction area is showing.
+                // Customer Data Model
+                customer: { 
                     id: '',
                     name: '',
                     email: '',
@@ -227,7 +228,10 @@
             }
         },
         mounted() { 
-            // when vue instance is mounted, get the customers and the authenticated user.
+            /* 
+            * when vue instance is mounted, get the 
+            * customers and the authenticated user.
+            */
             this.getUser();
             this.getCustomers();
         },
@@ -238,11 +242,19 @@
             SuccessMessage
         },
         computed: {
-            user() {
-                return this.$store.getters.getUser;
+            /**
+             * Get the user permissions
+             * @return number
+             */
+            user() { 
+                return this.$store.getters.getUser; 
             },
-            list() {
-                return this.$store.getters.getCustomers;
+            /**
+             * Get the list of customers from the vuex state
+             * @return Array
+             */
+            list() { 
+                return this.$store.getters.getCustomers; 
             }
         },
         methods: {
@@ -255,14 +267,27 @@
             switchToForm(){ // prop: toForm | component: <viewAddBtns>
                 this.table = false;
             },
-            getUser(){ // ajax call to get the authenticated user
+            /**
+             * Dispatches to 'commitPermission' action in vuex store to
+             * call user permission to be commited to 'setPermission'
+             * mutation. 
+             */
+            getUser(){
                 this.$store.dispatch('commitPermission');
             },
-            getCustomers(){ // ajax call to get all the customers
+            /**
+             * Dispatches to 'commitCustomers' action in vuex store to
+             * get the customers array to be commited to 'setCustomers'
+             * mutation.
+             */
+            getCustomers(){
                 this.$store.dispatch('commitCustomers');
             },
             // ===== C.R.U.D methods =====
-            createCustomer(){ // post request to add a customer
+            /**
+             * Creates new customer resource. Runs form validation.
+             */
+            createCustomer(){
                 this.valueCheck();
                 axios({
                     method: 'post',
@@ -279,7 +304,13 @@
                     this.message("Sorry! Something went wrong when creating your customer!", 'error', 10000);
                 });
             },
-            updateCustomer(id){ // patch request to update a customer
+            /**
+             * Updates specific resourse by it's id
+             *
+             * @param id | number
+             * @return void
+             */
+            updateCustomer(id){
                 this.valueCheck();
                 axios({
                     method: 'patch',
@@ -296,7 +327,14 @@
                     this.message("Sorry! Something went wrong when updating your customer!", 'error', 10000);
                 });
             },
-            showCustomer(id){ // grad a specific customer to be edited.
+            /**
+             * Gets a specific resource by it's id to be
+             * updated.
+             *
+             * @param id | number
+             * @return void
+             */
+            showCustomer(id){
                 axios({
                     method: 'get',
                     url: 'api/customers/' + id,
@@ -314,6 +352,13 @@
                 });
                 this.edit = true;
             },
+            /**
+             * Gets a specific resourse by it's id to
+             * be viewed only.
+             *
+             * @param id | number
+             * @return void
+             */
             viewCustomer(id){
                 axios({
                     method: 'get',
@@ -331,7 +376,14 @@
                     this.message("Sorry! Something went wrong when receiving your customer info!", 'error', 10000);
                 });
             },
-            deleteCustomer(id){ // deletes a specific customer, only the Super Admin can make this request as the button is only visable for that user.
+            /**
+             * Delete a specific resource by it's id. Only
+             * an admin user can delete resources
+             *
+             * @param id | number
+             * @return void
+             */
+            deleteCustomer(id){
                 if(confirm('Are you sure you want to delete this customer?')){
                     axios.delete('api/customers/' + id)
                     .then( response => {
@@ -345,6 +397,9 @@
                     return;
                 }
             },
+            /**
+             * Closes the resource viwing and resets state
+             */
             closeView(){
                 this.resetValues();
                 this.read = false;
@@ -361,6 +416,13 @@
             * In the conditional statment for the pattern test as well, it needed an else statment to get ride
             * of the error for when the user got ride of the unapproved character but the field wasn't empty. 
             */
+
+            /**
+             * Check the pattern of the name field.
+             *
+             * @param string | string
+             * @return void
+             */
             regexNameCheck(string){
                 var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
                 if(string == ''){
@@ -374,6 +436,12 @@
                     this.regexNameWarning = '';
                 }
             },
+            /**
+             * Checks the pattern of the buyer field.
+             *
+             * @param string | string
+             * @return void
+             */
             regexBuyerCheck(string){
                 var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
                 if(string == ''){
@@ -387,6 +455,12 @@
                     this.regexBuyerWarning = '';
                 }
             },
+            /**
+             * Checks the pattern of the country field.
+             *
+             * @param string | string
+             * @param return void
+             */
             regexCountryCheck(string){
                 var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
                 if(string == ''){
@@ -400,6 +474,12 @@
                     this.regexCountryWarning = '';
                 }
             },
+            /**
+             * Checks the pattern of the shipto field.
+             *
+             * @param string | string
+             * @return void
+             */
             regexShiptoCheck(string){
                 var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+$/;
                 if(string == ''){
@@ -413,6 +493,12 @@
                     this.regexShiptoWarning = '';
                 } 
             },
+            /**
+             * Checks the pattern of the billto field.
+             *
+             * @param string | string
+             * @return void
+             */
             regexBilltoCheck(string){
                 var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+$/;
                 if(string == ''){
@@ -426,6 +512,12 @@
                     this.regexBilltoWarning = '';
                 } 
             },
+            /**
+             * Checks the pattern of the disclaimer field.
+             *
+             * @param string | string
+             * @return void
+             */
             regexDiscCheck(string){
                 var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
                 if(string == ''){
@@ -439,6 +531,12 @@
                     this.regexDiscWarning = '';
                 }
             },
+            /**
+             * Checks the pattern of the comments field.
+             *
+             * @param string | string
+             * @return void
+             */
             regexComCheck(string){
                 var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
                 if(string == ''){
@@ -452,6 +550,12 @@
                     this.regexComWarning = '';
                 } 
             },
+            /**
+             * Checks the pattern of the phone field.
+             *
+             * @param string | string
+             * @return void
+             */
             regexPhoneCheck(string){
                 var pattern = /^(?!-)(?!.*--)[0-9\(\)\-\s]+$/;
                 if(string == ''){
@@ -465,11 +569,19 @@
                     this.regexPhoneWarning = '';
                 }
             },
+            /**
+             * Check to see if the country, disclaimer and comments fields are empty.
+             * If so, they are auto filled with NA due to the need for none null values.
+             */
             valueCheck(){
                 if(!this.customer.country){this.customer.country = 'NA';}
                 if(!this.customer.disclaimer){this.customer.disclaimer = 'NA';}
                 if(!this.customer.comments){this.customer.comments = 'NA';}
             },
+            /**
+             * Resets customer state, gets the customers list and resets
+             * boolean values.
+             */
             resetValues(){
                 for (var key in this.customer){
                     this.customer[key] = '';
@@ -478,6 +590,9 @@
                 this.getCustomers();
                 this.table = true;
             },
+            /**
+             * 
+             */
             message(message, setting="success", timing){
                 if(setting == 'success'){
                     this.successMessage = message;

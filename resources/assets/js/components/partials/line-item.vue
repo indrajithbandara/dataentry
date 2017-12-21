@@ -47,7 +47,7 @@
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <label :for="forValExt">Ext Price</label>
                     <input 
-                        :value="model.line_items[itemNum].extended" 
+                        :value="model.line_items[itemNum].extended.toFixed(2)" 
                         number type="number" 
                         :name="forValExt" 
                         min="0" step="0.01" 

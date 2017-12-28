@@ -142,7 +142,7 @@
                 <strong class="mid-font">Address: </strong><span>{{ company.address }}</span><br>
                 <strong class="mid-font">Phone: </strong><span>{{ company.phone }}</span><br>
                 <strong class="mid-font">Email: </strong><span>{{ company.email }}</span><br>
-                <strong class="mid-font">Description: </strong><span>{{ company.disc }}</span><br>
+                <strong class="mid-font">Description: </strong><span>{{ company.desc }}</span><br>
                 <strong class="mid-font">Invoice Prefix Number: </strong><span>{{ company.inv_prefix }}</span><br>
                 <strong class="mid-font">Invoice Document Controle Number: </strong><span>{{ company.invoice_con }}</span><br>
                 <strong class="mid-font">Shipper Document Controle Number: </strong><span>{{ company.shipper_con }}</span><br>

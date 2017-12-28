@@ -219,36 +219,25 @@ export const updateTotal = (state, payload) => {
  * @return void
  */
 export const resetState = (state) => {
-    for(var key in state.invoice){
+    for(let key in state.invoice){
         if(key == 'inv_num' || key == 'ship_fee' || key == 'misc_char' || key == 'total'){
             state.invoice[key] = 0;
         }else if(key == 'customer'){
-            for(var k in state.invoice.customer){
+            for(let k in state.invoice.customer){
                 state.invoice.customer[k] = '';
             }
         }else if(key == 'line_items'){
-            for(var i = 0; i < 7; i++){
-                this.resetLineItem(state, i);
+            for(let i = 0; i < 7; i++){
+                for(let key in state.invoice.line_items[i]){
+                    if(key == 'item' || key == 'product'){
+                        state.invoice.line_items[i][key] = '';
+                    }else{
+                        state.invoice.line_items[i][key] = 0;
+                    }
+                }
             }  
         }else {
             state.invoice[key] = '';
-        }
-    }
-};
-
-/**
- * Responsible for resetting line items individually or in a loop.
- *
- * @param state | vuex state
- * @param payload | payload from dispatcher
- * @return void
- */
-export const resetLineItem = (state, payload) => {
-    for(var key in state.invoice.line_items[payload]){
-        if(key == 'item' || key == 'product'){
-            state.invoice.line_items[payload][key] = '';
-        }else{
-            state.invoice.line_items[payload][key] = 0;
         }
     }
 };

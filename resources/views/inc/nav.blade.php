@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/dashboard') }}">Data Entry</a>
+                <a class="navbar-brand" href="{{ url('/dashboard') }}">Dataentry</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">

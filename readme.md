@@ -5,10 +5,10 @@ The project is currently in session, It's main purpose is manage product, invoic
 ### The System currently includes
 1. A Simple dashboard.
 <img src="https://github.com/lvstross/dataentry/blob/master/public/img/dashboard.png">
-2. Settings and Company Information Area.
-<img src="https://github.com/lvstross/dataentry/blob/master/public/img/settings_1.png">
-3. The ability to import and export data in either CSV or Excel formats.
+2. Company Information Area and Assets reset abilities.
 <img src="https://github.com/lvstross/dataentry/blob/master/public/img/settings_2.png">
+3. The ability to import and export data in either CSV or Excel formats.
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/settings_1.png">
 4. Customers interface for recording customer information.
 <img src="https://github.com/lvstross/dataentry/blob/master/public/img/customers.png">
 5. Products interface for recording product information.
@@ -17,6 +17,8 @@ The project is currently in session, It's main purpose is manage product, invoic
 <img src="https://github.com/lvstross/dataentry/blob/master/public/img/invoice_form.png">
 7. The ability to print invoice reports, invoices and shippers along with the ability to search for specific invoices.
 <img src="https://github.com/lvstross/dataentry/blob/master/public/img/invoice_table.png">
+8. The ability to create multiple users and give them certain permissions over the system.
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/users.png">
 
 ### Features To Come
 1. Traveler Interface

@@ -70,7 +70,7 @@
         <!-- End of Invoice Table -->
         <hr>
         <transition name="fade">
-            <div v-if="read && !edit && !search && !report && table" class="well">
+            <div v-if="read && !edit && table" class="well">
                 <h2 class="lg-font underline">Invoice #: {{ invoiceObj.inv_num }}</h2>
                 <strong class="mid-font">Date: </strong><span>{{ invoiceObj.date }}</span><br>
                 <strong class="mid-font">PO Number: </strong><span>{{ invoiceObj.po_num }}</span><br>
@@ -532,6 +532,7 @@
                 this.search_inv = '';
                 this.start = '';
                 this.end = '';
+                this.read = false;
                 this.search = false;
                 this.report = false;
                 this.getInvoices();
@@ -692,9 +693,16 @@
                     }
                 }
                 this.cust_id = '';
-                this.$store.dispatch('commitInvoices');
+                this.search_inv = '';
+                this.start = '';
+                this.end = '';
+                this.rep_name = '';
                 this.edit = false;
+                this.search = false;
+                this.report = false;
+                this.read = false;
                 this.table = true;
+                this.$store.dispatch('commitInvoices');
             },
             message(message, setting="success", timing){
                 if(setting == 'success'){

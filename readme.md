@@ -17,6 +17,8 @@ The project is currently in session, It's main purpose is manage product, invoic
 <img src="https://github.com/lvstross/dataentry/blob/master/public/img/invoice_form.png">
 7. The ability to print invoice reports, invoices and shippers along with the ability to search for specific invoices.
 <img src="https://github.com/lvstross/dataentry/blob/master/public/img/invoice_table.png">
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/reports.png">
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/search.png">
 8. The ability to create multiple users and give them certain permissions over the system.
 <img src="https://github.com/lvstross/dataentry/blob/master/public/img/users.png">
 

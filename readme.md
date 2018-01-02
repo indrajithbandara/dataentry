@@ -2,13 +2,21 @@
 <h3 align="center">A data entry system for companies with product driven warehouses.</h3>
 The project is currently in session, It's main purpose is manage product, invoice and shipping information.
 
-### Current Features
-1. Dashboard
-2. Users Interface
-3. Customers Interface
-4. Products Interface
-1. Invoiceing Interface
-2. Company / Settings Interface
+### The System currently includes
+1. A Simple dashboard.
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/dashboard.png">
+2. Settings and Company Information Area.
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/settings_1.png">
+3. The ability to import and export data in either CSV or Excel formats.
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/settings_2.png">
+4. Customers interface for recording customer information.
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/customers.png">
+5. Products interface for recording product information.
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/products.png">
+6. An invoices interface for creating invoices.
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/invoice_form.png">
+7. The ability to print invoice reports, invoices and shippers along with the ability to search for specific invoices.
+<img src="https://github.com/lvstross/dataentry/blob/master/public/img/invoice_table.png">
 
 ### Features To Come
 1. Traveler Interface

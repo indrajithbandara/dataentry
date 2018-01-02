@@ -2,7 +2,7 @@
     <div>
         <ViewAddBtns 
             :textOne="'View Invoices'" 
-            :textTwo="'Add An Invoice'"
+            :textTwo="'Add Invoice'"
             :toTable="switchToTable" 
             :toForm="switchToForm"
         ></ViewAddBtns>

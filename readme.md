@@ -23,7 +23,7 @@ handel the tracking of purchase orders, travelers and inventory.
 8. the ability to create multiple users and give them certain permissions over the system.
 <img src="https://github.com/lvstross/dataentry/blob/master/public/img/users.png">
 
-#### Other featurs include
+#### Other features include:
 1. Error and Success Messages.
 2. Mobile Responsiveness with Bootstrap.
 3. Warning messages along with input validation.

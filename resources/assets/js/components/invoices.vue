@@ -42,7 +42,7 @@
                             <th>Print Invoice</th>
                             <th>View</th>
                             <th>Edit</th>
-                            <th v-if="user == 1">Delete</th>
+                            <th v-if="user.permission == 1">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,7 +55,7 @@
                             <td><a :href="'/pdf/invoice/' + invoice.id" class="btn btn-default btn-sm"><i class="fa fa-print" aria-hidden="true"></i> Invoice</a></td>
                             <td><button @click="readInvoice(invoice.id)" class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></td>
                             <td><button @click="showInvoice(invoice.id)" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
-                            <td v-if="user == 1"><button @click="deleteInvoice(invoice.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
+                            <td v-if="user.permission == 1"><button @click="deleteInvoice(invoice.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
                         </tr>
                     </tbody>
                 </table>

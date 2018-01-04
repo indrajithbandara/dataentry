@@ -4,4 +4,4 @@
  * @param state | Vuex state
  * @return number
  */
-export const getUser = state => state.permission
+export const getUser = state => state

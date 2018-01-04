@@ -6,5 +6,6 @@
  * @return void
  */
 export const setPermission = (state, payload) => {
-    state.permission = payload;
+    state.id = payload.id;
+    state.permission = payload.permission;
 };

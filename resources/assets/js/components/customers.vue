@@ -24,8 +24,8 @@
                             <th>Buyer</th>
                             <th>Country</th>
                             <th>View</th>
-                            <th v-if="user == 1 || user == 2">Edit</th>
-                            <th v-if="user == 1">Delete</th>
+                            <th v-if="user.permission == 1 || user.permission == 2">Edit</th>
+                            <th v-if="user.permission == 1">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,8 +37,8 @@
                             <td>{{ customer.buyer }}</td>
                             <td>{{ customer.country }}</td>
                             <td><button @click="viewCustomer(customer.id)" class="btn btn-default btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></td>
-                            <td v-if="user == 1 || user == 2"><button @click="showCustomer(customer.id)" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
-                            <td v-if="user == 1"><button @click="deleteCustomer(customer.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
+                            <td v-if="user.permission == 1 || user.permission == 2"><button @click="showCustomer(customer.id)" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
+                            <td v-if="user.permission == 1"><button @click="deleteCustomer(customer.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
                         </tr>
                     </tbody>
                 </table>

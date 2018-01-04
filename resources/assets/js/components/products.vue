@@ -11,8 +11,8 @@
                         <th>Revision</th>
                         <th>Rev Date</th>
                         <th>View</th>
-                        <th v-if="user == 1 || user == 2 || user == 3">Edit</th>
-                        <th v-if="user == 1">Delete</th>
+                        <th v-if="user.permission == 1 || user.permission == 2 || user.permission == 3">Edit</th>
+                        <th v-if="user.permission == 1">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,8 +24,8 @@
                         <td>{{ product.rev }}</td>
                         <td>{{ product.rev_date }}</td>
                         <td><button @click="viewProduct(product.id)" class="btn btn-default btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></td>
-                        <td v-if="user == 1 || user == 2 || user == 3"><button @click="showProduct(product.id)" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
-                        <td v-if="user == 1"><button @click="deleteProduct(product.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
+                        <td v-if="user.permission == 1 || user.permission == 2 || user.permission == 3"><button @click="showProduct(product.id)" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
+                        <td v-if="user.permission == 1"><button @click="deleteProduct(product.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
                     </tr>
                 </tbody>
             </table>

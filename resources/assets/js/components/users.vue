@@ -9,11 +9,18 @@
                         <th>Email</th>
                         <th>Permissions</th>
                         <th>Edit</th>
-                        <th v-if="user == 1">Delete</th>
+                        <th v-if="user.permission == 1">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="users in list">
+                    <tr v-if="user.id == 1" v-for="users in list">
+                        <td>{{ users.name }}</td>
+                        <td>{{ users.email }}</td>
+                        <td>{{ users.permission }}</td>
+                        <td><button @click="showUser(users.id)" class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
+                        <td v-if="users.id != 1"><button @click="deleteUser(users.id)" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
+                    </tr>
+                    <tr v-else>
                         <td v-if="users.id != 1">{{ users.name }}</td>
                         <td v-if="users.id != 1">{{ users.email }}</td>
                         <td v-if="users.id != 1">{{ users.permission }}</td>
@@ -46,7 +53,7 @@
                     <label for="password">Password</label>
                     <input v-model="users.password" type="password" name="password" class="form-control">
                 </div>
-                <div class="form-group">
+                <div v-show="users.id != 1" class="form-group">
                     <label>Permissions</label>
                     <select v-model="users.permission" class="form-control" required>
                         <option>Choose an option</option>

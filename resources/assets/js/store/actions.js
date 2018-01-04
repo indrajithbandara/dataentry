@@ -7,7 +7,7 @@
 export const commitPermission = ({ commit }) => {
     axios.get('api/user')
     .then((response) => {
-        commit('setPermission', response.data.permission);
+        commit('setPermission', response.data);
     }).catch((error) => {
         throw new Error(" commit permission failed!" + error);
     });

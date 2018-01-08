@@ -301,7 +301,7 @@
                     this.message("Customer has successfully been created!", 'success', 5000);
                 }).catch((error) => {
                     throw new Error("Create Customer Failed! " + error.message);
-                    this.message("Sorry! Something went wrong when creating your customer!", 'error', 10000);
+                    this.message("Sorry! Something went wrong when creating your customer!", 'error', 10000); 
                 });
             },
             /**

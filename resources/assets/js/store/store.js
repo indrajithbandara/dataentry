@@ -3,9 +3,13 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 // Modules
 import invoices from './modules/invoice/invoices';
+import routers from './modules/router/routers';
 import users from './modules/users';
 import products from './modules/products';
 import customers from './modules/customers';
+import departments from './modules/departments';
+import inventory from './modules/inventory';
+import purchaseorders from './modules/purchaseorders';
 // Tasks
 import * as getters from './getters';
 import * as mutations from './mutations';
@@ -27,7 +31,11 @@ export const store = new Vuex.Store({
     modules: {
         users,
         invoices,
+        routers,
         products,
-        customers
+        customers,
+        departments,
+        inventory,
+        purchaseorders
     }
 });

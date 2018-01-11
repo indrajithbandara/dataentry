@@ -40,29 +40,38 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav main-color">
                     <li>
-                        <a href="{{ url('/dashboard') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a href="{{ url('/dashboard') }}"><i class="fa fa-fw fa-dashboard" aria-hidden="true"></i> Dashboard</a>
                     </li>
                     @if( Auth::user()->permission == 1 || Auth::user()->permission == 2 )
-                        <li><a href="{{ url('invoices') }} "><i class="fa fa-fw fa-money"></i> Invoices</a></li>
+                        <li><a href="{{ url('invoices') }} "><i class="fa fa-fw fa-money" aria-hidden="true"></i> Invoices</a></li>
                     @endif
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#assets"><i class="fa fa-fw fa-database"></i> Assets <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#assets"><i class="fa fa-fw fa-database" aria-hidden="true"></i> Assets <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="assets" class="collapse">
 
                             @if( Auth::user()->permission == 1 )
-                                <li><a href="{{ url('users') }}"><i class="fa fa-fw fa-user"></i> Users</a></li>
+                                <li><a href="{{ url('users') }}"><i class="fa fa-fw fa-user" aria-hidden="true"></i> Users</a></li>
                             @endif
 
                             @if( Auth::user()->permission == 1 || Auth::user()->permission == 2 || Auth::user()->permission == 3 )
-                                <li><a href="{{ url('products') }}"><i class="fa fa-fw fa-plane"></i> Products</a></li>
+                                <li><a href="{{ url('products') }}"><i class="fa fa-fw fa-plane" aria-hidden="true"></i> Products</a></li>
                             @endif
 
                             @if( Auth::user()->permission == 1 || Auth::user()->permission == 2 )
-                                <li><a href="{{ url('customers') }}"><i class="fa fa-fw fa-users"></i> Customers</a></li>
+                                <li><a href="{{ url('customers') }}"><i class="fa fa-fw fa-users" aria-hidden="true"></i> Customers</a></li>
                             @endif
 
                         </ul>
                     </li>
+                    @if( Auth::user()->permission == 1 || Auth::user()->permission == 2 || Auth::user()->permission == 3 )
+                        <li><a href="{{ url('routers') }} "><i class="fa fa-fw fa-arrows" aria-hidden="true"></i> Routers</a></li>
+                    @endif
+                    @if( Auth::user()->permission == 1 || Auth::user()->permission == 2 || Auth::user()->permission == 3 )
+                        <li><a href="{{ url('inventory') }} "><i class="fa fa-fw fa-ticket" aria-hidden="true"></i> Inventory</a></li>
+                    @endif
+                    @if( Auth::user()->permission == 1 || Auth::user()->permission == 2 || Auth::user()->permission == 3 )
+                        <li><a href="{{ url('purchaseorders') }} "><i class="fa fa-fw fa-tasks" aria-hidden="true"></i> Purchase Orders</a></li>
+                    @endif
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

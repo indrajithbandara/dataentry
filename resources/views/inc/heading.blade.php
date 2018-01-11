@@ -4,6 +4,8 @@
                         <h1 class="page-header text-center">
                             @if(Request::is('purchaseorders'))
                                 Purchase Orders
+                            @elseif(Request::is('dashboard'))
+                                Dashboard
                             @elseif(Request::is('users'))
                                 Users
                             @elseif(Request::is('products'))
@@ -11,27 +13,17 @@
                             @elseif(Request::is('invoices'))
                                 Invoices
                             @elseif(Request::is('routers'))
-                                Routers
+                                {{-- Nothing --}}
                             @elseif(Request::is('customers'))
                                 Customers
                             @elseif(Request::is('settings'))
                                 Settings
+                            @elseif(Request::is('inventory'))
+                                Inventory
                             @else
-                                Dashboard
+                                {{-- Nothing --}}
                             @endif
-                            <small>
-                            @if(Request::is('/add'))
-                                Add
-                            @endif
-                            @if(Request::is('/view'))
-                                View
-                            @endif
-                            </small>
                         </h1>
                     </div>
                 </div>
                 <!-- /.row -->
-
-<!-- 
-    will need logic to display for the 404 error page headings.
- -->

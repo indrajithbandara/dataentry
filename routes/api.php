@@ -49,6 +49,47 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('company/store', 'CompanyController@addCompany'); // Add the company info
     Route::patch('company/{id}', 'CompanyController@updateCompany'); // Update the company info
     // No Delete Functionality. This api is for the company info using the application.
+    //====================== End of Company Api ====================== //
+
+    //====================== Routers Api ====================== //
+    Route::get('routers', 'RoutersController@getRouters'); // Get all Routers
+    Route::get('routers/count', 'RoutersController@count'); // Get count of routers
+    Route::get('routers/{id}', 'RoutersController@getOne'); // Get One Router for Editting
+    Route::get('routers/report/{start}/{end}', 'RoutersController@betweenDates'); // Get the routers between two given dates
+    Route::get('routers/search/{term}', 'RoutersController@byRouterNum'); // Searches for a router by router_num
+    Route::post('routers/store', 'RoutersController@addRouter'); // Add a single router
+    Route::patch('routers/{id}', 'RoutersController@updateRouter'); // Update a single router
+    Route::delete('routers/{id}', 'RoutersController@deleteRouter'); // Delete a Single Router
+    //====================== End of Routers Api ====================== //
+
+    //====================== Departments Api ====================== //
+    Route::get('departments', 'DepartmentsController@getDepartments'); // Get all Departments
+    Route::get('departments/{id}', 'DepartmentsController@getOne'); // Get One Department for Editting
+    Route::post('departments/store', 'DepartmentsController@addDepartment'); // Add a single department
+    Route::patch('departments/{id}', 'DepartmentsController@updateDeparment'); // Update a single department
+    Route::delete('departments/{id}', 'DepartmentsController@deleteDepartment'); // Delete a Single department
+    //====================== End of Departments Api ====================== //
+
+    //====================== Inventory Api ====================== //
+    Route::get('inventory', 'InventoryController@getInventory'); // Get all of inventory ship tickets
+    Route::get('inventory/{id}', 'InventoryController@getOne'); // Get One Inventory ship ticket for Editting
+    Route::get('inventory/report/{start}/{end}', 'InventoryController@betweenDates'); // Get the inventory ship tickets between two given dates
+    Route::get('inventory/search/{term}', 'InventoryController@byIstNum'); // Searches for a router by ist_num
+    Route::post('inventory/store', 'InventoryController@addInventory'); // Add a single Inventory Ship Ticket
+    Route::patch('inventory/{id}', 'InventoryController@updateInventory'); // Update a single Inventory Ship Ticket
+    Route::delete('inventory/{id}', 'InventoryController@deleteInventory'); // Delete a Single Inventory Ship Ticket
+    //====================== End of Inventory Api ====================== //
+
+    //====================== Purchase Orders Api ====================== //
+    Route::get('purchaseorders', 'PurchaseordersController@getPurchaseorders'); // Get all purchase orders
+    Route::get('purchaseorders/count', 'PurchaseordersController@count'); // Get count of purchase orders
+    Route::get('purchaseorders/{id}', 'PurchaseordersController@getOne'); // Get One Invoice for Editing
+    Route::get('purchaseorders/report/{start}/{end}', 'PurchaseordersController@betweenDates'); // Get the invoices between two given dates
+    Route::get('purchaseorders/search/{term}', 'PurchaseordersController@byPoNum'); // searches for an invoice by inv_num
+    Route::post('purchaseorders/store', 'PurchaseordersController@addPurchaseorder'); // Add A Single Invoice
+    Route::patch('purchaseorders/{id}', 'PurchaseordersController@updatePurchaseorder'); // Update a Single Invoice
+    Route::delete('purchaseorders/{id}', 'PurchaseordersController@deletePurchaseorder'); // Delete a Single Invoice
+    //====================== End of Purchase Orders Api ====================== //
 });
 
 

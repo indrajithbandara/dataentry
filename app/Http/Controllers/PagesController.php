@@ -75,25 +75,11 @@ class PagesController extends Controller
     }
 
     /**
-     * Load the routers page to level 1-3 users
+     * Load the routers and departments page to level 1-3 users
      *
      * @return void
      */
     public function routers()
-    {
-        if( User::isSuperAdmin() || User::isAdmin() || User::isManager() ){
-            return view('page');
-        }else{
-            return abort('401');
-        }
-    }
-
-    /**
-     * Load the departments page to level 1-3 users
-     *
-     * @return void
-     */
-    public function departments()
     {
         if( User::isSuperAdmin() || User::isAdmin() || User::isManager() ){
             return view('page');

@@ -254,4 +254,37 @@ class PDFController extends Controller
             ->filename($reportname)
             ->download();
     }
+
+    /**
+    *
+    * @param $start  Start date of the report
+    * @param $end  End date of the report
+    * @return pdf
+    */
+    public function routerReport($start, $end, $reportname = "router-report.pdf") 
+    {
+        //
+    }
+
+    /**
+    *
+    * @param $start  Start date of the report
+    * @param $end  End date of the report
+    * @return pdf
+    */
+    public function inventoryReport($start, $end, $reportname = "inventory-report.pdf") 
+    {
+        //
+    }
+
+    /**
+    *
+    * @param $start  Start date of the report
+    * @param $end  End date of the report
+    * @return pdf
+    */
+    public function purchaseorderReport($start, $end, $reportname = "purchaseorder-report.pdf") 
+    {
+        //
+    }
 }

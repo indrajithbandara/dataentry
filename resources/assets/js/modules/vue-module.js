@@ -11,7 +11,6 @@ Vue.component('customers', require('./../components/customers.vue'));
 Vue.component('products', require('./../components/products.vue'));
 Vue.component('invoices', require('./../components/invoices.vue'));
 Vue.component('routers', require('./../components/routers.vue'));
-Vue.component('departments', require('./../components/departments.vue'));
 Vue.component('inventory', require('./../components/inventory.vue'));
 Vue.component('purchaseorders', require('./../components/purchaseorders.vue'));
 
@@ -30,8 +29,6 @@ if (document.getElementById('dashboard-app')) {
     const invApp = new Vue({ el: '#invoice-app', store: store });
 } else if (document.getElementById('routers-app')) {
     const routerApp = new Vue({ el: '#routers-app', store: store });
-} else if (document.getElementById('departments-app')) {
-    const deptApp = new Vue({ el: '#departments-app', store: store });
 } else if (document.getElementById('inventory-app')) {
     const inventoryApp = new Vue({ el: '#inventory-app', store: store });
 } else if (document.getElementById('purchaseorders-app')) {

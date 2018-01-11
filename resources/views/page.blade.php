@@ -34,17 +34,10 @@
         </div>
     @endif
     
-    {{-- Routers Template --}}
+    {{-- Routers and Departments Template --}}
     @if(Request::is('routers'))
         <div id="routers-app">
             <routers></routers>
-        </div>
-    @endif
-
-    {{-- Departments Template --}}
-    @if(Request::is('departments'))
-        <div id="departments-app">
-            <departments></departments>
         </div>
     @endif
 

@@ -16,7 +16,8 @@ class Purchaseorder extends Model
         'part_num',
         'qty',
         'status',
-        'notes'
+        'notes',
+        'placement'
     ];
 
     public $timestamps = false;

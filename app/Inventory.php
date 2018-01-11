@@ -13,7 +13,8 @@ class Inventory extends Model
         'customer',
         'status',
         'boxes',
-        'log'
+        'log',
+        'date'
     ];
     
     protected $casts = [

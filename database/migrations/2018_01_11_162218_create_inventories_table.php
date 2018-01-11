@@ -22,6 +22,7 @@ class CreateInventoriesTable extends Migration
             $table->enum('status',['Approved', 'Unapproved']);
             $table->json('boxes')->nullable();
             $table->text('log')->nullable();
+            $table->date('date');
         });
     }
 

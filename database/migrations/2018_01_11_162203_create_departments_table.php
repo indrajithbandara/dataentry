@@ -15,9 +15,9 @@ class CreateDepartmentsTable extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('dept_name');
-            $table->string('dept_bg_color')->default('d6d6d6');
-            $table->string('dept_txt_color')->default('000');
+            $table->string('dept_name', 50);
+            $table->string('dept_bg_color', 6)->default('d6d6d6');
+            $table->string('dept_txt_color', 6)->default('000000');
         });
     }
 

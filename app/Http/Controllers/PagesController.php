@@ -73,4 +73,60 @@ class PagesController extends Controller
             return abort('401');
         }
     }
+
+    /**
+     * Load the routers page to level 1-3 users
+     *
+     * @return void
+     */
+    public function routers()
+    {
+        if( User::isSuperAdmin() || User::isAdmin() || User::isManager() ){
+            return view('page');
+        }else{
+            return abort('401');
+        }
+    }
+
+    /**
+     * Load the departments page to level 1-3 users
+     *
+     * @return void
+     */
+    public function departments()
+    {
+        if( User::isSuperAdmin() || User::isAdmin() || User::isManager() ){
+            return view('page');
+        }else{
+            return abort('401');
+        }
+    }
+
+    /**
+     * Load the inventory page to level 1-3 users
+     *
+     * @return void
+     */
+    public function inventory()
+    {
+        if( User::isSuperAdmin() || User::isAdmin() || User::isManager() ){
+            return view('page');
+        }else{
+            return abort('401');
+        }
+    }
+
+    /**
+     * Load the purchaseorders page to level 1-3 users
+     *
+     * @return void
+     */
+    public function purchaseorders()
+    {
+        if( User::isSuperAdmin() || User::isAdmin() || User::isManager() ){
+            return view('page');
+        }else{
+            return abort('401');
+        }
+    }
 }

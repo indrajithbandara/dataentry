@@ -35,24 +35,31 @@
     @endif
     
     {{-- Routers Template --}}
-{{--     @if(Request::is('routers'))
+    @if(Request::is('routers'))
         <div id="routers-app">
             <routers></routers>
         </div>
-    @endif --}}
+    @endif
 
-    {{-- Purchase Orders Template --}}
-{{--     @if(Request::is('purchaseorders'))
-        <div id="purchaseorders-app">
-            <purchaseorders></purchaseorders>
+    {{-- Departments Template --}}
+    @if(Request::is('departments'))
+        <div id="departments-app">
+            <departments></departments>
         </div>
-    @endif --}}
-
+    @endif
 
     {{-- Inventory Template --}}
-{{--     @if(Request::is('inventory'))
+    @if(Request::is('inventory'))
         <div id="inventory-app">
             <inventory></inventory>
         </div>
-    @endif --}}
+    @endif
+
+    {{-- Purchase Orders Template --}}
+    @if(Request::is('purchaseorders'))
+        <div id="purchaseorders-app">
+            <purchaseorders></purchaseorders>
+        </div>
+    @endif
+
 @endsection

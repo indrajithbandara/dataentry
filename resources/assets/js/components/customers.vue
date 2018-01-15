@@ -135,8 +135,8 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="disclaimer">Shipper Statement</label>
-                            <textarea v-model="customer.disclaimer" @keyup="regexDiscCheck(customer.disclaimer)" type="text" name="disclaimer" class="form-control" rows="3" maxlength="255"></textarea>
-                            <p class="alert alert-warning" v-if="customer.disclaimer.length == 255">255 character limit reached!</p>
+                            <textarea v-model="customer.disclaimer" @keyup="regexDiscCheck(customer.disclaimer)" type="text" name="disclaimer" class="form-control" rows="3" maxlength="500"></textarea>
+                            <p class="alert alert-warning" v-if="customer.disclaimer.length == 500">500 character limit reached!</p>
                             <p class="alert alert-danger" v-if="regexDiscWarning">{{ regexDiscWarning }}</p>
                         </div>
                     </div>                

@@ -521,7 +521,7 @@
              * @return void
              */
             regexDiscCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+$/;
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\'\.\*\#\s]+$/;
                 if(string == ''){
                     this.regexDiscWarning = '';
                     return;

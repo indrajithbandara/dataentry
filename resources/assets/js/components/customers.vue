@@ -134,7 +134,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label for="disclaimer">Disclaimer</label>
+                            <label for="disclaimer">Shipper Statement</label>
                             <textarea v-model="customer.disclaimer" @keyup="regexDiscCheck(customer.disclaimer)" type="text" name="disclaimer" class="form-control" rows="3" maxlength="255"></textarea>
                             <p class="alert alert-warning" v-if="customer.disclaimer.length == 255">255 character limit reached!</p>
                             <p class="alert alert-danger" v-if="regexDiscWarning">{{ regexDiscWarning }}</p>
@@ -178,7 +178,7 @@
                     it appears here.</li>
                     <li><strong>Ship To Address: </strong>The address that the products will be shipping to. The address will appear on the invocie and the shipper
                     as it appears here.</li>
-                    <li><strong>Disclaimer: </strong>The disclaimer is a note of information that will appear on the shipper.</li>
+                    <li><strong>Shipper Statement: </strong>The disclaimer is a note of information that will appear on the shipper.</li>
                     <li><strong>Comments: </strong>The comments that will need to follow this invoice through it's life cycle. This information is not printed anywhere in the system.</li>
                 </ol>
             </div>
@@ -210,6 +210,8 @@
                     shipto: '',
                     billto: '',
                     country: '',
+                    // Disclaimer changed to "Shipper Stament" on the front end for visual purposes
+                    // disclaimer is still used for code logic.
                     disclaimer: '',
                     comments: ''
                 },

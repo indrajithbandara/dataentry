@@ -483,7 +483,7 @@
              * @return void
              */
             regexShiptoCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+$/;
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\@\(\)\:\.\s]+$/;
                 if(string == ''){
                     this.regexShiptoWarning = '';
                     return;
@@ -502,7 +502,7 @@
              * @return void
              */
             regexBilltoCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\:\.\s]+$/;
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\@\(\)\:\.\s]+$/;
                 if(string == ''){
                     this.regexBilltoWarning = '';
                     return;

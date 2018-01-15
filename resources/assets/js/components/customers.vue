@@ -527,7 +527,7 @@
                     return;
                 }
                 if(pattern.test(string) != true){
-                    this.regexDiscWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, ', *, #, commas and periods. However, '--' is not allowed.";
+                    this.regexDiscWarning = "Unapproved characters detected! List of approved characters: a-z, A-Z, 0-9, &, -, (), /, ', ., *, #, commas and periods. However, '--' is not allowed.";
                     return;
                 } else {
                     this.regexDiscWarning = '';

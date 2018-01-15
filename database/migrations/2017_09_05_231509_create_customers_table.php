@@ -22,7 +22,7 @@ class CreateCustomersTable extends Migration
             $table->string('email', 50);
             $table->string('phone', 25);
             $table->string('country', 15)->nullable();
-            $table->string('disclaimer', 255)->nullable();
+            $table->string('disclaimer', 500)->nullable();
             $table->string('comments', 255)->nullable();
         });
     }

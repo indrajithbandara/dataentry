@@ -51,7 +51,8 @@ class RoutersController extends Controller
                                 'status', 
                                 'dept_name', 
                                 'date', 
-                                'move_log'
+                                'move_log',
+                                'placement'
                             )
                             ->orderBy('date', 'desc')
                             ->get();
@@ -89,7 +90,8 @@ class RoutersController extends Controller
             'dept_name' => 'nullable|string|alpha|max:50',
             'move_log' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i',
             'date' => 'required|date',
-            'date_in_inv' => 'nullable|date'
+            'date_in_inv' => 'nullable|date',
+            'placement' => 'nullable|numeric'
         ]);
 
         // Create Router Entry
@@ -104,7 +106,8 @@ class RoutersController extends Controller
             'dept_name' => $request->input(['dept_name']),
             'move_log' => $request->input(['move_log']),
             'date' => $request->input(['date']),
-            'date_in_inv' => $request->input(['date_in_inv'])
+            'date_in_inv' => $request->input(['date_in_inv']),
+            'placement' => $request->input(['placement'])
         ]);
     }
 
@@ -129,7 +132,8 @@ class RoutersController extends Controller
             'dept_name' => 'nullable|string|alpha|max:50',
             'move_log' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i',
             'date' => 'required|date',
-            'date_in_inv' => 'nullable|date'
+            'date_in_inv' => 'nullable|date',
+            'placement' => 'nullable|numeric'
         ]);
 
         // Create Update Entry
@@ -144,7 +148,8 @@ class RoutersController extends Controller
             'dept_name' => $request->input(['dept_name']),
             'move_log' => $request->input(['move_log']),
             'date' => $request->input(['date']),
-            'date_in_inv' => $request->input(['date_in_inv'])
+            'date_in_inv' => $request->input(['date_in_inv']),
+            'placement' => $request->input(['placement'])
         ]);
     }
 
@@ -179,7 +184,8 @@ class RoutersController extends Controller
                                 'status', 
                                 'dept_name', 
                                 'date', 
-                                'move_log'
+                                'move_log',
+                                'placement'
                             )
                             ->whereBetween('date', [$start, $end])
                             ->get();
@@ -240,7 +246,8 @@ class RoutersController extends Controller
                     'dept_name' => $row['dept_name'],
                     'move_log' => $row['move_log'],
                     'date' => $row['date'],
-                    'date_in_inv' => $row['date_in_inv']
+                    'date_in_inv' => $row['date_in_inv'],
+                    'placement' => $row['placement']
                 ];
               }
           }

@@ -17,7 +17,8 @@ class Router extends Model
         'dept_name',
         'move_log',
         'date',
-        'date_in_inv'
+        'date_in_inv',
+        'placement'
     ];
 
     public $timestamps = false;

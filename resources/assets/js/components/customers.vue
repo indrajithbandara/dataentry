@@ -426,13 +426,13 @@
              * @return void
              */
             regexNameCheck(string){
-                var pattern = /^(?!-)(?!.*--)[A-Za-z\,\.\s]+$/;
+                var pattern = /^(?!-)(?!.*--)[A-Za-z0-9\,\.\s]+$/;
                 if(string == ''){
                     this.regexNameWarning = '';
                     return;
                 }
                 if(pattern.test(string) != true){
-                    this.regexNameWarning = "Unapproved characters detected! Only alphabetical characters, commas and periods are approved for this field.";
+                    this.regexNameWarning = "Unapproved characters detected! Only alphabetical characters, numeric characters, commas and periods are approved for this field.";
                     return;
                 } else {
                     this.regexNameWarning = '';

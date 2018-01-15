@@ -63,7 +63,7 @@ class CustomersController extends Controller
     public function addCustomer(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
+            'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Z0-9a-z\,\.\s]+(?<!-)$/i|max:50',
             'shipto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\@\(\)\:\.\s]+(?<!-)$/i|max:255',
             'billto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\@\(\)\:\.\s]+(?<!-)$/i|max:255',
             'buyer' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
@@ -96,7 +96,7 @@ class CustomersController extends Controller
     public function updateCustomer(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',
+            'name' => 'required|string|regex:/^(?!-)(?!.*--)[A-Z0-9a-z\,\.\s]+(?<!-)$/i|max:50',
             'shipto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\@\(\)\:\.\s]+(?<!-)$/i|max:255',
             'billto' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\-\#\@\(\)\:\.\s]+(?<!-)$/i|max:255',
             'buyer' => 'required|string|regex:/^(?!-)(?!.*--)[A-Za-z\,\.\s]+(?<!-)$/i|max:50',

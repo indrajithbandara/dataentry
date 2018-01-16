@@ -1,5 +1,6 @@
 <template>
     <div>
+        <br><br>
         <RouterNavBtns
             :toRouters="switchToRouters"
             :toDepartments="switchToDepartments"

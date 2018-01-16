@@ -35,7 +35,7 @@
     @endif
     
     {{-- Routers and Departments Template --}}
-    @if(Request::is('routers'))
+    @if(Request::is('production'))
         <div id="routers-app">
             <routers></routers>
         </div>

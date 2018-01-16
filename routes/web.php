@@ -20,7 +20,7 @@ Route::group(['middleware' => ['web', 'auth']], function(){
     Route::get('/users', 'PagesController@users');
     Route::get('/customers', 'PagesController@customers');
     Route::get('/products', 'PagesController@products');
-    Route::get('/routers', 'PagesController@routers');
+    Route::get('/production', 'PagesController@routers');
     Route::get('/inventory', 'PagesController@inventory');
     Route::get('/purchaseorders', 'PagesController@purchaseorders');
     // PDF Generation Routes

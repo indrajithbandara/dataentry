@@ -64,7 +64,7 @@
                         </ul>
                     </li>
                     @if( Auth::user()->permission == 1 || Auth::user()->permission == 2 || Auth::user()->permission == 3 )
-                        <li><a href="{{ url('routers') }} "><i class="fa fa-fw fa-arrows" aria-hidden="true"></i> Routers</a></li>
+                        <li><a href="{{ url('production') }} "><i class="fa fa-fw fa-arrows" aria-hidden="true"></i> Production</a></li>
                     @endif
                     @if( Auth::user()->permission == 1 || Auth::user()->permission == 2 || Auth::user()->permission == 3 )
                         <li><a href="{{ url('inventory') }} "><i class="fa fa-fw fa-ticket" aria-hidden="true"></i> Inventory</a></li>

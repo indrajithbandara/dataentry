@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="text-center">Routers</h1>
-        <br>
+        <hr>
         <ViewAddBtns
             :textOne="'View Routers'" 
             :textTwo="'Add Router'" 

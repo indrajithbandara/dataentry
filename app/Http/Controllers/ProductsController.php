@@ -55,8 +55,8 @@ class ProductsController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:products|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
-            'description' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
-            'material' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\.\,\s]+(?<!-)$/i|max:70',
+            'description' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\(\)\s]+(?<!-)$/i|max:255',
+            'material' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\(\)\.\,\s]+(?<!-)$/i|max:255',
             'rev' => 'nullable|max:3',
             'rev_date' => 'nullable|date'
         ]);
@@ -80,8 +80,8 @@ class ProductsController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
-            'description' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\s]+(?<!-)$/i|max:25',
-            'material' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\.\,\s]+(?<!-)$/i|max:70',
+            'description' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\(\)\s]+(?<!-)$/i|max:255',
+            'material' => 'nullable|regex:/^(?!-)(?!.*--)[A-Za-z0-9\-\(\)\.\,\s]+(?<!-)$/i|max:255',
             'rev' => 'nullable|max:3',
             'rev_date' => 'nullable|date'
         ]);

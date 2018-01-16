@@ -63,15 +63,15 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <input v-model="product.description" type="text" name="description" class="form-control" maxlength="25">
-                            <p class="alert alert-warning" v-if="product.description.length == 25">25 character limit reached!</p>
+                            <input v-model="product.description" type="text" name="description" class="form-control" maxlength="255">
+                            <p class="alert alert-warning" v-if="product.description.length == 255">255 character limit reached!</p>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="material">Material</label>
-                    <input v-model="product.material" type="text" name="material" class="form-control" maxlength="70">
-                    <p class="alert alert-warning" v-if="product.material.length == 70">70 character limit reached!</p>
+                    <input v-model="product.material" type="text" name="material" class="form-control" maxlength="255">
+                    <p class="alert alert-warning" v-if="product.material.length == 255">255 character limit reached!</p>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
@@ -278,7 +278,7 @@
             },
             regexCheck(){
                 var arr = [this.product.name, this.product.description, this.product.material],
-                    pattern = /^$|^(?!-)(?!.*--)[A-Za-z0-9\-\.\,\s]+$/;
+                    pattern = /^(?!-)(?!.*--)[A-Za-z0-9\-\.\(\)\,\s]+$/;
                 var newArr = arr.filter(function(val){
                     return pattern.test(val) === false;
                 });

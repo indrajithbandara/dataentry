@@ -21,6 +21,7 @@ class CreateRoutersTable extends Migration
             $table->string('customer', 100)->nullable();
             $table->integer('qty');
             $table->integer('stock_qty')->nullable();
+            $table->integer('rating')->nullable();
             $table->enum('status', ['NIP', 'IP', 'II', 'A']); // Status: NIP = 'Not In Production', IP = 'In Production', II = 'In Inventory', A = 'Archive'
             $table->string('dept_name', 50)->nullable();
             $table->text('move_log')->nullable();

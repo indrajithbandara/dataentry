@@ -18,6 +18,7 @@ class CreateDepartmentsTable extends Migration
             $table->string('dept_name', 50);
             $table->string('dept_bg_color', 6)->default('d6d6d6');
             $table->string('dept_txt_color', 6)->default('000000');
+            $table->integer('key');
         });
     }
 

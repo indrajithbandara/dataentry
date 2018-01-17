@@ -13,6 +13,7 @@ class Router extends Model
         'customer',
         'qty',
         'stock_qty',
+        'rating',
         'status',
         'dept_name',
         'move_log',

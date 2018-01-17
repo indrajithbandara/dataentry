@@ -54,11 +54,13 @@ class DepartmentsController extends Controller
             'dept_name' => 'required|alpha|max:50',
             'dept_bg_color' => 'nullable|alphanum|max:6',
             'dept_txt_color' => 'nullable|alphanum|max:6',
+            'key' => 'required|numeric'
         ]);
         return Department::create([
             'dept_name' => $request->input(['dept_name']),
             'dept_bg_color' => $request->input(['dept_bt_color']),
             'dept_txt_color' => $request->input(['dept_txt_color']),
+            'key' => $request->input(['key'])
         ]);
     }
 
@@ -75,12 +77,14 @@ class DepartmentsController extends Controller
             'dept_name' => 'required|alpha|max:50',
             'dept_bg_color' => 'nullable|alphanum|max:6',
             'dept_txt_color' => 'nullable|alphanum|max:6',
+            'key' => 'required|numeric'
         ]);
         
         Department::findOrFail($id)->update([
             'dept_name' => $request->input(['dept_name']),
             'dept_bg_color' => $request->input(['dept_bt_color']),
             'dept_txt_color' => $request->input(['dept_txt_color']),
+            'key' => $request->input(['key'])
         ]);
     }
 
@@ -116,6 +120,7 @@ class DepartmentsController extends Controller
                     'dept_name' => $row['dept_name'],
                     'dept_bg_color' => $row['dept_bg_color'],
                     'dept_txt_color' => $row['dept_txt_color'],
+                    'key' => $row['key']
                 ];
               }
           }

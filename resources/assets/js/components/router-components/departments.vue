@@ -8,16 +8,39 @@
         <!-- Start of Departments Table -->
         <div>
             <div id="departments-table" v-if="list.length > 0" class="table-responsive">
-                <Draggable :options="{group:'departments'}" @start="drag=true" @end="drag=false">
-                    <div v-for="dept in list" :key="dept.key">
-                        <td>{{ dept.dept_name }}</td>
-                        <td>{{ dept.dept_bg_color }}</td>
-                        <td>{{ dept.dept_txt_color }}</td>
-                        <td><button class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></td>
-                        <td><button class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
-                        <td><button class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
-                    </div>
-                </Draggable>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Sort</th>
+                            <th>Order</th>
+                            <th>Name</th>
+                            <th>Background Color</th>
+                            <th>Text Color</th>
+                            <th>View</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <Draggable 
+                        v-model="list" 
+                        :options="{group:'departments'}" 
+                        :element="'tbody'"
+                        :move="onMove"
+                        @start="onStart" 
+                        @end="onEnd"
+                        >
+                        <tr v-for="dept in list" :key="dept.key" class="cursor-move">
+                            <td><i class="fa fa-bars fa-2x" aria-hidden="true"></i></td>
+                            <td>{{ dept.key }}</td>
+                            <td>{{ dept.dept_name }}</td>
+                            <td>{{ dept.dept_bg_color }}</td>
+                            <td>{{ dept.dept_txt_color }}</td>
+                            <td><button class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></td>
+                            <td><button class="btn btn-warning btn-sm"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button></td>
+                            <td><button class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></td>
+                        </tr>
+                    </Draggable>
+                </table>
             </div>
             <div v-else> 
                 <p class="alert alert-info text-center">You currently have no routers to show.</p>
@@ -85,7 +108,16 @@
 
         },
         methods: {
-
+            onMove(evt){
+                console.log(evt.draggedContext);
+                console.log(evt.relatedContext);
+            },
+            onStart(){
+                console.log("drag started");
+            },
+            onEnd(){
+                console.log("drag ended");
+            }
         }
     }
 </script>
@@ -93,5 +125,8 @@
     #departments-table { 
         max-height: 565px; 
         overflow: scroll; 
+    }
+    .cursor-move {
+        cursor: move;
     }
 </style>

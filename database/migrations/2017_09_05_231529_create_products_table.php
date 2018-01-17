@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name', 25)->unique();
             $table->string('description', 255)->nullable();
             $table->string('material', 255)->nullable();
-            $table->char('rev', 3)->nullable();
+            $table->char('rev', 20)->nullable();
             $table->date('rev_date')->nullable();
         });
     }

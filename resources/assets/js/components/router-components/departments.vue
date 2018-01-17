@@ -25,11 +25,10 @@
                         v-model="list" 
                         :options="{group:'departments'}" 
                         :element="'tbody'"
-                        :move="onMove"
-                        @start="onStart" 
                         @end="onEnd"
+                        class="cursor-move"
                         >
-                        <tr v-for="dept in list" :key="dept.key" class="cursor-move">
+                        <tr v-for="dept in list" :key="dept.key">
                             <td><i class="fa fa-bars fa-2x" aria-hidden="true"></i></td>
                             <td>{{ dept.key }}</td>
                             <td>{{ dept.dept_name }}</td>
@@ -53,7 +52,7 @@
                 <div class="well" :style="read_text">
                     <h2 class="text-center lg-font underline">Mold</h2>
                     <p class="text-center">Sample text to see your color.</p>
-                    <button class="btn btn-danger full-width">Close Viewing</button>
+                    <button @click="cancelRead" class="btn btn-danger full-width">Close Viewing</button>
                 </div>
             </transition>
         </div>
@@ -80,7 +79,7 @@
     export default {
         data(){
             return {
-                read: false,
+                read: true,
                 edit: false,
                 table: true,
                 list: [
@@ -108,15 +107,15 @@
 
         },
         methods: {
-            onMove(evt){
-                console.log(evt.draggedContext);
-                console.log(evt.relatedContext);
-            },
-            onStart(){
-                console.log("drag started");
-            },
             onEnd(){
-                console.log("drag ended");
+                console.log(this.list);
+                for(var i = 0; i < this.list.length; i++){
+                    this.list[i].key = i+1;
+                }
+                console.log(this.list);
+            },
+            cancelRead(){
+                this.read = false;
             }
         }
     }

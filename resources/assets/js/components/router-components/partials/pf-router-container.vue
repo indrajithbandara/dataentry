@@ -1,6 +1,8 @@
 <template>
     <div class="router-cont">
-        {{ routerNumber }} | {{ quantity }}
+        <span>Router: {{ routerNumber }} | Qty: {{ quantity }} </span> 
+        &nbsp;&nbsp; 
+        <i class="fa fa-caret-down" aria-hidden="true"></i>
     </div>
 </template>
 <script>
@@ -26,5 +28,8 @@
         border-radius: 10px;
         background: #fff;
         margin: 5px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>

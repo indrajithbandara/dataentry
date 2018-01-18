@@ -11,13 +11,22 @@
                 <!-- Start of 'NIP' Container -->
                 <div class="dept-cont" id="nip-cont">
                     <h4 class="text-center">Not In Production</h4>
-                    <div class="full-width" v-for="route in routers">
-                        <RouterContainer
-                            v-if="route.status == 'NIP'"
-                            :routerNumber="route.router_num" 
-                            :quantity="route.qty"
-                        ></RouterContainer>
-                    </div>
+                    <Draggable 
+                        v-model="routers"
+                        class="full-width" 
+                        :element="'div'"
+                        :options="dragOptions"
+                        :move="onMove"
+                        @end="onEnd" 
+                        >
+                        <div id="nip-container" v-for="route in routers" :key="route.key" class="full-width">
+                            <RouterContainer
+                                v-if="route.status == 'NIP'"
+                                :routerNumber="route.router_num" 
+                                :quantity="route.qty" 
+                            ></RouterContainer>
+                        </div>
+                    </Draggable>
                 </div>
                 <!-- End of 'NIP' Container -->
 
@@ -25,15 +34,24 @@
                 <div class="dept-cont-ip">
                     <h4 class="text-center">In Production</h4>
                     <div id="ip-cont">
-                        <div class="dept-cont-inner-ip" v-for="dept in departments">
+                        <div :id="dept.dept_name" class="dept-cont-inner-ip" v-for="dept in departments">
                             <h5 class="text-center">{{ dept.dept_name }}</h5>
-                            <div class="full-width" v-for="route in routers">
-                                <RouterContainer 
-                                    v-if="route.dept_name == dept.dept_name && route.status == 'IP'"
-                                    :routerNumber="route.router_num" 
-                                    :quantity="route.qty"
-                                ></RouterContainer>
-                            </div>
+                            <Draggable 
+                                v-model="routers"
+                                class="full-width" 
+                                :element="'div'"
+                                :options="dragOptions" 
+                                :move="onMove"
+                                @end="onEnd" 
+                                >
+                                <div v-for="route in routers" :key="route.key" class="full-width">
+                                    <RouterContainer 
+                                        v-if="route.dept_name == dept.dept_name && route.status == 'IP'"
+                                        :routerNumber="route.router_num" 
+                                        :quantity="route.qty"
+                                    ></RouterContainer>
+                                </div>
+                            </Draggable>
                         </div>
                     </div>
                 </div>
@@ -64,21 +82,26 @@
             return {
                 errorMessage: '',
                 successMessage: '',
+                nextDept: '',
+                dragOptions: {
+                    group: 'routers',
+                    sort: true
+                },
                 routers: [
-                    { router_num: 1001, part_num: '620-1-200', dept_name: '', po_num: '88596', customer: 'Eaton', qty: 150, status: 'A', date: '2018-01-12', placement: '1' },
-                    { router_num: 1002, part_num: '620-1-450', dept_name: '', po_num: '88597', customer: 'Boing', qty: 50, status: 'II', date: '2018-01-12', placement: '2' },
-                    { router_num: 1003, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', placement: '3' },
-                    { router_num: 1003, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', placement: '3' },
-                    { router_num: 1003, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', placement: '3' },
-                    { router_num: 1003, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', placement: '3' },
-                    { router_num: 1003, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', placement: '3' },
-                    { router_num: 1003, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', placement: '3' },
-                    { router_num: 1003, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', placement: '3' },
-                    { router_num: 1004, part_num: '620-5-200', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', placement: '4' },
-                    { router_num: 1004, part_num: '620-5-200', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', placement: '4' },
-                    { router_num: 1004, part_num: '620-5-200', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', placement: '4' },
-                    { router_num: 1004, part_num: '620-5-200', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', placement: '4' },
-                    { router_num: 1005, part_num: '620-5-600', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', placement: '5' },
+                    { router_num: 1001, part_num: '620-1-200', dept_name: '', po_num: '88596', customer: 'Eaton', qty: 150, status: 'A', date: '2018-01-12', key: 1, placement: 1 },
+                    { router_num: 1002, part_num: '620-1-450', dept_name: '', po_num: '88597', customer: 'Boing', qty: 50, status: 'II', date: '2018-01-12', key: 2, placement: 1 },
+                    { router_num: 1003, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 3, placement: 1 },
+                    { router_num: 1004, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 4, placement: 2 },
+                    { router_num: 1005, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 5, placement: 3 },
+                    { router_num: 1006, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 6, placement: 4 },
+                    { router_num: 1007, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 7, placement: 5},
+                    { router_num: 1008, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 8, placement: 6 },
+                    { router_num: 1009, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 9, placement: 7 },
+                    { router_num: 1010, part_num: '620-5-200', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 10, placement: 8 },
+                    { router_num: 1011, part_num: '620-5-200', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 11, placement: 9 },
+                    { router_num: 1012, part_num: '620-5-200', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 12, placement: 10 },
+                    { router_num: 1013, part_num: '620-5-200', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 13, placement: 11 },
+                    { router_num: 1014, part_num: '620-5-600', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 14, placement: 1 },
                 ],
                 departments: [
                     { dept_name: 'Wrap', dept_bg_color: '#af366c', dept_txt_color: '#fff', key: 1 },
@@ -101,7 +124,23 @@
 
         },
         methods: {
-
+            onMove(evt){
+                this.nextDept = evt.srcElement.parentElement.id;
+                console.log(evt.srcElement.parentElement.id);
+                console.log(evt.relatedContext);
+                var index = evt.relatedContext.index -1;
+                console.log(index);
+                this.routers[index].dept_name = this.nextDept;
+                console.log(this.routers[index].dept_name);
+                /*
+                trying to capture the next department name so that item can be moved into it. 
+                */
+            },
+            onEnd(evt){
+                evt
+                console.log(evt.srcElement.parentElement.id);
+                console.log(evt.item);
+            }
         }
     }
 </script>

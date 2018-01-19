@@ -8576,6 +8576,10 @@ ul.alert-dropdown {
 
 /*Custom*/
 
+.underline {
+  text-decoration: underline;
+}
+
 div.form-middle-center {
   margin: 0 auto;
 }
@@ -8764,6 +8768,10 @@ button.full-width {
 
 .pointer {
   cursor: pointer;
+}
+
+.clear-both {
+  clear: both;
 }
 
 #product-table {

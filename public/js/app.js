@@ -1070,17 +1070,21 @@ module.exports = defaults;
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(194)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(99)
 /* template */
-var __vue_template__ = __webpack_require__(100)
+var __vue_template__ = __webpack_require__(196)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-7b8345f6"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -50239,60 +50243,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-xs-6 col-sm-6 col-md-6" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-lg full-width",
-          on: { click: _vm.toTable }
-        },
-        [
-          _c("i", {
-            staticClass: "fa fa-table",
-            attrs: { "aria-hidden": "true" }
-          }),
-          _vm._v("  " + _vm._s(_vm.textOne))
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-xs-6 col-sm-6 col-md-6" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success btn-lg full-width",
-          on: { click: _vm.toForm }
-        },
-        [
-          _c("i", {
-            staticClass: "fa fa-plus",
-            attrs: { "aria-hidden": "true" }
-          }),
-          _vm._v("  " + _vm._s(_vm.textTwo))
-        ]
-      )
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7b8345f6", module.exports)
-  }
-}
-
-/***/ }),
+/* 100 */,
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -56131,7 +56082,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            read: true,
+            read: false,
             edit: false,
             table: true,
             list: [{ dept_name: 'Wrap', dept_bg_color: '#af366c', dept_txt_color: '#fff', key: 1 }, { dept_name: 'Mold', dept_bg_color: '#74875f', dept_txt_color: '#fff', key: 2 }, { dept_name: 'Grind', dept_bg_color: '#29a77a', dept_txt_color: '#fff', key: 3 }, { dept_name: 'Wash', dept_bg_color: '#006a84', dept_txt_color: '#fff', key: 4 }],
@@ -58045,7 +57996,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\nh4[data-v-cdc3ab66] {\n    color: #fff;\n}\n#scroll-container[data-v-cdc3ab66] {\n    overflow: scroll;\n    width: 100%;\n    height: 600px;\n    background: #ddd;\n    margin: 0;\n    border-radius: 10px;\n    border: 1px dashed #bbb;\n}\n.dept-main[data-v-cdc3ab66] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    width: 1350px;\n}\n.dept-cont[data-v-cdc3ab66], .dept-cont-ip[data-v-cdc3ab66], .dept-cont-inner-ip[data-v-cdc3ab66] {\n    border-radius: 10px;\n    height: 580px;\n    margin: 5px .5%;\n    padding: .5%;\n    overflow: scroll;\n}\n.dept-cont[data-v-cdc3ab66] {\n    width: 225px;\n}\n.dept-cont-ip[data-v-cdc3ab66] {\n    width: 900px;\n    background: #be832c;\n}\n.dept-cont-inner-ip[data-v-cdc3ab66] {\n    background: #ddd;\n    height: 520px;\n    width:24%;\n}\n#nip-cont[data-v-cdc3ab66] {\n    background: #a62f61;\n}\n#ip-cont[data-v-cdc3ab66] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n}\n#ii-cont[data-v-cdc3ab66] {\n    background: #29a77a;\n}\n#ii-inner-cont[data-v-cdc3ab66] {\n    height: 480px;\n    overflow-y: scroll;\n    margin-bottom: 5px;\n}\n", ""]);
+exports.push([module.i, "\nh4[data-v-cdc3ab66] {\n    color: #fff;\n}\n#scroll-container[data-v-cdc3ab66] {\n    overflow: scroll;\n    width: 100%;\n    height: 600px;\n    background: #ddd;\n    margin: 0;\n    border-radius: 10px;\n    border: 1px dashed #bbb;\n}\n.dept-main[data-v-cdc3ab66] {\n    width: 2000px;\n}\n.dept-cont[data-v-cdc3ab66], .dept-cont-ip[data-v-cdc3ab66], .dept-cont-inner-ip[data-v-cdc3ab66] {\n    border-radius: 10px;\n    height: 580px;\n    margin: 5px 7px;\n    padding: 10px;\n    overflow: scroll;\n}\n.nip-cont[data-v-cdc3ab66] {\n    background: #a62f61;\n    display: inline-block;\n}\n.dept-cont[data-v-cdc3ab66] {\n    width: 225px;\n    display: inline-block;\n}\n.dept-cont-ip[data-v-cdc3ab66] {\n    min-width: 260px;\n    display: inline-block;\n    background: #208ca4;\n}\n.dept-cont-inner-ip[data-v-cdc3ab66] {\n    background: #ddd;\n    display: inline-block;\n    height: 520px;\n    width: 225px;\n}\n.ip-cont[data-v-cdc3ab66] {\n}\n.ii-cont[data-v-cdc3ab66] {\n    background: #29a77a;\n}\n.ii-inner-cont[data-v-cdc3ab66] {\n    height: 480px;\n    overflow-y: scroll;\n    margin-bottom: 5px;\n}\n.dotted[data-v-cdc3ab66] {\n    border: 2px dotted #fff;\n    color: #aaa;\n}\n#main-search[data-v-cdc3ab66] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n@media(max-width:1345px){\n.fa-search[data-v-cdc3ab66] {\n        display: none;\n}\n}\n", ""]);
 
 // exports
 
@@ -58137,6 +58088,91 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -58149,15 +58185,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             errorMessage: '',
             successMessage: '',
             nextDept: '',
+            nextStatus: '',
+            element: {},
+            inProdWidth: '',
+            deptMainWidth: '',
+            search_pn_num: '',
+            search_pn: false,
+            search_router_num: '',
+            search_router: false,
+            search_po_num: '',
+            search_po: false,
             dragOptions: {
-                group: 'routers',
-                sort: true
+                group: 'routers'
             },
-            routers: [{ router_num: 1001, part_num: '620-1-200', dept_name: '', po_num: '88596', customer: 'Eaton', qty: 150, status: 'A', date: '2018-01-12', key: 1, placement: 1 }, { router_num: 1002, part_num: '620-1-450', dept_name: '', po_num: '88597', customer: 'Boing', qty: 50, status: 'II', date: '2018-01-12', key: 2, placement: 1 }, { router_num: 1003, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 3, placement: 1 }, { router_num: 1004, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 4, placement: 2 }, { router_num: 1005, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 5, placement: 3 }, { router_num: 1006, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 6, placement: 4 }, { router_num: 1007, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 7, placement: 5 }, { router_num: 1008, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 8, placement: 6 }, { router_num: 1009, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 9, placement: 7 }, { router_num: 1010, part_num: '620-5-200', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 10, placement: 8 }, { router_num: 1011, part_num: '620-5-200', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 11, placement: 9 }, { router_num: 1012, part_num: '620-5-200', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 12, placement: 10 }, { router_num: 1013, part_num: '620-5-200', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 13, placement: 11 }, { router_num: 1014, part_num: '620-5-600', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 14, placement: 1 }],
-            departments: [{ dept_name: 'Wrap', dept_bg_color: '#af366c', dept_txt_color: '#fff', key: 1 }, { dept_name: 'Mold', dept_bg_color: '#74875f', dept_txt_color: '#fff', key: 2 }, { dept_name: 'Grind', dept_bg_color: '#29a77a', dept_txt_color: '#fff', key: 3 }, { dept_name: 'Wash', dept_bg_color: '#006a84', dept_txt_color: '#fff', key: 4 }]
+            routers: [{ router_num: 1001, part_num: '620-1-200', dept_name: '', po_num: '88596', customer: 'Eaton', qty: 150, status: 'A', date: '2018-01-12', key: 1, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1002, part_num: '620-1-450', dept_name: '', po_num: '88597', customer: 'Boing', qty: 50, status: 'TI', date: '2018-01-12', key: 2, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1003, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 3, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1004, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 4, placement: 2, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1005, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 5, placement: 3, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1006, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 6, placement: 4, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1007, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 7, placement: 5, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1008, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 8, placement: 6, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1009, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 9, placement: 7, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1010, part_num: '620-5-200', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 10, placement: 8, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1011, part_num: '620-5-200', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 11, placement: 9, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1012, part_num: '620-5-200', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 12, placement: 10, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1013, part_num: '620-5-200', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 13, placement: 11, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1014, part_num: '620-5-600', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 14, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1015, part_num: '620-5-600', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 15, placement: 2, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }],
+            departments: [{ dept_name: 'Wrap', dept_bg_color: '#f08613', dept_txt_color: '#fff', key: 1 }, { dept_name: 'Mold', dept_bg_color: '#74875f', dept_txt_color: '#fff', key: 2 }, { dept_name: 'Grind', dept_bg_color: '#29a77a', dept_txt_color: '#fff', key: 3 }, { dept_name: 'Wash', dept_bg_color: '#006a84', dept_txt_color: '#fff', key: 4 }, { dept_name: 'Visual', dept_bg_color: '#10cc83', dept_txt_color: '#fff', key: 5 }, { dept_name: 'Dip', dept_bg_color: '#00cd44', dept_txt_color: '#fff', key: 6 }, { dept_name: 'In Process', dept_bg_color: '#cc014d', dept_txt_color: '#fff', key: 7 }],
+            windowWidth: 0
         };
     },
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        this.setInProductionWidth();
+    },
 
     components: {
         ErrorMessage: __WEBPACK_IMPORTED_MODULE_0__components_partials_error_message_vue___default.a,
@@ -58167,22 +58215,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {},
     methods: {
-        onMove: function onMove(evt) {
-            this.nextDept = evt.srcElement.parentElement.id;
-            console.log(evt.srcElement.parentElement.id);
-            console.log(evt.relatedContext);
-            var index = evt.relatedContext.index - 1;
-            console.log(index);
-            this.routers[index].dept_name = this.nextDept;
-            console.log(this.routers[index].dept_name);
-            /*
-            trying to capture the next department name so that item can be moved into it. 
-            */
+        onMove: function onMove(_ref) {
+            var relatedContext = _ref.relatedContext,
+                draggedContext = _ref.draggedContext;
+
+            this.index = draggedContext.futureIndex;
+            // Sets the id of the drop parent element which is the department name
+            this.nextDept = relatedContext.component.$el.parentElement.id;
+            // Set the id of the main parent container which has the Status ID
+            this.nextStatus = relatedContext.component.$el.parentElement.parentElement.id;
+            // Saves the element that is being moved
+            this.element = draggedContext.element;
         },
         onEnd: function onEnd(evt) {
-            evt;
-            console.log(evt.srcElement.parentElement.id);
-            console.log(evt.item);
+            if (this.element.dept_name !== this.nextDept && this.element.dept_name != '') {
+                this.routers.unshift(this.element);
+            } else if (this.element.dept_name == '' && this.nextDept == '') {
+                // Do not push element
+            } else if (this.element.dept_name == '' && this.nextDept != '') {
+                this.routers.unshift(this.element);
+            }
+            this.element.dept_name = this.nextDept;
+            this.element.status = this.nextStatus;
+            // console.log('At 4:30 PM on January, 18th 2018, this router moved into the Visual department.')
+        },
+        getNewtime: function getNewtime() {
+            // time function in scratch js
+        },
+        setInProductionWidth: function setInProductionWidth() {
+            var width = 0;
+            for (var i = 0; i < this.departments.length; i++) {
+                if (this.departments.length < 3) {
+                    width += 250;
+                } else if (this.departments.length < 11) {
+                    width += 242;
+                } else {
+                    width += 241;
+                }
+            }
+            var mainWidth = width + 550;
+            this.inProdWidth = width.toString();
+            this.deptMainWidth = mainWidth.toString();
         }
     }
 });
@@ -58194,19 +58267,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(155)
+  __webpack_require__(191)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(157)
 /* template */
-var __vue_template__ = __webpack_require__(158)
+var __vue_template__ = __webpack_require__(193)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-f8c31dba"
+var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -58239,46 +58312,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 155 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(156);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("4d5145ea", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f8c31dba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./pf-router-container.vue", function() {
-     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f8c31dba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./pf-router-container.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 156 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n.router-cont[data-v-f8c31dba] {\n    width: 100%;\n    height: 50px;\n    border-radius: 10px;\n    background: #fff;\n    margin: 5px 0;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 155 */,
+/* 156 */,
 /* 157 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -58291,59 +58326,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         routerNumber: Number,
-        quantity: Number
+        quantity: Number,
+        department: String,
+        log: Array
     },
     data: function data() {
         return {
-            //
+            card: false,
+            move_log: false
         };
     },
 
     methods: {
-        //
+        toggle: function toggle() {
+            if (this.card == false) {
+                this.card = true;
+            } else {
+                this.card = false;
+            }
+        },
+        showlog: function showlog() {
+            if (this.move_log == false) {
+                this.move_log = true;
+            } else {
+                this.move_log = false;
+            }
+        }
     }
 });
 
 /***/ }),
-/* 158 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "router-cont" }, [
-    _c("span", [
-      _vm._v(
-        "Router: " +
-          _vm._s(_vm.routerNumber) +
-          " | Qty: " +
-          _vm._s(_vm.quantity) +
-          " "
-      )
-    ]),
-    _vm._v(" \n       \n    "),
-    _c("i", {
-      staticClass: "fa fa-caret-down",
-      attrs: { "aria-hidden": "true" }
-    })
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-f8c31dba", module.exports)
-  }
-}
-
-/***/ }),
+/* 158 */,
 /* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -58360,76 +58399,241 @@ var render = function() {
       _vm._v(" "),
       _c("SuccessMessage", { attrs: { successMes: _vm.successMessage } }),
       _vm._v(" "),
-      _c("div", { attrs: { id: "scroll-container" } }, [
-        _c("div", { staticClass: "dept-main" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-xs-12 col-md-6 col-lg-4" }, [
           _c(
-            "div",
-            { staticClass: "dept-cont", attrs: { id: "nip-cont" } },
+            "form",
+            {
+              attrs: { action: "#" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                }
+              }
+            },
             [
-              _c("h4", { staticClass: "text-center" }, [
-                _vm._v("Not In Production")
-              ]),
-              _vm._v(" "),
-              _c(
-                "Draggable",
-                {
-                  staticClass: "full-width",
-                  attrs: {
-                    element: "div",
-                    options: _vm.dragOptions,
-                    move: _vm.onMove
-                  },
-                  on: { end: _vm.onEnd },
-                  model: {
-                    value: _vm.routers,
-                    callback: function($$v) {
-                      _vm.routers = $$v
-                    },
-                    expression: "routers"
-                  }
-                },
-                _vm._l(_vm.routers, function(route) {
-                  return _c(
-                    "div",
-                    {
-                      key: route.key,
-                      staticClass: "full-width",
-                      attrs: { id: "nip-container" }
-                    },
-                    [
-                      route.status == "NIP"
-                        ? _c("RouterContainer", {
-                            attrs: {
-                              routerNumber: route.router_num,
-                              quantity: route.qty
-                            }
-                          })
-                        : _vm._e()
-                    ],
-                    1
-                  )
-                })
-              )
-            ],
-            1
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xs-8 col-sm-8" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.search_router_num,
+                          expression: "search_router_num"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "search",
+                        placeholder: "Router Number"
+                      },
+                      domProps: { value: _vm.search_router_num },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.search_router_num = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "dept-cont-ip" }, [
-            _c("h4", { staticClass: "text-center" }, [_vm._v("In Production")]),
-            _vm._v(" "),
+          _c(
+            "button",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.search_router,
+                  expression: "search_router"
+                }
+              ],
+              staticClass: "btn btn-danger full-width btn-sm",
+              on: { click: function($event) {} }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-ban",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" Cancel Search")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-xs-12 col-md-6 col-lg-4" }, [
+          _c(
+            "form",
+            {
+              attrs: { action: "#" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xs-8 col-sm-8" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.search_pn_num,
+                          expression: "search_pn_num"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "search",
+                        placeholder: "Part Number"
+                      },
+                      domProps: { value: _vm.search_pn_num },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.search_pn_num = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.search_pn,
+                  expression: "search_pn"
+                }
+              ],
+              staticClass: "btn btn-danger full-width btn-sm",
+              on: { click: function($event) {} }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-ban",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" Cancel Search")
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-xs-12 col-md-6 col-lg-4" }, [
+          _c(
+            "form",
+            {
+              attrs: { action: "#" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xs-8 col-sm-8" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.search_po_num,
+                          expression: "search_po_num"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "search",
+                        placeholder: "P.O Number"
+                      },
+                      domProps: { value: _vm.search_po_num },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.search_po_num = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(2)
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.search_po,
+                  expression: "search_po"
+                }
+              ],
+              staticClass: "btn btn-danger full-width btn-sm",
+              on: { click: function($event) {} }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-ban",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" Cancel Search")
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "scroll-container" } }, [
+        _c(
+          "div",
+          {
+            staticClass: "dept-main",
+            style: "width:" + _vm.deptMainWidth + "px;"
+          },
+          [
             _c(
               "div",
-              { attrs: { id: "ip-cont" } },
-              _vm._l(_vm.departments, function(dept) {
-                return _c(
+              { staticClass: "dept-cont nip-cont", attrs: { id: "NIP" } },
+              [
+                _c(
                   "div",
-                  {
-                    staticClass: "dept-cont-inner-ip",
-                    attrs: { id: dept.dept_name }
-                  },
                   [
-                    _c("h5", { staticClass: "text-center" }, [
-                      _vm._v(_vm._s(dept.dept_name))
+                    _c("h4", { staticClass: "text-center" }, [
+                      _vm._v("Not In Production")
                     ]),
                     _vm._v(" "),
                     _c(
@@ -58450,53 +58654,268 @@ var render = function() {
                           expression: "routers"
                         }
                       },
-                      _vm._l(_vm.routers, function(route) {
-                        return _c(
-                          "div",
-                          { key: route.key, staticClass: "full-width" },
-                          [
-                            route.dept_name == dept.dept_name &&
-                            route.status == "IP"
-                              ? _c("RouterContainer", {
-                                  attrs: {
-                                    routerNumber: route.router_num,
-                                    quantity: route.qty
-                                  }
-                                })
-                              : _vm._e()
-                          ],
-                          1
-                        )
-                      })
+                      [
+                        _vm._l(_vm.routers, function(route) {
+                          return _c(
+                            "div",
+                            {
+                              key: route.key,
+                              staticClass: "full-width",
+                              attrs: { id: "nip-container" }
+                            },
+                            [
+                              route.status == "NIP"
+                                ? _c("RouterContainer", {
+                                    attrs: {
+                                      routerNumber: route.router_num,
+                                      quantity: route.qty,
+                                      department: route.dept_name,
+                                      log: route.move_log
+                                    }
+                                  })
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c("div", {
+                          staticClass: "router-cont dotted",
+                          staticStyle: {
+                            "background-color": "#a62f61",
+                            color: "#fff"
+                          }
+                        })
+                      ],
+                      2
                     )
                   ],
                   1
                 )
-              })
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "dept-cont", attrs: { id: "ii-cont" } }, [
-            _c("h4", { staticClass: "text-center" }, [_vm._v("To Inventory")]),
+              ]
+            ),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "full-width", attrs: { id: "ii-inner-cont" } },
-              [_c("RouterContainer")],
-              1
+              {
+                staticClass: "dept-cont-ip",
+                style: "width:" + _vm.inProdWidth + "px;"
+              },
+              [
+                _c(
+                  "h4",
+                  {
+                    staticClass: "text-center",
+                    staticStyle: { "margin-top": "4px" }
+                  },
+                  [_vm._v("In Production")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "ip-cont", attrs: { id: "IP" } },
+                  _vm._l(_vm.departments, function(dept) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass: "dept-cont-inner-ip",
+                        style:
+                          "background-color:" +
+                          dept.dept_bg_color +
+                          ";" +
+                          "color:" +
+                          dept.dept_txt_color +
+                          ";",
+                        attrs: { id: dept.dept_name }
+                      },
+                      [
+                        _c("h5", { staticClass: "text-center" }, [
+                          _vm._v(_vm._s(dept.dept_name))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "Draggable",
+                          {
+                            staticClass: "full-width",
+                            attrs: {
+                              element: "div",
+                              options: _vm.dragOptions,
+                              move: _vm.onMove
+                            },
+                            on: { end: _vm.onEnd },
+                            model: {
+                              value: _vm.routers,
+                              callback: function($$v) {
+                                _vm.routers = $$v
+                              },
+                              expression: "routers"
+                            }
+                          },
+                          [
+                            _vm._l(_vm.routers, function(route) {
+                              return _c(
+                                "div",
+                                { key: route.key, staticClass: "full-width" },
+                                [
+                                  dept.dept_name == route.dept_name &&
+                                  route.status == "IP"
+                                    ? _c("RouterContainer", {
+                                        attrs: {
+                                          routerNumber: route.router_num,
+                                          quantity: route.qty,
+                                          log: route.move_log
+                                        }
+                                      })
+                                    : _vm._e()
+                                ],
+                                1
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c("div", {
+                              staticClass: "router-cont dotted",
+                              style:
+                                "background-color:" +
+                                dept.dept_bg_color +
+                                ";" +
+                                "color:" +
+                                dept.dept_txt_color +
+                                ";"
+                            })
+                          ],
+                          2
+                        )
+                      ],
+                      1
+                    )
+                  })
+                )
+              ]
             ),
             _vm._v(" "),
-            _c("button", { staticClass: "btn btn-success full-width" }, [
-              _vm._v("Submit")
-            ])
-          ])
-        ])
+            _c(
+              "div",
+              { staticClass: "dept-cont ii-cont", attrs: { id: "TI" } },
+              [
+                _c("h4", { staticClass: "text-center" }, [
+                  _vm._v("To Inventory")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "full-width ii-inner-cont" },
+                  [
+                    _c(
+                      "Draggable",
+                      {
+                        staticClass: "full-width",
+                        attrs: {
+                          element: "div",
+                          options: _vm.dragOptions,
+                          move: _vm.onMove
+                        },
+                        on: { end: _vm.onEnd },
+                        model: {
+                          value: _vm.routers,
+                          callback: function($$v) {
+                            _vm.routers = $$v
+                          },
+                          expression: "routers"
+                        }
+                      },
+                      [
+                        _vm._l(_vm.routers, function(route) {
+                          return _c(
+                            "div",
+                            { key: route.key, staticClass: "full-width" },
+                            [
+                              route.status == "TI"
+                                ? _c("RouterContainer", {
+                                    attrs: {
+                                      routerNumber: route.router_num,
+                                      quantity: route.qty,
+                                      log: route.move_log
+                                    }
+                                  })
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c("div", {
+                          staticClass: "router-cont dotted",
+                          staticStyle: { background: "#29a77a", color: "#fff" }
+                        })
+                      ],
+                      2
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("button", { staticClass: "btn btn-success full-width" }, [
+                  _vm._v("Submit")
+                ])
+              ]
+            )
+          ]
+        )
       ])
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xs-4 col-sm-4" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("button", { staticClass: "btn btn-default full-width" }, [
+          _c("i", {
+            staticClass: "fa fa-search",
+            attrs: { "aria-hidden": "true" }
+          }),
+          _vm._v("  Search")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xs-4 col-sm-4" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("button", { staticClass: "btn btn-default full-width" }, [
+          _c("i", {
+            staticClass: "fa fa-search",
+            attrs: { "aria-hidden": "true" }
+          }),
+          _vm._v("  Search")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xs-4 col-sm-4" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("button", { staticClass: "btn btn-default full-width" }, [
+          _c("i", {
+            staticClass: "fa fa-search",
+            attrs: { "aria-hidden": "true" }
+          }),
+          _vm._v("  Search")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -58592,7 +59011,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n#routers-table[data-v-5f0af0ce] { \n    max-height: 565px; \n    overflow: scroll;\n}\n.nip-item[data-v-5f0af0ce] {\n    background: #af366c;\n    color: #fff;\n}\n.ip-item[data-v-5f0af0ce] {\n    background: #c58e32;\n    color: #fff;\n}\n.ii-item[data-v-5f0af0ce] {\n    background: #29a77a;\n    color: #fff;\n}\n.a-item[data-v-5f0af0ce] {\n    background: #423939;\n    color: #fff;\n}\n.cust_top_margin[data-v-5f0af0ce] {\n    margin-top: 32px;\n}\n.btn-margin[data-v-5f0af0ce] {\n    margin-top: 27px;\n}\n.space-below[data-v-5f0af0ce] {\n    margin-bottom: 20px;\n}\n.wide[data-v-5f0af0ce] {\n    width: 100%;\n}\n.underline[data-v-5f0af0ce] {\n    text-decoration: underline;\n}\n", ""]);
+exports.push([module.i, "\n#routers-table[data-v-5f0af0ce] { \n    max-height: 565px; \n    overflow: scroll;\n}\n.nip-item[data-v-5f0af0ce] {\n    background: #af366c;\n    color: #fff;\n}\n.ip-item[data-v-5f0af0ce] {\n    background: #208ca4;\n    color: #fff;\n}\n.ii-item[data-v-5f0af0ce] {\n    background: #29a77a;\n    color: #fff;\n}\n.a-item[data-v-5f0af0ce] {\n    background: #423939;\n    color: #fff;\n}\n.cust_top_margin[data-v-5f0af0ce] {\n    margin-top: 32px;\n}\n.btn-margin[data-v-5f0af0ce] {\n    margin-top: 27px;\n}\n.space-below[data-v-5f0af0ce] {\n    margin-bottom: 20px;\n}\n.wide[data-v-5f0af0ce] {\n    width: 100%;\n}\n@media(max-width:1345px){\n.fa-search[data-v-5f0af0ce] {\n        display: none;\n}\n}\n", ""]);
 
 // exports
 
@@ -60288,6 +60707,305 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(192);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("746a5774", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f8c31dba\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./pf-router-container.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-f8c31dba\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./pf-router-container.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 192 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.router-cont {\n    width: 100%;\n    min-height: 50px;\n    padding: 10px;\n    border-radius: 10px;\n    background: #fff;\n    color: #000;\n    margin: 5px 0;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n}\n.toggle-btn {\n    border: 1px solid #bbb;\n    border-radius: 5px;\n}\n#move-cont {\n    max-height: 230px;\n    overflow-y: scroll;\n}\n.actions {\n    color: #25a3bc;\n    text-decoration: underline;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "router-cont",
+      attrs: { "data-department": _vm.department }
+    },
+    [
+      _c("div", [
+        _c("span", [
+          _vm._v(
+            "Router: " +
+              _vm._s(_vm.routerNumber) +
+              " | Qty: " +
+              _vm._s(_vm.quantity) +
+              " "
+          )
+        ]),
+        _vm._v(" \n           \n        "),
+        _c("button", { staticClass: "toggle-btn", on: { click: _vm.toggle } }, [
+          _c("i", {
+            staticClass: "fa fa-caret-down",
+            attrs: { "aria-hidden": "true" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.card
+        ? _c("div", { staticClass: "full-width" }, [
+            _c("hr", { staticClass: "dashed" }),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4),
+            _vm._v(" "),
+            _vm._m(5),
+            _vm._v(" "),
+            _vm.move_log
+              ? _c(
+                  "div",
+                  { staticClass: "full-width", attrs: { id: "move-cont" } },
+                  [
+                    _vm._m(6),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "full-width" },
+                      _vm._l(_vm.log, function(items) {
+                        return _c("p", [_vm._v(_vm._s(items.item))])
+                      })
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "full-width text-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-xs",
+                  attrs: { type: "button" }
+                },
+                [_vm._v("View")]
+              ),
+              _vm._v("   \n            "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-warning btn-xs",
+                  attrs: { type: "button" }
+                },
+                [_vm._v("Edit")]
+              ),
+              _vm._v("   \n            "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-default btn-xs",
+                  attrs: { type: "button" },
+                  on: { click: _vm.showlog }
+                },
+                [_vm._v("Move Log")]
+              )
+            ])
+          ])
+        : _vm._e()
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("strong", [_vm._v("Part #:")]), _vm._v(" 620-1-200")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("strong", [_vm._v("Qty:")]), _vm._v(" 150")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("strong", [_vm._v("Date:")]), _vm._v(" 1-1-2018")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("strong", [_vm._v("Status:")]), _vm._v(" NIP")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("strong", [_vm._v("P.O. #:")]), _vm._v(" 99088823")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [_c("strong", [_vm._v("Employee:")]), _vm._v(" Levi")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "text-center underline" }, [
+      _c("strong", [_vm._v("Move Log")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-f8c31dba", module.exports)
+  }
+}
+
+/***/ }),
+/* 194 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(195);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("9cbf9c8c", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7b8345f6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./view-add-btns.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7b8345f6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./view-add-btns.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 195 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n@media(max-width:1345px){\n.fa-table[data-v-7b8345f6], .fa-plus[data-v-7b8345f6] {\n        display: none;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 196 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-xs-6 col-sm-6 col-md-6" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary btn-lg full-width",
+          on: { click: _vm.toTable }
+        },
+        [
+          _c("i", {
+            staticClass: "fa fa-table",
+            attrs: { "aria-hidden": "true" }
+          }),
+          _vm._v("  " + _vm._s(_vm.textOne))
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-xs-6 col-sm-6 col-md-6" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-lg full-width",
+          on: { click: _vm.toForm }
+        },
+        [
+          _c("i", {
+            staticClass: "fa fa-plus",
+            attrs: { "aria-hidden": "true" }
+          }),
+          _vm._v("  " + _vm._s(_vm.textTwo))
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7b8345f6", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

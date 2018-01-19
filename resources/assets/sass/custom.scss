@@ -51,6 +51,7 @@ ul.alert-dropdown {width: 200px;}
 .panel-yellow > a {color: #f0ad4e;}
 .panel-yellow > a:hover {color: #df8a13;}
 /*Custom*/
+.underline {text-decoration: underline;}
 div.form-middle-center {margin: 0 auto;}
 nav>ul.nav-justified>li {background: #A0E3FA;cursor: pointer;padding-top: 15px;padding-bottom: 15px;border-radius: 10px 10px 0 0;}
 div.show {display: block;}
@@ -128,6 +129,9 @@ button.full-width { width: 100%; }
 }
 .pointer {
     cursor: pointer;
+}
+.clear-both {
+    clear: both;
 }
 #product-table { max-height: 565px; overflow: scroll; }
 /* Small Devices, Tablets */

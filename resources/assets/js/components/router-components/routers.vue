@@ -279,7 +279,7 @@
         color: #fff;
     }
     .ip-item {
-        background: #c58e32;
+        background: #208ca4;
         color: #fff;
     }
     .ii-item {
@@ -302,7 +302,9 @@
     .wide {
         width: 100%;
     }
-    .underline {
-        text-decoration: underline;
+    @media(max-width:1345px){
+        .fa-search {
+            display: none;
+        }
     }
 </style>

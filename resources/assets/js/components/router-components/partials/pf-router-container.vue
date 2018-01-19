@@ -1,35 +1,86 @@
 <template>
-    <div class="router-cont">
-        <span>Router: {{ routerNumber }} | Qty: {{ quantity }} </span> 
-        &nbsp;&nbsp; 
-        <i class="fa fa-caret-down" aria-hidden="true"></i>
+    <div class="router-cont" :data-department="department">
+        <div>
+            <span>Router: {{ routerNumber }} | Qty: {{ quantity }} </span> 
+            &nbsp;&nbsp; 
+            <button class="toggle-btn" @click="toggle"><i class="fa fa-caret-down" aria-hidden="true"></i></button>
+        </div>
+        <div class="full-width" v-if="card">
+            <hr class="dashed">
+            <p><strong>Part #:</strong> 620-1-200</p>
+            <p><strong>Qty:</strong> 150</p>
+            <p><strong>Date:</strong> 1-1-2018</p>
+            <p><strong>Status:</strong> NIP</p>
+            <p><strong>P.O. #:</strong> 99088823</p>
+            <p><strong>Employee:</strong> Levi</p>
+            <div id="move-cont" class="full-width" v-if="move_log">
+                <p class="text-center underline"><strong>Move Log</strong></p>
+                <div class="full-width">
+                    <p v-for="items in log">{{items.item}}</p>
+                </div>
+            </div>
+            <div class="full-width text-center">
+                <button type="button" class="btn btn-primary btn-xs">View</button> &nbsp; 
+                <button type="button" class="btn btn-warning btn-xs">Edit</button> &nbsp; 
+                <button @click="showlog" type="button" class="btn btn-default btn-xs">Move Log</button>
+            </div>
+        </div>
     </div>
 </template>
 <script>
     export default {
         props: {
             routerNumber: Number,
-            quantity: Number
+            quantity: Number,
+            department: String,
+            log: Array
         },
         data(){
             return {
-                //
+                card: false,
+                move_log: false
             }
         },
         methods: {
-            //
+            toggle(){
+                if(this.card == false){
+                    this.card = true;
+                }else{
+                    this.card = false;
+                }
+            },
+            showlog(){
+                if(this.move_log == false){
+                    this.move_log = true;
+                }else{
+                    this.move_log = false;
+                }
+            }
         }
     }
 </script>
-<style scoped>
+<style>
     .router-cont {
         width: 100%;
-        height: 50px;
+        min-height: 50px;
+        padding: 10px;
         border-radius: 10px;
         background: #fff;
+        color: #000;
         margin: 5px 0;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column;
+    }
+    .toggle-btn {
+        border: 1px solid #bbb;
+        border-radius: 5px;
+    }
+    #move-cont {
+        max-height: 230px;
+        overflow-y: scroll;
+    }
+    .actions {
+        color: #25a3bc;
+        text-decoration: underline;
     }
 </style>

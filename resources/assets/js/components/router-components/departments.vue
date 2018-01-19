@@ -79,7 +79,7 @@
     export default {
         data(){
             return {
-                read: true,
+                read: false,
                 edit: false,
                 table: true,
                 list: [

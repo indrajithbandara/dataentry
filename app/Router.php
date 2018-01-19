@@ -17,6 +17,7 @@ class Router extends Model
         'status',
         'dept_name',
         'move_log',
+        'employee',
         'date',
         'date_in_inv',
         'placement'

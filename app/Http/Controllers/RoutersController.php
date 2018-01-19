@@ -44,15 +44,18 @@ class RoutersController extends Controller
                             ->select(
                                 'id',
                                 'router_num', 
-                                'qty', 
-                                'rating', 
                                 'part_num', 
                                 'po_num', 
                                 'customer', 
+                                'qty', 
+                                'stock_qty', 
+                                'rating', 
                                 'status', 
                                 'dept_name', 
+                                'move_log', 
+                                'employee', 
                                 'date', 
-                                'move_log',
+                                'date_in_inv', 
                                 'placement'
                             )
                             ->orderBy('date', 'desc')
@@ -90,7 +93,8 @@ class RoutersController extends Controller
             'rating' => 'nullable|numeric',
             'status' => 'required|string',
             'dept_name' => 'nullable|string|alpha|max:50',
-            'move_log' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i',
+            'move_log' => 'nullable|array',
+            'employee' => 'nullable|string',
             'date' => 'required|date',
             'date_in_inv' => 'nullable|date',
             'placement' => 'nullable|numeric'
@@ -108,6 +112,7 @@ class RoutersController extends Controller
             'status' => $request->input(['status']),
             'dept_name' => $request->input(['dept_name']),
             'move_log' => $request->input(['move_log']),
+            'employee' => $request->input(['employee']),
             'date' => $request->input(['date']),
             'date_in_inv' => $request->input(['date_in_inv']),
             'placement' => $request->input(['placement'])
@@ -134,7 +139,8 @@ class RoutersController extends Controller
             'rating' => 'nullable|numeric',
             'status' => 'required|string',
             'dept_name' => 'nullable|string|alpha|max:50',
-            'move_log' => 'nullable|string|regex:/^(?!-)(?!.*--)[A-Za-z0-9\,\&\-\(\)\/\"\.\*\#\s]+(?<!-)$/i',
+            'move_log' => 'nullable|array',
+            'employee' => 'nullable|string',
             'date' => 'required|date',
             'date_in_inv' => 'nullable|date',
             'placement' => 'nullable|numeric'
@@ -152,6 +158,7 @@ class RoutersController extends Controller
             'status' => $request->input(['status']),
             'dept_name' => $request->input(['dept_name']),
             'move_log' => $request->input(['move_log']),
+            'employee' => $request->input(['employee']),
             'date' => $request->input(['date']),
             'date_in_inv' => $request->input(['date_in_inv']),
             'placement' => $request->input(['placement'])
@@ -182,15 +189,18 @@ class RoutersController extends Controller
                             ->select(
                                 'id',
                                 'router_num', 
-                                'qty', 
-                                'rating', 
                                 'part_num', 
                                 'po_num', 
                                 'customer', 
+                                'qty', 
+                                'stock_qty', 
+                                'rating', 
                                 'status', 
                                 'dept_name', 
+                                'move_log', 
+                                'employee', 
                                 'date', 
-                                'move_log',
+                                'date_in_inv', 
                                 'placement'
                             )
                             ->whereBetween('date', [$start, $end])
@@ -210,15 +220,19 @@ class RoutersController extends Controller
                             ->select(
                                 'id',
                                 'router_num', 
-                                'qty', 
-                                'rating', 
                                 'part_num', 
                                 'po_num', 
                                 'customer', 
+                                'qty', 
+                                'stock_qty', 
+                                'rating', 
                                 'status', 
                                 'dept_name', 
+                                'move_log', 
+                                'employee', 
                                 'date', 
-                                'move_log'
+                                'date_in_inv', 
+                                'placement'
                             )
                             ->where('router_num', $term)
                             ->get();
@@ -253,6 +267,7 @@ class RoutersController extends Controller
                     'status' => $row['status'],
                     'dept_name' => $row['dept_name'],
                     'move_log' => $row['move_log'],
+                    'employee' => $row['employee'],
                     'date' => $row['date'],
                     'date_in_inv' => $row['date_in_inv'],
                     'placement' => $row['placement']

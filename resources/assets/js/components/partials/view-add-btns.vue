@@ -14,3 +14,10 @@
         }
     }
 </script>
+<style scoped>
+    @media(max-width:1345px){
+        .fa-table, .fa-plus {
+            display: none;
+        }
+    }
+</style>

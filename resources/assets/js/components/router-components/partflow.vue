@@ -87,7 +87,13 @@
                                     :routerNumber="route.router_num" 
                                     :quantity="route.qty" 
                                     :department="route.dept_name" 
-                                    :log="route.move_log"
+                                    :log="route.move_log" 
+                                    :partNumber="route.part_num" 
+                                    :date="route.date" 
+                                    :status="route.status" 
+                                    :poNum="route.po_num" 
+                                    :customer="route.customer"
+                                    :employee="route.employee" 
                                 ></RouterContainer>
                             </div>
                             <div class="router-cont dotted" style="background-color:#a62f61;color:#fff;"></div>
@@ -115,7 +121,13 @@
                                         v-if="dept.dept_name == route.dept_name && route.status == 'IP'"
                                         :routerNumber="route.router_num" 
                                         :quantity="route.qty" 
-                                        :log="route.move_log"
+                                        :log="route.move_log" 
+                                        :partNumber="route.part_num" 
+                                        :date="route.date" 
+                                        :status="route.status" 
+                                        :poNum="route.po_num" 
+                                        :customer="route.customer"
+                                        :employee="route.employee" 
                                     ></RouterContainer>
                                 </div>
                                 <div class="router-cont dotted" :style="'background-color:'+dept.dept_bg_color+';'+'color:'+dept.dept_txt_color+';'"></div>
@@ -125,9 +137,9 @@
                 </div>
                 <!-- Start of 'IP' Container -->
 
-                <!-- Start of 'II' Container -->
-                <div class="dept-cont ii-cont" id="TI">
-                    <h4 class="text-center">To Inventory</h4>
+                <!-- Start of 'STFI' Container -->
+                <div class="dept-cont ii-cont" id="STFI">
+                    <h4 class="text-center">Staged For Inventory</h4>
                     <div class="full-width ii-inner-cont">
                     <Draggable 
                         v-model="routers"
@@ -139,16 +151,22 @@
                         >
                         <div v-for="route in routers" :key="route.key" class="full-width">
                             <RouterContainer
-                                v-if="route.status == 'TI'"
+                                v-if="route.status == 'STFI'"
                                 :routerNumber="route.router_num" 
                                 :quantity="route.qty" 
-                                :log="route.move_log"
+                                :log="route.move_log" 
+                                :partNumber="route.part_num" 
+                                :date="route.date" 
+                                :status="route.status" 
+                                :poNum="route.po_num" 
+                                :customer="route.customer"
+                                :employee="route.employee" 
                             ></RouterContainer>
                         </div>
-                        <div class="router-cont dotted" style="background:#29a77a;color:#fff;"></div>
+                        <div class="router-cont dotted" style="background:#c58e32;color:#fff;"></div>
                     </Draggable>
                     </div>
-                    <button class="btn btn-success full-width">Submit</button>
+                    <button class="btn btn-warning full-width">Submit</button>
                 </div>
                 <!-- End of 'II' Container -->
             </div>
@@ -181,22 +199,26 @@
                 dragOptions: {
                     group: 'routers'
                 },
+                nip_items: [],
+                ip_items: [],
+                stfi_items: [],
+                ii_items: [],
                 routers: [
-                    { router_num: 1001, part_num: '620-1-200', dept_name: '', po_num: '88596', customer: 'Eaton', qty: 150, status: 'A', date: '2018-01-12', key: 1, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1002, part_num: '620-1-450', dept_name: '', po_num: '88597', customer: 'Boing', qty: 50, status: 'TI', date: '2018-01-12', key: 2, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1003, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 3, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1004, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 4, placement: 2, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1005, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 5, placement: 3, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1006, part_num: '620-1-600', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 6, placement: 4, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1007, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 7, placement: 5, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1008, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 8, placement: 6, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1009, part_num: '620-1-600', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 9, placement: 7, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1010, part_num: '620-5-200', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 10, placement: 8, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1011, part_num: '620-5-200', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 11, placement: 9, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1012, part_num: '620-5-200', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 12, placement: 10, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1013, part_num: '620-5-200', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 13, placement: 11, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1014, part_num: '620-5-600', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 14, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
-                    { router_num: 1015, part_num: '620-5-600', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 15, placement: 2, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1001, part_num: '620-1-200', employee: 'Levi', dept_name: '', po_num: '88596', customer: 'Eaton', qty: 150, status: 'A', date: '2018-01-12', key: 1, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1002, part_num: '620-1-450', employee: 'Levi', dept_name: '', po_num: '88597', customer: 'Boing', qty: 50, status: 'STFI', date: '2018-01-12', key: 2, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1003, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 3, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1004, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 4, placement: 2, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1005, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 5, placement: 3, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1006, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 6, placement: 4, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1007, part_num: '620-1-600', employee: 'Levi', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 7, placement: 5, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1008, part_num: '620-1-600', employee: 'Levi', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 8, placement: 6, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1009, part_num: '620-1-600', employee: 'Levi', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 9, placement: 7, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1010, part_num: '620-5-200', employee: 'Levi', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 10, placement: 8, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1011, part_num: '620-5-200', employee: 'Levi', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 11, placement: 9, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1012, part_num: '620-5-200', employee: 'Levi', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 12, placement: 10, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1013, part_num: '620-5-200', employee: 'Levi', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 13, placement: 11, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1014, part_num: '620-5-600', employee: 'Levi', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 14, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
+                    { router_num: 1015, part_num: '620-5-600', employee: 'Levi', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 15, placement: 2, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.'}, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.'}, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.'}, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.'} ]},
                 ],
                 departments: [
                     { dept_name: 'Wrap', dept_bg_color: '#f08613', dept_txt_color: '#fff', key: 1 },
@@ -212,6 +234,22 @@
         },
         mounted() {
             this.setInProductionWidth();
+            console.log(this.routers);
+            for(var i=0; i < this.routers.length; i++){
+                if(this.routers[i].status == 'NIP'){
+                    this.nip_items.unshift(this.routers[i]);
+                } else if(this.routers[i].status == 'IP') {
+                    this.ip_items.unshift(this.routers[i]);
+                } else if(this.routers[i].status == 'STFI') {
+                    this.stfi_items.unshift(this.routers[i]);
+                } else if(this.routers[i].status == 'II') {
+                    this.ii_items.unshift(this.routers[i]);
+                }
+            }
+            console.log(this.nip_items);
+            console.log(this.ip_items);
+            console.log(this.stfi_items);
+            console.log(this.ii_items);
         },
         components: {
             ErrorMessage,
@@ -311,7 +349,7 @@
 
     }
     .ii-cont {
-        background: #29a77a;
+        background: #c58e32;
     }
     .ii-inner-cont {
         height: 480px;

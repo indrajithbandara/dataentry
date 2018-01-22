@@ -1,5 +1,5 @@
 <template>
-    <div class="router-cont" :data-department="department">
+    <div class="router-cont">
         <div>
             <span>Router: {{ routerNumber }} | Qty: {{ quantity }} </span> 
             &nbsp;&nbsp; 
@@ -7,12 +7,13 @@
         </div>
         <div class="full-width" v-if="card">
             <hr class="dashed">
-            <p><strong>Part #:</strong> 620-1-200</p>
-            <p><strong>Qty:</strong> 150</p>
-            <p><strong>Date:</strong> 1-1-2018</p>
-            <p><strong>Status:</strong> NIP</p>
-            <p><strong>P.O. #:</strong> 99088823</p>
-            <p><strong>Employee:</strong> Levi</p>
+            <p><strong>Part #:</strong> {{ partNumber }}</p>
+            <p><strong>Qty:</strong> {{ quantity }}</p>
+            <p><strong>Date:</strong> {{ date }}</p>
+            <p><strong>Status:</strong> {{ status }}</p>
+            <p><strong>P.O. #:</strong> {{ poNum }}</p>
+            <p><strong>Customer:</strong> {{ customer }}</p>
+            <p><strong>Employee:</strong> {{ employee }}</p>
             <div id="move-cont" class="full-width" v-if="move_log">
                 <p class="text-center underline"><strong>Move Log</strong></p>
                 <div class="full-width">
@@ -33,7 +34,13 @@
             routerNumber: Number,
             quantity: Number,
             department: String,
-            log: Array
+            log: Array,
+            partNumber: String,
+            date: String,
+            status: String,
+            poNum: String,
+            customer: String,
+            employee: String
         },
         data(){
             return {

@@ -37,6 +37,7 @@
                             <td>{{ router.part_num }}</td>
                             <td v-if="router.status == 'NIP'" class="nip-item text-center">{{ router.status }}</td>
                             <td v-else-if="router.status == 'IP'" class="ip-item text-center">{{ router.status }}</td>
+                            <td v-else-if="router.status == 'STFI'" class="stfi-item text-center">{{ router.status }}</td>
                             <td v-else-if="router.status == 'II'" class="ii-item text-center">{{ router.status }}</td>
                             <td v-else-if="router.status == 'A'" class="a-item text-center">{{ router.status }}</td>
                             <td>{{ router.po_num }}</td>
@@ -203,9 +204,10 @@
                 list: [
                     { router_num: 1001, part_num: '620-1-200', po_num: '88596', customer: 'Eaton', qty: 150, status: 'A', date: '2018-01-12' },
                     { router_num: 1002, part_num: '620-1-450', po_num: '88597', customer: 'Boing', qty: 50, status: 'II', date: '2018-01-12' },
-                    { router_num: 1003, part_num: '620-1-600', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13' },
-                    { router_num: 1004, part_num: '620-5-200', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14' },
-                    { router_num: 1005, part_num: '620-5-600', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14' },
+                    { router_num: 1003, part_num: '620-1-600', po_num: '88598', customer: 'Eaton', qty: 20, status: 'STFI', date: '2018-01-13' },
+                    { router_num: 1003, part_num: '620-1-600', po_num: '88599', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13' },
+                    { router_num: 1004, part_num: '620-5-200', po_num: '88600', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14' },
+                    { router_num: 1005, part_num: '620-5-600', po_num: '88601', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14' },
                 ],
                 // Modes
                 table: true,
@@ -228,6 +230,7 @@
                 selectList: [
                     { name: 'Not In Production', value: 'NIP' },
                     { name: 'In Production', value: 'IP' },
+                    { name: 'Staged For Inventory', value: 'STFI' },
                     { name: 'In Inventory', value: 'II' },
                     { name: 'Archive', value: 'A' },
                 ],
@@ -280,6 +283,10 @@
     }
     .ip-item {
         background: #208ca4;
+        color: #fff;
+    }
+    .stfi-item {
+        background: #c58e32;
         color: #fff;
     }
     .ii-item {

@@ -240,6 +240,99 @@ class RoutersController extends Controller
     }
 
     /**
+    * Seach for an router by it's part number
+    *
+    * @param Request $request
+    * @return \Illuminate\Http\Response
+    */
+    public function byPartNum($term)
+    {
+        $routers = DB::table('routers')
+                            ->select(
+                                'id',
+                                'router_num', 
+                                'part_num', 
+                                'po_num', 
+                                'customer', 
+                                'qty', 
+                                'stock_qty', 
+                                'rating', 
+                                'status', 
+                                'dept_name', 
+                                'move_log', 
+                                'employee', 
+                                'date', 
+                                'date_in_inv', 
+                                'placement'
+                            )
+                            ->where('part_num', $term)
+                            ->get();
+        return $routers;
+    }
+
+    /**
+    * Seach for an router by it's status
+    *
+    * @param Request $request
+    * @return \Illuminate\Http\Response
+    */
+    public function byStatus($term)
+    {
+        $routers = DB::table('routers')
+                            ->select(
+                                'id',
+                                'router_num', 
+                                'part_num', 
+                                'po_num', 
+                                'customer', 
+                                'qty', 
+                                'stock_qty', 
+                                'rating', 
+                                'status', 
+                                'dept_name', 
+                                'move_log', 
+                                'employee', 
+                                'date', 
+                                'date_in_inv', 
+                                'placement'
+                            )
+                            ->where('status', $term)
+                            ->get();
+        return $routers;
+    }
+
+    /**
+    * Seach for an router by it's po_num
+    *
+    * @param Request $request
+    * @return \Illuminate\Http\Response
+    */
+    public function byStatus($term)
+    {
+        $routers = DB::table('routers')
+                            ->select(
+                                'id',
+                                'router_num', 
+                                'part_num', 
+                                'po_num', 
+                                'customer', 
+                                'qty', 
+                                'stock_qty', 
+                                'rating', 
+                                'status', 
+                                'dept_name', 
+                                'move_log', 
+                                'employee', 
+                                'date', 
+                                'date_in_inv', 
+                                'placement'
+                            )
+                            ->where('po_num', $term)
+                            ->get();
+        return $routers;
+    }
+
+    /**
      * import an Routers Excel file in storage.
      *
      * @param  \Illuminate\Http\Request  $request

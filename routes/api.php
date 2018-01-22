@@ -56,7 +56,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('routers/count', 'RoutersController@count'); // Get count of routers
     Route::get('routers/{id}', 'RoutersController@getOne'); // Get One Router for Editting
     Route::get('routers/report/{start}/{end}', 'RoutersController@betweenDates'); // Get the routers between two given dates
-    Route::get('routers/search/{term}', 'RoutersController@byRouterNum'); // Searches for a router by router_num
+    Route::get('routers/search/byrouternum/{term}', 'RoutersController@byRouterNum'); // Searches for a router by router_num
+    Route::get('routers/search/bypartnum/{term}', 'RoutersController@byPartNum'); // Searches for a router by part_num
+    Route::get('routers/search/ponum/{term}', 'RoutersController@byPoNum'); // Searches for a router by po_num
+    Route::get('routers/search/bystatus/{term}', 'RoutersController@byStatus'); // Searches for a router by status
     Route::post('routers/store', 'RoutersController@addRouter'); // Add a single router
     Route::patch('routers/{id}', 'RoutersController@updateRouter'); // Update a single router
     Route::delete('routers/{id}', 'RoutersController@deleteRouter'); // Delete a Single Router

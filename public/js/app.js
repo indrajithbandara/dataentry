@@ -58313,14 +58313,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             ip_items: [],
             stfi_items: [],
             ii_items: [],
-            routers: [{ router_num: 1001, part_num: '620-1-200', employee: 'Levi', dept_name: '', po_num: '88596', customer: 'Eaton', qty: 150, status: 'A', date: '2018-01-12', key: 0, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1002, part_num: '620-1-450', employee: 'Levi', dept_name: '', po_num: '88597', customer: 'Boing', qty: 50, status: 'STFI', date: '2018-01-12', key: 1, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1003, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 2, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1004, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 3, placement: 2, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1005, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 4, placement: 3, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1006, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 5, placement: 4, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1007, part_num: '620-1-600', employee: 'Levi', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 6, placement: 5, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1008, part_num: '620-1-600', employee: 'Levi', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 7, placement: 6, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1009, part_num: '620-1-600', employee: 'Levi', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 8, placement: 7, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1010, part_num: '620-5-200', employee: 'Levi', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 9, placement: 8, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1011, part_num: '620-5-200', employee: 'Levi', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 10, placement: 9, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1012, part_num: '620-5-200', employee: 'Levi', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 11, placement: 10, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1013, part_num: '620-5-200', employee: 'Levi', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 12, placement: 11, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1014, part_num: '620-5-600', employee: 'Levi', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 13, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1015, part_num: '620-5-600', employee: 'Levi', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 14, placement: 2, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }],
+            routers: [{ router_num: 1001, part_num: '620-1-200', employee: 'Levi', dept_name: '', po_num: '88596', customer: 'Eaton', qty: 150, status: 'A', date: '2018-01-12', key: 0, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1002, part_num: '620-1-450', employee: 'Levi', dept_name: '', po_num: '88597', customer: 'Boing', qty: 50, status: 'STFI', date: '2018-01-12', key: 1, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1003, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 5, placement: 1, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1004, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 4, placement: 2, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1005, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 3, placement: 3, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1006, part_num: '620-1-600', employee: 'Levi', dept_name: 'Wrap', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 2, placement: 4, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1007, part_num: '620-1-600', employee: 'Levi', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 6, placement: 5, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1008, part_num: '620-1-600', employee: 'Levi', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 7, placement: 6, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1009, part_num: '620-1-600', employee: 'Levi', dept_name: 'Mold', po_num: '88598', customer: 'Eaton', qty: 20, status: 'IP', date: '2018-01-13', key: 8, placement: 7, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1010, part_num: '620-5-200', employee: 'Levi', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 9, placement: 8, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1011, part_num: '620-5-200', employee: 'Levi', dept_name: 'Grind', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 10, placement: 9, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1012, part_num: '620-5-200', employee: 'Levi', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 11, placement: 10, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1013, part_num: '620-5-200', employee: 'Levi', dept_name: 'Wash', po_num: '88599', customer: 'Hankifang', qty: 250, status: 'IP', date: '2018-01-14', key: 12, placement: 11, move_log: [{ item: 'At 3:00 PM on January, 17th 2018, this router moved into the Wrap department.' }, { item: 'At 3:45 PM on January, 18th 2018, this router moved into the Mold department.' }, { item: 'At 4:15 PM on January, 18th 2018, this router moved into the Grind department.' }, { item: 'At 4:30 PM on January, 18th 2018, this router moved into the Visual department.' }] }, { router_num: 1015, part_num: '620-5-600', employee: 'Levi', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 14, placement: 1, move_log: [] }, { router_num: 1014, part_num: '620-5-600', employee: 'Levi', dept_name: '', po_num: '88600', customer: 'Boing', qty: 500, status: 'NIP', date: '2018-01-14', key: 13, placement: 2, move_log: [] }],
             departments: [{ dept_name: 'Wrap', dept_bg_color: '#f08613', dept_txt_color: '#fff', key: 1 }, { dept_name: 'Mold', dept_bg_color: '#74875f', dept_txt_color: '#fff', key: 2 }, { dept_name: 'Grind', dept_bg_color: '#29a77a', dept_txt_color: '#fff', key: 3 }, { dept_name: 'Wash', dept_bg_color: '#006a84', dept_txt_color: '#fff', key: 4 }, { dept_name: 'Visual', dept_bg_color: '#10cc83', dept_txt_color: '#fff', key: 5 }, { dept_name: 'Dip', dept_bg_color: '#00cd44', dept_txt_color: '#fff', key: 6 }, { dept_name: 'In Process', dept_bg_color: '#cc014d', dept_txt_color: '#fff', key: 7 }],
             windowWidth: 0
         };
     },
     mounted: function mounted() {
         this.setInProductionWidth();
-        console.log(this.routers);
+        this.sortRouters();
     },
 
     components: {
@@ -58329,14 +58329,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Draggable: __WEBPACK_IMPORTED_MODULE_3_vuedraggable___default.a,
         RouterContainer: __WEBPACK_IMPORTED_MODULE_2__components_router_components_partials_pf_router_container_vue___default.a
     },
-    computed: {},
+    computed: {
+        list: function list() {
+            return this.routers;
+        }
+    },
     methods: {
         onMove: function onMove(_ref) {
             var relatedContext = _ref.relatedContext,
                 draggedContext = _ref.draggedContext;
 
-            console.log('Related:', relatedContext);
-            console.log('Dragged:', draggedContext);
             this.index = draggedContext.futureIndex;
             // Sets the id of the drop parent element which is the department name
             this.nextDept = relatedContext.component.$el.parentElement.id;
@@ -58355,9 +58357,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             this.element.dept_name = this.nextDept;
             this.element.status = this.nextStatus;
-            this.sortRouter();
-            console.log(this.routers);
-            console.log();
+            this.element.key = this.index;
+            this.sortRouters();
+            this.log();
             // console.log('At 4:30 PM on January, 18th 2018, this router moved into the Visual department.')
         },
         getNewtime: function getNewtime() {
@@ -58365,26 +58367,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         setInProductionWidth: function setInProductionWidth() {
             var width = 0;
-            for (var i = 0; i < this.departments.length; i++) {
-                if (this.departments.length < 3) {
+            this.departments.forEach(function (el, i, a) {
+                if (a.length < 3) {
                     width += 250;
-                } else if (this.departments.length < 11) {
+                } else if (a.length < 11) {
                     width += 242;
                 } else {
                     width += 241;
                 }
-            }
+            });
             var mainWidth = width + 550;
             this.inProdWidth = width.toString();
             this.deptMainWidth = mainWidth.toString();
         },
-        sortRouter: function sortRouter() {
-            for (var i = 0; i < this.routers.length; i++) {
-                this.routers[i].key = i;
-            }
+        sortRouters: function sortRouters() {
             this.routers.sort(function (a, b) {
                 return a.key - b.key;
+            }).forEach(function (el, i, a) {
+                return a[i].key = i;
             });
+        },
+        log: function log() {
+            console.log('============================================================');
+            this.routers.forEach(function (el, i, a) {
+                console.log('Index: ' + i + ' | ' + 'Router Number: ' + a[i].router_num + ' | ' + 'Key: ' + a[i].key + ' | ' + 'Dept: ' + a[i].dept_name + ' | ' + 'Status: ' + a[i].status);
+            });
+            console.log('============================================================');
         }
     }
 });
@@ -58976,7 +58984,7 @@ var render = function() {
                         }
                       },
                       [
-                        _vm._l(_vm.routers, function(route) {
+                        _vm._l(_vm.list, function(route) {
                           return _c(
                             "div",
                             {
@@ -59079,7 +59087,7 @@ var render = function() {
                             }
                           },
                           [
-                            _vm._l(_vm.routers, function(route) {
+                            _vm._l(_vm.list, function(route) {
                               return _c(
                                 "div",
                                 { key: route.key, staticClass: "full-width" },
@@ -59157,7 +59165,7 @@ var render = function() {
                         }
                       },
                       [
-                        _vm._l(_vm.routers, function(route) {
+                        _vm._l(_vm.list, function(route) {
                           return _c(
                             "div",
                             { key: route.key, staticClass: "full-width" },

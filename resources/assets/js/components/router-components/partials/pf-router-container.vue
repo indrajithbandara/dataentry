@@ -16,8 +16,11 @@
             <p><strong>Employee:</strong> {{ employee }}</p>
             <div id="move-cont" class="full-width" v-if="move_log">
                 <p class="text-center underline"><strong>Move Log</strong></p>
-                <div class="full-width">
+                <div class="full-width" v-if="log.length > 0">
                     <p v-for="items in log">{{items.item}}</p>
+                </div>
+                <div v-else>
+                    <p class="alert alert-info text-center">Move Log Empty</p>
                 </div>
             </div>
             <div class="full-width text-center">

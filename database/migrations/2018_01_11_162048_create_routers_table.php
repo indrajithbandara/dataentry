@@ -35,7 +35,7 @@ class CreateRoutersTable extends Migration
             $table->string('employee')->nullable();
             $table->date('date');
             $table->date('date_in_inv')->nullable();
-            $table->integer('placement')->nullable();
+            $table->integer('key')->nullable();
         });
     }
 

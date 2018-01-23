@@ -20,7 +20,7 @@ class Router extends Model
         'employee',
         'date',
         'date_in_inv',
-        'placement'
+        'key'
     ];
 
     public $timestamps = false;

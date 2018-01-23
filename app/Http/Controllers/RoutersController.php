@@ -56,7 +56,7 @@ class RoutersController extends Controller
                                 'employee', 
                                 'date', 
                                 'date_in_inv', 
-                                'placement'
+                                'key'
                             )
                             ->orderBy('date', 'desc')
                             ->get();
@@ -97,7 +97,7 @@ class RoutersController extends Controller
             'employee' => 'nullable|string',
             'date' => 'required|date',
             'date_in_inv' => 'nullable|date',
-            'placement' => 'nullable|numeric'
+            'key' => 'nullable|numeric'
         ]);
 
         // Create Router Entry
@@ -115,7 +115,7 @@ class RoutersController extends Controller
             'employee' => $request->input(['employee']),
             'date' => $request->input(['date']),
             'date_in_inv' => $request->input(['date_in_inv']),
-            'placement' => $request->input(['placement'])
+            'key' => $request->input(['key'])
         ]);
     }
 
@@ -143,7 +143,7 @@ class RoutersController extends Controller
             'employee' => 'nullable|string',
             'date' => 'required|date',
             'date_in_inv' => 'nullable|date',
-            'placement' => 'nullable|numeric'
+            'key' => 'nullable|numeric'
         ]);
 
         // Create Update Entry
@@ -161,7 +161,7 @@ class RoutersController extends Controller
             'employee' => $request->input(['employee']),
             'date' => $request->input(['date']),
             'date_in_inv' => $request->input(['date_in_inv']),
-            'placement' => $request->input(['placement'])
+            'key' => $request->input(['key'])
         ]);
     }
 
@@ -201,7 +201,7 @@ class RoutersController extends Controller
                                 'employee', 
                                 'date', 
                                 'date_in_inv', 
-                                'placement'
+                                'key'
                             )
                             ->whereBetween('date', [$start, $end])
                             ->get();
@@ -232,7 +232,7 @@ class RoutersController extends Controller
                                 'employee', 
                                 'date', 
                                 'date_in_inv', 
-                                'placement'
+                                'key'
                             )
                             ->where('router_num', $term)
                             ->get();
@@ -263,7 +263,7 @@ class RoutersController extends Controller
                                 'employee', 
                                 'date', 
                                 'date_in_inv', 
-                                'placement'
+                                'key'
                             )
                             ->where('part_num', $term)
                             ->get();
@@ -294,7 +294,7 @@ class RoutersController extends Controller
                                 'employee', 
                                 'date', 
                                 'date_in_inv', 
-                                'placement'
+                                'key'
                             )
                             ->where('status', $term)
                             ->get();
@@ -325,7 +325,7 @@ class RoutersController extends Controller
                                 'employee', 
                                 'date', 
                                 'date_in_inv', 
-                                'placement'
+                                'key'
                             )
                             ->where('po_num', $term)
                             ->get();
@@ -363,7 +363,7 @@ class RoutersController extends Controller
                     'employee' => $row['employee'],
                     'date' => $row['date'],
                     'date_in_inv' => $row['date_in_inv'],
-                    'placement' => $row['placement']
+                    'key' => $row['key']
                 ];
               }
           }
